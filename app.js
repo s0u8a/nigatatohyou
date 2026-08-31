@@ -106,7 +106,6 @@ const TYPE_NAMES = {
   \u5730\u57DF: "\u5730\u5143\u3064\u306A\u304C\u308A\u578B"
 };
 const OFFICIAL_SCHEDULE_URL = "https://www.pref.niigata.lg.jp/site/senkyo/list803.html";
-const OFFICIAL_NIIGATA_POLLING_URL = "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html";
 const UPCOMING_ELECTIONS = [
   { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u80CE\u5185\u5E02\u9577\u9078\u6319", notice: "9\u67086\u65E5", day: "9\u670813\u65E5", isoDate: "2026-09-13" },
   { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u65B0\u6F5F\u5E02\u9577\u9078\u6319", notice: "10\u670811\u65E5", day: "10\u670825\u65E5", isoDate: "2026-10-25" },
@@ -3604,7 +3603,8 @@ function freshScores() {
   return s;
 }
 const state = {
-  tab: "home",
+  tab: "top",
+  // 最初に開いたときは必ずこのトップ画面のみ
   electionDate: "2026-10-25",
   quizStep: 0,
   scores: freshScores(),
@@ -3651,6 +3651,8 @@ function elJpDateToIso(day) {
 function icon(name, size = 16) {
   const common = `width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"`;
   switch (name) {
+    case "home":
+      return `<svg ${common}><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`;
     case "calendar":
       return `<svg ${common}><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>`;
     case "clipboard":
@@ -3682,8 +3684,11 @@ function render() {
   const content = document.createElement("div");
   content.className = "wrap content";
   switch (state.tab) {
-    case "home":
-      content.appendChild(renderHome());
+    case "top":
+      content.appendChild(renderTopLandingPage());
+      break;
+    case "schedule":
+      content.appendChild(renderSchedulePage());
       break;
     case "pledges":
       content.appendChild(renderPledges());
@@ -3711,7 +3716,7 @@ function renderHeader() {
   logoImg.alt = "\u65B0\u6F5F\u306E\u65B0\u6F5F\u9078\u6319";
   logoImg.className = "site-logo-img";
   logoImg.addEventListener("click", () => {
-    state.tab = "home";
+    state.tab = "top";
     render();
   });
   logoBox.appendChild(logoImg);
@@ -3719,7 +3724,8 @@ function renderHeader() {
   const navTabs = document.createElement("nav");
   navTabs.className = "nav-tabs-container";
   const tabDefs = [
-    ["home", "\u65E5\u7A0B", "calendar"],
+    ["top", "\u30DB\u30FC\u30E0", "home"],
+    ["schedule", "\u65E5\u7A0B", "calendar"],
     ["pledges", "\u516C\u7D04", "clipboard"],
     ["quiz", "\u6295\u7968\u8A3A\u65AD", "vote"],
     ["place", "\u6295\u7968\u6240", "map-pin"]
@@ -3738,7 +3744,8 @@ function renderHeader() {
   header.appendChild(container);
   return header;
 }
-function renderHeroSection() {
+function renderTopLandingPage() {
+  const wrap = document.createElement("div");
   const hero = document.createElement("div");
   hero.className = "main-hero-container";
   const bgPhoto = document.createElement("div");
@@ -3775,13 +3782,17 @@ function renderHeroSection() {
   hero.appendChild(heroOverlay);
   const scrollIndicator = document.createElement("div");
   scrollIndicator.className = "scroll-indicator";
-  scrollIndicator.innerHTML = `<span>\u25BC \u4E0B\u3078\u30B9\u30AF\u30ED\u30FC\u30EB\u3057\u3066\u30B3\u30F3\u30C6\u30F3\u30C4\u3092\u898B\u308B</span>`;
+  scrollIndicator.innerHTML = `<span>\u4E0A\u306E\u300C\u65E5\u7A0B\u300D\u300C\u516C\u7D04\u300D\u300C\u6295\u7968\u8A3A\u65AD\u300D\u300C\u6295\u7968\u6240\u300D\u30BF\u30D6\u3092\u9078\u3093\u3067\u30B9\u30BF\u30FC\u30C8\uFF01</span>`;
   hero.appendChild(scrollIndicator);
-  return hero;
+  wrap.appendChild(hero);
+  return wrap;
 }
-function renderHome() {
+function renderSchedulePage() {
   const wrap = document.createElement("div");
-  wrap.appendChild(renderHeroSection());
+  const title = document.createElement("h2");
+  title.className = "disp section-title";
+  title.textContent = "\u9078\u6319\u65E5\u7A0B \uFF06 \u30AB\u30A6\u30F3\u30C8\u30C0\u30A6\u30F3";
+  wrap.appendChild(title);
   const days = daysUntil(state.electionDate);
   const heroRow = document.createElement("div");
   heroRow.className = "hero-row";

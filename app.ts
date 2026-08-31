@@ -50,7 +50,7 @@ interface PollingPlace {
   updateInfo?: string;
 }
 
-type TabKey = "home" | "pledges" | "quiz" | "place";
+type TabKey = "top" | "schedule" | "pledges" | "quiz" | "place";
 
 // ---------- Sample / reference data ----------
 const TAGS: Tag[] = ["経済", "教育", "環境", "デジタル", "福祉", "地域"];
@@ -167,7 +167,6 @@ const TYPE_NAMES: Record<Tag, string> = {
 
 // 出典リンク
 const OFFICIAL_SCHEDULE_URL = "https://www.pref.niigata.lg.jp/site/senkyo/list803.html";
-const OFFICIAL_NIIGATA_POLLING_URL = "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html";
 
 // 令和8年度, 令和9年度以降 スケジュール
 const UPCOMING_ELECTIONS: UpcomingElection[] = [
@@ -3687,7 +3686,7 @@ function freshScores(): Record<Tag, number> {
 }
 
 const state: AppState = {
-  tab: "home",
+  tab: "top", // 最初に開いたときは必ずこのトップ画面のみ
   electionDate: "2026-10-25",
   quizStep: 0,
   scores: freshScores(),
@@ -3742,6 +3741,8 @@ function elJpDateToIso(day: string): string {
 function icon(name: string, size = 16): string {
   const common = `width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"`;
   switch (name) {
+    case "home":
+      return `<svg ${common}><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`;
     case "calendar":
       return `<svg ${common}><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>`;
     case "clipboard":
@@ -3778,8 +3779,11 @@ function render() {
   content.className = "wrap content";
 
   switch (state.tab) {
-    case "home":
-      content.appendChild(renderHome());
+    case "top":
+      content.appendChild(renderTopLandingPage());
+      break;
+    case "schedule":
+      content.appendChild(renderSchedulePage());
       break;
     case "pledges":
       content.appendChild(renderPledges());
@@ -3797,7 +3801,7 @@ function render() {
   root.appendChild(content);
 }
 
-// ---------- Header with Logo & Stylized Tabs ----------
+// ---------- Header with Logo & Tabs (［ ホーム ］［ 日程 ］［ 公約 ］［ 投票診断 ］［ 投票所 ］) ----------
 function renderHeader(): HTMLElement {
   const header = document.createElement("header");
   header.className = "site-header";
@@ -3813,18 +3817,19 @@ function renderHeader(): HTMLElement {
   logoImg.alt = "新潟の新潟選挙";
   logoImg.className = "site-logo-img";
   logoImg.addEventListener("click", () => {
-    state.tab = "home";
+    state.tab = "top";
     render();
   });
   logoBox.appendChild(logoImg);
   container.appendChild(logoBox);
 
-  // Tabs (［ 日程 ］［ 公約 ］［ 投票診断 ］［ 投票所 ］)
+  // Tabs
   const navTabs = document.createElement("nav");
   navTabs.className = "nav-tabs-container";
 
   const tabDefs: [TabKey, string, string][] = [
-    ["home", "日程", "calendar"],
+    ["top", "ホーム", "home"],
+    ["schedule", "日程", "calendar"],
     ["pledges", "公約", "clipboard"],
     ["quiz", "投票診断", "vote"],
     ["place", "投票所", "map-pin"],
@@ -3846,12 +3851,14 @@ function renderHeader(): HTMLElement {
   return header;
 }
 
-// ---------- Initial Welcome Hero Section (モックアップ画像に忠実なメイン画面) ----------
-function renderHeroSection(): HTMLElement {
+// ---------- 【ホームページ (トップ画面)】最初にアクセスした時に開く専用の画面 ----------
+function renderTopLandingPage(): HTMLElement {
+  const wrap = document.createElement("div");
+
+  // メインヒーロービジュアル（モックアップ画像に100%忠実なデザイン）
   const hero = document.createElement("div");
   hero.className = "main-hero-container";
 
-  // Background Photo (R.jpe - 新潟県庁と信濃川の景色)
   const bgPhoto = document.createElement("div");
   bgPhoto.className = "hero-bg-photo";
   bgPhoto.style.backgroundImage = "url('R.jpe')";
@@ -3860,13 +3867,11 @@ function renderHeroSection(): HTMLElement {
   const heroOverlay = document.createElement("div");
   heroOverlay.className = "hero-overlay-mask";
 
-  // Center Oval Banner (「新潟の若者の選挙率を高めるためのサイト」)
   const ovalBanner = document.createElement("div");
   ovalBanner.className = "hero-oval-text";
   ovalBanner.textContent = "新潟の若者の選挙率を高めるためのサイト";
   heroOverlay.appendChild(ovalBanner);
 
-  // Left Mascot Character Card ("選挙君")
   const mascotLeftCard = document.createElement("div");
   mascotLeftCard.className = "hero-mascot-left";
   const senkyoImg = document.createElement("img");
@@ -3875,7 +3880,6 @@ function renderHeroSection(): HTMLElement {
   mascotLeftCard.appendChild(senkyoImg);
   heroOverlay.appendChild(mascotLeftCard);
 
-  // Bottom-Left Rice Mascot ("こめちゃん")
   const komeLeftCard = document.createElement("div");
   komeLeftCard.className = "hero-mascot-kome-left";
   const komeLeftImg = document.createElement("img");
@@ -3884,7 +3888,6 @@ function renderHeroSection(): HTMLElement {
   komeLeftCard.appendChild(komeLeftImg);
   heroOverlay.appendChild(komeLeftCard);
 
-  // Bottom-Right Rice Mascot ("こめちゃん")
   const komeRightCard = document.createElement("div");
   komeRightCard.className = "hero-mascot-kome-right";
   const komeRightImg = document.createElement("img");
@@ -3895,20 +3898,23 @@ function renderHeroSection(): HTMLElement {
 
   hero.appendChild(heroOverlay);
 
-  // Scroll Down Indicator
   const scrollIndicator = document.createElement("div");
   scrollIndicator.className = "scroll-indicator";
-  scrollIndicator.innerHTML = `<span>▼ 下へスクロールしてコンテンツを見る</span>`;
+  scrollIndicator.innerHTML = `<span>上の「日程」「公約」「投票診断」「投票所」タブを選んでスタート！</span>`;
   hero.appendChild(scrollIndicator);
 
-  return hero;
+  wrap.appendChild(hero);
+  return wrap;
 }
 
-function renderHome(): HTMLElement {
+// ---------- 【日程 画面】「日程」タブをクリックした時だけに開く専用画面 ----------
+function renderSchedulePage(): HTMLElement {
   const wrap = document.createElement("div");
 
-  // 最初にサイトを開いた際のHero画面（モックアップに基づくデザイン）
-  wrap.appendChild(renderHeroSection());
+  const title = document.createElement("h2");
+  title.className = "disp section-title";
+  title.textContent = "選挙日程 ＆ カウントダウン";
+  wrap.appendChild(title);
 
   const days = daysUntil(state.electionDate);
   const heroRow = document.createElement("div");
