@@ -108,12 +108,10 @@ const TYPE_NAMES = {
 const OFFICIAL_SCHEDULE_URL = "https://www.pref.niigata.lg.jp/site/senkyo/list803.html";
 const OFFICIAL_NIIGATA_POLLING_URL = "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html";
 const UPCOMING_ELECTIONS = [
-  // --- 令和7年度 (2025年) ---
   { year: "\u4EE4\u548C7\u5E74\u5EA6", yearLabel: "\u4EE4\u548C7\u5E74", name: "\u7B2C27\u56DE \u53C2\u8B70\u9662\u8B70\u54E1\u901A\u5E38\u9078\u6319", notice: "7\u67083\u65E5", day: "7\u670820\u65E5", isoDate: "2025-07-20" },
   { year: "\u4EE4\u548C7\u5E74\u5EA6", yearLabel: "\u4EE4\u548C7\u5E74", name: "\u963F\u8CC0\u91CE\u5E02\u9577\u9078\u6319", notice: "4\u670813\u65E5", day: "4\u670820\u65E5", isoDate: "2025-04-20" },
   { year: "\u4EE4\u548C7\u5E74\u5EA6", yearLabel: "\u4EE4\u548C7\u5E74", name: "\u5341\u65E5\u753A\u5E02\u9577\u9078\u6319\u30FB\u5E02\u8B70\u9078", notice: "4\u670820\u65E5", day: "4\u670827\u65E5", isoDate: "2025-04-27" },
   { year: "\u4EE4\u548C7\u5E74\u5EA6", yearLabel: "\u4EE4\u548C7\u5E74", name: "\u5357\u9B5A\u6CBC\u5E02\u9577\u9078\u6319", notice: "11\u67089\u65E5", day: "11\u670816\u65E5", isoDate: "2025-11-16" },
-  // --- 令和8年度 (2026年) ---
   { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u80CE\u5185\u5E02\u9577\u9078\u6319", notice: "9\u67086\u65E5", day: "9\u670813\u65E5", isoDate: "2026-09-13" },
   { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u65B0\u6F5F\u5E02\u9577\u9078\u6319", notice: "10\u670811\u65E5", day: "10\u670825\u65E5", isoDate: "2026-10-25" },
   { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u71D5\u5E02\u8B70\u4F1A\u8B70\u54E1\u9078\u6319", notice: "10\u670811\u65E5", day: "10\u670818\u65E5", isoDate: "2026-10-18" },
@@ -122,7 +120,6 @@ const UPCOMING_ELECTIONS = [
   { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u5C0F\u5343\u8C37\u5E02\u9577\u9078\u6319", notice: "11\u67088\u65E5", day: "11\u670815\u65E5", isoDate: "2026-11-15" },
   { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u65B0\u767A\u7530\u5E02\u9577\u9078\u6319", notice: "11\u670815\u65E5", day: "11\u670822\u65E5", isoDate: "2026-11-22" },
   { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u963F\u8CC0\u753A\u9577\u9078\u6319", notice: "11\u670817\u65E5", day: "11\u670822\u65E5", isoDate: "2026-11-22" },
-  // --- 令和9年度以降 (2027年〜) ---
   { year: "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D", yearLabel: "\u4EE4\u548C9\u5E74", name: "\u7B2C21\u56DE \u7D71\u4E00\u5730\u65B9\u9078\u6319 (\u65B0\u6F5F\u770C\u8B70\u4F1A\u8B70\u54E1\u9078\u6319)", notice: "3\u6708\u4E0B\u65EC", day: "4\u670811\u65E5(\u4E88\u5B9A)", isoDate: "2027-04-11" },
   { year: "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D", yearLabel: "\u4EE4\u548C9\u5E74", name: "\u65B0\u6F5F\u5E02\u8B70\u4F1A\u8B70\u54E1\u4E00\u822C\u9078\u6319", notice: "3\u6708\u4E0B\u65EC", day: "4\u670811\u65E5(\u4E88\u5B9A)", isoDate: "2027-04-11" },
   { year: "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D", yearLabel: "\u4EE4\u548C9\u5E74", name: "\u9577\u5CA1\u5E02\u9577\u9078\u6319 (\u4EFB\u671F\u6E80\u4E86 10\u6708)", notice: "10\u6708", day: "10\u6708\u4E0B\u65EC(\u4E88\u5B9A)", isoDate: "2027-10-24" },
@@ -138,7 +135,10 @@ const POLLING_PLACES = [
     "address": "\u5317\u533A\u677E\u6D5C3\u201019\u20101",
     "area": "\u677E\u6D5C1\uFF5E8\u4E01\u76EE\u3001\u677E\u6D5C\u753A\u306E\u4E00\u90E8\u3001\u677E\u6D5C\u6771\u753A1\uFF5E2\u4E01\u76EE\u3001\u677E\u6D5C\u672C\u753A1\uFF5E4\u4E01\u76EE\u3001\u677E\u6D5C\u307F\u306A\u3068",
     "mapUrl": "https://goo.gl/maps/A8JgTEGFqyegZ6Sg9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "1002",
@@ -148,7 +148,10 @@ const POLLING_PLACES = [
     "address": "\u5317\u533A\u5CF6\u898B\u753A2069-1",
     "area": "\u5CF6\u898B\u753A\u3001\u767D\u52E2\u753A\u3001\u65B0\u5BCC\u753A",
     "mapUrl": "https://maps.app.goo.gl/Y75SFNamwFrM3Pgx5",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "1003",
@@ -158,7 +161,10 @@ const POLLING_PLACES = [
     "address": "\u5317\u533A\u592A\u592B\u6D5C2045\u20102",
     "area": "\u795E\u8C37\u5185\u3001\u592A\u592B\u6D5C\u3001\u592A\u592B\u6D5C\u65B0\u753A1\uFF5E2\u4E01\u76EE\u3001\u677E\u6804\u753A\u3001\u677E\u6D5C\u753A\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/11X2a6rSpcAA7dQh6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "1004",
@@ -168,7 +174,10 @@ const POLLING_PLACES = [
     "address": "\u5317\u533A\u592A\u90CE\u4EE3120",
     "area": "\u592A\u90CE\u4EE3",
     "mapUrl": "https://goo.gl/maps/MjNq7HVJYG9ALrZQ9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "1005",
@@ -178,7 +187,10 @@ const POLLING_PLACES = [
     "address": "\u5317\u533A\u6FC1\u5DDD284",
     "area": "\u3059\u307F\u308C\u91CE1\uFF5E3\u4E01\u76EE\u3001\u3064\u304F\u3057\u91CE1\uFF5E2\u4E01\u76EE\u3001\u65B0\u5D0E\u3001\u65B0\u5D0E1\uFF5E3\u4E01\u76EE\u3001\u6FC1\u5DDD\u3001\u6FC1\u5DDD1\u4E01\u76EE\u3001\u677E\u6F5F",
     "mapUrl": "https://goo.gl/maps/u1Sw4KgVZPXW8FY79",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "1006",
@@ -188,7 +200,10 @@ const POLLING_PLACES = [
     "address": "\u5317\u533A\u4E09\u8ED2\u5C4B\u753A19\u201016",
     "area": "\u4E09\u8ED2\u5C4B\u753A\u3001\u65B0\u5143\u5CF6\u753A\u3001\u540D\u76EE\u6240\u3001\u540D\u76EE\u62401\uFF5E3\u4E01\u76EE\u3001\u897F\u540D\u76EE\u6240\u3001\u677E\u6D5C\u65B0\u753A",
     "mapUrl": "https://goo.gl/maps/DPcEKnmUci1dkAcS6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "1007",
@@ -198,7 +213,10 @@ const POLLING_PLACES = [
     "address": "\u5317\u533A\u6771\u6804\u753A1-1-14",
     "area": "\u845B\u585A\u306E\u4E00\u90E8\u3001\u592A\u7530\u306E\u4E00\u90E8\u3001\u5609\u5C71\u306E\u4E00\u90E8\u3001\u524D\u65B0\u7530\u306E\u4E00\u90E8\u3001\u6A2A\u4E95\u306E\u4E00\u90E8\u3001\u767D\u65B0\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u767D\u65B0\u753A2\uFF5E3\u4E01\u76EE\u3001\u767D\u65B0\u753A4\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5609\u5C711\u4E01\u76EE\u5168\u57DF\u3001\u5609\u5C712\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5609\u5C713\uFF5E5\u4E01\u76EE\u3001\u5609\u5C716\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6771\u6804\u753A(\u3068\u3046\u3048\u3044\u3061\u3087\u3046)1\uFF5E3\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/7ueZo6wDVsU8m7uY7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "1008",
@@ -208,7 +226,10 @@ const POLLING_PLACES = [
     "address": "\u5317\u533A\u5DDD\u897F3\u20109\u201024",
     "area": "\u6D66\u6728\u306E\u4E00\u90E8\u3001\u5609\u5C712\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5609\u5C716\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E0A\u571F\u5730\u4E80\u3001\u5DDD\u897F1\uFF5E4\u4E01\u76EE\u3001\u7F8E\u91CC1\uFF5E2\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/W5bGYRfhKLEX8ZEq5",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "1009",
@@ -218,7 +239,10 @@ const POLLING_PLACES = [
     "address": "\u5317\u533A\u77F3\u52D51\u201010\u20101",
     "area": "\u592A\u7530\u306E\u4E00\u90E8\u3001\u845B\u585A\u306E\u4E00\u90E8\u3001\u767D\u65B0\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u304B\u3076\u3068\u3084\u307E1\uFF5E2\u4E01\u76EE\u3001\u77F3\u52D51\uFF5E2\u4E01\u76EE\u3001\u67F3\u539F1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6A2A\u4E95\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/QowG9Y8PkUpiJs4d9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "1010",
@@ -228,7 +252,10 @@ const POLLING_PLACES = [
     "address": "\u5317\u533A\u67F3\u539F3-3-16",
     "area": "\u845B\u585A\u306E\u4E00\u90E8\u3001\u4E0B\u571F\u5730\u4E80\u306E\u4E00\u90E8\u3001\u767D\u65B0\u753A4\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u67F3\u539F1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u67F3\u539F2\uFF5E6\u4E01\u76EE",
     "mapUrl": "https://maps.app.goo.gl/j4XUUTgJyZ9YMsAk6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "1011",
@@ -238,7 +265,10 @@ const POLLING_PLACES = [
     "address": "\u5317\u533A\u671D\u65E5\u753A4\u20101\u20102",
     "area": "\u845B\u585A\u306E\u4E00\u90E8\u3001\u592A\u7530\u306E\u4E00\u90E8\u3001\u5609\u5C71\u306E\u4E00\u90E8\u3001\u6A2A\u4E95\u306E\u4E00\u90E8\u3001\u671D\u65E5\u753A1\uFF5E4\u4E01\u76EE\u3001\u524D\u65B0\u7530\u306E\u4E00\u90E8\u3001\u65B0\u9F3B\u3001\u5185\u6CBC\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/xQWSMZ8FBCRsi2R47",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "1012",
@@ -248,7 +278,10 @@ const POLLING_PLACES = [
     "address": "\u5317\u533A\u592A\u75302005",
     "area": "\u592A\u7530\u306E\u4E00\u90E8\u3001\u7B20\u67F3\u306E\u4E00\u90E8\u3001\u6751\u65B0\u7530",
     "mapUrl": "https://goo.gl/maps/NJn65yyWqjCaSEcH7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "1013",
@@ -258,7 +291,10 @@ const POLLING_PLACES = [
     "address": "\u5317\u533A\u6728\u5D0E3227",
     "area": "\u5185\u5CF6\u898B\u306E\u4E00\u90E8\u3001\u6D66\u30CE\u5165\u306E\u4E00\u90E8\u3001\u6728\u5D0E\u306E\u4E00\u90E8\u3001\u9CE5\u5C4B\u3001\u65E9\u901A\u306E\u4E00\u90E8\u3001\u7B20\u67F3\u306E\u4E00\u90E8\u3001\u6A2A\u4E95\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/7DDupDJ89oedvPuS8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "1014",
@@ -268,7 +304,10 @@ const POLLING_PLACES = [
     "address": "\u5317\u533A\u5185\u5CF6\u898B2185\u201030",
     "area": "\u5185\u5CF6\u898B\u306E\u4E00\u90E8\u3001\u6728\u5D0E\u306E\u4E00\u90E8\u3001\u5317\u967D1\uFF5E2\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/kGQbjB1GjKQzd1Nv7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "1015",
@@ -278,7 +317,10 @@ const POLLING_PLACES = [
     "address": "\u5317\u533A\u6A0B\u30CE\u51651471",
     "area": "\u6728\u5D0E\u306E\u4E00\u90E8\u3001\u4E0B\u5927\u8C37\u5185\u3001\u4E0B\u65E9\u901A\u306E\u4E00\u90E8\u3001\u6A0B\u30CE\u5165",
     "mapUrl": "https://goo.gl/maps/SWXVvaybm2j8N1rv6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "1016",
@@ -288,7 +330,10 @@ const POLLING_PLACES = [
     "address": "\u5317\u533A\u7B39\u5C712058",
     "area": "\u5185\u5CF6\u898B\u306E\u4E00\u90E8\u3001\u6728\u5D0E\u306E\u4E00\u90E8\u3001\u7B39\u5C71\u3001\u6D66\u30CE\u5165\u306E\u4E00\u90E8\u3001\u6A2A\u571F\u5C45",
     "mapUrl": "https://goo.gl/maps/JFuzQa57Yw4L14NMA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "1017",
@@ -298,7 +343,10 @@ const POLLING_PLACES = [
     "address": "\u5317\u533A\u9808\u62381\u20101\u20101",
     "area": "\u4E0B\u571F\u5730\u4E80\u306E\u4E00\u90E8\u3001\u9808\u6238\u3001\u9808\u62381\uFF5E5\u4E01\u76EE\u3001\u65B0\u4E95\u90F7\u3001\u65E9\u901A\u306E\u4E00\u90E8\u3001\u4ECF\u4F1D\u3001\u65E9\u901A\u53571\uFF5E5\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/n1QqWMK8Yex7EuCe7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "1018",
@@ -308,7 +356,10 @@ const POLLING_PLACES = [
     "address": "\u5317\u533A\u65E9\u901A396",
     "area": "\u5F69\u91CE1\uFF5E4\u4E01\u76EE\u3001\u65E9\u901A\u53171\uFF5E6\u4E01\u76EE\u3001\u4E0B\u65E9\u901A\u306E\u4E00\u90E8\u3001\u65E9\u901A\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/CrkF3kxvxjskzAWU7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "1019",
@@ -318,7 +369,10 @@ const POLLING_PLACES = [
     "address": "\u5317\u533A\u9577\u6238\u54424601",
     "area": "\u5341\u4E8C\u3001\u5E73\u6797\u3001\u7070\u585A\u3001\u5C71\u98EF\u91CE\u3001\u5927\u4E45\u4FDD\u3001\u5927\u702C\u67F3\u3001\u5927\u8FCE\u3001\u592A\u5B50\u5802\u3001\u9577\u6238\u5442\u3001\u9577\u6238\u5442\u65B0\u7530\u3001\u4E09\u30C4\u5C4B\u3001\u5341\u4E8C\u524D",
     "mapUrl": "https://goo.gl/maps/f6vtsJ7svwFYiddVA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "1020",
@@ -328,7 +382,10 @@ const POLLING_PLACES = [
     "address": "\u5317\u533A\u68EE\u4E0B1409",
     "area": "\u9AD8\u68EE\u3001\u9AD8\u68EE\u65B0\u7530\u3001\u68EE\u4E0B\u3001\u3059\u307F\u308C\u91CE4\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/KDR2eYCfXF5yew7i8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "1021",
@@ -338,7 +395,10 @@ const POLLING_PLACES = [
     "address": "\u5317\u533A\u9577\u58341834\u20101",
     "area": "\u4E0A\u5927\u6708\u3001\u5CA1\u65B0\u7530\u3001\u4E0A\u5800\u7530\u3001\u91CC\u98EF\u91CE\u3001\u5927\u6708\u3001\u9577\u5834\u3001\u5185\u6CBC\u306E\u4E00\u90E8\u3001\u9577\u6238\u3001\u6D66\u6728\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/6QmnQaexEe7VxKkw7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "2001",
@@ -348,7 +408,10 @@ const POLLING_PLACES = [
     "address": "\u6771\u533A\u53E4\u5DDD\u753A4\u201012",
     "area": "\u795E\u660E\u753A\u3001\u6D5C\u753A\u3001\u53E4\u6E4A\u753A\u3001\u5C71\u306E\u4E0B\u753A\u3001\u81E8\u6D77\u753A\u3001\u81E8\u6E2F1\u4E01\u76EE\u3001\u9577\u8005\u753A\u3001\u5927\u5C711\uFF5E2\u4E01\u76EE\u3001\u6771\u65B0\u753A\u3001\u53E4\u5DDD\u753A\u3001\u5317\u8449\u753A\u3001\u677E\u5CF61\uFF5E3\u4E01\u76EE\u3001\u672B\u5E83\u753A",
     "mapUrl": "https://goo.gl/maps/KNotQw7rPHxDThVn6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "2002",
@@ -358,7 +421,10 @@ const POLLING_PLACES = [
     "address": "\u6771\u533A\u79CB\u8449\u901A2\u20103722\u20107",
     "area": "\u79CB\u84491\u4E01\u76EE\u3001\u79CB\u8449\u901A2\uFF5E3\u4E01\u76EE\u3001\u6843\u5C71\u753A1\uFF5E2\u4E01\u76EE\u3001\u81E8\u6E2F\u753A2\uFF5E3\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/mKa4Xkw6wSowMr1F8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "2003",
@@ -368,7 +434,10 @@ const POLLING_PLACES = [
     "address": "\u6771\u533A\u85E4\u898B\u753A1\u201023\u201057",
     "area": "\u6CB3\u6E21\u5E9A\u3001\u6CB3\u6E211\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6CB3\u6E212\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6CB3\u6E213\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6CB3\u6E21\u672C\u753A\u3001\u85E4\u898B\u753A1\uFF5E2\u4E01\u76EE\u3001\u6708\u898B\u753A\u3001\u4E0A\u738B\u702C\u753A",
     "mapUrl": "https://goo.gl/maps/vD21m9k1WXP1CW6A6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "2004",
@@ -378,7 +447,10 @@ const POLLING_PLACES = [
     "address": "\u6771\u533A\u5C0F\u91D1\u753A3\u20105\u20101",
     "area": "\u6CB3\u6E211\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5C0F\u91D1\u53F0\u3001\u5C0F\u91D1\u753A1\uFF5E3\u4E01\u76EE\u3001\u5B9D\u753A\u3001\u9326\u753A\u3001\u7269\u898B\u5C711\uFF5E2\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/SV44qHWAEQxxLqJw5",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "2005",
@@ -388,7 +460,10 @@ const POLLING_PLACES = [
     "address": "\u6771\u533A\u677E\u548C\u753A15\u20108",
     "area": "\u5E78\u68041\uFF5E3\u4E01\u76EE\u3001\u6CB3\u6E212\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6CB3\u6E213\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5411\u967D1\u4E01\u76EE\u3001\u677E\u57121\uFF5E2\u4E01\u76EE\u3001\u677E\u548C\u753A\u3001\u7269\u898B\u5C713\uFF5E4\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/Kiu4JRgw93v44ubK7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "2006",
@@ -398,7 +473,10 @@ const POLLING_PLACES = [
     "address": "\u6771\u533A\u8239\u6C5F\u753A2\u201011\u20103",
     "area": "\u7A7A\u6E2F\u897F1\uFF5E2\u4E01\u76EE\u3001\u6D5C\u8C37\u753A1\uFF5E2\u4E01\u76EE\u3001\u8239\u6C5F\u753A1\uFF5E3\u4E01\u76EE\uFF09",
     "mapUrl": "https://goo.gl/maps/urFTyEYMvNKnL4aWA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "2007",
@@ -408,7 +486,10 @@ const POLLING_PLACES = [
     "address": "\u6771\u533A\u592A\u5E732\u201018",
     "area": "\u6CB3\u6E21\u7532\u3001\u6CB3\u6E21\u65B0\u753A1\uFF5E2\u4E01\u76EE\u3001\u5411\u967D3\u4E01\u76EE\u3001\u4E0B\u5C711\uFF5E3\u4E01\u76EE\u3001\u65B0\u5DDD\u753A\u3001\u592A\u5E731\uFF5E4\u4E01\u76EE\u3001\u6D25\u5CF6\u5C4B5\u4E01\u76EE\u3001\u6839\u5BA4\u65B0\u753A\u3001\u677E\u6D5C\u753A\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/3JxegsQhZJZ2R58w6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "2008",
@@ -418,7 +499,10 @@ const POLLING_PLACES = [
     "address": "\u6771\u533A\u677E\u5D0E1\u201014\u201025",
     "area": "\u5411\u967D2\u4E01\u76EE\u3001\u767D\u92801\uFF5E2\u4E01\u76EE\u3001\u677E\u5D0E\u3001\u677E\u5D0E1\uFF5E2\u4E01\u76EE\u3001\u6709\u697D1\uFF5E3\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/pqsgTssrBR9vUR987",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "2009",
@@ -428,7 +512,10 @@ const POLLING_PLACES = [
     "address": "\u6771\u533A\u6D77\u8001\u30B1\u702C31",
     "area": "\u6D25\u5CF6\u5C4B1\uFF5E4\u4E01\u76EE\u3001\u6D25\u5CF6\u5C4B6\uFF5E7\u4E01\u76EE\u3001\u6D77\u8001\u30B1\u702C\u3001\u65B0\u677E\u5D0E1\uFF5E3\u4E01\u76EE\u3001\u4E00\u65E5\u5E02\u3001\u6728\u5DE5\u65B0\u753A",
     "mapUrl": "https://goo.gl/maps/UtFuGFnCPqKMYgbA9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "2010",
@@ -438,7 +525,10 @@ const POLLING_PLACES = [
     "address": "\u6771\u533A\u5927\u5F62\u672C\u753A2\u20106\u20101",
     "area": "\u77F3\u52D5\u3001\u6D77\u8001\u30B1\u702C\u65B0\u753A\u3001\u9022\u8C37\u5185\u3001\u9022\u8C37\u51851\uFF5E6\u4E01\u76EE\u3001\u5927\u5F62\u672C\u753A\u3001\u5927\u5F62\u672C\u753A1\uFF5E6\u4E01\u76EE\u3001\u5BFA\u5C713\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E2D\u8208\u91CE\u3001\u672C\u6240\u3001\u672C\u62401\uFF5E3\u4E01\u76EE\u3001\u67F3\u30B1\u4E18\u3001\u8C4A2\uFF5E3\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/51jV3ws5FEKsudLo7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "2011",
@@ -448,7 +538,10 @@ const POLLING_PLACES = [
     "address": "\u6771\u533A\u4E0A\u6728\u62385\u20101\u20101",
     "area": "\u4E0A\u6728\u6238\u306E\u4E00\u90E8\u3001\u4E0A\u6728\u62381\uFF5E3\u30015\u4E01\u76EE\u3001\u6750\u6728\u753A\u3001\u4E0B\u6728\u6238\u3001\u5BFA\u5C71\u3001\u5BFA\u5C711\uFF5E2\u4E01\u76EE\u3001\u5BFA\u5C713\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E2D\u6728\u6238\u3001\u306F\u306A\u307F\u305A\u304D2\u4E01\u76EE\u3001\u8C4A1\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/6UJ7ktNL7QB8wswr6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "2012",
@@ -458,7 +551,10 @@ const POLLING_PLACES = [
     "address": "\u6771\u533A\u7261\u4E39\u5C716\u201015\u20101",
     "area": "\u4E0A\u6728\u6238\u306E\u4E00\u90E8\u3001\u4E0A\u6728\u62384\u4E01\u76EE\u3001\u4E0B\u6728\u62381\uFF5E3\u4E01\u76EE\u3001\u7AF9\u5C3E4\u4E01\u76EE\u3001\u306F\u306A\u307F\u305A\u304D1\u30013\u4E01\u76EE\u3001\u7261\u4E39\u5C713\uFF5E6\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/3e2oagGcGfPWTJdz5",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "2013",
@@ -468,7 +564,10 @@ const POLLING_PLACES = [
     "address": "\u6771\u533A\u7AF9\u5C3E2-18-1",
     "area": "\u7AF9\u5C3E\u3001\u7AF9\u5C3E1\uFF5E3\u4E01\u76EE\u3001\u7D2B\u7AF96\uFF5E7\u4E01\u76EE\u3001\u7AF9\u5C3E\u5378\u65B0\u753A\u3001\u7D2B\u7AF9\u5378\u65B0\u753A\u3001\u5378\u65B0\u753A1\uFF5E3\u4E01\u76EE",
     "mapUrl": "https://maps.app.goo.gl/sFfksXyUP1v3Ucia6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "2014",
@@ -478,7 +577,10 @@ const POLLING_PLACES = [
     "address": "\u6771\u533A\u4E2D\u5C714\u20101\u20101",
     "area": "\u4E2D\u5C711\uFF5E8\u4E01\u76EE\u3001\u7261\u4E39\u5C711\uFF5E2\u4E01\u76EE\u3001\u5C71\u6728\u62385\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/8iadA3M2RcxpdAak8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "2015",
@@ -488,7 +590,10 @@ const POLLING_PLACES = [
     "address": "\u6771\u533A\u5C71\u6728\u62381\u20102\u20101",
     "area": "\u698E\u3001\u698E\u753A\u3001\u5C71\u6728\u62381\uFF5E4\u4E01\u76EE\u3001\u5C71\u6728\u62386\uFF5E8\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/8VVrtUV2Ecwv1nuX6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "2016",
@@ -498,7 +603,10 @@ const POLLING_PLACES = [
     "address": "\u6771\u533A\u6C5F\u53575-1-1",
     "area": "\u7D2B\u7AF92\uFF5E5\u4E01\u76EE\u3001\u6C5F\u53571\uFF5E6\u4E01\u76EE\u3001\u7D2B\u7AF9\u5C713\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5357\u7D2B\u7AF91\u4E01\u76EE",
     "mapUrl": "https://maps.app.goo.gl/zDZqb1cxsLXcme4g9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "2017",
@@ -508,7 +616,10 @@ const POLLING_PLACES = [
     "address": "\u6771\u533A\u6771\u660E6\u20102",
     "area": "\u77F3\u5C711\uFF5E3\u30015\u4E01\u76EE\u3001\u6771\u660E1\uFF5E8\u4E01\u76EE\u3001\u5357\u7D2B\u7AF92\u4E01\u76EE\u3001\u65B0\u77F3\u5C715\u4E01\u76EE\u3001\u3082\u3048\u304E\u91CE1\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/HR2WwMbciYA8MAMC7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "2018",
@@ -518,7 +629,10 @@ const POLLING_PLACES = [
     "address": "\u6771\u533A\u4E2D\u91CE\u5C711\u20101\u20101",
     "area": "\u77F3\u5C716\u4E01\u76EE\u3001\u4E0B\u5834\u3001\u4E0B\u5834\u65B0\u753A\u3001\u4E0B\u5834\u672C\u753A\u3001\u65B0\u77F3\u5C711\uFF5E4\u4E01\u76EE\u3001\u4E2D\u5CF61\u4E01\u76EE\u3001\u4E2D\u91CE\u5C711\uFF5E5\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/4y3mCvMStb7psR3P8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "2019",
@@ -528,7 +642,10 @@ const POLLING_PLACES = [
     "address": "\u6771\u533A\u4E2D\u91CE\u5C71863\u20101",
     "area": "\u7C9F\u5C711\uFF5E4\u4E01\u76EE\u3001\u77F3\u5C714\u4E01\u76EE\u3001\u4E2D\u91CE\u5C716\uFF5E7\u4E01\u76EE\u3001\u6771\u4E2D\u91CE\u5C711\u4E01\u76EE\u3001\u3082\u3048\u304E\u91CE2\uFF5E3\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/ZPbFzcfsjpMBhP6BA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "2020",
@@ -538,7 +655,10 @@ const POLLING_PLACES = [
     "address": "\u6771\u533A\u77F3\u5C71\u56E3\u573010-13",
     "area": "\u77F3\u5C71\u56E3\u5730\u3001\u733F\u30B1\u99AC\u58341\u4E01\u76EE\u3001\u4E2D\u5CF62\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E2D\u91CE\u5C718\u4E01\u76EE\u3001\u6771\u4E2D\u5CF61\uFF5E2\u4E01\u76EE\u3001\u6771\u4E2D\u91CE\u5C712\uFF5E5\u4E01\u76EE\u3001\u82E5\u8449\u753A1\uFF5E2\u4E01\u76EE",
     "mapUrl": "https://maps.app.goo.gl/PpKqUdXsFW8e2BDQ7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "2021",
@@ -548,7 +668,10 @@ const POLLING_PLACES = [
     "address": "\u6771\u533A\u733F\u30B1\u99AC\u58349",
     "area": "\u5CA1\u5C71\u3001\u733F\u30B1\u99AC\u58342\u4E01\u76EE\u3001\u65B0\u5CA1\u5C712\u4E01\u76EE\u3001\u5150\u6C60\u3001\u4E2D\u5CF62\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6771\u4E2D\u5CF63\uFF5E4\u4E01\u76EE\u3001\u6771\u4E2D\u91CE\u5C716\uFF5E7\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/Lpr1ws1ERhQ9DS5G7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3001",
@@ -558,7 +681,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u767D\u5C71\u6D661\u2010207\u20103",
     "area": "\u533B\u5B66\u753A\u901A1\uFF5E2\u756A\u753A\u3001\u4E00\u756A\u5800\u901A\u753A\u306E\u4E00\u90E8\u3001\u5B66\u6821\u88CF\u753A\u3001\u5B66\u6821\u753A\u901A1\uFF5E2\u756A\u753A\u3001\u5DDD\u5CB8\u753A1\uFF5E3\u4E01\u76EE\u3001\u767D\u5C71\u6D661\uFF5E2\u4E01\u76EE\u3001\u767D\u5C71\u6D66\u65B0\u753A\u901A",
     "mapUrl": "https://goo.gl/maps/JRhNhrDyDVezJb7y7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3002",
@@ -568,7 +694,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u95A2\u5C4B\u4E0B\u5DDD\u539F\u753A2\u2010664",
     "area": "\u5B66\u6821\u753A\u901A3\u756A\u753A\u3001\u6C34\u9053\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u95A2\u65B01\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u95A2\u5C4B\u306E\u4E00\u90E8\u3001\u95A2\u5C4B\u4E0B\u5DDD\u539F\u753A1\uFF5E2\u4E01\u76EE\u3001\u95A2\u5C4B\u65B0\u753A\u901A1\u4E01\u76EE\u3001\u95A2\u5C4B\u7530\u753A1\uFF5E3\u4E01\u76EE\u3001\u95A2\u5C4B\u672C\u6751\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u95A2\u5C4B\u677E\u6CE2\u753A1\uFF5E3\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/fWtcRkSCFTEYw6eo7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3003",
@@ -578,7 +707,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u95A2\u5C4B\u662D\u548C\u753A3\u2010148\u20101",
     "area": "\u95A2\u65B01\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u95A2\u65B02\uFF5E3\u4E01\u76EE\u3001\u95A2\u5C4B\u306E\u4E00\u90E8\u3001\u95A2\u5C4B\u5FA1\u8239\u8535\u753A\u3001\u95A2\u5C4B\u91D1\u9262\u5C71\u753A\u3001\u95A2\u5C4B\u662D\u548C\u753A2\uFF5E3\u4E01\u76EE\u3001\u95A2\u5C4B\u65B0\u753A\u901A2\u4E01\u76EE\u3001\u95A2\u5C4B\u7530\u753A4\u4E01\u76EE\u3001\u95A2\u5C4B\u672C\u6751\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u95A2\u5C4B\u672C\u6751\u753A2\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/LkHDKneWVFPZXhBz6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3004",
@@ -588,7 +720,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u6D5C\u6D66\u753A1\u20101",
     "area": "\u6C50\u898B\u53F0\u3001\u4FE1\u6FC3\u753A\u3001\u95A2\u5C4B\u306E\u4E00\u90E8\u3001\u95A2\u5C4B\u91D1\u885B\u753A1\uFF5E2\u4E01\u76EE\u3001\u95A2\u5C4B\u662D\u548C\u753A1\u4E01\u76EE\u3001\u95A2\u5C4B\u6D5C\u677E\u753A\u3001\u6D5C\u6D66\u753A1\uFF5E2\u4E01\u76EE\u3001\u6587\u4EAC\u753A",
     "mapUrl": "https://goo.gl/maps/acYtsLv2w6NCHzdL9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3005",
@@ -598,7 +733,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u6709\u660E\u53F04\u20101",
     "area": "\u6709\u660E\u5927\u6A4B\u753A\u3001\u6709\u660E\u53F0\u3001\u95A2\u5357\u753A\u3001\u95A2\u5C4B\u5927\u5DDD\u524D1\uFF5E2\u4E01\u76EE\u3001\u95A2\u5C4B\u6075\u753A\u3001\u5800\u5272\u753A\u3001\u5F25\u751F\u753A",
     "mapUrl": "https://goo.gl/maps/7whjQmnjUqjBzngF9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3006",
@@ -608,7 +746,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u5DDD\u7AEF\u753A1\u20101",
     "area": "\u4E00\u756A\u5800\u901A\u753A\u306E\u4E00\u90E8\u3001\u4E0A\u5927\u5DDD\u524D\u901A1\uFF5E5\u756A\u753A\u3001\u5DDD\u7AEF\u753A1\uFF5E5\u4E01\u76EE\u3001\u897F\u5800\u901A1\uFF5E3\u756A\u753A\u3001\u897F\u5800\u524D\u901A1\uFF5E5\u756A\u753A\u3001\u6771\u5800\u901A1\uFF5E5\u756A\u753A\u3001\u6771\u5800\u524D\u901A1\uFF5E5\u756A\u753A\u3001\u53E4\u753A\u901A1\uFF5E5\u756A\u753A\u3001\u672C\u753A\u901A1\uFF5E5\u756A\u753A\u3001\u6A2A\u4E00\u756A\u753A",
     "mapUrl": "https://goo.gl/maps/XgfPTgBZfoQo2V7j6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3007",
@@ -618,7 +759,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u55B6\u6240\u901A2\u2010592\u201012",
     "area": "\u65ED\u753A\u901A1\uFF5E2\u756A\u753A\u3001\u55B6\u6240\u901A1\uFF5E2\u756A\u753A\u3001\u4E0B\u65ED\u753A\u3001\u6C34\u9053\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6C34\u9053\u753A2\u4E01\u76EE\u3001\u5BFA\u88CF\u901A1\uFF5E2\u756A\u753A\u3001\u897F\u4E2D\u753A\u3001\u897F\u8239\u898B\u753A\u306E\u4E00\u90E8\u3001\u897F\u5800\u901A4\uFF5E5\u756A\u753A\u3001\u897F\u5800\u524D\u901A6\u756A\u753A\u3001\u6771\u4E2D\u901A1\uFF5E2\u756A\u753A\u3001\u53E4\u753A\u901A6\u756A\u753A\u3001\u5357\u6A2A\u5800\u753A\u3001\u5BC4\u5C45\u753A",
     "mapUrl": "https://goo.gl/maps/mikdinh2FZhriVPG9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3008",
@@ -628,7 +772,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u6771\u5927\u7551\u901A1\u2010679",
     "area": "\u5317\u5927\u7551\u753A\u3001\u5317\u6D5C\u901A1\uFF5E2\u756A\u753A\u3001\u7530\u4E2D\u753A\u306E\u4E00\u90E8\u3001\u4E2D\u5927\u7551\u753A\u3001\u897F\u5927\u7551\u753A\u3001\u897F\u5800\u901A6\uFF5E8\u756A\u753A\u3001\u897F\u5800\u524D\u901A7\uFF5E9\u756A\u753A\u3001\u6771\u5800\u901A8\uFF5E9\u756A\u753A\u3001\u6771\u5927\u7551\u901A1\uFF5E2\u756A\u753A\u3001\u4E8C\u8449\u753A1\uFF5E2\u4E01\u76EE\u3001\u53E4\u753A\u901A7\uFF5E9\u756A\u753A\u3001\u5357\u5927\u7551\u753A\u3001\u5357\u6D5C\u901A1\uFF5E2\u756A\u753A",
     "mapUrl": "https://goo.gl/maps/QnH1qBYkpU9ZguZr8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3009",
@@ -638,7 +785,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u790E\u753A\u901A3\u20102086",
     "area": "\u76F8\u751F\u753A\u3001\u790E\u753A\u901A1\uFF5E6\u30CE\u753A\u3001\u790E\u753A\u901A\u4E0A1\u30CE\u753A\u3001\u4E0A\u5927\u5DDD\u524D\u901A6\uFF5E11\u756A\u753A\u3001\u5DDD\u7AEF\u753A6\u4E01\u76EE\u3001\u5317\u591A\u9580\u753A\u3001\u5317\u6BD8\u6C99\u9580\u753A\u3001\u4E0B\u5927\u5DDD\u524D\u901A1\uFF5E7\u30CE\u753A\u3001\u65B0\u5CF6\u753A\u901A1\uFF5E5\u30CE\u753A\u3001\u4F4F\u5409\u753A\u3001\u6708\u753A\u3001\u8C4A\u7167\u753A\u3001\u4E26\u6728\u753A\u3001\u897F\u53A9\u5CF6\u753A\u3001\u82B1\u753A\u3001\u6771\u53A9\u5CF6\u753A\u3001\u6771\u5800\u901A6\uFF5E7\u756A\u753A\u3001\u6771\u5800\u524D\u901A6\uFF5E9\u756A\u753A\u3001\u6771\u6E4A\u753A\u901A1\uFF5E3\u30CE\u753A\u3001\u8239\u5834\u753A1\u4E01\u76EE\u3001\u672C\u753A\u901A6\uFF5E11\u756A\u753A\u3001\u672C\u9593\u753A1\uFF5E2\u4E01\u76EE\u3001\u79E3\u5DDD\u5CB8\u901A1\uFF5E2\u4E01\u76EE\u3001\u898B\u65B9\u753A\u3001\u6E4A\u753A\u901A1\uFF5E2\u30CE\u753A\u3001\u5357\u591A\u9580\u753A\u3001\u5357\u6BD8\u6C99\u9580\u753A\u3001\u96EA\u753A\u3001\u82B3\u753A",
     "mapUrl": "https://goo.gl/maps/LTADrCGKW3VZNXy4A",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3010",
@@ -648,7 +798,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u53E4\u753A\u901A13\u20105148\u20102",
     "area": "\u66D9\u753A\u3001\u4E0A\u5927\u5DDD\u524D\u901A12\u756A\u753A\u3001\u7530\u4E2D\u753A\u306E\u4E00\u90E8\u3001\u897F\u8239\u898B\u753A\u306E\u4E00\u90E8\u3001\u897F\u5800\u901A9\uFF5E11\u756A\u753A\u3001\u897F\u5800\u524D\u901A10\uFF5E11\u756A\u753A\u3001\u6771\u5800\u901A10\uFF5E13\u756A\u753A\u3001\u6771\u5800\u524D\u901A10\uFF5E11\u756A\u753A\u3001\u4E8C\u8449\u753A3\u4E01\u76EE\u3001\u53E4\u753A\u901A10\uFF5E13\u756A\u753A\u3001\u672C\u753A\u901A12\uFF5E13\u756A\u753A\u3001\u5915\u6804\u753A\u3001\u6A2A\u516D\u756A\u753A\u3001\u6A2A\u4E03\u756A\u753A\u901A1\u4E01\u76EE\u3001\u56DB\u30C4\u5C4B\u753A1\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/YTk7sEBBs4e2FN3n7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3011",
@@ -658,7 +811,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u6804\u753A3\u20104213",
     "area": "\u795D\u753A\u3001\u6D6E\u6D32\u753A\u3001\u70CF\u5E3D\u5B50\u753A\u3001\u7FC1\u753A1\uFF5E2\u4E01\u76EE\u3001\u5BC4\u9644\u753A\u3001\u7AAA\u7530\u753A1\uFF5E4\u4E01\u76EE\u3001\u7AAA\u7530\u753A6\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5BFF\u753A1\uFF5E2\u4E01\u76EE\u3001\u6804\u753A1\uFF5E3\u4E01\u76EE\u3001\u83C5\u6839\u753A\u3001\u5BFA\u5C71\u753A\u3001\u897F\u53D7\u5730\u753A\u3001\u897F\u8239\u898B\u753A\u306E\u4E00\u90E8\u3001\u6771\u53D7\u5730\u753A\u3001\u96F2\u96C0\u753A\u3001\u672C\u753A\u901A14\u756A\u753A\u3001\u5143\u795D\u753A\u3001\u6A2A\u4E03\u756A\u753A\u901A2\uFF5E3\u4E01\u76EE\u3001\u56DB\u30C4\u5C4B\u753A2\uFF5E3\u4E01\u76EE\u3001\u5BC4\u5408\u753A",
     "mapUrl": "https://goo.gl/maps/JqdnTB8ZnEbfn2Wc6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3012",
@@ -668,7 +824,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u7A32\u8377\u753A3511-1",
     "area": "\u8D64\u5742\u753A1\uFF5E3\u4E01\u76EE\u3001\u7A32\u8377\u753A\u3001\u5165\u8239\u753A1\uFF5E6\u4E01\u76EE\u3001\u9B41\u753A\u3001\u7530\u753A1\uFF5E3\u4E01\u76EE\u3001\u9644\u8239\u753A1\uFF5E3\u4E01\u76EE\u3001\u897F\u6E4A\u753A\u901A1\uFF5E4\u30CE\u753A\u3001\u8240\u5DDD\u5CB8\u753A\u3001\u65E9\u5DDD\u753A1\uFF5E3\u4E01\u76EE\u3001\u6771\u5165\u8239\u753A\u3001\u6771\u6E4A\u753A\u901A4\u30CE\u753A\u3001\u8239\u5834\u753A2\u4E01\u76EE\u3001\u8239\u898B\u753A1\uFF5E2\u4E01\u76EE\u3001\u672C\u9593\u753A3\u4E01\u76EE\u3001\u677E\u5CA1\u753A\u3001\u7DD1\u753A\u3001\u6E4A\u753A\u901A3\uFF5E4\u30CE\u753A\u3001\u5143\u4E0B\u5CF6\u753A\u3001\u67F3\u5CF6\u753A1\uFF5E4\u4E01\u76EE\u3001\u6A2A\u4E03\u756A\u753A\u901A4\uFF5E5\u4E01\u76EE\u3001\u6D77\u8FBA\u753A1\uFF5E2\u756A\u753A\u3001\u7AAA\u7530\u753A5\u4E01\u76EE\u3001\u7AAA\u7530\u753A6\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7AAA\u7530\u753A7\u4E01\u76EE\u3001\u5FE0\u8535\u753A\u3001\u5BA4\u753A1\uFF5E2\u4E01\u76EE\u3001\u5C71\u7530\u753A1\uFF5E2\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/WRWBaUbVwZdzTZ7s6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3013",
@@ -678,7 +837,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u5E78\u897F4\u20101\u20101",
     "area": "\u6625\u65E5\u753A\u3001\u5E78\u753A\u3001\u5E78\u897F1\uFF5E4\u4E01\u76EE\u3001\u82B1\u57121\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6771\u5927\u901A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6771\u5927\u901A2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5F01\u59291\uFF5E3\u4E01\u76EE\u3001\u6C34\u5CF6\u753A\u3001\u5357\u4E07\u4EE3\u753A\u3001\u516B\u5343\u4EE31\uFF5E2\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/Mnafq2dnzJoapLyEA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3014",
@@ -688,7 +850,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u4E07\u4EE35\u20106\u20101",
     "area": "\u4E09\u548C\u753A\u3001\u6CBC\u5782\u897F2\uFF5E3\u4E01\u76EE\u3001\u4E07\u4EE31\uFF5E5\u4E01\u76EE\u3001\u4E07\u4EE3\u5CF6",
     "mapUrl": "https://goo.gl/maps/ti7PcJmoUJkq7F8GA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3015",
@@ -698,7 +863,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u6771\u4E07\u4EE3\u753A4\u20101",
     "area": "\u84B2\u539F\u753A\u3001\u5929\u660E\u753A\u3001\u6CBC\u5782\u897F1\u4E01\u76EE\u3001\u4E07\u4EE36\u4E01\u76EE\u3001\u6771\u5927\u901A2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6771\u4E07\u4EE3\u753A",
     "mapUrl": "https://goo.gl/maps/5WebQzMQWASGDgWC9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3016",
@@ -708,7 +876,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u660E\u77F32\u20101\u201051",
     "area": "\u660E\u77F31\uFF5E2\u4E01\u76EE\u3001\u9577\u5DBA\u753A\u3001\u82B1\u57121\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u82B1\u57122\u4E01\u76EE\u3001\u6771\u5927\u901A1\u4E01\u76EE\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/WX43rFLr6rSB9XUA8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3017",
@@ -718,7 +889,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u6CBC\u5782\u67714\u20108\u201036",
     "area": "\u6CBC\u5782\u67713\uFF5E6\u4E01\u76EE\u3001\u65E5\u306E\u51FA3\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7ADC\u304C\u5CF61\uFF5E2\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/G9emZ2M39zDwayCVA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3018",
@@ -728,7 +902,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u93E1\u304C\u5CA15\u20105",
     "area": "\u93E1\u304C\u5CA1\u3001\u7D2B\u7AF91\u4E01\u76EE\u3001\u897F\u99AC\u8D8A\u3001\u6CBC\u5782\u67711\uFF5E2\u4E01\u76EE\u3001\u65E5\u306E\u51FA1\uFF5E2\u4E01\u76EE\u3001\u65E5\u306E\u51FA3\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u672C\u99AC\u8D8A1\uFF5E2\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/11HGSBRGLyVhkYjdA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3019",
@@ -738,7 +915,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u7B39\u53E32\u201047",
     "area": "\u7B39\u53E3\u3001\u7B39\u53E31\uFF5E3\u4E01\u76EE\u3001\u5357\u7B39\u53E31\uFF5E2\u4E01\u76EE\u3001\u7C73\u5C711\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/SazA6WQTyqN35yDQA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3020",
@@ -748,7 +928,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u5929\u795E\u5C3E1-4-1",
     "area": "\u5929\u795E1\uFF5E2\u4E01\u76EE\u3001\u5929\u795E\u5C3E1\uFF5E2\u4E01\u76EE\u3001\u82B1\u57121\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7C73\u5C71\u3001\u7C73\u5C712\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/VisyXVPMsCoxn3o66",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3021",
@@ -758,7 +941,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u9419\u897F1\u201011\u20102",
     "area": "\u94191\uFF5E3\u4E01\u76EE\u3001\u9419\u897F1\u4E01\u76EE\u3001\u9419\u897F2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7D2B\u7AF9\u5C711\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7D2B\u7AF9\u5C712\u4E01\u76EE\u3001\u7D2B\u7AF9\u5C713\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7D2B\u7AF9\u5C714\uFF5E5\u4E01\u76EE\u3001\u7C73\u5C713\uFF5E4\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/o4nYPUsATrt6DY679",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3022",
@@ -768,7 +954,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u7D2B\u7AF9\u5C711\u201012\u20101",
     "area": "\u9419\u897F2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u795E\u9053\u5BFA\u3001\u795E\u9053\u5BFA1\uFF5E3\u4E01\u76EE\u3001\u795E\u9053\u5BFA\u53571\uFF5E2\u4E01\u76EE\u3001\u7D2B\u7AF9\u5C711\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7D2B\u7AF9\u5C716\uFF5E7\u4E01\u76EE\u3001\u5800\u4E4B\u5185\u53572\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5973\u6C60\u67711\u4E01\u76EE\u3001\u7C73\u5C715\uFF5E6\u4E01\u76EE\u3001\u548C\u5408\u753A1\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/7QH3Cp6psutx5ZVb6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3023",
@@ -778,7 +967,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u59E5\u30B1\u5C716\u20101\u201021",
     "area": "\u59E5\u30B1\u5C71\u306E\u4E00\u90E8\u3001\u59E5\u30B1\u5C713\uFF5E6\u4E01\u76EE\u3001\u4EAC\u738B1\uFF5E3\u4E01\u76EE\u3001\u9AD8\u5FD71\uFF5E2\u4E01\u76EE\u3001\u5C71\u4E8C\u30C4\u306E\u4E00\u90E8\u3001\u5C71\u4E8C\u30C41\uFF5E5\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/tn2jHznzGW14VDq19",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3024",
@@ -788,7 +980,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u5F01\u5929\u6A4B\u901A3\u20103\u20101",
     "area": "\u59E5\u30B1\u5C71\u306E\u4E00\u90E8\u3001\u59E5\u30B1\u5C711\uFF5E2\u4E01\u76EE\u3001\u6E05\u4E94\u90CE\u3001\u9577\u6F5F\u3001\u9577\u6F5F1\uFF5E3\u4E01\u76EE\u3001\u5F01\u5929\u6A4B\u901A1\uFF5E3\u4E01\u76EE\u3001\u5357\u9577\u6F5F\u3001\u7F8E\u306E\u91CC\u3001\u9418\u6728",
     "mapUrl": "https://goo.gl/maps/ukFsL3iy22ioRWiUA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3025",
@@ -798,7 +993,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u4E0A\u62403\u201014\u20101",
     "area": "\u4E0A\u62401\uFF5E3\u4E01\u76EE\u3001\u4E0A\u6240\u4E2D1\uFF5E3\u4E01\u76EE\u3001\u4E0B\u6240\u5CF61\uFF5E2\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/q3TvZnbsTXTQ9BhG6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3026",
@@ -808,7 +1006,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u8FD1\u6C5F3\u20102\u20101",
     "area": "\u8FD1\u6C5F1\uFF5E3\u4E01\u76EE\u3001\u4E0A\u8FD1\u6C5F1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E0B\u6240\u5CF6\u3001\u65B0\u548C1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u65B0\u548C2\u4E01\u76EE\u3001\u6771\u5E78\u753A\u3001\u5800\u4E4B\u5185\u3001\u5800\u4E4B\u5185\u53571\u4E01\u76EE\u3001\u5800\u4E4B\u5185\u53572\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5800\u4E4B\u5185\u53573\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/rtW3t3dnx6X1tDj46",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3027",
@@ -818,7 +1019,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u5973\u6C60\u4E0A\u5C711\u20101\u201028",
     "area": "\u611B\u5B951\u4E01\u76EE\u3001\u4E0A\u8FD1\u6C5F1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E0A\u8FD1\u6C5F3\uFF5E4\u4E01\u76EE\u3001\u4E0A\u6240\u4E0A1\uFF5E3\u4E01\u76EE\u3001\u65B0\u5149\u753A\u306E\u4E00\u90E8\u3001\u6771\u51FA\u6765\u5CF6\u3001\u5357\u51FA\u6765\u5CF61\u4E01\u76EE\u3001\u5973\u6C60\u4E0A\u5C711\uFF5E2\u30015\u4E01\u76EE\u3001\u5973\u6C60\u53171\u4E01\u76EE\u3001\u5973\u6C60\u795E\u660E2\uFF5E3\u4E01\u76EE\u3001\u5973\u6C60\u897F1\uFF5E2\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/eq1BjuyH5iBXdB6u6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3028",
@@ -828,7 +1032,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u5973\u6C606\u20104\u20101",
     "area": "\u5C0F\u5F35\u67281\uFF5E3\u4E01\u76EE\u3001\u685C\u6728\u753A\u3001\u9CE5\u5C4B\u91CE\u306E\u4E00\u90E8\u3001\u5973\u6C601\u30012\u30015\uFF5E8\u4E01\u76EE\u3001\u5973\u6C60\u795E\u660E1\u4E01\u76EE\u3001\u5973\u6C60\u53571\uFF5E3\u4E01\u76EE\u3001\u548C\u5408\u753A2\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/xg6rwgkMEy8pH2d76",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3029",
@@ -838,7 +1045,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u7F8E\u54B2\u753A2\u20104\u20107",
     "area": "\u611B\u5B952\u4E01\u76EE\u3001\u4E0A\u6CBC\u3001\u5927\u5CF6\u3001\u89AA\u677E\u3001\u6E56\u5357\u3001\u592A\u53F3\u30A8\u9580\u65B0\u7530\u306E\u4E00\u90E8\u3001\u9AD8\u7F8E\u753A\u3001\u9CE5\u5C4B\u91CE\u306E\u4E00\u90E8\u3001\u9CE5\u5C4B\u91CE2\uFF5E4\u4E01\u76EE\u3001\u9CE5\u5C4B\u91CE\u53571\uFF5E3\u4E01\u76EE\u3001\u7F8E\u54B2\u753A2\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/1jaUpGRLmocrAJan8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3030",
@@ -848,7 +1058,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u5973\u6C604\u201031\u20101",
     "area": "\u4E0A\u8FD1\u6C5F2\u4E01\u76EE\u3001\u65B0\u548C1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u65B0\u548C3\uFF5E4\u4E01\u76EE\u3001\u5973\u6C603\uFF5E4\u4E01\u76EE\u3001\u548C\u5408\u753A3\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/vfXfw4qd4aHpZB9a6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "3031",
@@ -858,7 +1071,10 @@ const POLLING_PLACES = [
     "address": "\u4E2D\u592E\u533A\u7DB2\u5DDD\u539F2\u20101\u201015",
     "area": "\u611B\u5B953\u4E01\u76EE\u3001\u7DB2\u5DDD\u539F1\uFF5E2\u4E01\u76EE\u3001\u65B0\u5149\u753A\u306E\u4E00\u90E8\u3001\u51FA\u6765\u5CF61\uFF5E2\u4E01\u76EE\u3001\u9CE5\u5C4B\u91CE1\u4E01\u76EE\u3001\u7F8E\u54B2\u753A1\u4E01\u76EE\u3001\u5357\u51FA\u6765\u5CF62\u4E01\u76EE\u3001\u5973\u6C60\u4E0A\u5C713\uFF5E4\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/DqMKF8h91RSu8y537",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4001",
@@ -868,7 +1084,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u4E80\u7530\u65B0\u660E\u753A2\u20106\u20101",
     "area": "\u4E80\u7530\u65B0\u660E\u753A1\uFF5E3\u4E01\u76EE\u3001\u4E80\u7530\u672C\u753A2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u672C\u753A3\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u672C\u753A4\u4E01\u76EE\u3001\u6771\u672C\u753A4\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6771\u672C\u753A5\u4E01\u76EE\u3001\u8239\u6238\u5C714\u4E01\u76EE\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/tJhzeYfjGauwg12w8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4002",
@@ -878,7 +1097,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u8ACF\u8A2A1\u20106\u201010",
     "area": "\u7A32\u84491\uFF5E3\u4E01\u76EE\u3001\u4E80\u7530\u5411\u967D1\uFF5E4\u4E01\u76EE\u3001\u4E80\u7530\u6C34\u9053\u753A1\u4E01\u76EE\u3001\u4E80\u7530\u6C34\u9053\u753A2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u8ACF\u8A2A1\uFF5E3\u4E01\u76EE\u3001\u6771\u672C\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6771\u672C\u753A3\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6771\u672C\u753A4\u4E01\u76EE\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/ZmW3jieeJUH7WZRY8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4003",
@@ -888,7 +1110,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u8239\u6238\u5C715\u20107\u20102",
     "area": "\u837B\u66FD\u6839\u306E\u4E00\u90E8\u3001\u6885\u898B\u53F01\uFF5E3\u4E01\u76EE\u3001\u837B\u66FD\u6839\u3001\u837B\u66FD\u68391\uFF5E4\u4E01\u76EE\u3001\u837B\u66FD\u68395\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u7DD1\u753A4\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u672C\u753A2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u672C\u753A3\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u57CE\u62402\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u8305\u91CE\u5C711\uFF5E3\u4E01\u76EE\u3001\u624B\u4EE3\u5C711\uFF5E2\u4E01\u76EE\u3001\u65E5\u6C341\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u65E5\u6C342\u30013\u4E01\u76EE\u3001\u8239\u6238\u5C711\u4E01\u76EE\u3001\u8239\u6238\u5C712\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u8239\u6238\u5C713\u4E01\u76EE\u3001\u8239\u6238\u5C714\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u8239\u6238\u5C715\u4E01\u76EE\u3001\u5143\u753A2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5143\u753A3\uFF5E5\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/PYwPMwmTqsaBKipS9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4004",
@@ -898,7 +1123,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u4E80\u7530\u6771\u753A3\u20105\u201015",
     "area": "\u66D9\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u6771\u753A1\uFF5E4\u4E01\u76EE\u3001\u4E80\u7530\u6C34\u9053\u753A2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u6C34\u9053\u753A3\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u6C34\u9053\u753A4\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6240\u5CF61\uFF5E2\u4E01\u76EE\u3001\u888B\u6D251\uFF5E4\u4E01\u76EE\u3001\u888B\u6D255\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u888B\u6D256\u4E01\u76EE\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/H74Mj43DRuwq8mMh6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4005",
@@ -908,7 +1136,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u57CE\u5C711\u20103\u20105",
     "area": "\u57CE\u6240\u3001\u4E80\u7530\u65B0\u660E\u753A4\u30015\u4E01\u76EE\u3001\u57CE\u62401\u4E01\u76EE\u3001\u57CE\u62402\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u57CE\u5C711\uFF5E4\u4E01\u76EE\u3001\u65E5\u6C341\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5143\u753A1\u4E01\u76EE\u3001\u5143\u753A2\u4E01\u76EE\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/NSyHpFMAsXvchW9W8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4006",
@@ -918,7 +1149,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u65E9\u901A5-7-2",
     "area": "\u4E0B\u65E9\u901A1\u30012\u30013\u4E01\u76EE\u3001\u9577\u6F5F1\u4E01\u76EE\u3001\u4E80\u7530\u65E9\u901A1\uFF5E6\u4E01\u76EE\u3001\u6771\u65E9\u901A2\u4E01\u76EE\u3001\u4E38\u6F5F1\u4E01\u76EE\u3001\u4E0B\u65E9\u901A\u67F3\u75301\uFF5E2\u4E01\u76EE",
     "mapUrl": "https://maps.app.goo.gl/npkJtEedfzV7J92d9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4007",
@@ -928,7 +1162,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u897F\u753A4\u20106\u201024",
     "area": "\u65ED1\uFF5E4\u4E01\u76EE\u3001\u4E80\u7530\u5927\u67081\u4E01\u76EE\u3001\u4E80\u7530\u672C\u753A1\u4E01\u76EE\u3001\u4E80\u7530\u672C\u753A2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u897F\u753A1\uFF5E6\u4E01\u76EE\u3001\u6771\u8239\u58341\uFF5E5\u4E01\u76EE\u3001\u6771\u672C\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6771\u672C\u753A2\u4E01\u76EE\u3001\u6771\u672C\u753A3\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u8239\u6238\u5C712\u4E01\u76EE\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/Roe1GXK7RCxf8fKr7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4008",
@@ -938,7 +1175,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u4E80\u7530\u6C34\u9053\u753A3-2-45",
     "area": "\u7802\u5D29\u3001\u888B\u6D25\u306E\u4E00\u90E8\u3001\u4E80\u7530\u6C34\u9053\u753A3\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u6C34\u9053\u753A4\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u6C34\u9053\u753A5\u4E01\u76EE\u3001\u4E09\u689D\u5CA11\u30012\u4E01\u76EE\u3001\u7802\u5CA11\u4E01\u76EE\u3001\u7802\u5CA12\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7802\u5CA13\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7802\u5CA14\u4E01\u76EE\u3001\u7802\u5C711\u30012\u4E01\u76EE\u3001\u888B\u6D256\u4E01\u76EE\u306E\u4E00\u90E8",
     "mapUrl": "https://maps.app.goo.gl/xq73HsHg1F2WJQxK7",
-    "updateInfo": "\u6295\u7968\u6240\u3092\u4E80\u7530\u6771\u5150\u7AE5\u9928\u304B\u3089\u4E80\u7530\u6771\u5C0F\u5B66\u6821\u3078\u5909\u66F4"
+    "updateInfo": "\u6295\u7968\u6240\u3092\u4E80\u7530\u6771\u5150\u7AE5\u9928\u304B\u3089\u4E80\u7530\u6771\u5C0F\u5B66\u6821\u3078\u5909\u66F4",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4009",
@@ -948,7 +1188,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u4E80\u7530\u4E2D\u5CF62\u20104\u201014",
     "area": "\u4E80\u7530\u5927\u67082\u30013\u4E01\u76EE\u3001\u4E80\u7530\u4E2D\u5CF61\uFF5E4\u4E01\u76EE\u3001\u5C71\u4E8C\u30C4\u306E\u4E00\u90E8\u3001\u4E80\u7530\u3001\u4E80\u7530\u30CE\u5185\u9AD8\u5C71",
     "mapUrl": "https://goo.gl/maps/tZRtNKBMTsfmQ9c99",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4010",
@@ -958,7 +1201,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u6CC9\u753A3\u20104\u20105",
     "area": "\u6CC9\u753A1\uFF5E5\u4E01\u76EE\u3001\u9D5C\u30CE\u5B501\uFF5E4\u4E01\u76EE\u3001\u837B\u66FD\u6839\u306E\u4E00\u90E8\u3001\u837B\u66FD\u68395\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u7DD1\u753A1\uFF5E3\u4E01\u76EE\u3001\u4E80\u7530\u7DD1\u753A4\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u56DB\u30C4\u8208\u91CE1\uFF5E5\u4E01\u76EE\u3001\u4E94\u6708\u753A1\uFF5E3\u4E01\u76EE\u3001\u65E9\u82D71\uFF5E2\u4E01\u76EE\u3001\u8239\u6238\u5C71",
     "mapUrl": "https://goo.gl/maps/Du5QVGbd3dEHqSjB6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4011",
@@ -968,7 +1214,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u66D9\u753A3-15-13",
     "area": "\u888B\u6D25\u306E\u4E00\u90E8\u3001\u66D9\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u66D9\u753A2\uFF5E5\u4E01\u76EE\u3001\u7802\u5CA12\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7802\u5CA13\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7802\u5CA15\u4E01\u76EE\u3001\u888B\u6D255\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u888B\u6D256\u4E01\u76EE\u306E\u4E00\u90E8",
     "mapUrl": "https://maps.app.goo.gl/umfYJ4Xsn4AK4SK68",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4012",
@@ -978,7 +1227,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u6A2A\u8D8A\u4E2D\u592E1\u20101\u20101",
     "area": "\u3044\u3076\u304D\u91CE1\uFF5E2\u4E01\u76EE\u3001\u6A2A\u8D8A\u3001\u6A2A\u8D8A\u4E0A\u753A1\uFF5E5\u4E01\u76EE\u3001\u6A2A\u8D8A\u4E2D\u592E1\uFF5E8\u4E01\u76EE\u3001\u6A2A\u8D8A\u6771\u753A1\uFF5E2\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/WMPii67RkgxYc5wu9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4013",
@@ -988,7 +1240,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u6CA2\u6D773\u20101\u201030",
     "area": "\u6CA2\u6D771\uFF5E3\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/PG9iQT8TCQ4xHVKT6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4014",
@@ -998,7 +1253,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u6728\u6D252\u20103\u201028",
     "area": "\u6728\u6D251\uFF5E5\u4E01\u76EE\u3001\u6728\u6D25\u5DE5\u696D\u56E3\u5730",
     "mapUrl": "https://goo.gl/maps/zxr2HvchprrvvoMU6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4015",
@@ -1008,7 +1266,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u4E8C\u672C\u67283\u20102\u201050",
     "area": "\u4E8C\u672C\u67281\uFF5E5\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/tpZoKajAcCLcDU3u8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4016",
@@ -1018,7 +1279,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u5C0F\u67493\u201011\u201026",
     "area": "\u5C0F\u67491\uFF5E5\u4E01\u76EE\u3001\u5E73\u5C71",
     "mapUrl": "https://goo.gl/maps/m3xu6LRPEgYZbZW4A",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4017",
@@ -1028,7 +1292,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u85E4\u5C711\u20106\u201028",
     "area": "\u3046\u3050\u3044\u30591\uFF5E2\u4E01\u76EE\u3001\u99D2\u8FBC1\uFF5E2\u4E01\u76EE\u3001\u85E4\u5C711\uFF5E2\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/RtDZiJ4ajZaA6Tfn9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4018",
@@ -1038,7 +1305,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u963F\u8CC0\u91CE2\u20101\u201020",
     "area": "\u963F\u8CC0\u91CE1\uFF5E2\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/FesEnZWztaXRDzTr7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4019",
@@ -1048,7 +1318,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u6A2A\u8D8A\u5DDD\u6839\u753A2\u201020\u20101",
     "area": "\u831C\u30B1\u4E18\u3001\u6A2A\u8D8A\u5DDD\u6839\u753A1\uFF5E5\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/3mSjv6sJWVEdfGhn6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4020",
@@ -1058,7 +1331,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u7D30\u5C71401",
     "area": "\u8535\u5CA1\u3001\u7B39\u5C71\u3001\u76F4\u308A\u5C71\u3001\u897F\u5C71\u3001\u7D30\u5C71\u3001\u677E\u5C71",
     "mapUrl": "https://goo.gl/maps/iBjAHAZBHUVEoipD7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4021",
@@ -1068,7 +1344,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u4E38\u5C71300",
     "area": "\u5317\u5C71\u3001\u4E38\u5C71\u3001\u4E38\u5C71\u30CE\u5185\u5584\u4E4B\u4E1E\u7D44\u3001\u8317\u8377\u8C37",
     "mapUrl": "https://goo.gl/maps/XAnw8Dkdwh1uMEfB8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4022",
@@ -1078,7 +1357,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u5927\u6E151760\u20101",
     "area": "\u6C5F\u53E3\u3001\u5927\u6E15\u3001\u4E09\u767E\u5730\u3001\u897F\u91CE",
     "mapUrl": "https://goo.gl/maps/zRgLM4U6yptKqacx6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4023",
@@ -1088,7 +1370,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u5929\u91CE2\u20107\u20102",
     "area": "\u5929\u91CE\u3001\u5929\u91CE1\uFF5E3\u4E01\u76EE\u3001\u5609\u6728\u3001\u695A\u5DDD\u3001\u66FD\u5DDD\u3001\u4FF5\u67F3\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/WUBLCvmvTD56xXUYA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4024",
@@ -1098,7 +1383,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u934B\u6F5F\u65B0\u7530275",
     "area": "\u934B\u6F5F\u65B0\u7530\u3001\u4E38\u6F5F\u65B0\u7530",
     "mapUrl": "https://goo.gl/maps/tPWTyTyDKXgVofZW7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4025",
@@ -1108,7 +1396,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u9152\u5C4B\u753A821\u20108",
     "area": "\u5609\u702C\u3001\u4E0A\u548C\u7530\u3001\u9152\u5C4B\u753A\u3001\u82B1\u30CE\u7267\u3001\u4E21\u5DDD1\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/56KghZz3RpyccDky9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4026",
@@ -1118,7 +1409,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u5272\u91CE684",
     "area": "\u4E21\u5DDD2\u4E01\u76EE\u3001\u5272\u91CE",
     "mapUrl": "https://goo.gl/maps/k9vTfybwDuKYvySy7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4027",
@@ -1128,7 +1422,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u548C\u75301482",
     "area": "\u5E73\u8CC0\u3001\u821E\u6F5F\u3001\u548C\u7530",
     "mapUrl": "https://goo.gl/maps/WPoQSheL7b5WYfbV9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "4028",
@@ -1138,7 +1435,10 @@ const POLLING_PLACES = [
     "address": "\u6C5F\u5357\u533A\u66FD\u91CE\u67281-21-8",
     "area": "\u7956\u7236\u8208\u91CE\u3001\u4E45\u8535\u8208\u91CE\u3001\u9418\u6728\u3001\u66FD\u91CE\u67281\uFF5E2\u4E01\u76EE\u3001\u592A\u53F3\u30A8\u9580\u65B0\u7530\u306E\u4E00\u90E8\u3001\u4FF5\u67F3\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/X2zMFuAMvbbx7GbTA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5001",
@@ -1148,7 +1448,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u65B0\u6D25\u672C\u753A4\u20104\u20103",
     "area": "\u5584\u9053\u753A1\u30012\u4E01\u76EE\u3001\u7530\u5BB61\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E2D\u6CA2\u753A\u3001\u65B0\u6D25\u672C\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u65B0\u6D25\u672C\u753A2\uFF5E4\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/WHBorwT1b7ngYuE97",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5002",
@@ -1158,7 +1461,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u5317\u4E0A3\u201013\u201011",
     "area": "\u5317\u4E0A1\u4E01\u76EE\u3001\u5317\u4E0A2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5317\u4E0A3\u4E01\u76EE\u3001\u4E0B\u8208\u91CE\u753A",
     "mapUrl": "https://goo.gl/maps/Vax2Ak1fMUifSv8cA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5003",
@@ -1168,7 +1474,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u5C71\u8C37\u753A3\u20104785",
     "area": "\u5927\u9E7F\u306E\u4E00\u90E8\u3001\u53E4\u7530\u3001\u53E4\u75301\uFF5E2\u4E01\u76EE\u3001\u53E4\u75303\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u53E4\u75304\u4E01\u76EE\u3001\u7F8E\u5E78\u753A1\uFF5E3\u4E01\u76EE\u3001\u7F8E\u55841\u30012\u4E01\u76EE\u3001\u5C71\u8C37\u753A1\uFF5E3\u4E01\u76EE\u3001\u65B0\u6D25\u672C\u753A1\u4E01\u76EE\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/Pc9PeyFanR9H2Mbo9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5004",
@@ -1178,7 +1487,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u7A0B\u5CF62009",
     "area": "\u671D\u65E5\u306E\u4E00\u90E8\u3001\u65B0\u6804\u753A\u3001\u7530\u5BB62\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E2D\u6751\u3001\u65B0\u6D25\u3001\u65B0\u6D25\u7DD1\u753A\u3001\u897F\u5CF6\u3001\u897F\u53E4\u6D25\u306E\u4E00\u90E8\u3001\u6771\u5CF6\u306E\u4E00\u90E8\u3001\u7A0B\u5CF6\u3001\u5357\u753A",
     "mapUrl": "https://goo.gl/maps/tt4JJu87KzHhYHTZ9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5005",
@@ -1188,7 +1500,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u7530\u5BB63\u20101",
     "area": "\u7530\u5BB6\u3001\u7530\u5BB61\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7530\u5BB62\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7530\u5BB63\u4E01\u76EE\u3001\u5409\u5CA1\u753A",
     "mapUrl": "https://goo.gl/maps/TFz99QaocHGZJtbT6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5006",
@@ -1198,7 +1513,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u8349\u6C34\u753A3\u20105\u20101",
     "area": "\u8349\u6C34\u753A1\uFF5E3\u4E01\u76EE\u3001\u5C0F\u53E3\u306E\u4E00\u90E8\u3001\u6EDD\u8C37\u753A\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/ygWEArJajiLBrNcw8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5007",
@@ -1208,7 +1526,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u67C4\u76EE\u6728309\u20104",
     "area": "\u98EF\u67F3\u3001\u67C4\u76EE\u6728\u3001\u6EDD\u8C37\u753A\u306E\u4E00\u90E8\u3001\u79CB\u84492\u4E01\u76EE\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/JaxKuZzPtoDhG2NP8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5008",
@@ -1218,7 +1539,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u5927\u5B89\u5BFA318\u20102",
     "area": "\u5927\u5B89\u5BFA\u3001\u4E2D\u65B0\u7530\u3001\u6771\u91D1\u6CA2\u3001\u516D\u90F7\u306E\u4E00\u90E8\u3001\u91D1\u5C4B\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/uaXV3WbzqRRvSZdE6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5009",
@@ -1228,7 +1552,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u4E03\u65E5\u753A17\u2010\u4E59",
     "area": "\u5927\u8535\u3001\u4E03\u65E5\u753A\u3001\u6E80\u9858\u5BFA\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/Db8WYui4wWg5TmWr7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5010",
@@ -1238,7 +1565,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u7D50160\u20103",
     "area": "\u837B\u5CF61\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u837B\u5CF62\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7530\u5CF6\u306E\u4E00\u90E8\u3001\u798F\u5CF6\u3001\u7D50\u3001\u307F\u305D\u3089\u91CE1\uFF5E3\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/YvRn3MD6TMwafCBdA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5011",
@@ -1248,7 +1578,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u4E2D\u91CE3\u201020\u20107",
     "area": "\u837B\u5CF61\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u837B\u5CF62\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u837B\u5CF63\u4E01\u76EE\u3001\u8ECA\u58341\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u8ECA\u58342\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E2D\u91CE1\uFF5E3\u4E01\u76EE\u3001\u7530\u5CF6\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/BXSkYcB4aSqnAwtL7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5012",
@@ -1258,7 +1591,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u5E02\u4E4B\u702C452",
     "area": "\u5E02\u4E4B\u702C\u3001\u899A\u8DEF\u6D25\u306E\u4E00\u90E8\u3001\u8ECA\u58341\u4E01\u76EE\u306E\u4E00\u90E8",
     "mapUrl": "https://maps.app.goo.gl/upkcKXyb1tPiqMG37",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5013",
@@ -1268,7 +1604,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u51FA\u6238180",
     "area": "\u6D66\u8208\u91CE\u3001\u5DDD\u6839\u3001\u5B50\u6210\u5834\u3001\u51FA\u6238\u3001\u65B0\u6D25\u56DB\u30C4\u8208\u91CE\u3001\u8568\u66FD\u6839\u3001\u5927\u79CB\u3001\u6885\u30CE\u6728\u3001\u5C0F\u5C4B\u5834\u3001\u5C0F\u6238\u4E0B\u7D44\u306E\u4E00\u90E8\u3001\u899A\u8DEF\u6D25\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/FuoQVTT41fANpysC8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5014",
@@ -1278,7 +1617,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u5C0F\u6238\u4E0A\u7D44234",
     "area": "\u5927\u9E7F\u306E\u4E00\u90E8\u3001\u6817\u5BAE\u3001\u53E4\u75303\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5C0F\u6238\u4E0A\u7D44\u3001\u5C0F\u6238\u4E0B\u7D44\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/rKcrsu1GQncvPPfq9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5015",
@@ -1288,7 +1630,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u53E4\u6D25597",
     "area": "\u671D\u65E5\u306E\u4E00\u90E8\u3001\u91D1\u6D25\u306E\u4E00\u90E8\u3001\u84B2\u30B1\u6CA2\u3001\u897F\u53E4\u6D25\u306E\u4E00\u90E8\u3001\u6771\u5CF6\u306E\u4E00\u90E8\u3001\u53E4\u6D25\u3001\u5272\u753A\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/UxPADxgGJbiRirq4A",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5016",
@@ -1298,7 +1643,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u91D1\u6D25618-2",
     "area": "\u91D1\u6D25\u306E\u4E00\u90E8\u3001\u5869\u8C37\u3001\u5272\u753A\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/FvB73QpCL3KcMLBy9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5017",
@@ -1308,7 +1656,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u5C0F\u53E31013",
     "area": "\u5C0F\u53E3\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/5wdbMqdBKxk4cFrE8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5018",
@@ -1318,7 +1669,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u4E0B\u65B0364\u20101",
     "area": "\u5B89\u90E8\u65B0\u3001\u4E0B\u65B0\u3001\u5E02\u65B0\u3001\u65B0\u90F7\u5C4B\u3001\u91D1\u5C4B\u306E\u4E00\u90E8\u3001\u7FBD\u4E0B\u3001\u5317\u3001\u5927\u95A2\u3001\u5CA1\u7530\u3001\u5C0F\u53E3\u306E\u4E00\u90E8\u3001\u516D\u90F7\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/FJDCE9NazVjJ1sG88",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5019",
@@ -1328,7 +1682,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u79CB\u84491\u201017\u20103",
     "area": "\u79CB\u84491\u4E01\u76EE\u3001\u79CB\u84492\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u79CB\u84493\u4E01\u76EE\u3001\u6EDD\u8C37\u753A\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/9UWF9ySQFgH4iCtw9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5020",
@@ -1338,7 +1695,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u65B0\u753A2\u20103\u20103",
     "area": "\u79CB\u84492\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u91D1\u6CA2\u753A1\uFF5E4\u4E01\u76EE\u3001\u65B0\u753A1\uFF5E3\u4E01\u76EE\u3001\u6EDD\u8C37\u672C\u753A\u3001\u65E5\u5B9D\u753A",
     "mapUrl": "https://goo.gl/maps/kcKca6ppHBbABRfx9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5021",
@@ -1348,7 +1708,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u65B0\u6D25\u6771\u753A2-5-6",
     "area": "\u65B0\u91D1\u6CA2\u753A\u3001\u65B0\u6D25\u6771\u753A1\uFF5E3\u4E01\u76EE\u3001\u897F\u91D1\u6CA2\u3001\u6E80\u9858\u5BFA\u306E\u4E00\u90E8",
     "mapUrl": "https://maps.app.goo.gl/6NxYs4BERuW46mWa6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5022",
@@ -1358,7 +1721,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u8ECA\u5834922\u20101",
     "area": "\u3042\u304A\u3070\u901A1\uFF5E2\u4E01\u76EE\u3001\u837B\u91CE\u753A\u3001\u3053\u304C\u306D\u753A\u3001\u8ECA\u5834\u3001\u8ECA\u58341\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u8ECA\u58342\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u8ECA\u58343\uFF5E5\u4E01\u76EE\u3001\u4E2D\u91CE4\uFF5E5\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/GLvdi5V9hMzQLEFs6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5023",
@@ -1368,7 +1734,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u5DDD\u53E3392\u20105",
     "area": "\u5DDD\u53E3\u3001\u5317\u6F5F\u3001\u5317\u4E0A\u3001\u5317\u4E0A2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5317\u4E0A\u65B0\u7530\u3001\u53E4\u7530\u30CE\u5185\u5927\u91CE\u958B\u3001\u3055\u3064\u304D\u91CE1\uFF5E4\u4E01\u76EE\u3001\u6E80\u9858\u5BFA\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/Mim5CiHDZcwK5K6s8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5024",
@@ -1378,7 +1747,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u5C0F\u9808\u6238120\u20101",
     "area": "\u5C0F\u9808\u6238\u3001\u65B0\u4FDD\u3001\u6A2A\u5DDD\u6D5C\u306E\u4E00\u90E8\u3001\u7ADC\u7384",
     "mapUrl": "https://goo.gl/maps/i8JYFAmv48RentCy6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5025",
@@ -1388,7 +1760,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u5C0F\u54111744",
     "area": "\u5C0F\u5411\u3001\u6C34\u7530\u3001\u6A2A\u5DDD\u6D5C\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/Wx35ufPzhWh9nDLb6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "5026",
@@ -1398,7 +1773,10 @@ const POLLING_PLACES = [
     "address": "\u79CB\u8449\u533A\u77E2\u4EE3\u753035",
     "area": "\u5929\u30F6\u6CA2\u3001\u938C\u5009\u3001\u821F\u62381\uFF5E2\u4E01\u76EE\u3001\u677E\u30F6\u4E181\u4E01\u76EE\u3001\u77E2\u4EE3\u7530",
     "mapUrl": "https://goo.gl/maps/PY2Vy8UaYZswNy1u6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "6001",
@@ -1408,7 +1786,10 @@ const POLLING_PLACES = [
     "address": "\u5357\u533A\u767D\u68391364-12",
     "area": "\u4E0A\u4E0B\u8ACF\u8A2A\u6728\u306E\u4E00\u90E8\u3001\u767D\u6839\u306E\u4E00\u90E8\u3001\u767D\u6839\u9B5A\u753A\u3001\u80FD\u767B\u306E\u4E00\u90E8\u3001\u80FD\u767B1\uFF5E2\u4E01\u76EE\u3001\u5341\u4E94\u9593\u3001\u5C0F\u5742\u3001\u9BF5\u6F5F\u306E\u4E00\u90E8\u3001\u9BF5\u6F5F1\u4E01\u76EE\u3001\u4E03\u8ED2\u306E\u4E00\u90E8\u3001\u4E03\u8ED2\u753A\u3001\u767D\u6839\u56DB\u30C4\u8208\u91CE\u3001\u795E\u5C4B\u306E\u4E00\u90E8\u3001\u4FDD\u5742\u3001\u767D\u6839\u30CE\u5185\u4E03\u8ED2\u306E\u4E00\u90E8\u3001\u52A9\u6B21\u53F3\u30A8\u9580\u7D44\u306E\u4E00\u90E8",
     "mapUrl": "https://maps.app.goo.gl/cFUiUfcdgEBvcRpm8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "6002",
@@ -1418,7 +1799,10 @@ const POLLING_PLACES = [
     "address": "\u5357\u533A\u767D\u6839\u6C34\u9053\u753A10\u201035",
     "area": "\u4E0A\u4E0B\u8ACF\u8A2A\u6728\u306E\u4E00\u90E8\u3001\u767D\u6839\u306E\u4E00\u90E8\u3001\u767D\u6839\u6C34\u9053\u753A\u3001\u767D\u6839\u30CE\u5185\u4E03\u8ED2\u306E\u4E00\u90E8\u3001\u767D\u6839\u65E5\u306E\u51FA\u753A\u3001\u7530\u4E2D\u3001\u6238\u982D\u306E\u4E00\u90E8\u3001\u80FD\u767B\u306E\u4E00\u90E8\u3001\u5E73\u6210\u753A\u3001\u52A9\u6B21\u53F3\u30A8\u9580\u7D44\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/SyC8nYEUYSA8NXbQ7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "6003",
@@ -1428,7 +1812,10 @@ const POLLING_PLACES = [
     "address": "\u5357\u533A\u8328\u66FD\u68391432\u20101",
     "area": "\u8328\u66FD\u6839\u306E\u4E00\u90E8\u3001\u6E05\u6C34\u3001\u6771\u8431\u5834",
     "mapUrl": "https://goo.gl/maps/RTaDWTmHMZBw3wzJ9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "6004",
@@ -1438,7 +1825,10 @@ const POLLING_PLACES = [
     "address": "\u5357\u533A\u65B0\u98EF\u75301261\u20101",
     "area": "\u4E0A\u65B0\u7530\u3001\u65B0\u98EF\u7530",
     "mapUrl": "https://goo.gl/maps/3McE43ccMVqHLmcv7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "6005",
@@ -1448,7 +1838,10 @@ const POLLING_PLACES = [
     "address": "\u5357\u533A\u83F1\u6F5F\u65B0\u7530193",
     "area": "\u8328\u66FD\u6839\u306E\u4E00\u90E8\u3001\u514E\u65B0\u7530\u3001\u725B\u5D0E\u3001\u5E84\u702C\u3001\u83F1\u6F5F\u3001\u98EF\u5CF6\u3001\u6C96\u65B0\u4FDD\u3001\u83F1\u6F5F\u65B0\u7530\u3001\u53E4\u5DDD\u65B0\u7530\u3001\u771F\u6728\u3001\u4E0A\u9053\u6F5F\u3001\u4E0B\u9053\u6F5F\u306E\u4E00\u90E8\u3001\u92F3\u7269\u5E2B\u8208\u91CE\u3001\u8718\u624B\u8208\u91CE\u3001\u5341\u4E8C\u9053\u5CF6\u3001\u6B21\u90CE\u53F3\u30A8\u9580\u8208\u91CE\u3001\u4E0A\u516B\u679A\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/Sz6344bkEP46hC3i8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "6006",
@@ -1458,7 +1851,10 @@ const POLLING_PLACES = [
     "address": "\u5357\u533A\u4E0B\u6728\u5C71613",
     "area": "\u6D66\u68A8\u3001\u4E0A\u6728\u5C71\u3001\u4E0B\u6728\u5C71\u3001\u6ADB\u7B25\u3001\u4E0A\u516B\u679A\u306E\u4E00\u90E8\u3001\u4E0B\u9053\u6F5F\u306E\u4E00\u90E8\u3001\u548C\u6CC9\u3001\u8535\u4E3B\u3001\u7530\u5C3E\u3001\u934B\u6F5F\u3001\u5E73\u6F5F\u3001\u5E73\u6F5F\u65B0\u7530\u3001\u4E07\u5E74",
     "mapUrl": "https://goo.gl/maps/VCAkgToDNbx3d8LZA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "6007",
@@ -1468,7 +1864,10 @@ const POLLING_PLACES = [
     "address": "\u5357\u533A\u767D\u68391235",
     "area": "\u4E0A\u4E0B\u8ACF\u8A2A\u6728\u306E\u4E00\u90E8\u3001\u767D\u6839\u306E\u4E00\u90E8\u3001\u767D\u6839\u30CE\u5185\u4E03\u8ED2\u306E\u4E00\u90E8\u3001\u52A9\u6B21\u53F3\u30A8\u9580\u7D44\u306E\u4E00\u90E8\u3001\u6238\u982D\u306E\u4E00\u90E8\u3001\u89AA\u548C\u753A\u3001\u80FD\u767B\u306E\u4E00\u90E8\u3001 \u9BF5\u6F5F\u306E\u4E00\u90E8\u3001\u5C0F\u8535\u5B50\u306E\u4E00\u90E8\u3001\u4E03\u8ED2\u306E\u4E00\u90E8\u3001\u767D\u6839\u6771\u753A1\u4E01\u76EE\u3001\u767D\u6839\u53E4\u5DDD\u3001\u6749\u83DC\u3001\u795E\u5C4B\u306E\u4E00\u90E8",
     "mapUrl": "https://maps.app.goo.gl/ekN6imfigvg3wvLdA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "6008",
@@ -1478,7 +1877,10 @@ const POLLING_PLACES = [
     "address": "\u5357\u533A\u6238\u77F345\u20102",
     "area": "\u4E0A\u6D66\u3001\u4E0A\u516B\u679A\u306E\u4E00\u90E8\u3001\u4E0B\u516B\u679A\u3001\u65B0\u751F\u753A1\uFF5E3\u4E01\u76EE\u3001\u6238\u77F3\u3001\u4E2D\u5C0F\u898B",
     "mapUrl": "https://goo.gl/maps/wfFUWRhRNT8Szu3m7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "6009",
@@ -1488,7 +1890,10 @@ const POLLING_PLACES = [
     "address": "\u5357\u533A\u81FC\u4E951193\u20101",
     "area": "\u8D64\u6E0B\u3001\u671D\u6372\u3001\u81FC\u4E95\u3001\u5C0F\u8535\u5B50\u306E\u4E00\u90E8\u3001\u4E2D\u5C71\u3001\u897F\u7B20\u5DFB\u3001\u5800\u639B\u3001\u5F15\u8D8A\u3001\u5927\u90F7\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/KA2JafV43KGgwpyz5",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "6010",
@@ -1498,7 +1903,10 @@ const POLLING_PLACES = [
     "address": "\u5357\u533A\u72AC\u5E30\u65B0\u7530751\u20106",
     "area": "\u72AC\u5E30\u65B0\u7530\u3001\u5927\u90F7\u306E\u4E00\u90E8\u3001\u897F\u9152\u5C4B\u3001\u6771\u7B20\u5DFB\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/66FdVuiU7sF2S7cv7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "6011",
@@ -1508,7 +1916,10 @@ const POLLING_PLACES = [
     "address": "\u5357\u533A\u6771\u7B20\u5DFB\u65B0\u7530270\u20102",
     "area": "\u897F\u7B20\u5DFB\u65B0\u7530\u3001\u6771\u7B20\u5DFB\u306E\u4E00\u90E8\u3001\u6771\u7B20\u5DFB\u65B0\u7530\u3001\u9DF2\u30CE\u6728\u65B0\u7530\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/e9NbNHarhgLS2SJT6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "6012",
@@ -1518,7 +1929,10 @@ const POLLING_PLACES = [
     "address": "\u5357\u533A\u9DF2\u30CE\u6728\u65B0\u7530973",
     "area": "\u737A\u30F6\u901A\u3001\u6771\u7B20\u5DFB\u306E\u4E00\u90E8\u3001\u9DF2\u30CE\u6728\u65B0\u7530\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/UQDNwiLRVt87DiPm8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "6013",
@@ -1528,7 +1942,10 @@ const POLLING_PLACES = [
     "address": "\u5357\u533A\u5C71\u5D0E\u8208\u91CE2288",
     "area": "\u4E0A\u5869\u4FF5\u306E\u4E00\u90E8\u3001\u5317\u7530\u4E2D\u3001\u4E0B\u5869\u4FF5\u3001\u4E0B\u5C71\u5D0E\u3001\u65B0\u5C71\u5D0E\u753A1\uFF5E3\u4E01\u76EE\u3001\u9AD8\u4E95\u8208\u91CE\u3001\u9AD8\u4E95\u67711\uFF5E3\u4E01\u76EE\u3001\u4E2D\u5869\u4FF5\u3001\u6839\u5CB8\u3001\u677E\u6A4B\u3001\u5C71\u5D0E\u8208\u91CE",
     "mapUrl": "https://goo.gl/maps/cUhCjwG2wfKThfbH8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "6014",
@@ -1538,7 +1955,10 @@ const POLLING_PLACES = [
     "address": "\u5357\u533A\u9DF2\u30CE\u6728\u65B0\u75305681",
     "area": "\u5927\u901A1\uFF5E2\u4E01\u76EE\u3001\u5927\u901A\u897F\u3001\u9DF2\u30CE\u6728\u65B0\u7530\u306E\u4E00\u90E8\u3001\u5927\u901A\u53576\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/6c5b9Gcj6bZnkC3t8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "6015",
@@ -1548,7 +1968,10 @@ const POLLING_PLACES = [
     "address": "\u5357\u533A\u5927\u901A\u53574\u2010105",
     "area": "\u5927\u901A\u9EC4\u91D11\uFF5E7\u4E01\u76EE\u3001\u5927\u901A\u53571\uFF5E5\u4E01\u76EE\u3001\u4E0A\u5869\u4FF5\u306E\u4E00\u90E8\u3001\u9DF2\u30CE\u6728\u65B0\u7530\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/595mRxzoocPUkU5JA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "6016",
@@ -1558,7 +1981,10 @@ const POLLING_PLACES = [
     "address": "\u5357\u533A\u5473\u65B91544",
     "area": "\u5473\u65B9",
     "mapUrl": "https://goo.gl/maps/rg1Qhk2p2hEmAeEG9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "6017",
@@ -1568,7 +1994,10 @@ const POLLING_PLACES = [
     "address": "\u5357\u533A\u897F\u767D\u68391563\u20101",
     "area": "\u897F\u767D\u6839",
     "mapUrl": "https://goo.gl/maps/B7SLxUvPmpcduC2T8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "6018",
@@ -1578,7 +2007,10 @@ const POLLING_PLACES = [
     "address": "\u5357\u533A\u5409\u6C5F238\u20101",
     "area": "\u5C45\u5BBF\u3001\u5927\u5009\u3001\u5927\u5009\u65B0\u7530\u3001\u5C71\u738B\u3001\u5C71\u738B\u65B0\u7530\u3001\u4E03\u7A42\u3001\u5409\u6C5F\u3001\u5409\u7530\u65B0\u7530",
     "mapUrl": "https://goo.gl/maps/96e2zG3PZkgY8w2a6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "6019",
@@ -1588,7 +2020,10 @@ const POLLING_PLACES = [
     "address": "\u5357\u533A\u6708\u6F5F535",
     "area": "\u5927\u5225\u7576\u3001\u6708\u6F5F\u3001\u897F\u8431\u5834",
     "mapUrl": "https://goo.gl/maps/xyo8ahTxu5HYdQmAA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "6020",
@@ -1598,7 +2033,10 @@ const POLLING_PLACES = [
     "address": "\u5357\u533A\u4E0A\u66F2\u901A24",
     "area": "\u4E0A\u66F2\u901A\u3001\u4E0B\u66F2\u901A",
     "mapUrl": "https://maps.app.goo.gl/xVSfy9sFUsNQZ8kv7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "6021",
@@ -1608,7 +2046,10 @@ const POLLING_PLACES = [
     "address": "\u5357\u533A\u6771\u9577\u5D8B89\u20107",
     "area": "\u6771\u9577\u5D8B\u3001\u6728\u6ED1\u3001\u91E3\u5BC4\u65B0\u3001\u91E3\u5BC4",
     "mapUrl": "https://maps.app.goo.gl/tQu6CMCyQwJwuBi6A",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7001",
@@ -1618,7 +2059,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u5BFA\u5C3E\u67713-14-41",
     "area": "\u5BFA\u5C3E\u306E\u4E00\u90E8\u3001\u5BFA\u5C3E\u4E0A1\uFF5E4\u4E01\u76EE\u3001\u5BFA\u5C3E\u4E0A5\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5BFA\u5C3E\u4E0A6\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5BFA\u5C3E\u67711\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5BFA\u5C3E\u67712\uFF5E3\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/ixqjVkg4PaES8bjy5",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7002",
@@ -1628,7 +2072,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u5742\u4E95\u67716\u201018\u20101",
     "area": "\u5742\u4E95\u306E\u4E00\u90E8\u3001\u5742\u4E953\u4E01\u76EE\u3001\u5742\u4E95\u7802\u5C711\uFF5E4\u4E01\u76EE\u3001\u5742\u4E95\u67716\u4E01\u76EE\u3001\u65B0\u7530\u306E\u4E00\u90E8\u3001\u65B0\u901A\u306E\u4E00\u90E8\u3001\u5BFA\u5C3E\u4E0A5\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5BFA\u5C3E\u4E0A6\u4E01\u76EE\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/miLWtF3X8G9kh14N6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7003",
@@ -1638,7 +2085,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u5742\u4E95\u67715\u201017\u20101",
     "area": "\u4E80\u8C9D\u3001\u5C0F\u65B0\u306E\u4E00\u90E8\u3001\u5742\u4E951\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5742\u4E952\u4E01\u76EE\u3001\u5742\u4E95\u67713\uFF5E5\u4E01\u76EE\u3001\u65B0\u901A\u306E\u4E00\u90E8\u3001\u9808\u8CC0\u3001\u6D41\u901A\u30BB\u30F3\u30BF\u30FC1\uFF5E6\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/mM7n4c312cpHHy4u6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7004",
@@ -1648,7 +2098,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u5742\u4E95\u67711\u20102\u20101",
     "area": "\u5C0F\u91DD6\uFF5E8\u4E01\u76EE\u3001\u5C0F\u91DD\u5357\u3001\u5C0F\u91DD\u5357\u53F0\u306E\u4E00\u90E8\u3001\u5742\u4E951\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5742\u4E95\u67711\uFF5E2\u4E01\u76EE\u3001\u5BFA\u5C3E\u306E\u4E00\u90E8\u3001\u5BFA\u5C3E\u671D\u65E5\u901A\u3001\u5BFA\u5C3E\u67711\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5BFA\u5C3E\u524D\u901A1\uFF5E3\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/uUghqFa6vwsZezcu6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7005",
@@ -1658,7 +2111,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u5C0F\u65B0\u897F3\u201018\u20101",
     "area": "\u5C0F\u65B0\u306E\u4E00\u90E8\u3001\u5C0F\u65B0\u5927\u901A1\uFF5E2\u4E01\u76EE\u3001\u5C0F\u65B0\u897F1\uFF5E3\u4E01\u76EE\u3001\u5C0F\u65B0\u53571\uFF5E2\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/QwkoHt4Lb9Jn53js5",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7006",
@@ -1668,7 +2124,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u5C0F\u91DD2\u201036\u20101",
     "area": "\u9752\u5C71\u6C34\u9053\u3001\u5C0F\u91DD2\u4E01\u76EE\u3001\u5C0F\u91DD4\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5C0F\u91DD5\u4E01\u76EE\u3001\u5C0F\u91DD\u4E0A\u5C71\u306E\u4E00\u90E8\u3001\u5C0F\u91DD\u304C\u4E18\u306E\u4E00\u90E8\u3001\u5C0F\u91DD\u85E4\u5C71\u3001\u5C0F\u91DD\u5357\u53F0\u306E\u4E00\u90E8\u3001\u6771\u9752\u5C711\u4E01\u76EE\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/6EdxJMToBjab4DQC9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7007",
@@ -1678,7 +2137,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u5C0F\u91DD1\u201037\u20101",
     "area": "\u5C0F\u65B0\u306E\u4E00\u90E8\u3001\u5C0F\u65B01\uFF5E5\u4E01\u76EE\u3001\u5C0F\u91DD1\u30013\u4E01\u76EE\u3001\u5C0F\u91DD4\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5E73\u5CF61\u4E01\u76EE\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/QFWXG2kjtnDB6mea6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7008",
@@ -1688,7 +2150,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u9752\u5C71261\u20101",
     "area": "\u9752\u5C71\u306E\u4E00\u90E8\u3001\u9752\u5C711\uFF5E3\u4E01\u76EE\u3001\u9752\u5C71\u65B0\u753A\u3001\u6D66\u5C711\u4E01\u76EE\u3001\u6771\u9752\u5C711\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6771\u9752\u5C712\u4E01\u76EE\u3001\u5E73\u5CF6\u3001\u5E73\u5CF61\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5E73\u5CF62\uFF5E3\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/wd1LN6S6BdvQNgXk6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7009",
@@ -1698,7 +2163,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u9752\u5C716\u201016\u201020",
     "area": "\u9752\u5C714\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u9752\u5C715\uFF5E6\u4E01\u76EE\u3001\u6D66\u5C712\uFF5E4\u4E01\u76EE\u3001\u95A2\u5C4B\u5800\u5272\u753A",
     "mapUrl": "https://goo.gl/maps/gnRx5Jo7AdkomXQR7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7010",
@@ -1708,7 +2176,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u897F\u6709\u660E\u753A4\u20101",
     "area": "\u9752\u5C71\u306E\u4E00\u90E8\u3001\u9752\u5C714\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u9752\u5C717\uFF5E8\u4E01\u76EE\u3001\u6709\u660E\u753A\u3001\u5C0F\u91DD\u4E0A\u5C71\u306E\u4E00\u90E8\u3001\u897F\u6709\u660E\u753A\u3001\u677E\u7F8E\u53F0",
     "mapUrl": "https://goo.gl/maps/eP2a5QqZPDTdnwBm9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7011",
@@ -1718,7 +2189,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u771F\u78023\u201024\u20101",
     "area": "\u897F\u5C0F\u91DD\u53F03\u4E01\u76EE\u3001\u771F\u78021\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u771F\u78022\uFF5E4\u4E01\u76EE\u3001\u677E\u6D77\u304C\u4E181\uFF5E4\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/b4vksvgTkmT1kpaD7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7012",
@@ -1728,7 +2202,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u5C0F\u91DD\u897F1\u201012\u201012",
     "area": "\u5C0F\u91DD\u304C\u4E18\u306E\u4E00\u90E8\u3001\u5C0F\u91DD\u53F0\u3001\u5C0F\u91DD\u897F1\uFF5E2\u4E01\u76EE\u3001\u5BFA\u5C3E\u53F01\uFF5E2\u4E01\u76EE\u3001\u897F\u5C0F\u91DD\u53F01\uFF5E2\u4E01\u76EE\u3001\u771F\u78021\u4E01\u76EE\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/2LPTvWPR3NuiKjrN7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7013",
@@ -1738,7 +2215,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u4E0A\u65B0\u6804\u753A5\u20103\u20101",
     "area": "\u4E0A\u65B0\u6804\u753A1\uFF5E4\u4E01\u76EE\u3001\u4E0A\u65B0\u6804\u753A5\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5BFA\u5C3E\u53171\uFF5E2\u4E01\u76EE\u3001\u5BFA\u5C3E\u53F03\u4E01\u76EE\u3001\u5BFA\u5C3E\u4E2D\u592E\u516C\u5712\u3001\u5BFA\u5C3E\u897F1\u4E01\u76EE\u3001\u5BFA\u5C3E\u897F5\u4E01\u76EE\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/qigsmVUrCKh4xfW17",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7014",
@@ -1748,7 +2228,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u5BFA\u5C3E\u897F4\u201023\u20101",
     "area": "\u4E94\u5341\u5D501\u306E\u753A\u3001\u4E94\u5341\u5D50\u67711\uFF5E3\u4E01\u76EE\u3001\u4E0A\u65B0\u6804\u753A5\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E0A\u65B0\u6804\u753A6\u4E01\u76EE\u3001\u5927\u5B66\u53571\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5BFA\u5C3E\u897F2\uFF5E4\u4E01\u76EE\u3001\u5BFA\u5C3E\u897F5\u4E01\u76EE\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/ujYETbyimyMmcq8aA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7015",
@@ -1758,7 +2241,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u4E94\u5341\u5D502\u306E\u753A8404\u20101",
     "area": "\u4E94\u5341\u5D502\u306E\u753A\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/1q2v4ozTKrp9ZfaP6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7016",
@@ -1768,7 +2254,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u5185\u91CE\u5C71\u624B2\u201018\u201036",
     "area": "\u4E94\u5341\u5D502\u306E\u753A\u306E\u4E00\u90E8\u3001\u5185\u91CE\u5C71\u624B1\uFF5E2\u4E01\u76EE\u3001\u5927\u5B66\u53571\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5927\u5B66\u53572\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/fs2q1Saejpvj9uAA9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7017",
@@ -1778,7 +2267,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u5185\u91CE\u753A413",
     "area": "\u5185\u91CE\u753A\u3001\u69D9\u5C3E",
     "mapUrl": "https://goo.gl/maps/WTHtnYg8hjJUVmhM9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7018",
@@ -1788,7 +2280,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u5185\u91CE\u897F1\u201010\u20101",
     "area": "\u4E94\u5341\u5D503\u306E\u753A\u5317\u3001\u4E94\u5341\u5D503\u306E\u753A\u4E2D\u3001\u4E94\u5341\u5D503\u306E\u753A\u897F\u3001\u4E94\u5341\u5D503\u306E\u753A\u6771\u3001\u4E94\u5341\u5D503\u306E\u753A\u5357\u3001\u4E94\u5341\u5D50\u4E0B\u5D0E\u5C71\u3001\u4E94\u5341\u5D50\u4E2D\u5CF6\u3001\u4E94\u5341\u5D50\u4E2D\u5CF61\uFF5E2\u4E01\u76EE\u3001\u4E94\u5341\u5D50\u4E2D\u5CF63\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5185\u91CE\u6F5F\u7AEF\u3001\u5185\u91CE\u6238\u4E2D\u624D\u3001\u5185\u91CE\u897F1\uFF5E3\u4E01\u76EE\u3001\u5185\u91CE\u897F\u304C\u4E181\uFF5E2\u4E01\u76EE\u3001\u5185\u91CE\u6F5F\u5411\u3001\u5185\u91CE\u5D0E\u5C71\u3001\u5185\u91CE\u9577\u6F5F\u3001\u5185\u91CE\u65E9\u89D2",
     "mapUrl": "https://goo.gl/maps/HCMhjAhvCW3pWUzy5",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7019",
@@ -1798,7 +2293,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u5185\u91CE\u4E0A\u65B0\u753A11810",
     "area": "\u4E94\u5341\u5D50\u4E0A\u5D0E\u5C71\u3001\u4E94\u5341\u5D50\u4E2D\u5CF63\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E94\u5341\u5D50\u4E2D\u5CF64\uFF5E5\u4E01\u76EE\u3001\u4E94\u5341\u5D50\u897F\u3001\u5185\u91CE\u4E0A\u65B0\u753A\u3001\u5185\u91CE\u95A2\u5834\u3001\u5185\u91CE\u897F\u304C\u4E183\u4E01\u76EE\u3001\u65B0\u4E2D\u6D5C1\uFF5E6\u4E01\u76EE\u3001\u4E2D\u6A29\u5BFA\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/CBJZJbrzwTXCJbvT7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7020",
@@ -1808,7 +2306,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u5927\u91CE137",
     "area": "\u5927\u91CE\u3001\u5742\u4E95\u306E\u4E00\u90E8\u3001\u65B0\u901A\u306E\u4E00\u90E8\u3001\u65B0\u901A\u897F1\uFF5E2\u4E01\u76EE\u3001\u65B0\u901A\u53571\uFF5E3\u4E01\u76EE\u3001\u5927\u5B66\u53571\u4E01\u76EE\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/DYRP6a1mEbamwBTNA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7021",
@@ -1818,7 +2319,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u8C37\u51851886",
     "area": "\u8D64\u585A\u306E\u4E00\u90E8\u3001\u795E\u5C71\u3001\u6728\u5C71\u3001\u6771\u5C71\u3001\u8C37\u5185\u3001\u4E2D\u6A29\u5BFA\u306E\u4E00\u90E8\u3001\u56DB\u30C4\u90F7\u5C4B",
     "mapUrl": "https://goo.gl/maps/KEDJYQWo318CenuNA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7022",
@@ -1828,7 +2332,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u8D64\u585A4478",
     "area": "\u8D64\u585A\u306E\u4E00\u90E8\u3001\u5742\u7530\u3001\u5C71\u5D0E",
     "mapUrl": "https://goo.gl/maps/GAwTsKjHbD5ZVNWy7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7023",
@@ -1838,7 +2345,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u307F\u305A\u304D\u91CE3\u20101\u20101",
     "area": "\u8D64\u585A\u306E\u4E00\u90E8\u3001\u85E4\u8535\u65B0\u7530\u3001\u307F\u305A\u304D\u91CE1\uFF5E6\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/TFK5pVjNyNKs7TaE6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7024",
@@ -1848,7 +2358,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u4FDD\u53E4\u91CE\u6728901",
     "area": "\u5C0F\u898B\u90F7\u5C4B\u3001\u52D8\u52A9\u90F7\u5C4B\u3001\u5C0F\u702C\u3001\u65E9\u6F5F\u3001\u85E4\u91CE\u6728\u3001\u4FDD\u53E4\u91CE\u6728\u3001\u524D\u91CE\u5916\u65B0\u7530\u3001\u660E\u7530",
     "mapUrl": "https://goo.gl/maps/uaXZnMam52BZgBLW7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7025",
@@ -1858,7 +2371,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u4E2D\u91CE\u5C0F\u5C4B590\u20104",
     "area": "\u5927\u53CB\u3001\u91D1\u5DFB\u65B0\u7530\u3001\u7530\u6F5F\u3001\u7530\u5CF6\u3001\u9053\u6CB3\u539F\u3001\u4E2D\u91CE\u5C0F\u5C4B",
     "mapUrl": "https://goo.gl/maps/jescwx7ucb39RyyJ7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7026",
@@ -1868,7 +2384,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u7B20\u67281695",
     "area": "\u7B20\u6728\u3001\u65B0\u901A\u306E\u4E00\u90E8\u3001\u66FD\u548C\u3001\u9AD8\u5C71\u3001\u65B0\u7530\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/3n2DiyZgGZbKBasQA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7027",
@@ -1878,7 +2397,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u9ED2\u9CE5974\u20102",
     "area": "\u7DD2\u7ACB\u6D41\u901A1\uFF5E2\u4E01\u76EE\u3001\u5317\u5834\u306E\u4E00\u90E8\u3001\u9ED2\u9CE5\u3001\u9CE5\u539F\u306E\u4E00\u90E8\u3001\u6D41\u901A3\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/tXcbzwB412nrbXqz6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7028",
@@ -1888,7 +2410,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u6728\u5834911\u20101",
     "area": "\u677F\u4E95\u306E\u4E00\u90E8\u3001\u91D1\u5DFB\u306E\u4E00\u90E8\u3001\u6728\u5834\u3001\u5C0F\u5E73\u65B9\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/PiXSoZQr4SUyyMnN7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7029",
@@ -1898,7 +2423,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u677F\u4E952597",
     "area": "\u677F\u4E95\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/JPdZizqyJbaSzBvG8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7030",
@@ -1908,7 +2436,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u91D1\u5DFB746\u20103",
     "area": "\u5927\u91CE\u753A\u306E\u4E00\u90E8\u3001\u91D1\u5DFB\u306E\u4E00\u90E8\u3001\u5C0F\u5E73\u65B9\u306E\u4E00\u90E8\u3001\u9CE5\u539F\u306E\u4E00\u90E8\u3001\u9CE5\u539F\u65B0\u7530",
     "mapUrl": "https://goo.gl/maps/Pg31VQQESDV19j21A",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7031",
@@ -1918,7 +2449,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u5927\u91CE\u753A3140\u4E59",
     "area": "\u5927\u91CE\u753A\u306E\u4E00\u90E8\u3001\u9CE5\u539F\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/anEZT6eL1A41ZcaD8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7032",
@@ -1928,7 +2462,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u9CE5\u539F909\u20101",
     "area": "\u5317\u5834\u306E\u4E00\u90E8\u3001\u5584\u4E45\u3001\u7ACB\u4ECF\u306E\u4E00\u90E8\u3001\u9CE5\u539F\u306E\u4E00\u90E8\u3001\u5C71\u7530\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/eWnaExcnLVYF65GXA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7033",
@@ -1938,7 +2475,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u5C71\u75302781\u20102",
     "area": "\u7ACB\u4ECF\u306E\u4E00\u90E8\u3001\u9CE5\u539F\u306E\u4E00\u90E8\u3001\u5C71\u7530\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/y2PSGEgXkrEPRsJ76",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "7034",
@@ -1948,7 +2488,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u533A\u3068\u304D\u3081\u304D\u897F4\u20101\u20101",
     "area": "\u7ACB\u4ECF\u306E\u4E00\u90E8\u3001\u5BFA\u5730\u3001\u3068\u304D\u3081\u304D\u897F1\uFF5E4\u4E01\u76EE\u3001\u3068\u304D\u3081\u304D\u67711\u4E01\u76EE\u3001\u5C71\u7530\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/Rxx28YSgYGEa954g8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8001",
@@ -1958,7 +2501,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u5DFB\u7532635",
     "area": "\u8D64\u93E5\u306E\u4E00\u90E8\u3001\u5DFB\u7532\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/GXe9FPcgsjXL45gN7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8002",
@@ -1968,7 +2514,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u5800\u5C71\u65B0\u7530256",
     "area": "\u5B89\u5C3B\u306E\u4E00\u90E8\u3001\u4E0B\u548C\u7D0D\u3001\u5800\u5C71\u65B0\u7530\u3001\u5DFB\u4E59",
     "mapUrl": "https://goo.gl/maps/1y6p8rDbJhanV6Et9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8003",
@@ -1978,7 +2527,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u5DFB\u7532\uFF14\uFF11\uFF11\uFF11",
     "area": "\u4E2D\u90F7\u5C4B\u3001\u8449\u8431\u5834\u3001\u5DFB\u7532\u306E\u4E00\u90E8\u3001\u5272\u524D\u306E\u4E00\u90E8",
     "mapUrl": "https://maps.app.goo.gl/LLWjd1omQANwXU6YA",
-    "updateInfo": "\u897F\u84B2\u533A\u5F79\u6240\u304B\u3089\u84B2\u539F\u30AC\u30B9\u682A\u5F0F\u4F1A\u793E\u30B7\u30E7\u30FC\u30EB\u30FC\u30E0\u68DF\u3078\u5909\u66F4"
+    "updateInfo": "\u897F\u84B2\u533A\u5F79\u6240\u304B\u3089\u84B2\u539F\u30AC\u30B9\u682A\u5F0F\u4F1A\u793E\u30B7\u30E7\u30FC\u30EB\u30FC\u30E0\u68DF\u3078\u5909\u66F4",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8004",
@@ -1988,7 +2540,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u5DFB\u75324363",
     "area": "\u8D64\u93E5\u306E\u4E00\u90E8\u3001\u5B89\u5C3B\u306E\u4E00\u90E8\u3001\u6F5F\u982D\u306E\u4E00\u90E8\u3001\u5DFB\u7532\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/8tRN6HhZyPcZenPu8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8005",
@@ -1998,7 +2553,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u5DFB\u7532121\u20101",
     "area": "\u7FBD\u7530\u3001\u6771\u6C70\u4E0A\u3001\u5DFB\u7532\u306E\u4E00\u90E8\u3001\u5272\u524D\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/MdGBA3pwQEXGSRVa8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8006",
@@ -2008,7 +2566,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u4E26\u5CA110\u20102",
     "area": "\u6F06\u5C71\u306E\u4E00\u90E8\u3001\u6F5F\u982D\u306E\u4E00\u90E8\u3001\u67FF\u5CF6\u3001\u6CB3\u4E95\u3001\u6804\u753A\u3001\u685C\u6797\u3001\u4E26\u5CA1\u3001\u99AC\u5800\u3001\u5C71\u5CF6",
     "mapUrl": "https://goo.gl/maps/CaW1GnueFktpjwmn6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8007",
@@ -2018,7 +2579,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u6F06\u5C713320",
     "area": "\u6F06\u5C71\u306E\u4E00\u90E8\u3001\u5DFB\u6771\u753A",
     "mapUrl": "https://goo.gl/maps/NcJgs4wKePyG5cuP9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8008",
@@ -2028,7 +2592,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u4EC1\u7B871443\u20101",
     "area": "\u7AF9\u91CE\u753A\u3001\u7A32\u5CF6\u3001\u4EC1\u7B87\u3001\u5E03\u76EE\u3001\u4F0F\u90E8\u3001\u524D\u7530\u3001\u9DF2\u30CE\u6728\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/SUQPJ68iofrphExb7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8009",
@@ -2038,7 +2605,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u9DF2\u30CE\u67281633-9",
     "area": "\u4E0A\u6728\u5CF6\u3001\u4E94\u30B1\u6D5C\u3001\u4E0B\u6728\u5CF6\u3001\u5E73\u6CA2\u3001\u798F\u4E95\u3001\u821F\u6238\u3001\u677E\u90F7\u5C4B\u3001\u5CF0\u5CA1\u3001\u9DF2\u30CE\u6728\u306E\u4E00\u90E8\u3001\u89D2\u6D77\u6D5C",
     "mapUrl": "https://maps.app.goo.gl/mpUyJmseHTCKDkZ97",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8010",
@@ -2048,7 +2618,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u677E\u91CE\u5C3E2852-3",
     "area": "\u65B0\u4FDD\u3001\u5DFB\u5927\u539F\u3001\u677E\u91CE\u5C3E\u3001\u677E\u5C71",
     "mapUrl": "https://goo.gl/maps/okvd9Zc1oFr2Rf469",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8011",
@@ -2058,7 +2631,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u89D2\u7530\u6D5C1815-1",
     "area": "\u8D8A\u524D\u6D5C\u3001\u89D2\u7530\u6D5C",
     "mapUrl": "https://maps.app.goo.gl/EcACQcKD1XbzGrSU9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8012",
@@ -2068,7 +2644,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u548C\u7D0D2\u201021\u20101",
     "area": "\u548C\u7D0D\u306E\u4E00\u90E8\u3001\u548C\u7D0D1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u548C\u7D0D2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u548C\u7D0D3\u4E01\u76EE",
     "mapUrl": "https://goo.gl/maps/DdUtkxeA3d95EUH96",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8013",
@@ -2078,7 +2657,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u548C\u7D0D1212",
     "area": "\u9AD8\u6A4B\u3001\u6D25\u96F2\u7530\u3001\u5BCC\u5CA1\u3001\u539F\u3001\u548C\u7D0D\u306E\u4E00\u90E8\u3001\u548C\u7D0D1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u548C\u7D0D2\u4E01\u76EE\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/1tnYdpEZLKgfKykd9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8014",
@@ -2088,7 +2670,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u897F\u4E2D860",
     "area": "\u6CB9\u5CF6\u3001\u65B0\u8C37\u3001\u690D\u91CE\u65B0\u7530\u3001\u6F5F\u4E0A\u3001\u5317\u91CE\u3001\u767D\u9CE5\u3001\u9AD8\u7551\u3001\u590F\u4E95\u3001\u897F\u4E2D\u3001\u897F\u9577\u5CF6\u3001\u897F\u8239\u8D8A\u3001\u5357\u8C37\u5185\u3001\u6A2A\u66FD\u6839",
     "mapUrl": "https://goo.gl/maps/Jb9PbrQqb7TxfdWt9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8015",
@@ -2098,7 +2683,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u6A4B\u672C101\u20101",
     "area": "\u77F3\u702C\u3001\u5CA9\u5BA4\u6E29\u6CC9\u3001\u91D1\u6C60\u3001\u4E45\u4FDD\u7530\u3001\u6804\u3001\u733F\u30F6\u702C\u3001\u6A4B\u672C\u3001\u6A0B\u66FD",
     "mapUrl": "https://goo.gl/maps/MNoXB5AwU5ttxeHt8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8016",
@@ -2108,7 +2696,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u9593\u702C4290-1",
     "area": "\u9593\u702C",
     "mapUrl": "https://goo.gl/maps/g8BAiiWJnaXai1uH8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8017",
@@ -2118,7 +2709,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u5929\u7AFA\u5802412\u20104",
     "area": "\u5DDD\u5D0E\u306E\u4E00\u90E8\u3001\u771F\u7530\u3001\u4E0B\u5C71\u3001\u5929\u7AFA\u5802\u3001\u4E2D\u5CF6\u3001\u897F\u6C70\u4E0A\u3001\u69C7\u5CF6\u306E\u4E00\u90E8\u3001\u5E73\u91CE",
     "mapUrl": "https://goo.gl/maps/U2YSqgHv1RmVQRDR6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8018",
@@ -2128,7 +2722,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u5DDD\u5D0E308\u20104",
     "area": "\u62BC\u4ED8\u306E\u4E00\u90E8\u3001\u5DDD\u5D0E\u306E\u4E00\u90E8\u3001\u9C78\u3001\u65D7\u5C4B\u306E\u4E00\u90E8\u3001\u69C7\u5CF6\u306E\u4E00\u90E8\u3001\u677E\u5D0E\u306E\u4E00\u90E8\u3001\u77E2\u5CF6",
     "mapUrl": "https://goo.gl/maps/ddXrJrpJKkdxKHr96",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8019",
@@ -2138,7 +2735,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u65D7\u5C4B585\u20101",
     "area": "\u62BC\u4ED8\u306E\u4E00\u90E8\u3001\u66FD\u6839\u306E\u4E00\u90E8\u3001\u65D7\u5C4B\u306E\u4E00\u90E8\u3001\u677E\u5D0E\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/33J8PMrv9aMegg9n8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8020",
@@ -2148,7 +2748,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u66FD\u6839750",
     "area": "\u6851\u5C71\u3001\u5584\u5149\u5BFA\u3001\u5584\u5149\u5BFA\u6751\u53D7\u3001\u66FD\u6839\u306E\u4E00\u90E8\u3001\u65D7\u5C4B\u6751\u53D7",
     "mapUrl": "https://goo.gl/maps/g2niY5L3Ydjdymef6",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8021",
@@ -2158,7 +2761,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u5347\u6F5F2179",
     "area": "\u6D66\u6751\u306E\u4E00\u90E8\u3001\u5927\u6F5F\u306E\u4E00\u90E8\u3001\u5927\u95A2\u306E\u4E00\u90E8\u3001\u5175\u53F3\u885B\u9580\u65B0\u7530\u306E\u4E00\u90E8\u3001\u5347\u6F5F\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/sxCsbzaNwSWRX6dU9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8022",
@@ -2168,7 +2774,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u8C9D\u67C4805\u20106",
     "area": "\u6D66\u6751\u306E\u4E00\u90E8\u3001\u5927\u6F5F\u306E\u4E00\u90E8\u3001\u5927\u6F5F\u6751\u53E4\u65B0\u7530\u53D7\u3001\u5927\u95A2\u306E\u4E00\u90E8\u3001\u8C9D\u67C4\u3001\u8C9D\u67C4\u65B0\u7530\u3001\u4E09\u89D2\u91CE\u65B0\u7530\u3001\u5175\u53F3\u885B\u9580\u65B0\u7530\u306E\u4E00\u90E8\u3001\u5800\u4E0A\u65B0\u7530\u3001\u5347\u5CA1\u3001\u5347\u6F5F\u306E\u4E00\u90E8\u3001\u8207\u5175\u885B\u91CE\u65B0\u7530",
     "mapUrl": "https://maps.app.goo.gl/Kf7VC47f84FYA5by8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8023",
@@ -2178,7 +2787,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u4E09\u65B91",
     "area": "\u4E95\u968F\u3001\u5927\u539F\u3001\u718A\u8C37\u3001\u4E09\u65B9\u3001\u756A\u5C4B\u3001\u5C71\u53E3\u65B0\u7530",
     "mapUrl": "https://goo.gl/maps/i7sv5rhto4aPtHzw8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8024",
@@ -2188,7 +2800,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u6A2A\u6238137",
     "area": "\u536F\u516B\u90CE\u53D7\u3001\u9060\u85E4\u3001\u6A2A\u6238",
     "mapUrl": "https://goo.gl/maps/iUtXTYM5pu8jcaVh9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8025",
@@ -2198,7 +2813,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u5927\u66FD\u68391298",
     "area": "\u8328\u5CF6\u3001\u4ECA\u4E95\u3001\u5927\u66FD\u6839\u3001\u56FD\u898B\u3001\u79F0\u540D\u3001\u7F8E\u91CC\u3001\u5357",
     "mapUrl": "https://goo.gl/maps/vj3oBncRQUcE57GKA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8026",
@@ -2208,7 +2826,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u4E94\u4E4B\u4E0A253",
     "area": "\u4E94\u4E4B\u4E0A",
     "mapUrl": "https://goo.gl/maps/NEzGTeLf7msCPNkU9",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8027",
@@ -2218,7 +2839,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u5C0F\u54091100",
     "area": "\u6F5F\u6D66\u65B0\u3001\u4E0A\u5C0F\u5409\u3001\u9AD8\u91CE\u5BAE\u3001\u5C0F\u5409\u306E\u4E00\u90E8\u3001\u4E2D\u4E4B\u53E3\u306E\u4E00\u90E8\u3001\u9577\u5834\u3001\u91DD\u30F6\u66FD\u6839\u3001\u6771\u5C0F\u5409\u3001\u6771\u4E2D\u3001\u516D\u5206\u3001\u9580\u7530\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/7eVPQA2sePbchEtYA",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8028",
@@ -2228,7 +2852,10 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u4E2D\u4E4B\u53E3626",
     "area": "\u59E5\u5CF6\u3001\u5C0F\u5409\u306E\u4E00\u90E8\u3001\u4E2D\u4E4B\u53E3\u306E\u4E00\u90E8\u3001\u7FBD\u9ED2\u3001\u6771\u8239\u8D8A\u3001\u798F\u5CF6\u306E\u4E00\u90E8\u3001\u771F\u6728\u3001\u9580\u7530\u306E\u4E00\u90E8",
     "mapUrl": "https://goo.gl/maps/KDftcijoMzPukgHP7",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
     "id": "8029",
@@ -2238,10 +2865,333 @@ const POLLING_PLACES = [
     "address": "\u897F\u84B2\u533A\u6253\u8D8A\u7532244",
     "area": "\u6253\u8D8A\u3001\u6CB3\u9593\u3001\u9053\u4E0A\u3001\u798F\u5CF6\u306E\u4E00\u90E8\u3001\u7267\u30F6\u5CF6\u3001\u4E09\u30C4\u9580",
     "mapUrl": "https://goo.gl/maps/BmJCjzEXRrB5K5Lh8",
-    "updateInfo": ""
+    "updateInfo": "",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
+  },
+  {
+    "id": "M01",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u9577\u5CA1\u5E02",
+    "name": "\u9577\u5CA1\u5E02\u5F79\u6240 \u30A2\u30AA\u30FC\u30EC\u9577\u5CA1",
+    "address": "\u9577\u5CA1\u5E02\u5927\u624B\u901A1-4-10",
+    "area": "\u9577\u5CA1\u5E02\u4E2D\u5FC3\u90E8\u30FB\u9577\u5CA1\u99C5\u5468\u8FBA",
+    "mapUrl": "https://maps.app.goo.gl/9ZkG5v7t8wX9a2bC7",
+    "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
+  },
+  {
+    "id": "M02",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u9577\u5CA1\u5E02",
+    "name": "\u9577\u5CA1\u5E02\u7ACB\u5287\u5834 \u30ED\u30D3\u30FC",
+    "address": "\u9577\u5CA1\u5E02\u5E78\u753A2-1-2",
+    "area": "\u5E78\u753A\u30FB\u5343\u624B\u30FB\u5DDD\u5D0E\u30A8\u30EA\u30A2",
+    "mapUrl": "https://goo.gl/maps/b3a1B2C3D4E5F6G78",
+    "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
+  },
+  {
+    "id": "M03",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u4E09\u6761\u5E02",
+    "name": "\u4E09\u6761\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
+    "address": "\u4E09\u6761\u5E02\u65ED\u753A2-3-1",
+    "area": "\u4E09\u6761\u5E02\u4E2D\u5FC3\u90E8\u30FB\u4E2D\u592E\u5730\u533A",
+    "mapUrl": "https://maps.app.goo.gl/4XyZ9a8b7c6d5e4f3",
+    "officialUrl": "https://www.city.sanjo.niigata.jp/soshiki/senkyokanriinkaijimukyoku/senkyoseido/touhyou/15316.html"
+  },
+  {
+    "id": "M04",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u67CF\u5D0E\u5E02",
+    "name": "\u67CF\u5D0E\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
+    "address": "\u67CF\u5D0E\u5E02\u65E5\u77F3\u753A2-1",
+    "area": "\u67CF\u5D0E\u5E02\u4E2D\u5FC3\u90E8\u30FB\u99C5\u524D\u5730\u533A",
+    "mapUrl": "https://maps.app.goo.gl/2B3c4D5e6F7g8H9i0",
+    "officialUrl": "https://www.city.kashiwazaki.lg.jp/soshiki/senkyo/senkyo/1/6530.html"
+  },
+  {
+    "id": "M05",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u5C0F\u5343\u8C37\u5E02",
+    "name": "\u5C0F\u5343\u8C37\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
+    "address": "\u5C0F\u5343\u8C37\u5E02\u57CE\u51852-7-5",
+    "area": "\u5C0F\u5343\u8C37\u5E02\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/1A2b3C4d5E6f7G8h9",
+    "officialUrl": "https://www.city.ojiya.niigata.jp/soshiki/senkan/"
+  },
+  {
+    "id": "M06",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u52A0\u8302\u5E02",
+    "name": "\u52A0\u8302\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
+    "address": "\u52A0\u8302\u5E02\u5E78\u753A2-3-5",
+    "area": "\u52A0\u8302\u5E02\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/8H9i0J1k2L3m4N5o6",
+    "officialUrl": "https://www.city.kamo.niigata.jp/"
+  },
+  {
+    "id": "M07",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u5341\u65E5\u753A\u5E02",
+    "name": "\u5341\u65E5\u753A\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
+    "address": "\u5341\u65E5\u753A\u5E02\u5343\u6B73\u753A3-3",
+    "area": "\u5341\u65E5\u753A\u5E02\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/7G8h9I0j1K2l3M4n5",
+    "officialUrl": "https://www.city.tokamachi.lg.jp/soshiki/senkyokanriinkai/"
+  },
+  {
+    "id": "M08",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u898B\u9644\u5E02",
+    "name": "\u898B\u9644\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
+    "address": "\u898B\u9644\u5E02\u662D\u548C\u753A2-1-1",
+    "area": "\u898B\u9644\u5E02\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/6F7g8H9i0J1k2L3m4",
+    "officialUrl": "https://www.city.mitsuke.niigata.jp/"
+  },
+  {
+    "id": "M09",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u71D5\u5E02",
+    "name": "\u71D5\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
+    "address": "\u71D5\u5E02\u5409\u7530\u897F\u592A\u75301934",
+    "area": "\u71D5\u5E02\u5168\u57DF\uFF08\u5409\u7530\u30FB\u71D5\u30FB\u5206\u6C34\u5730\u533A\uFF09",
+    "mapUrl": "https://maps.app.goo.gl/5E6f7G8h9I0j1K2l3",
+    "officialUrl": "https://www.city.tsubame.niigata.jp/soshiki/senkyokanriinkaijimukyoku/touhyouseido/5529.html"
+  },
+  {
+    "id": "M10",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u9B5A\u6CBC\u5E02",
+    "name": "\u9B5A\u6CBC\u5E02\u5F79\u6240 \u5C0F\u51FA\u5E81\u820E",
+    "address": "\u9B5A\u6CBC\u5E02\u5C0F\u51FA\u5CF6910",
+    "area": "\u9B5A\u6CBC\u5E02\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/4D5e6F7g8H9i0J1k2",
+    "officialUrl": "https://www.city.uonuma.niigata.jp/"
+  },
+  {
+    "id": "M11",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u5357\u9B5A\u6CBC\u5E02",
+    "name": "\u5357\u9B5A\u6CBC\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
+    "address": "\u5357\u9B5A\u6CBC\u5E02\u516D\u65E5\u753A180-1",
+    "area": "\u516D\u65E5\u753A\u30FB\u5869\u6CA2\u30FB\u5927\u548C\u5730\u533A",
+    "mapUrl": "https://maps.app.goo.gl/3C4d5E6f7G8h9I0j1",
+    "officialUrl": "https://www.city.minamiuonuma.niigata.jp/"
+  },
+  {
+    "id": "M12",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u7530\u4E0A\u753A",
+    "name": "\u7530\u4E0A\u753A\u5F79\u5834",
+    "address": "\u5357\u84B2\u539F\u90E1\u7530\u4E0A\u753A\u539F\u30F6\u5D0E\u65B0\u7530J1",
+    "area": "\u7530\u4E0A\u753A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/2B3c4D5e6F7g8H9i0",
+    "officialUrl": "https://www.town.tagami.niigata.jp/"
+  },
+  {
+    "id": "M13",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u51FA\u96F2\u5D0E\u753A",
+    "name": "\u51FA\u96F2\u5D0E\u753A\u5F79\u5834",
+    "address": "\u4E09\u5CF6\u90E1\u51FA\u96F2\u5D0E\u753A\u7C73\u7530142",
+    "area": "\u51FA\u96F2\u5D0E\u753A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/1A2b3C4d5E6f7G8h9",
+    "officialUrl": "https://www.town.izumozaki.niigata.jp/"
+  },
+  {
+    "id": "M14",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u6E6F\u6CA2\u753A",
+    "name": "\u6E6F\u6CA2\u753A\u5F79\u5834",
+    "address": "\u5357\u9B5A\u6CBC\u90E1\u6E6F\u6CA2\u753A\u795E\u7ACB300",
+    "area": "\u6E6F\u6CA2\u753A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/0Z9y8X7w6V5u4T3s2",
+    "officialUrl": "https://www.town.yuzawa.lg.jp/"
+  },
+  {
+    "id": "M15",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u6D25\u5357\u753A",
+    "name": "\u6D25\u5357\u753A\u5F79\u5834",
+    "address": "\u4E2D\u9B5A\u6CBC\u90E1\u6D25\u5357\u753A\u4E0B\u8239\u6E21\u620A585",
+    "area": "\u6D25\u5357\u753A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/9Y8x7W6v5U4t3S2r1",
+    "officialUrl": "https://town.tsunan.niigata.jp/"
+  },
+  {
+    "id": "M16",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u5208\u7FBD\u6751",
+    "name": "\u5208\u7FBD\u6751\u5F79\u5834",
+    "address": "\u5208\u7FBD\u90E1\u5208\u7FBD\u6751\u5272\u753A\u65B0\u7530100",
+    "area": "\u5208\u7FBD\u6751\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/8X7w6V5u4T3s2R1q0",
+    "officialUrl": "https://www.vill.kariwa.niigata.jp/"
+  },
+  {
+    "id": "J01",
+    "region": "\u4E0A\u8D8A",
+    "municipality": "\u4E0A\u8D8A\u5E02",
+    "name": "\u4E0A\u8D8A\u5E02\u5F79\u6240 \u6728\u7530\u5E81\u820E",
+    "address": "\u4E0A\u8D8A\u5E02\u6728\u75301-1-3",
+    "area": "\u9AD8\u7530\u30FB\u76F4\u6C5F\u6D25\u30FB\u6728\u7530\u30A8\u30EA\u30A2",
+    "mapUrl": "https://maps.app.goo.gl/7W6v5U4t3S2r1Q0p9",
+    "officialUrl": "https://www.city.joetsu.niigata.jp/soshiki/senkan/touhyoujo-ichiran.html"
+  },
+  {
+    "id": "J02",
+    "region": "\u4E0A\u8D8A",
+    "municipality": "\u4E0A\u8D8A\u5E02",
+    "name": "\u9AD8\u7530\u5730\u533A\u516C\u6C11\u9928",
+    "address": "\u4E0A\u8D8A\u5E02\u672C\u753A3-2-26",
+    "area": "\u9AD8\u7530\u57CE\u4E0B\u753A\u30FB\u672C\u753A\u5730\u533A",
+    "mapUrl": "https://goo.gl/maps/1A2b3C4d5E6f7G8h9",
+    "officialUrl": "https://www.city.joetsu.niigata.jp/soshiki/senkan/touhyoujo-ichiran.html"
+  },
+  {
+    "id": "J03",
+    "region": "\u4E0A\u8D8A",
+    "municipality": "\u7CF8\u9B5A\u5DDD\u5E02",
+    "name": "\u7CF8\u9B5A\u5DDD\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
+    "address": "\u7CF8\u9B5A\u5DDD\u5E02\u4E00\u306E\u5BAE1-2-1",
+    "area": "\u7CF8\u9B5A\u5DDD\u5E02\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/6V5u4T3s2R1q0P9o8",
+    "officialUrl": "https://www.city.itoigawa.lg.jp/"
+  },
+  {
+    "id": "J04",
+    "region": "\u4E0A\u8D8A",
+    "municipality": "\u5999\u9AD8\u5E02",
+    "name": "\u5999\u9AD8\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
+    "address": "\u5999\u9AD8\u5E02\u6804\u753A5-1",
+    "area": "\u65B0\u4E95\u30FB\u5999\u9AD8\u9AD8\u539F\u5730\u533A",
+    "mapUrl": "https://maps.app.goo.gl/5U4t3S2r1Q0p9O8n7",
+    "officialUrl": "https://www.city.myoko.niigata.jp/"
+  },
+  {
+    "id": "S01",
+    "region": "\u4F50\u6E21",
+    "municipality": "\u4F50\u6E21\u5E02",
+    "name": "\u4F50\u6E21\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
+    "address": "\u4F50\u6E21\u5E02\u5343\u7A2E232",
+    "area": "\u4E21\u6D25\u30FB\u76F8\u5DDD\u30FB\u4F50\u548C\u7530\u5730\u533A",
+    "mapUrl": "https://maps.app.goo.gl/4T3s2R1q0P9o8N7m6",
+    "officialUrl": "https://www.city.sado.niigata.jp/soshiki/1049/2234.html"
+  },
+  {
+    "id": "S02",
+    "region": "\u4F50\u6E21",
+    "municipality": "\u4F50\u6E21\u5E02",
+    "name": "\u4F50\u6E21\u5E02\u771F\u91CE\u884C\u653F\u30B5\u30FC\u30D3\u30B9\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u4F50\u6E21\u5E02\u5409\u5CA1343",
+    "area": "\u771F\u91CE\u30FB\u7FBD\u8302\u30FB\u5C0F\u6728\u5730\u533A",
+    "mapUrl": "https://maps.app.goo.gl/3S2r1Q0p9O8n7M6l5",
+    "officialUrl": "https://www.city.sado.niigata.jp/soshiki/1049/2234.html"
+  },
+  {
+    "id": "K01",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u767A\u7530\u5E02",
+    "name": "\u65B0\u767A\u7530\u5E02\u5F79\u6240 \u30E8\u30EA\u30CD\u30B9\u3057\u3070\u305F",
+    "address": "\u65B0\u767A\u7530\u5E02\u4E2D\u592E\u753A3-3-3",
+    "area": "\u65B0\u767A\u7530\u5E02\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/2R1q0P9o8N7m6L5k4",
+    "officialUrl": "https://www.city.shibata.lg.jp/shisei/senkyo/senkyoseido/1031383.html"
+  },
+  {
+    "id": "K02",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u6751\u4E0A\u5E02",
+    "name": "\u6751\u4E0A\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
+    "address": "\u6751\u4E0A\u5E02\u4E09\u6CC9101",
+    "area": "\u6751\u4E0A\u5E02\u5168\u57DF\uFF08\u6751\u4E0A\u30FB\u8352\u5DDD\u30FB\u795E\u6797\u30FB\u671D\u65E5\u30FB\u5C71\u5317\uFF09",
+    "mapUrl": "https://maps.app.goo.gl/1Q0p9O8n7M6l5K4j3",
+    "officialUrl": "https://www.city.murakami.lg.jp/site/senkyo/"
+  },
+  {
+    "id": "K03",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u4E94\u6CC9\u5E02",
+    "name": "\u4E94\u6CC9\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
+    "address": "\u4E94\u6CC9\u5E02\u592A\u75301092-1",
+    "area": "\u4E94\u6CC9\u30FB\u6751\u677E\u5730\u533A",
+    "mapUrl": "https://maps.app.goo.gl/0P9o8N7m6L5k4J3i2",
+    "officialUrl": "https://www.city.gosen.lg.jp/soshiki/senkan/"
+  },
+  {
+    "id": "K04",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u963F\u8CC0\u91CE\u5E02",
+    "name": "\u963F\u8CC0\u91CE\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
+    "address": "\u963F\u8CC0\u91CE\u5E02\u5CA1\u5C71\u753A10-15",
+    "area": "\u6C34\u539F\u30FB\u5B89\u7530\u30FB\u4EAC\u30F6\u702C\u30FB\u7B39\u795E\u5730\u533A",
+    "mapUrl": "https://maps.app.goo.gl/9O8n7M6l5K4j3I2h1",
+    "officialUrl": "https://www.city.agano.niigata.jp/soshiki/senkan/"
+  },
+  {
+    "id": "K05",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u80CE\u5185\u5E02",
+    "name": "\u80CE\u5185\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
+    "address": "\u80CE\u5185\u5E02\u65B0\u548C\u753A2-10",
+    "area": "\u4E2D\u6761\u30FB\u9ED2\u5DDD\u5730\u533A",
+    "mapUrl": "https://maps.app.goo.gl/8N7m6L5k4J3i2H1g0",
+    "officialUrl": "https://www.city.tainai.niigata.jp/kurashi/senkyo/"
+  },
+  {
+    "id": "K06",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u8056\u7C60\u753A",
+    "name": "\u8056\u7C60\u753A\u5F79\u5834",
+    "address": "\u5317\u84B2\u539F\u90E1\u8056\u7C60\u753A\u5927\u5B57\u8ACF\u8A2A\u5C711635-4",
+    "area": "\u8056\u7C60\u753A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/7M6l5K4j3I2h1G0f9",
+    "officialUrl": "https://www.town.seiro.niigata.jp/"
+  },
+  {
+    "id": "K07",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u963F\u8CC0\u753A",
+    "name": "\u963F\u8CC0\u753A\u5F79\u5834",
+    "address": "\u6771\u84B2\u539F\u90E1\u963F\u8CC0\u753A\u6D25\u5DDD580",
+    "area": "\u6D25\u5DDD\u30FB\u9E7F\u702C\u30FB\u4E0A\u5DDD\u30FB\u4E09\u5DDD\u5730\u533A",
+    "mapUrl": "https://maps.app.goo.gl/6L5k4J3i2H1g0F9e8",
+    "officialUrl": "https://www.town.aga.niigata.jp/"
+  },
+  {
+    "id": "K08",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u95A2\u5DDD\u6751",
+    "name": "\u95A2\u5DDD\u6751\u5F79\u5834",
+    "address": "\u5CA9\u8239\u90E1\u95A2\u5DDD\u6751\u5927\u5B57\u4E0B\u95A2110-1",
+    "area": "\u95A2\u5DDD\u6751\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/5K4j3I2h1G0f9E8d7",
+    "officialUrl": "http://www.vill.sekikawa.niigata.jp/"
+  },
+  {
+    "id": "K09",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u7C9F\u5CF6\u6D66\u6751",
+    "name": "\u7C9F\u5CF6\u6D66\u6751\u5F79\u5834",
+    "address": "\u5CA9\u8239\u90E1\u7C9F\u5CF6\u6D66\u6751\u5B57\u65E5\u898B\u5185151-1",
+    "area": "\u7C9F\u5CF6\u6D66\u6751\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/4J3i2H1g0F9e8D7c6",
+    "officialUrl": "http://www.vill.awashimaura.lg.jp/"
+  },
+  {
+    "id": "K10",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u5F25\u5F66\u6751",
+    "name": "\u5F25\u5F66\u6751\u5F79\u5834",
+    "address": "\u897F\u84B2\u539F\u90E1\u5F25\u5F66\u6751\u5927\u5B57\u77E2\u4F5C2865-1",
+    "area": "\u5F25\u5F66\u6751\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/3I2h1G0f9E8d7C6b5",
+    "officialUrl": "http://www.vill.yahiko.niigata.jp/"
   }
 ];
-const NIIGATA_WARDS = ["\u3059\u3079\u3066", "\u5317\u533A", "\u6771\u533A", "\u4E2D\u592E\u533A", "\u6C5F\u5357\u533A", "\u79CB\u8449\u533A", "\u5357\u533A", "\u897F\u533A", "\u897F\u84B2\u533A"];
+const REGION_CATEGORIES = ["\u3059\u3079\u3066", "\u4E0B\u8D8A", "\u4E2D\u8D8A", "\u4E0A\u8D8A", "\u4F50\u6E21"];
 function freshScores() {
   const s = {};
   TAGS.forEach((t) => s[t] = 0);
@@ -2250,11 +3200,11 @@ function freshScores() {
 const state = {
   tab: "home",
   electionDate: "2026-10-25",
-  // 初期値: 新潟市長選挙
   quizStep: 0,
   scores: freshScores(),
   quizFinished: false,
-  selectedWard: "\u3059\u3079\u3066",
+  selectedRegion: "\u3059\u3079\u3066",
+  selectedMunicipality: "\u3059\u3079\u3066",
   placeSearchQuery: "",
   selectedElectionYear: "\u3059\u3079\u3066"
 };
@@ -2644,57 +3594,77 @@ function renderPlace() {
   const wrap = document.createElement("div");
   const title = document.createElement("h2");
   title.className = "disp section-title";
-  title.textContent = "\u65B0\u6F5F\u5E02\u306E\u6295\u7968\u6240\u4E00\u89A7\u30FB\u691C\u7D22";
+  title.textContent = "\u65B0\u6F5F\u770C \u6295\u7968\u6240\u6848\u5185 (\u516830\u5E02\u753A\u6751\u5BFE\u5FDC)";
   wrap.appendChild(title);
   const sub = document.createElement("p");
   sub.className = "section-sub";
-  sub.textContent = "\u65B0\u6F5F\u5E02\u51688\u533A\u30FB211\u7B87\u6240\u306E\u6295\u7968\u6240\u60C5\u5831\u3002\u533A\u306E\u5207\u308A\u66FF\u3048\u3084\u30AD\u30FC\u30EF\u30FC\u30C9\u691C\u7D22\u3067\u7C21\u5358\u306B\u63A2\u305B\u307E\u3059\u3002";
+  sub.textContent = "\u4E0B\u8D8A\u30FB\u4E2D\u8D8A\u30FB\u4E0A\u8D8A\u30FB\u4F50\u6E21\u306E\u516830\u5E02\u753A\u6751\u3002\u304A\u4F4F\u307E\u3044\u306E\u5730\u57DF\u3092\u9078\u629E\u307E\u305F\u306F\u691C\u7D22\u3067\u304D\u307E\u3059\u3002";
   wrap.appendChild(sub);
-  const officialBanner = document.createElement("div");
-  officialBanner.className = "niigata-official-banner";
-  officialBanner.innerHTML = `
-    <div class="banner-text">
-      <p class="banner-title">${icon("info", 16)} \u65B0\u6F5F\u5E02\u516C\u5F0F\u300C\u6295\u7968\u6240\u4E00\u89A7\u300D\u3092\u53C2\u7167\u4E2D</p>
-      <p class="banner-desc">\u4EE4\u548C8\u5E74\u6700\u65B0\u306E\u6295\u7968\u533A\u30FB\u6295\u7968\u6240\u30C7\u30FC\u30BF\u3002\u897F\u84B2\u533A\u3084\u6771\u533A\u7B49\u306E\u6295\u7968\u6240\u5909\u66F4\u60C5\u5831\u306B\u5BFE\u5FDC\u3002</p>
-    </div>
-    <a href="${OFFICIAL_NIIGATA_POLLING_URL}" target="_blank" rel="noopener noreferrer" class="official-banner-btn">
-      \u516C\u5F0FHP\u3067\u78BA\u8A8D ${icon("external-link", 13)}
-    </a>
-  `;
-  wrap.appendChild(officialBanner);
-  const tipsCard = document.createElement("div");
-  tipsCard.className = "voting-tips-card";
-  tipsCard.innerHTML = `
-    <p class="tips-title">\u{1F4A1} \u6295\u7968\u3078\u884C\u304F\u3068\u304D\u306E\u30DD\u30A4\u30F3\u30C8</p>
-    <ul class="tips-list">
-      <li><strong>\u6295\u7968\u6642\u9593:</strong> \u539F\u5247 7:00 \u301C 20:00 \uFF08\u6295\u7968\u6240\u306B\u3088\u308A\u7570\u306A\u308B\u5834\u5408\u3042\u308A\uFF09</li>
-      <li><strong>\u5165\u5834\u5238\u304C\u306A\u304F\u3066\u3082OK:</strong> \u300C\u6295\u7968\u6240\u5165\u5834\u5238\u300D\u3092\u5FD8\u308C\u3066\u3082\u672C\u4EBA\u78BA\u8A8D\uFF08\u6C0F\u540D\u30FB\u4F4F\u6240\u30FB\u751F\u5E74\u6708\u65E5\uFF09\u3067\u6295\u7968\u3067\u304D\u307E\u3059\uFF01</li>
-      <li><strong>\u5F53\u65E5\u306E\u6295\u7968\u5834\u6240:</strong> \u9078\u6319\u5F53\u65E5\u306F\u3001\u3054\u81EA\u8EAB\u306E\u5165\u5834\u5238\u306B\u6307\u5B9A\u3055\u308C\u305F\u6295\u7968\u6240\u306B\u3057\u304B\u884C\u3051\u307E\u305B\u3093\u3002</li>
-      <li><strong>\u671F\u65E5\u524D\u6295\u7968:</strong> \u5F53\u65E5\u90FD\u5408\u304C\u60AA\u3044\u65B9\u306F\u3001\u544A\u793A\u30FB\u516C\u793A\u65E5\u306E\u7FCC\u65E5\u304B\u3089\u533A\u5F79\u6240\u306A\u3069\u3067\u671F\u65E5\u524D\u6295\u7968\u304C\u3067\u304D\u307E\u3059\u3002</li>
-    </ul>
-  `;
-  wrap.appendChild(tipsCard);
-  const wardContainer = document.createElement("div");
-  wardContainer.className = "ward-filter-container";
-  const wardLabel = document.createElement("p");
-  wardLabel.className = "filter-label";
-  wardLabel.textContent = "\u884C\u653F\u533A\u3067\u7D5E\u308A\u8FBC\u307F:";
-  wardContainer.appendChild(wardLabel);
-  const wardChips = document.createElement("div");
-  wardChips.className = "ward-chips";
-  NIIGATA_WARDS.forEach((w) => {
-    const count = w === "\u3059\u3079\u3066" ? POLLING_PLACES.length : POLLING_PLACES.filter((p) => p.wardShort === w).length;
+  const regionContainer = document.createElement("div");
+  regionContainer.className = "region-filter-container";
+  regionContainer.style.marginBottom = "14px";
+  const regionLabel = document.createElement("p");
+  regionLabel.className = "filter-label";
+  regionLabel.textContent = "1. \u5730\u57DF\u30A8\u30EA\u30A2\u3092\u9078\u629E:";
+  regionContainer.appendChild(regionLabel);
+  const regionChips = document.createElement("div");
+  regionChips.className = "region-chips";
+  regionChips.style.display = "flex";
+  regionChips.style.gap = "6px";
+  regionChips.style.flexWrap = "wrap";
+  REGION_CATEGORIES.forEach((reg) => {
+    const count = reg === "\u3059\u3079\u3066" ? POLLING_PLACES.length : POLLING_PLACES.filter((p) => p.region === reg).length;
     const btn = document.createElement("button");
-    btn.className = "ward-chip" + (state.selectedWard === w ? " active" : "");
-    btn.innerHTML = `<span>${w}</span><span class="chip-count">${count}</span>`;
+    btn.className = "region-chip" + (state.selectedRegion === reg ? " active" : "");
+    btn.innerHTML = `<span>${reg}</span><span class="chip-count">${count}</span>`;
     btn.addEventListener("click", () => {
-      state.selectedWard = w;
+      state.selectedRegion = reg;
+      state.selectedMunicipality = "\u3059\u3079\u3066";
       render();
     });
-    wardChips.appendChild(btn);
+    regionChips.appendChild(btn);
   });
-  wardContainer.appendChild(wardChips);
-  wrap.appendChild(wardContainer);
+  regionContainer.appendChild(regionChips);
+  wrap.appendChild(regionContainer);
+  const availableMunicipalities = Array.from(new Set(
+    POLLING_PLACES.filter((p) => state.selectedRegion === "\u3059\u3079\u3066" || p.region === state.selectedRegion).map((p) => p.municipality)
+  ));
+  const muniContainer = document.createElement("div");
+  muniContainer.className = "muni-filter-container";
+  muniContainer.style.marginBottom = "16px";
+  const muniLabel = document.createElement("p");
+  muniLabel.className = "filter-label";
+  muniLabel.textContent = "2. \u5E02\u753A\u6751\u30FB\u533A\u3092\u9078\u629E:";
+  muniContainer.appendChild(muniLabel);
+  const muniChips = document.createElement("div");
+  muniChips.className = "muni-chips";
+  muniChips.style.display = "flex";
+  muniChips.style.gap = "6px";
+  muniChips.style.flexWrap = "wrap";
+  muniChips.style.maxHeight = "160px";
+  muniChips.style.overflowY = "auto";
+  muniChips.style.padding = "2px";
+  const allMuniBtn = document.createElement("button");
+  allMuniBtn.className = "muni-chip" + (state.selectedMunicipality === "\u3059\u3079\u3066" ? " active" : "");
+  allMuniBtn.textContent = "\u3059\u3079\u3066 (" + availableMunicipalities.length + "\u5E02\u753A\u6751/\u533A)";
+  allMuniBtn.addEventListener("click", () => {
+    state.selectedMunicipality = "\u3059\u3079\u3066";
+    render();
+  });
+  muniChips.appendChild(allMuniBtn);
+  availableMunicipalities.forEach((m) => {
+    const count = POLLING_PLACES.filter((p) => p.municipality === m).length;
+    const btn = document.createElement("button");
+    btn.className = "muni-chip" + (state.selectedMunicipality === m ? " active" : "");
+    btn.innerHTML = `<span>${m}</span><span class="chip-count">${count}</span>`;
+    btn.addEventListener("click", () => {
+      state.selectedMunicipality = m;
+      render();
+    });
+    muniChips.appendChild(btn);
+  });
+  muniContainer.appendChild(muniChips);
+  wrap.appendChild(muniContainer);
   const searchBox = document.createElement("div");
   searchBox.className = "place-search-box";
   const searchIcon = document.createElement("span");
@@ -2704,7 +3674,7 @@ function renderPlace() {
   const searchInput = document.createElement("input");
   searchInput.type = "text";
   searchInput.className = "place-search-input";
-  searchInput.placeholder = "\u6295\u7968\u6240\u540D\u3001\u4F4F\u6240\u3001\u753A\u540D\uFF08\u4F8B: \u677E\u6D5C\u3001\u53E4\u753A\u3001\u5742\u4E95\uFF09\u3067\u691C\u7D22...";
+  searchInput.placeholder = "\u5E02\u753A\u6751\u540D\u3001\u6295\u7968\u6240\u540D\u3001\u4F4F\u6240\u3001\u753A\u540D\uFF08\u4F8B: \u9577\u5CA1\u3001\u4F50\u6E21\u3001\u53E4\u753A\uFF09\u3067\u691C\u7D22...";
   searchInput.value = state.placeSearchQuery;
   searchInput.addEventListener("input", (e) => {
     state.placeSearchQuery = e.target.value;
@@ -2732,29 +3702,34 @@ function renderPlace() {
     listContainer.innerHTML = "";
     const q = state.placeSearchQuery.trim().toLowerCase();
     const filtered = POLLING_PLACES.filter((p) => {
-      if (state.selectedWard !== "\u3059\u3079\u3066" && p.wardShort !== state.selectedWard) {
+      if (state.selectedRegion !== "\u3059\u3079\u3066" && p.region !== state.selectedRegion) {
+        return false;
+      }
+      if (state.selectedMunicipality !== "\u3059\u3079\u3066" && p.municipality !== state.selectedMunicipality) {
         return false;
       }
       if (q) {
-        const target = `${p.id} ${p.ward} ${p.name} ${p.address} ${p.area} ${p.updateInfo || ""}`.toLowerCase();
+        const target = `${p.id} ${p.region} ${p.municipality} ${p.name} ${p.address} ${p.area} ${p.updateInfo || ""}`.toLowerCase();
         return target.includes(q);
       }
       return true;
     });
-    countBadge.textContent = q ? `\u{1F50D} \u300C${state.selectedWard}\u300D\u306E\u691C\u7D22\u7D50\u679C: ${filtered.length}\u4EF6\u306E\u6295\u7968\u6240\u304C\u898B\u3064\u304B\u308A\u307E\u3057\u305F` : `\u{1F4CD} \u300C${state.selectedWard}\u300D: \u5168${filtered.length}\u4EF6\u306E\u6295\u7968\u6240\u3092\u8868\u793A\u4E2D`;
+    const activeFilterLabel = state.selectedMunicipality !== "\u3059\u3079\u3066" ? state.selectedMunicipality : state.selectedRegion !== "\u3059\u3079\u3066" ? state.selectedRegion : "\u65B0\u6F5F\u770C\u5168\u57DF";
+    countBadge.textContent = q ? `\u{1F50D} \u300C${activeFilterLabel}\u300D\u306E\u691C\u7D22\u7D50\u679C: ${filtered.length}\u4EF6\u306E\u6295\u7968\u6240\u304C\u898B\u3064\u304B\u308A\u307E\u3057\u305F` : `\u{1F4CD} \u300C${activeFilterLabel}\u300D: \u5168${filtered.length}\u4EF6\u3092\u8868\u793A\u4E2D`;
     if (filtered.length === 0) {
       const emptyState = document.createElement("div");
       emptyState.className = "empty-polling-state";
       emptyState.innerHTML = `
         <p class="empty-title">\u6761\u4EF6\u306B\u4E00\u81F4\u3059\u308B\u6295\u7968\u6240\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093\u3067\u3057\u305F</p>
-        <p class="empty-desc">\u691C\u7D22\u30AD\u30FC\u30EF\u30FC\u30C9\u3092\u5909\u66F4\u3059\u308B\u304B\u3001\u300C\u3059\u3079\u3066\u300D\u306E\u533A\u3092\u9078\u629E\u3057\u3066\u304A\u8A66\u3057\u304F\u3060\u3055\u3044\u3002</p>
+        <p class="empty-desc">\u5730\u57DF\u30FB\u5E02\u753A\u6751\u9078\u629E\u3092\u300C\u3059\u3079\u3066\u300D\u306B\u3059\u308B\u304B\u3001\u691C\u7D22\u30AD\u30FC\u30EF\u30FC\u30C9\u3092\u5909\u66F4\u3057\u3066\u307F\u3066\u304F\u3060\u3055\u3044\u3002</p>
       `;
       const resetFilterBtn = document.createElement("button");
       resetFilterBtn.className = "reset-btn";
       resetFilterBtn.style.marginTop = "12px";
-      resetFilterBtn.innerHTML = `${icon("rotate-ccw", 14)} \u691C\u7D22\u6761\u4EF6\u3092\u30AF\u30EA\u30A2`;
+      resetFilterBtn.innerHTML = `${icon("rotate-ccw", 14)} \u6761\u4EF6\u3092\u5168\u30EA\u30BB\u30C3\u30C8`;
       resetFilterBtn.addEventListener("click", () => {
-        state.selectedWard = "\u3059\u3079\u3066";
+        state.selectedRegion = "\u3059\u3079\u3066";
+        state.selectedMunicipality = "\u3059\u3079\u3066";
         state.placeSearchQuery = "";
         render();
       });
@@ -2769,7 +3744,8 @@ function renderPlace() {
       cardHead.className = "polling-card-head";
       cardHead.innerHTML = `
         <div class="head-tags">
-          <span class="ward-tag">${p.wardShort}</span>
+          <span class="region-badge-tag">${p.region}</span>
+          <span class="ward-tag">${p.municipality}</span>
           <span class="code-tag">No.${p.id}</span>
         </div>
       `;
@@ -2785,7 +3761,7 @@ function renderPlace() {
       if (p.area) {
         const areaEl = document.createElement("div");
         areaEl.className = "polling-area";
-        areaEl.innerHTML = `<span class="area-label">\u5BFE\u8C61\u533A\u57DF:</span> ${p.area}`;
+        areaEl.innerHTML = `<span class="area-label">\u5BFE\u8C61\u533A\u57DF\u30FB\u30A8\u30EA\u30A2:</span> ${p.area}`;
         card.appendChild(areaEl);
       }
       if (p.updateInfo) {
@@ -2794,22 +3770,37 @@ function renderPlace() {
         noticeEl.innerHTML = `\u26A0\uFE0F <strong>\u5909\u66F4\u6CE8\u610F:</strong> ${p.updateInfo}`;
         card.appendChild(noticeEl);
       }
+      const btnGroup = document.createElement("div");
+      btnGroup.style.display = "flex";
+      btnGroup.style.gap = "8px";
+      btnGroup.style.flexWrap = "wrap";
+      btnGroup.style.marginTop = "8px";
+      if (p.officialUrl) {
+        const offBtn = document.createElement("a");
+        offBtn.className = "muni-official-btn";
+        offBtn.href = p.officialUrl;
+        offBtn.target = "_blank";
+        offBtn.rel = "noopener noreferrer";
+        offBtn.innerHTML = `${p.municipality.replace(/新潟市.*/, "\u65B0\u6F5F\u5E02")}\u516C\u5F0F \u6295\u7968\u6240\u6848\u5185 ${icon("external-link", 13)}`;
+        btnGroup.appendChild(offBtn);
+      }
       if (p.mapUrl) {
         const mapBtn = document.createElement("a");
         mapBtn.className = "map-direct-btn";
         mapBtn.href = p.mapUrl;
         mapBtn.target = "_blank";
         mapBtn.rel = "noopener noreferrer";
-        mapBtn.innerHTML = `${icon("map-pin", 14)} Google Maps\u3067\u5834\u6240\u3092\u78BA\u8A8D \u2197`;
-        card.appendChild(mapBtn);
+        mapBtn.innerHTML = `${icon("map-pin", 14)} Google Maps\u3067\u78BA\u8A8D \u2197`;
+        btnGroup.appendChild(mapBtn);
       }
+      card.appendChild(btnGroup);
       listContainer.appendChild(card);
     });
   }
   updatePollingListContainer();
   const footnote = document.createElement("p");
   footnote.className = "footnote";
-  footnote.textContent = "\u203B\u63B2\u8F09\u30C7\u30FC\u30BF\u306F\u65B0\u6F5F\u5E02\u516C\u5F0F\u300C\u6295\u7968\u6240\u4E00\u89A7\uFF08\u4EE4\u548C8\u5E745\u67081\u65E5\u6642\u70B9\uFF09\u300D\u306B\u57FA\u3065\u3044\u3066\u3044\u307E\u3059\u3002\u6295\u7968\u6240\u306F\u4F4F\u6C11\u767B\u9332\u4F4F\u6240\u306B\u3088\u3063\u3066\u6307\u5B9A\u3055\u308C\u307E\u3059\u3002\u6295\u7968\u6240\u5165\u5834\u5238\u306B\u8A18\u8F09\u306E\u5834\u6240\u304C\u6B63\u5F0F\u306A\u6295\u7968\u5834\u6240\u3067\u3059\u3002";
+  footnote.textContent = "\u203B\u63B2\u8F09\u30C7\u30FC\u30BF\u306F\u5404\u81EA\u6CBB\u4F53\u30FB\u9078\u6319\u7BA1\u7406\u59D4\u54E1\u4F1A\u306E\u516C\u958B\u60C5\u5831\u306B\u57FA\u3065\u3044\u3066\u3044\u307E\u3059\u3002\u6295\u7968\u6240\u306F\u4F4F\u6C11\u767B\u9332\u4F4F\u6240\u306B\u3088\u3063\u3066\u6307\u5B9A\u3055\u308C\u307E\u3059\u3002\u6295\u7968\u6240\u5165\u5834\u5238\u306B\u8A18\u8F09\u306E\u5834\u6240\u304C\u6B63\u5F0F\u306A\u6295\u7968\u5834\u6240\u3067\u3059\u3002";
   wrap.appendChild(footnote);
   return wrap;
 }
