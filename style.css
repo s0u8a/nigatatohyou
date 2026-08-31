@@ -1,21 +1,24 @@
 /* ---------- Design tokens ----------
   Color: paper (#F5F6F1 - 米どころの紙色), ink (#1E2A3A - 藍染めのインディゴ),
   gold (#D6A24C - 実った稲), plum (#8C3B4B - CTA/強調), line (#D9DAD1)
-  Type: display = Zen Old Mincho (見出し), body = Zen Kaku Gothic New (本文)
+  Type: display = Zen Kaku Gothic New (本文), body = Zen Kaku Gothic New (本文)
 ------------------------------------ */
 
 :root {
-  --bg: #F5F6F1;
+  --bg: #F8FAFC;
   --surface: #FFFFFF;
-  --ink: #1E2A3A;
-  --gold: #D6A24C;
-  --plum: #8C3B4B;
-  --line: #D9DAD1;
-  --line-faint: #EEEFE9;
-  --muted: #5B6470;
-  --faint: #9AA0A6;
+  --ink: #0F172A;
+  --purple: #7C3AED;
+  --purple-dark: #5B21B6;
+  --emerald: #10B981;
+  --emerald-dark: #059669;
+  --plum: #7C3AED;
+  --line: #E2E8F0;
+  --line-faint: #F1F5F9;
+  --muted: #64748B;
+  --faint: #94A3B8;
 
-  --font-display: 'Zen Old Mincho', serif;
+  --font-display: 'Zen Kaku Gothic New', sans-serif;
   --font-body: 'Zen Kaku Gothic New', sans-serif;
 }
 
@@ -34,7 +37,7 @@ html, body {
 .disp { font-family: var(--font-display); }
 
 .wrap {
-  max-width: 640px;
+  max-width: 768px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -309,7 +312,7 @@ html, body {
   margin-bottom: 24px;
 }
 
-.content { padding: 24px 0; }
+.content { padding: 28px 0; }
 
 /* Hero / countdown */
 .hero-row {
@@ -321,72 +324,74 @@ html, body {
 .hero-num {
   font-size: 72px;
   line-height: 1;
-  color: var(--plum);
+  color: #7C3AED;
+  font-weight: 800;
 }
-.hero-suffix { padding-bottom: 8px; font-size: 18px; }
+.hero-suffix { padding-bottom: 8px; font-size: 18px; font-weight: 700; color: #1E293B; }
 .subtext { font-size: 14px; color: var(--muted); margin: 0 0 24px 0; }
 
-/* Cards */
+/* Unified Cards */
 .card {
   background-color: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 16px;
+  border-radius: 14px;
+  padding: 20px;
   margin-bottom: 24px;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.06);
 }
 .card-label {
   display: block;
   font-size: 14px;
-  color: var(--muted);
+  font-weight: 700;
+  color: #334155;
   margin-bottom: 8px;
 }
 .date-input {
   border: 1px solid var(--line);
-  border-radius: 6px;
-  padding: 8px 12px;
+  border-radius: 8px;
+  padding: 10px 14px;
   font-size: 14px;
   width: 100%;
   font-family: var(--font-body);
   background: var(--surface);
   color: var(--ink);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.date-input:focus {
+  outline: none;
+  border-color: #7C3AED;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
 }
 
-.list-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--line-faint);
-  font-size: 14px;
-}
-.list-row:last-child { border-bottom: none; }
 .year-chip {
-  background-color: var(--bg);
-  border: 1px solid var(--line);
+  background-color: #F1F5F9;
+  border: 1px solid #E2E8F0;
   border-radius: 999px;
-  padding: 4px 10px;
-  font-size: 12px;
-  color: var(--ink);
+  padding: 6px 14px;
+  font-size: 13px;
+  color: #475569;
   cursor: pointer;
   font-family: var(--font-body);
   transition: all .15s ease;
 }
 .year-chip:hover {
-  border-color: var(--muted);
+  border-color: #7C3AED;
+  color: #7C3AED;
 }
 .year-chip.active {
-  background-color: var(--plum);
+  background: linear-gradient(135deg, #7C3AED, #6366F1);
   color: #FFFFFF;
-  border-color: var(--plum);
+  border-color: #5B21B6;
   font-weight: 700;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.25);
 }
 .year-badge {
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
-  color: var(--plum);
-  background-color: rgba(140, 59, 75, 0.08);
-  padding: 2px 6px;
-  border-radius: 4px;
+  color: #7C3AED;
+  background-color: #F3E8FF;
+  padding: 2px 8px;
+  border-radius: 6px;
   white-space: nowrap;
 }
 .election-btn {
@@ -394,17 +399,20 @@ html, body {
   background: none;
   border: none;
   border-bottom: 1px solid var(--line-faint);
-  padding: 8px 0;
+  padding: 12px 6px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   text-align: left;
   font-size: 14px;
   cursor: pointer;
   color: var(--ink);
   font-family: var(--font-body);
+  transition: background-color 0.15s ease;
+  border-radius: 6px;
 }
 .election-btn:hover {
-  background-color: rgba(0,0,0,0.015);
+  background-color: #F8FAFC;
 }
 .election-btn:last-of-type { border-bottom: none; }
 .election-btn span:last-child { color: var(--muted); }
@@ -414,20 +422,26 @@ html, body {
   align-items: center;
   gap: 6px;
   font-size: 14px;
-  color: var(--plum);
+  font-weight: 700;
+  color: #7C3AED;
   text-decoration: none;
-  margin-top: 8px;
+  margin-top: 12px;
+  transition: color 0.15s ease;
+}
+.official-link:hover {
+  color: #5B21B6;
+  text-decoration: underline;
 }
 
 .info-row {
   display: flex;
   justify-content: space-between;
-  padding: 8px 0;
+  padding: 12px 0;
   font-size: 14px;
   border-bottom: 1px solid var(--line);
 }
 .info-row:last-child { border-bottom: none; }
-.info-row .label { color: var(--muted); }
+.info-row .label { color: var(--muted); font-weight: 600; }
 
 .footnote {
   font-size: 12px;
@@ -437,16 +451,23 @@ html, body {
 }
 
 /* Section headings */
-.section-title { font-size: 20px; margin: 0 0 4px 0; }
+.section-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0 0 6px 0;
+  border-left: 4px solid #7C3AED;
+  padding-left: 12px;
+}
 .section-sub { font-size: 14px; color: var(--muted); margin: 0 0 24px 0; }
 
-/* Pledges */
+/* Candidate Cards */
 .candidate-card { margin-bottom: 24px; }
-.candidate-name { font-size: 16px; margin: 0 0 4px 0; }
-.candidate-tagline { font-size: 14px; color: var(--muted); margin: 0 0 12px 0; }
-.pledge-list { list-style: none; margin: 0 0 12px 0; padding: 0; font-size: 14px; }
-.pledge-list li { display: flex; gap: 8px; margin-bottom: 6px; }
-.pledge-list li::before { content: '・'; color: var(--plum); }
+.candidate-name { font-size: 18px; color: #7C3AED; font-weight: 800; margin: 0 0 4px 0; }
+.candidate-tagline { font-size: 14px; color: var(--muted); margin: 0 0 14px 0; font-weight: 600; }
+.pledge-list { list-style: none; margin: 0 0 14px 0; padding: 0; font-size: 14px; }
+.pledge-list li { display: flex; gap: 8px; margin-bottom: 8px; line-height: 1.5; }
+.pledge-list li::before { content: '✔'; color: #10B981; font-weight: 800; }
 
 .tag-chip {
   display: inline-block;
@@ -632,7 +653,7 @@ html, body {
   background-color: var(--surface);
   border: 1px solid var(--line);
   border-radius: 999px;
-  padding: 6px 12px;
+  padding: 6px 14px;
   font-size: 13px;
   color: var(--ink);
   cursor: pointer;
@@ -643,14 +664,23 @@ html, body {
   transition: all .15s ease;
 }
 .region-chip:hover, .muni-chip:hover, .ward-chip:hover {
-  border-color: var(--muted);
-  background-color: #F8F9F5;
+  border-color: #7C3AED;
+  color: #7C3AED;
+  background-color: #F8FAFC;
 }
-.region-chip.active, .muni-chip.active, .ward-chip.active {
-  background-color: var(--ink);
-  color: var(--bg);
-  border-color: var(--ink);
+.region-chip.active {
+  background: linear-gradient(135deg, #7C3AED, #6366F1);
+  color: #FFFFFF;
+  border-color: #5B21B6;
   font-weight: 700;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.25);
+}
+.muni-chip.active, .ward-chip.active {
+  background: linear-gradient(135deg, #10B981, #059669);
+  color: #FFFFFF;
+  border-color: #047857;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
 }
 .region-chip.active .chip-count, .muni-chip.active .chip-count, .ward-chip.active .chip-count {
   background: rgba(255, 255, 255, 0.25);
@@ -658,12 +688,12 @@ html, body {
 }
 
 .region-badge-tag {
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
-  color: #3E6B8A;
-  background-color: #EBF3F9;
+  color: #7C3AED;
+  background-color: #F3E8FF;
   padding: 2px 8px;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 .muni-official-btn {
@@ -671,30 +701,26 @@ html, body {
   align-items: center;
   gap: 6px;
   font-size: 13px;
-  font-weight: 500;
-  color: #3E6B8A;
-  background-color: #F0F4F8;
-  border: 1px solid #D0DFE8;
-  border-radius: 6px;
-  padding: 6px 12px;
+  font-weight: 600;
+  color: #475569;
+  background-color: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  padding: 8px 14px;
   text-decoration: none;
   transition: all .15s ease;
 }
 .muni-official-btn:hover {
-  background-color: #3E6B8A;
-  color: #FFFFFF;
-  border-color: #3E6B8A;
+  background-color: #E2E8F0;
+  color: #0F172A;
+  border-color: #94A3B8;
 }
 .chip-count {
   font-size: 11px;
-  opacity: 0.75;
-  background: rgba(150, 150, 150, 0.15);
+  opacity: 0.85;
+  background: rgba(100, 116, 139, 0.12);
   padding: 1px 6px;
   border-radius: 999px;
-}
-.ward-chip.active .chip-count {
-  background: rgba(255, 255, 255, 0.25);
-  color: #FFFFFF;
 }
 
 /* Search input */
@@ -704,20 +730,20 @@ html, body {
 }
 .search-icon {
   position: absolute;
-  left: 12px;
+  left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--faint);
+  color: var(--muted);
   display: flex;
   align-items: center;
   pointer-events: none;
 }
 .place-search-input {
   width: 100%;
-  padding: 10px 36px;
+  padding: 12px 40px;
   font-size: 14px;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 10px;
   background-color: var(--surface);
   color: var(--ink);
   font-family: var(--font-body);
@@ -725,12 +751,12 @@ html, body {
 }
 .place-search-input:focus {
   outline: none;
-  border-color: var(--plum);
-  box-shadow: 0 0 0 3px rgba(140, 59, 75, 0.1);
+  border-color: #7C3AED;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.18);
 }
 .search-clear-btn {
   position: absolute;
-  right: 10px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -748,35 +774,36 @@ html, body {
 }
 
 .result-count-badge {
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 12px;
-  font-weight: 500;
+  font-size: 13.5px;
+  color: #334155;
+  margin-bottom: 14px;
+  font-weight: 700;
 }
 
 /* Polling cards */
 .polling-list-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   margin-bottom: 24px;
 }
 .polling-card {
   background-color: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 16px;
+  border-radius: 12px;
+  padding: 18px;
   transition: box-shadow .15s ease, border-color .15s ease;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.04);
 }
 .polling-card:hover {
-  border-color: #C0C2B8;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  border-color: #CBD5E1;
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.08);
 }
 .polling-card-head {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 .head-tags {
   display: flex;
@@ -784,12 +811,13 @@ html, body {
   align-items: center;
 }
 .ward-tag {
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
-  color: var(--plum);
-  background-color: rgba(140, 59, 75, 0.08);
+  color: #10B981;
+  background-color: #ECFDF5;
   padding: 2px 8px;
-  border-radius: 4px;
+  border-radius: 6px;
+  border: 1px solid #A7F3D0;
 }
 .code-tag {
   font-size: 11px;
@@ -800,63 +828,65 @@ html, body {
   font-family: monospace;
 }
 .polling-name {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 17px;
+  font-weight: 800;
   margin: 0 0 6px 0;
-  color: var(--ink);
+  color: #0F172A;
 }
 .polling-address {
-  font-size: 13px;
-  color: var(--muted);
-  margin: 0 0 8px 0;
+  font-size: 13.5px;
+  color: #475569;
+  margin: 0 0 10px 0;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 .polling-address svg {
-  color: var(--plum);
+  color: #7C3AED;
   flex-shrink: 0;
 }
 .polling-area {
-  font-size: 12px;
-  color: var(--muted);
-  background-color: #F8F9F5;
-  border-radius: 6px;
-  padding: 8px 10px;
-  margin-bottom: 10px;
+  font-size: 12.5px;
+  color: #475569;
+  background-color: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
   line-height: 1.5;
 }
 .area-label {
   font-weight: 700;
-  color: var(--ink);
+  color: #1E293B;
 }
 .polling-notice {
-  font-size: 12px;
-  color: #9C27B0;
-  background-color: #F3E5F5;
-  border: 1px solid #E1BEE7;
-  border-radius: 6px;
-  padding: 8px 10px;
-  margin-bottom: 10px;
+  font-size: 12.5px;
+  color: #9333EA;
+  background-color: #F3E8FF;
+  border: 1px solid #E9D5FF;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
 }
 .map-direct-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  color: #2D68C4;
-  background-color: #EFF5FF;
-  border: 1px solid #C6DCFF;
-  border-radius: 6px;
-  padding: 6px 12px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #10B981, #059669);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
   text-decoration: none;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
   transition: all .15s ease;
 }
 .map-direct-btn:hover {
-  background-color: #2D68C4;
-  color: #FFFFFF;
-  border-color: #2D68C4;
+  background: linear-gradient(135deg, #059669, #047857);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
+  transform: translateY(-1px);
 }
 
 .empty-polling-state {
