@@ -3678,7 +3678,7 @@ function icon(name, size = 16) {
 const root = document.getElementById("app");
 function render() {
   root.innerHTML = "";
-  root.appendChild(renderNav());
+  root.appendChild(renderHeader());
   const content = document.createElement("div");
   content.className = "wrap content";
   switch (state.tab) {
@@ -3699,17 +3699,25 @@ function render() {
   }
   root.appendChild(content);
 }
-function renderNav() {
-  const nav = document.createElement("div");
-  nav.className = "nav";
-  const inner = document.createElement("div");
-  inner.className = "wrap nav-inner";
-  const title = document.createElement("h1");
-  title.className = "disp nav-title";
-  title.textContent = "\u306B\u3044\u304C\u305F\u3001\u6295\u7968\u307E\u3067\u306E\u9053";
-  inner.appendChild(title);
-  const tabs = document.createElement("div");
-  tabs.className = "tabs";
+function renderHeader() {
+  const header = document.createElement("header");
+  header.className = "site-header";
+  const container = document.createElement("div");
+  container.className = "header-container";
+  const logoBox = document.createElement("div");
+  logoBox.className = "logo-box";
+  const logoImg = document.createElement("img");
+  logoImg.src = "rogo.png";
+  logoImg.alt = "\u65B0\u6F5F\u306E\u65B0\u6F5F\u9078\u6319";
+  logoImg.className = "site-logo-img";
+  logoImg.addEventListener("click", () => {
+    state.tab = "home";
+    render();
+  });
+  logoBox.appendChild(logoImg);
+  container.appendChild(logoBox);
+  const navTabs = document.createElement("nav");
+  navTabs.className = "nav-tabs-container";
   const tabDefs = [
     ["home", "\u65E5\u7A0B", "calendar"],
     ["pledges", "\u516C\u7D04", "clipboard"],
@@ -3718,20 +3726,62 @@ function renderNav() {
   ];
   tabDefs.forEach(([key, label, iconName]) => {
     const btn = document.createElement("button");
-    btn.className = "tab-btn" + (state.tab === key ? " active" : "");
-    btn.innerHTML = `${icon(iconName, 15)}<span>${label}</span>`;
+    btn.className = "nav-tab-item" + (state.tab === key ? " active" : "");
+    btn.innerHTML = `${icon(iconName, 16)}<span>${label}</span>`;
     btn.addEventListener("click", () => {
       state.tab = key;
       render();
     });
-    tabs.appendChild(btn);
+    navTabs.appendChild(btn);
   });
-  inner.appendChild(tabs);
-  nav.appendChild(inner);
-  return nav;
+  container.appendChild(navTabs);
+  header.appendChild(container);
+  return header;
+}
+function renderHeroSection() {
+  const hero = document.createElement("div");
+  hero.className = "main-hero-container";
+  const bgPhoto = document.createElement("div");
+  bgPhoto.className = "hero-bg-photo";
+  bgPhoto.style.backgroundImage = "url('R.jpe')";
+  hero.appendChild(bgPhoto);
+  const heroOverlay = document.createElement("div");
+  heroOverlay.className = "hero-overlay-mask";
+  const ovalBanner = document.createElement("div");
+  ovalBanner.className = "hero-oval-text";
+  ovalBanner.textContent = "\u65B0\u6F5F\u306E\u82E5\u8005\u306E\u9078\u6319\u7387\u3092\u9AD8\u3081\u308B\u305F\u3081\u306E\u30B5\u30A4\u30C8";
+  heroOverlay.appendChild(ovalBanner);
+  const mascotLeftCard = document.createElement("div");
+  mascotLeftCard.className = "hero-mascot-left";
+  const senkyoImg = document.createElement("img");
+  senkyoImg.src = "\u9078\u6319\u541B.png";
+  senkyoImg.alt = "\u9078\u6319\u541B";
+  mascotLeftCard.appendChild(senkyoImg);
+  heroOverlay.appendChild(mascotLeftCard);
+  const komeLeftCard = document.createElement("div");
+  komeLeftCard.className = "hero-mascot-kome-left";
+  const komeLeftImg = document.createElement("img");
+  komeLeftImg.src = "\u3053\u3081.png";
+  komeLeftImg.alt = "\u3053\u3081\u3061\u3083\u3093";
+  komeLeftCard.appendChild(komeLeftImg);
+  heroOverlay.appendChild(komeLeftCard);
+  const komeRightCard = document.createElement("div");
+  komeRightCard.className = "hero-mascot-kome-right";
+  const komeRightImg = document.createElement("img");
+  komeRightImg.src = "\u3053\u3081.png";
+  komeRightImg.alt = "\u3053\u3081\u3061\u3083\u3093";
+  komeRightCard.appendChild(komeRightImg);
+  heroOverlay.appendChild(komeRightCard);
+  hero.appendChild(heroOverlay);
+  const scrollIndicator = document.createElement("div");
+  scrollIndicator.className = "scroll-indicator";
+  scrollIndicator.innerHTML = `<span>\u25BC \u4E0B\u3078\u30B9\u30AF\u30ED\u30FC\u30EB\u3057\u3066\u30B3\u30F3\u30C6\u30F3\u30C4\u3092\u898B\u308B</span>`;
+  hero.appendChild(scrollIndicator);
+  return hero;
 }
 function renderHome() {
   const wrap = document.createElement("div");
+  wrap.appendChild(renderHeroSection());
   const days = daysUntil(state.electionDate);
   const heroRow = document.createElement("div");
   heroRow.className = "hero-row";

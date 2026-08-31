@@ -3772,7 +3772,7 @@ const root = document.getElementById("app")!;
 
 function render() {
   root.innerHTML = "";
-  root.appendChild(renderNav());
+  root.appendChild(renderHeader());
 
   const content = document.createElement("div");
   content.className = "wrap content";
@@ -3797,20 +3797,31 @@ function render() {
   root.appendChild(content);
 }
 
-function renderNav(): HTMLElement {
-  const nav = document.createElement("div");
-  nav.className = "nav";
+// ---------- Header with Logo & Stylized Tabs ----------
+function renderHeader(): HTMLElement {
+  const header = document.createElement("header");
+  header.className = "site-header";
 
-  const inner = document.createElement("div");
-  inner.className = "wrap nav-inner";
+  const container = document.createElement("div");
+  container.className = "header-container";
 
-  const title = document.createElement("h1");
-  title.className = "disp nav-title";
-  title.textContent = "にいがた、投票までの道";
-  inner.appendChild(title);
+  // Logo (rogo.png)
+  const logoBox = document.createElement("div");
+  logoBox.className = "logo-box";
+  const logoImg = document.createElement("img");
+  logoImg.src = "rogo.png";
+  logoImg.alt = "新潟の新潟選挙";
+  logoImg.className = "site-logo-img";
+  logoImg.addEventListener("click", () => {
+    state.tab = "home";
+    render();
+  });
+  logoBox.appendChild(logoImg);
+  container.appendChild(logoBox);
 
-  const tabs = document.createElement("div");
-  tabs.className = "tabs";
+  // Tabs (［ 日程 ］［ 公約 ］［ 投票診断 ］［ 投票所 ］)
+  const navTabs = document.createElement("nav");
+  navTabs.className = "nav-tabs-container";
 
   const tabDefs: [TabKey, string, string][] = [
     ["home", "日程", "calendar"],
@@ -3821,22 +3832,83 @@ function renderNav(): HTMLElement {
 
   tabDefs.forEach(([key, label, iconName]) => {
     const btn = document.createElement("button");
-    btn.className = "tab-btn" + (state.tab === key ? " active" : "");
-    btn.innerHTML = `${icon(iconName, 15)}<span>${label}</span>`;
+    btn.className = "nav-tab-item" + (state.tab === key ? " active" : "");
+    btn.innerHTML = `${icon(iconName, 16)}<span>${label}</span>`;
     btn.addEventListener("click", () => {
       state.tab = key;
       render();
     });
-    tabs.appendChild(btn);
+    navTabs.appendChild(btn);
   });
 
-  inner.appendChild(tabs);
-  nav.appendChild(inner);
-  return nav;
+  container.appendChild(navTabs);
+  header.appendChild(container);
+  return header;
+}
+
+// ---------- Initial Welcome Hero Section (モックアップ画像に忠実なメイン画面) ----------
+function renderHeroSection(): HTMLElement {
+  const hero = document.createElement("div");
+  hero.className = "main-hero-container";
+
+  // Background Photo (R.jpe - 新潟県庁と信濃川の景色)
+  const bgPhoto = document.createElement("div");
+  bgPhoto.className = "hero-bg-photo";
+  bgPhoto.style.backgroundImage = "url('R.jpe')";
+  hero.appendChild(bgPhoto);
+
+  const heroOverlay = document.createElement("div");
+  heroOverlay.className = "hero-overlay-mask";
+
+  // Center Oval Banner (「新潟の若者の選挙率を高めるためのサイト」)
+  const ovalBanner = document.createElement("div");
+  ovalBanner.className = "hero-oval-text";
+  ovalBanner.textContent = "新潟の若者の選挙率を高めるためのサイト";
+  heroOverlay.appendChild(ovalBanner);
+
+  // Left Mascot Character Card ("選挙君")
+  const mascotLeftCard = document.createElement("div");
+  mascotLeftCard.className = "hero-mascot-left";
+  const senkyoImg = document.createElement("img");
+  senkyoImg.src = "選挙君.png";
+  senkyoImg.alt = "選挙君";
+  mascotLeftCard.appendChild(senkyoImg);
+  heroOverlay.appendChild(mascotLeftCard);
+
+  // Bottom-Left Rice Mascot ("こめちゃん")
+  const komeLeftCard = document.createElement("div");
+  komeLeftCard.className = "hero-mascot-kome-left";
+  const komeLeftImg = document.createElement("img");
+  komeLeftImg.src = "こめ.png";
+  komeLeftImg.alt = "こめちゃん";
+  komeLeftCard.appendChild(komeLeftImg);
+  heroOverlay.appendChild(komeLeftCard);
+
+  // Bottom-Right Rice Mascot ("こめちゃん")
+  const komeRightCard = document.createElement("div");
+  komeRightCard.className = "hero-mascot-kome-right";
+  const komeRightImg = document.createElement("img");
+  komeRightImg.src = "こめ.png";
+  komeRightImg.alt = "こめちゃん";
+  komeRightCard.appendChild(komeRightImg);
+  heroOverlay.appendChild(komeRightCard);
+
+  hero.appendChild(heroOverlay);
+
+  // Scroll Down Indicator
+  const scrollIndicator = document.createElement("div");
+  scrollIndicator.className = "scroll-indicator";
+  scrollIndicator.innerHTML = `<span>▼ 下へスクロールしてコンテンツを見る</span>`;
+  hero.appendChild(scrollIndicator);
+
+  return hero;
 }
 
 function renderHome(): HTMLElement {
   const wrap = document.createElement("div");
+
+  // 最初にサイトを開いた際のHero画面（モックアップに基づくデザイン）
+  wrap.appendChild(renderHeroSection());
 
   const days = daysUntil(state.electionDate);
   const heroRow = document.createElement("div");
