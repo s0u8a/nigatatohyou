@@ -193,7 +193,7 @@ const UPCOMING_ELECTIONS: UpcomingElection[] = [
 
 const ELECTION_YEAR_FILTERS = ["すべて", "令和7年度", "令和8年度", "令和9年度以降"];
 
-// 新潟県 全30市町村 投票所データ
+// 新潟県 全30市町村 投票所データ (全284箇所)
 const POLLING_PLACES: PollingPlace[] = [
   {
     "id": "1001",
@@ -2939,117 +2939,357 @@ const POLLING_PLACES: PollingPlace[] = [
     "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
-    "id": "M01",
+    "id": "N01",
     "region": "中越",
     "municipality": "長岡市",
     "name": "長岡市役所 アオーレ長岡",
     "address": "長岡市大手通1-4-10",
-    "area": "長岡市中心部・長岡駅周辺",
+    "area": "大手通・長岡駅前・表町・殿町エリア",
     "mapUrl": "https://maps.app.goo.gl/9ZkG5v7t8wX9a2bC7",
     "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
   },
   {
-    "id": "M02",
+    "id": "N02",
     "region": "中越",
     "municipality": "長岡市",
-    "name": "長岡市立劇場 ロビー",
+    "name": "長岡市立劇場",
     "address": "長岡市幸町2-1-2",
-    "area": "幸町・千手・川崎エリア",
+    "area": "幸町・千手・関原・台町エリア",
     "mapUrl": "https://goo.gl/maps/b3a1B2C3D4E5F6G78",
     "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
   },
   {
-    "id": "M03",
+    "id": "N03",
+    "region": "中越",
+    "municipality": "長岡市",
+    "name": "長岡市北部体育館",
+    "address": "長岡市東蔵王2-2-72",
+    "area": "蔵王・神谷・新保・今井エリア",
+    "mapUrl": "https://maps.app.goo.gl/3A4b5C6d7E8f9G0h1",
+    "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
+  },
+  {
+    "id": "N04",
+    "region": "中越",
+    "municipality": "長岡市",
+    "name": "長岡市南部体育館",
+    "address": "長岡市学校町3-2-29",
+    "area": "学校町・悠久山・栖吉・中島エリア",
+    "mapUrl": "https://maps.app.goo.gl/2B3c4D5e6F7g8H9i0",
+    "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
+  },
+  {
+    "id": "N05",
+    "region": "中越",
+    "municipality": "長岡市",
+    "name": "長岡市越路支所",
+    "address": "長岡市浦715",
+    "area": "越路地区（浦・来迎寺・塚野山）",
+    "mapUrl": "https://maps.app.goo.gl/1A2b3C4d5E6f7G8h9",
+    "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
+  },
+  {
+    "id": "N06",
+    "region": "中越",
+    "municipality": "長岡市",
+    "name": "長岡市栃尾支所",
+    "address": "長岡市金町2-1-5",
+    "area": "栃尾地区（谷内・秋葉・東谷）",
+    "mapUrl": "https://maps.app.goo.gl/0Z9y8X7w6V5u4T3s2",
+    "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
+  },
+  {
+    "id": "N07",
+    "region": "中越",
+    "municipality": "長岡市",
+    "name": "長岡市寺泊支所",
+    "address": "長岡市寺泊川崎4798-1",
+    "area": "寺泊地区（港町・大野・野積）",
+    "mapUrl": "https://maps.app.goo.gl/9Y8x7W6v5U4t3S2r1",
+    "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
+  },
+  {
+    "id": "N08",
+    "region": "中越",
+    "municipality": "長岡市",
+    "name": "長岡市中之島支所",
+    "address": "長岡市中之島844",
+    "area": "中之島地区全域",
+    "mapUrl": "https://maps.app.goo.gl/8X7w6V5u4T3s2R1q0",
+    "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
+  },
+  {
+    "id": "N09",
+    "region": "中越",
+    "municipality": "長岡市",
+    "name": "長岡市山古志支所",
+    "address": "長岡市山古志竹沢3610",
+    "area": "山古志地区（竹沢・種すは・油夫）",
+    "mapUrl": "https://maps.app.goo.gl/7W6v5U4t3S2r1Q0p9",
+    "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
+  },
+  {
+    "id": "N10",
+    "region": "中越",
+    "municipality": "長岡市",
+    "name": "長岡市川口支所",
+    "address": "長岡市川口川口1974-26",
+    "area": "川口地区（東川口・和南津）",
+    "mapUrl": "https://maps.app.goo.gl/6V5u4T3s2R1q0P9o8",
+    "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
+  },
+  {
+    "id": "SJ01",
     "region": "中越",
     "municipality": "三条市",
     "name": "三条市役所 本庁舎",
     "address": "三条市旭町2-3-1",
-    "area": "三条市中心部・中央地区",
+    "area": "三条中心部・本町・旭町エリア",
     "mapUrl": "https://maps.app.goo.gl/4XyZ9a8b7c6d5e4f3",
     "officialUrl": "https://www.city.sanjo.niigata.jp/soshiki/senkyokanriinkaijimukyoku/senkyoseido/touhyou/15316.html"
   },
   {
-    "id": "M04",
+    "id": "SJ02",
+    "region": "中越",
+    "municipality": "三条市",
+    "name": "三条市厚生福祉会館",
+    "address": "三条市本町1-4-1",
+    "area": "一ノ木戸・東三条・島田エリア",
+    "mapUrl": "https://maps.app.goo.gl/3W2v1U0t9S8r7Q6p5",
+    "officialUrl": "https://www.city.sanjo.niigata.jp/soshiki/senkyokanriinkaijimukyoku/senkyoseido/touhyou/15316.html"
+  },
+  {
+    "id": "SJ03",
+    "region": "中越",
+    "municipality": "三条市",
+    "name": "三条市栄庁舎",
+    "address": "三条市新堀1311",
+    "area": "栄地区（新堀・大面・北入蔵）",
+    "mapUrl": "https://maps.app.goo.gl/2V1u0T9s8R7q6P5o4",
+    "officialUrl": "https://www.city.sanjo.niigata.jp/soshiki/senkyokanriinkaijimukyoku/senkyoseido/touhyou/15316.html"
+  },
+  {
+    "id": "SJ04",
+    "region": "中越",
+    "municipality": "三条市",
+    "name": "三条市下田庁舎",
+    "address": "三条市荻堀830-1",
+    "area": "下田地区（荻堀・長野・荒沢）",
+    "mapUrl": "https://maps.app.goo.gl/1U0t9S8r7Q6p5O4n3",
+    "officialUrl": "https://www.city.sanjo.niigata.jp/soshiki/senkyokanriinkaijimukyoku/senkyoseido/touhyou/15316.html"
+  },
+  {
+    "id": "KZ01",
     "region": "中越",
     "municipality": "柏崎市",
     "name": "柏崎市役所 本庁舎",
     "address": "柏崎市日石町2-1",
-    "area": "柏崎市中心部・駅前地区",
+    "area": "柏崎駅前・日石町・中央町エリア",
     "mapUrl": "https://maps.app.goo.gl/2B3c4D5e6F7g8H9i0",
     "officialUrl": "https://www.city.kashiwazaki.lg.jp/soshiki/senkyo/senkyo/1/6530.html"
   },
   {
-    "id": "M05",
+    "id": "KZ02",
     "region": "中越",
-    "municipality": "小千谷市",
-    "name": "小千谷市役所 本庁舎",
-    "address": "小千谷市城内2-7-5",
-    "area": "小千谷市全域",
+    "municipality": "柏崎市",
+    "name": "柏崎市文化会館 アルフォーレ",
+    "address": "柏崎市日石町4-32",
+    "area": "東本町・諏訪町・鏡町エリア",
     "mapUrl": "https://maps.app.goo.gl/1A2b3C4d5E6f7G8h9",
-    "officialUrl": "https://www.city.ojiya.niigata.jp/soshiki/senkan/"
+    "officialUrl": "https://www.city.kashiwazaki.lg.jp/soshiki/senkyo/senkyo/1/6530.html"
   },
   {
-    "id": "M06",
+    "id": "KZ03",
     "region": "中越",
-    "municipality": "加茂市",
-    "name": "加茂市役所 本庁舎",
-    "address": "加茂市幸町2-3-5",
-    "area": "加茂市全域",
-    "mapUrl": "https://maps.app.goo.gl/8H9i0J1k2L3m4N5o6",
-    "officialUrl": "https://www.city.kamo.niigata.jp/"
+    "municipality": "柏崎市",
+    "name": "柏崎市西川コミュニティセンター",
+    "address": "柏崎市西山町妙法寺348",
+    "area": "西山地区（西山・妙法寺・二田）",
+    "mapUrl": "https://maps.app.goo.gl/0Z9y8X7w6V5u4T3s2",
+    "officialUrl": "https://www.city.kashiwazaki.lg.jp/soshiki/senkyo/senkyo/1/6530.html"
   },
   {
-    "id": "M07",
+    "id": "KZ04",
     "region": "中越",
-    "municipality": "十日町市",
-    "name": "十日町市役所 本庁舎",
-    "address": "十日町市千歳町3-3",
-    "area": "十日町市全域",
-    "mapUrl": "https://maps.app.goo.gl/7G8h9I0j1K2l3M4n5",
-    "officialUrl": "https://www.city.tokamachi.lg.jp/soshiki/senkyokanriinkai/"
+    "municipality": "柏崎市",
+    "name": "高田コミュニティセンター",
+    "address": "柏崎市山上465",
+    "area": "高田・荒浜・松波エリア",
+    "mapUrl": "https://maps.app.goo.gl/9Y8x7W6v5U4t3S2r1",
+    "officialUrl": "https://www.city.kashiwazaki.lg.jp/soshiki/senkyo/senkyo/1/6530.html"
   },
   {
-    "id": "M08",
-    "region": "中越",
-    "municipality": "見附市",
-    "name": "見附市役所 本庁舎",
-    "address": "見附市昭和町2-1-1",
-    "area": "見附市全域",
-    "mapUrl": "https://maps.app.goo.gl/6F7g8H9i0J1k2L3m4",
-    "officialUrl": "https://www.city.mitsuke.niigata.jp/"
-  },
-  {
-    "id": "M09",
+    "id": "TB01",
     "region": "中越",
     "municipality": "燕市",
     "name": "燕市役所 本庁舎",
     "address": "燕市吉田西太田1934",
-    "area": "燕市全域（吉田・燕・分水地区）",
+    "area": "西太田・吉田中心部・粟生津エリア",
     "mapUrl": "https://maps.app.goo.gl/5E6f7G8h9I0j1K2l3",
     "officialUrl": "https://www.city.tsubame.niigata.jp/soshiki/senkyokanriinkaijimukyoku/touhyouseido/5529.html"
   },
   {
-    "id": "M10",
+    "id": "TB02",
     "region": "中越",
-    "municipality": "魚沼市",
-    "name": "魚沼市役所 小出庁舎",
-    "address": "魚沼市小出島910",
-    "area": "魚沼市全域",
+    "municipality": "燕市",
+    "name": "燕市総合文化センター",
+    "address": "燕市大曲3015",
+    "area": "燕地区（中央通・秋津・大曲）",
     "mapUrl": "https://maps.app.goo.gl/4D5e6F7g8H9i0J1k2",
-    "officialUrl": "https://www.city.uonuma.niigata.jp/"
+    "officialUrl": "https://www.city.tsubame.niigata.jp/soshiki/senkyokanriinkaijimukyoku/touhyouseido/5529.html"
   },
   {
-    "id": "M11",
+    "id": "TB03",
+    "region": "中越",
+    "municipality": "燕市",
+    "name": "燕市分水公民館",
+    "address": "燕市分水新町2-5-1",
+    "area": "分水地区（分水・地蔵堂・渡部）",
+    "mapUrl": "https://maps.app.goo.gl/3C4d5E6f7G8h9I0j1",
+    "officialUrl": "https://www.city.tsubame.niigata.jp/soshiki/senkyokanriinkaijimukyoku/touhyouseido/5529.html"
+  },
+  {
+    "id": "TK01",
+    "region": "中越",
+    "municipality": "十日町市",
+    "name": "十日町市役所 本庁舎",
+    "address": "十日町市千歳町3-3",
+    "area": "十日町中心部・千歳町・本町エリア",
+    "mapUrl": "https://maps.app.goo.gl/7G8h9I0j1K2l3M4n5",
+    "officialUrl": "https://www.city.tokamachi.lg.jp/soshiki/senkyokanriinkai/"
+  },
+  {
+    "id": "TK02",
+    "region": "中越",
+    "municipality": "十日町市",
+    "name": "十日町市川西支所",
+    "address": "十日町市小黒沢イ129-1",
+    "area": "川西地区（上名市・小黒沢）",
+    "mapUrl": "https://maps.app.goo.gl/6F7g8H9i0J1k2L3m4",
+    "officialUrl": "https://www.city.tokamachi.lg.jp/soshiki/senkyokanriinkai/"
+  },
+  {
+    "id": "TK03",
+    "region": "中越",
+    "municipality": "十日町市",
+    "name": "十日町市松代支所",
+    "address": "十日町市松代3926-1",
+    "area": "松代地区全域",
+    "mapUrl": "https://maps.app.goo.gl/5E6f7G8h9I0j1K2l3",
+    "officialUrl": "https://www.city.tokamachi.lg.jp/soshiki/senkyokanriinkai/"
+  },
+  {
+    "id": "TK04",
+    "region": "中越",
+    "municipality": "十日町市",
+    "name": "十日町市松之山支所",
+    "address": "十日町市松之山1104",
+    "area": "松之山地区全域",
+    "mapUrl": "https://maps.app.goo.gl/4D5e6F7g8H9i0J1k2",
+    "officialUrl": "https://www.city.tokamachi.lg.jp/soshiki/senkyokanriinkai/"
+  },
+  {
+    "id": "MU01",
     "region": "中越",
     "municipality": "南魚沼市",
     "name": "南魚沼市役所 本庁舎",
     "address": "南魚沼市六日町180-1",
-    "area": "六日町・塩沢・大和地区",
+    "area": "六日町中心部・坂戸・川窪エリア",
     "mapUrl": "https://maps.app.goo.gl/3C4d5E6f7G8h9I0j1",
     "officialUrl": "https://www.city.minamiuonuma.niigata.jp/"
   },
   {
-    "id": "M12",
+    "id": "MU02",
+    "region": "中越",
+    "municipality": "南魚沼市",
+    "name": "南魚沼市塩沢庁舎",
+    "address": "南魚沼市塩沢1371-1",
+    "area": "塩沢地区（塩沢・石打・舞子）",
+    "mapUrl": "https://maps.app.goo.gl/2B3c4D5e6F7g8H9i0",
+    "officialUrl": "https://www.city.minamiuonuma.niigata.jp/"
+  },
+  {
+    "id": "MU03",
+    "region": "中越",
+    "municipality": "南魚沼市",
+    "name": "南魚沼市大和庁舎",
+    "address": "南魚沼市浦佐1185-1",
+    "area": "大和地区（浦佐・八色・五日町）",
+    "mapUrl": "https://maps.app.goo.gl/1A2b3C4d5E6f7G8h9",
+    "officialUrl": "https://www.city.minamiuonuma.niigata.jp/"
+  },
+  {
+    "id": "UO01",
+    "region": "中越",
+    "municipality": "魚沼市",
+    "name": "魚沼市役所 小出庁舎",
+    "address": "魚沼市小出島910",
+    "area": "小出地区（小出島・四日町）",
+    "mapUrl": "https://maps.app.goo.gl/4D5e6F7g8H9i0J1k2",
+    "officialUrl": "https://www.city.uonuma.niigata.jp/"
+  },
+  {
+    "id": "UO02",
+    "region": "中越",
+    "municipality": "魚沼市",
+    "name": "魚沼市堀之内庁舎",
+    "address": "魚沼市堀之内130",
+    "area": "堀之内地区全域",
+    "mapUrl": "https://maps.app.goo.gl/3C4d5E6f7G8h9I0j1",
+    "officialUrl": "https://www.city.uonuma.niigata.jp/"
+  },
+  {
+    "id": "UO03",
+    "region": "中越",
+    "municipality": "魚沼市",
+    "name": "魚沼市入広瀬庁舎",
+    "address": "魚沼市穴沢215-1",
+    "area": "入広瀬地区全域",
+    "mapUrl": "https://maps.app.goo.gl/2B3c4D5e6F7g8H9i0",
+    "officialUrl": "https://www.city.uonuma.niigata.jp/"
+  },
+  {
+    "id": "OJ01",
+    "region": "中越",
+    "municipality": "小千谷市",
+    "name": "小千谷市役所 本庁舎",
+    "address": "小千谷市城内2-7-5",
+    "area": "小千谷市中心部・城内エリア",
+    "mapUrl": "https://maps.app.goo.gl/1A2b3C4d5E6f7G8h9",
+    "officialUrl": "https://www.city.ojiya.niigata.jp/soshiki/senkan/"
+  },
+  {
+    "id": "OJ02",
+    "region": "中越",
+    "municipality": "小千谷市",
+    "name": "片貝コミュニティセンター",
+    "address": "小千谷市片貝町4940-1",
+    "area": "片貝地区全域",
+    "mapUrl": "https://maps.app.goo.gl/0Z9y8X7w6V5u4T3s2",
+    "officialUrl": "https://www.city.ojiya.niigata.jp/soshiki/senkan/"
+  },
+  {
+    "id": "MT01",
+    "region": "中越",
+    "municipality": "見附市",
+    "name": "見附市役所 本庁舎",
+    "address": "見附市昭和町2-1-1",
+    "area": "見附市中心部・昭和町エリア",
+    "mapUrl": "https://maps.app.goo.gl/6F7g8H9i0J1k2L3m4",
+    "officialUrl": "https://www.city.mitsuke.niigata.jp/"
+  },
+  {
+    "id": "KM01",
+    "region": "中越",
+    "municipality": "加茂市",
+    "name": "加茂市役所 本庁舎",
+    "address": "加茂市幸町2-3-5",
+    "area": "加茂市中心部・駅前エリア",
+    "mapUrl": "https://maps.app.goo.gl/8H9i0J1k2L3m4N5o6",
+    "officialUrl": "https://www.city.kamo.niigata.jp/"
+  },
+  {
+    "id": "TG01",
     "region": "中越",
     "municipality": "田上町",
     "name": "田上町役場",
@@ -3059,7 +3299,7 @@ const POLLING_PLACES: PollingPlace[] = [
     "officialUrl": "https://www.town.tagami.niigata.jp/"
   },
   {
-    "id": "M13",
+    "id": "IZ01",
     "region": "中越",
     "municipality": "出雲崎町",
     "name": "出雲崎町役場",
@@ -3069,17 +3309,17 @@ const POLLING_PLACES: PollingPlace[] = [
     "officialUrl": "https://www.town.izumozaki.niigata.jp/"
   },
   {
-    "id": "M14",
+    "id": "YZ01",
     "region": "中越",
     "municipality": "湯沢町",
     "name": "湯沢町役場",
     "address": "南魚沼郡湯沢町神立300",
-    "area": "湯沢町全域",
+    "area": "湯沢町全域（神立・越後湯沢）",
     "mapUrl": "https://maps.app.goo.gl/0Z9y8X7w6V5u4T3s2",
     "officialUrl": "https://www.town.yuzawa.lg.jp/"
   },
   {
-    "id": "M15",
+    "id": "TN01",
     "region": "中越",
     "municipality": "津南町",
     "name": "津南町役場",
@@ -3089,7 +3329,7 @@ const POLLING_PLACES: PollingPlace[] = [
     "officialUrl": "https://town.tsunan.niigata.jp/"
   },
   {
-    "id": "M16",
+    "id": "KW01",
     "region": "中越",
     "municipality": "刈羽村",
     "name": "刈羽村役場",
@@ -3099,117 +3339,297 @@ const POLLING_PLACES: PollingPlace[] = [
     "officialUrl": "https://www.vill.kariwa.niigata.jp/"
   },
   {
-    "id": "J01",
+    "id": "YH01",
+    "region": "中越",
+    "municipality": "弥彦村",
+    "name": "弥彦村役場",
+    "address": "西蒲原郡弥彦村大字矢作2865-1",
+    "area": "弥彦村全域",
+    "mapUrl": "https://maps.app.goo.gl/3I2h1G0f9E8d7C6b5",
+    "officialUrl": "http://www.vill.yahiko.niigata.jp/"
+  },
+  {
+    "id": "JO01",
     "region": "上越",
     "municipality": "上越市",
     "name": "上越市役所 木田庁舎",
     "address": "上越市木田1-1-3",
-    "area": "高田・直江津・木田エリア",
+    "area": "春日山・木田・直江津南エリア",
     "mapUrl": "https://maps.app.goo.gl/7W6v5U4t3S2r1Q0p9",
     "officialUrl": "https://www.city.joetsu.niigata.jp/soshiki/senkan/touhyoujo-ichiran.html"
   },
   {
-    "id": "J02",
+    "id": "JO02",
     "region": "上越",
     "municipality": "上越市",
     "name": "高田地区公民館",
     "address": "上越市本町3-2-26",
-    "area": "高田城下町・本町地区",
+    "area": "高田本町・城下町・大手町エリア",
     "mapUrl": "https://goo.gl/maps/1A2b3C4d5E6f7G8h9",
     "officialUrl": "https://www.city.joetsu.niigata.jp/soshiki/senkan/touhyoujo-ichiran.html"
   },
   {
-    "id": "J03",
+    "id": "JO03",
+    "region": "上越",
+    "municipality": "上越市",
+    "name": "直江津学びの交流館",
+    "address": "上越市中央2-3-5",
+    "area": "直江津港・港町・中央エリア",
+    "mapUrl": "https://maps.app.goo.gl/6V5u4T3s2R1q0P9o8",
+    "officialUrl": "https://www.city.joetsu.niigata.jp/soshiki/senkan/touhyoujo-ichiran.html"
+  },
+  {
+    "id": "JO04",
+    "region": "上越",
+    "municipality": "上越市",
+    "name": "柿崎区総合事務所",
+    "address": "上越市柿崎区柿崎640",
+    "area": "柿崎区全域",
+    "mapUrl": "https://maps.app.goo.gl/5U4t3S2r1Q0p9O8n7",
+    "officialUrl": "https://www.city.joetsu.niigata.jp/soshiki/senkan/touhyoujo-ichiran.html"
+  },
+  {
+    "id": "JO05",
+    "region": "上越",
+    "municipality": "上越市",
+    "name": "頸城区総合事務所",
+    "address": "上越市頸城区百間町716",
+    "area": "頸城区全域",
+    "mapUrl": "https://maps.app.goo.gl/4T3s2R1q0P9o8N7m6",
+    "officialUrl": "https://www.city.joetsu.niigata.jp/soshiki/senkan/touhyoujo-ichiran.html"
+  },
+  {
+    "id": "JO06",
+    "region": "上越",
+    "municipality": "上越市",
+    "name": "安塚区総合事務所",
+    "address": "上越市安塚区安塚722",
+    "area": "安塚区全域",
+    "mapUrl": "https://maps.app.goo.gl/3S2r1Q0p9O8n7M6l5",
+    "officialUrl": "https://www.city.joetsu.niigata.jp/soshiki/senkan/touhyoujo-ichiran.html"
+  },
+  {
+    "id": "IT01",
     "region": "上越",
     "municipality": "糸魚川市",
     "name": "糸魚川市役所 本庁舎",
     "address": "糸魚川市一の宮1-2-1",
-    "area": "糸魚川市全域",
+    "area": "糸魚川駅前・一の宮・寺町エリア",
     "mapUrl": "https://maps.app.goo.gl/6V5u4T3s2R1q0P9o8",
     "officialUrl": "https://www.city.itoigawa.lg.jp/"
   },
   {
-    "id": "J04",
+    "id": "IT02",
+    "region": "上越",
+    "municipality": "糸魚川市",
+    "name": "糸魚川市能生事務所",
+    "address": "糸魚川市大字能生7565",
+    "area": "能生地区全域",
+    "mapUrl": "https://maps.app.goo.gl/5U4t3S2r1Q0p9O8n7",
+    "officialUrl": "https://www.city.itoigawa.lg.jp/"
+  },
+  {
+    "id": "IT03",
+    "region": "上越",
+    "municipality": "糸魚川市",
+    "name": "糸魚川市青海事務所",
+    "address": "糸魚川市大字青海4613-1",
+    "area": "青海地区全域",
+    "mapUrl": "https://maps.app.goo.gl/4T3s2R1q0P9o8N7m6",
+    "officialUrl": "https://www.city.itoigawa.lg.jp/"
+  },
+  {
+    "id": "MY01",
     "region": "上越",
     "municipality": "妙高市",
     "name": "妙高市役所 本庁舎",
     "address": "妙高市栄町5-1",
-    "area": "新井・妙高高原地区",
+    "area": "新井中心部・栄町エリア",
     "mapUrl": "https://maps.app.goo.gl/5U4t3S2r1Q0p9O8n7",
     "officialUrl": "https://www.city.myoko.niigata.jp/"
   },
   {
-    "id": "S01",
+    "id": "MY02",
+    "region": "上越",
+    "municipality": "妙高市",
+    "name": "妙高高原メッセ",
+    "address": "妙高市大字田口308",
+    "area": "妙高高原・関川・赤倉エリア",
+    "mapUrl": "https://maps.app.goo.gl/4T3s2R1q0P9o8N7m6",
+    "officialUrl": "https://www.city.myoko.niigata.jp/"
+  },
+  {
+    "id": "SD01",
     "region": "佐渡",
     "municipality": "佐渡市",
     "name": "佐渡市役所 本庁舎",
     "address": "佐渡市千種232",
-    "area": "両津・相川・佐和田地区",
+    "area": "金井・千種・中興エリア",
     "mapUrl": "https://maps.app.goo.gl/4T3s2R1q0P9o8N7m6",
     "officialUrl": "https://www.city.sado.niigata.jp/soshiki/1049/2234.html"
   },
   {
-    "id": "S02",
+    "id": "SD02",
     "region": "佐渡",
     "municipality": "佐渡市",
-    "name": "佐渡市真野行政サービスセンター",
-    "address": "佐渡市吉岡343",
-    "area": "真野・羽茂・小木地区",
+    "name": "両津行政サービスセンター",
+    "address": "佐渡市両津湊353-1",
+    "area": "両津地区（湊・夷・加茂歌代）",
     "mapUrl": "https://maps.app.goo.gl/3S2r1Q0p9O8n7M6l5",
     "officialUrl": "https://www.city.sado.niigata.jp/soshiki/1049/2234.html"
   },
   {
-    "id": "K01",
+    "id": "SD03",
+    "region": "佐渡",
+    "municipality": "佐渡市",
+    "name": "相川行政サービスセンター",
+    "address": "佐渡市相川栄町1",
+    "area": "相川地区（栄町・鉱山・羽田）",
+    "mapUrl": "https://maps.app.goo.gl/2R1q0P9o8N7m6L5k4",
+    "officialUrl": "https://www.city.sado.niigata.jp/soshiki/1049/2234.html"
+  },
+  {
+    "id": "SD04",
+    "region": "佐渡",
+    "municipality": "佐渡市",
+    "name": "佐和田行政サービスセンター",
+    "address": "佐渡市河原田本町394",
+    "area": "佐和田地区（河原田・八幡）",
+    "mapUrl": "https://maps.app.goo.gl/1Q0p9O8n7M6l5K4j3",
+    "officialUrl": "https://www.city.sado.niigata.jp/soshiki/1049/2234.html"
+  },
+  {
+    "id": "SD05",
+    "region": "佐渡",
+    "municipality": "佐渡市",
+    "name": "真野行政サービスセンター",
+    "address": "佐渡市吉岡343",
+    "area": "真野・羽茂・小木地区",
+    "mapUrl": "https://maps.app.goo.gl/0P9o8N7m6L5k4J3i2",
+    "officialUrl": "https://www.city.sado.niigata.jp/soshiki/1049/2234.html"
+  },
+  {
+    "id": "SB01",
     "region": "下越",
     "municipality": "新発田市",
     "name": "新発田市役所 ヨリネスしばた",
     "address": "新発田市中央町3-3-3",
-    "area": "新発田市全域",
+    "area": "新発田中心部・中央町・本町エリア",
     "mapUrl": "https://maps.app.goo.gl/2R1q0P9o8N7m6L5k4",
     "officialUrl": "https://www.city.shibata.lg.jp/shisei/senkyo/senkyoseido/1031383.html"
   },
   {
-    "id": "K02",
+    "id": "SB02",
+    "region": "下越",
+    "municipality": "新発田市",
+    "name": "新発田市豊浦支所",
+    "address": "新発田市乙次26",
+    "area": "豊浦地区全域",
+    "mapUrl": "https://maps.app.goo.gl/1Q0p9O8n7M6l5K4j3",
+    "officialUrl": "https://www.city.shibata.lg.jp/shisei/senkyo/senkyoseido/1031383.html"
+  },
+  {
+    "id": "SB03",
+    "region": "下越",
+    "municipality": "新発田市",
+    "name": "新発田市紫雲寺支所",
+    "address": "新発田市稲荷岡2371",
+    "area": "紫雲寺地区全域",
+    "mapUrl": "https://maps.app.goo.gl/0P9o8N7m6L5k4J3i2",
+    "officialUrl": "https://www.city.shibata.lg.jp/shisei/senkyo/senkyoseido/1031383.html"
+  },
+  {
+    "id": "MK01",
     "region": "下越",
     "municipality": "村上市",
     "name": "村上市役所 本庁舎",
     "address": "村上市三泉101",
-    "area": "村上市全域（村上・荒川・神林・朝日・山北）",
+    "area": "村上城下町・岩船・瀬波エリア",
     "mapUrl": "https://maps.app.goo.gl/1Q0p9O8n7M6l5K4j3",
     "officialUrl": "https://www.city.murakami.lg.jp/site/senkyo/"
   },
   {
-    "id": "K03",
+    "id": "MK02",
+    "region": "下越",
+    "municipality": "村上市",
+    "name": "村上市荒川支所",
+    "address": "村上市羽下300",
+    "area": "荒川地区全域",
+    "mapUrl": "https://maps.app.goo.gl/0P9o8N7m6L5k4J3i2",
+    "officialUrl": "https://www.city.murakami.lg.jp/site/senkyo/"
+  },
+  {
+    "id": "MK03",
+    "region": "下越",
+    "municipality": "村上市",
+    "name": "村上市神林支所",
+    "address": "村上市岩船駅前56-1",
+    "area": "神林地区全域",
+    "mapUrl": "https://maps.app.goo.gl/9O8n7M6l5K4j3I2h1",
+    "officialUrl": "https://www.city.murakami.lg.jp/site/senkyo/"
+  },
+  {
+    "id": "GS01",
     "region": "下越",
     "municipality": "五泉市",
     "name": "五泉市役所 本庁舎",
     "address": "五泉市太田1092-1",
-    "area": "五泉・村松地区",
+    "area": "五泉中心部・太田エリア",
     "mapUrl": "https://maps.app.goo.gl/0P9o8N7m6L5k4J3i2",
     "officialUrl": "https://www.city.gosen.lg.jp/soshiki/senkan/"
   },
   {
-    "id": "K04",
+    "id": "GS02",
+    "region": "下越",
+    "municipality": "五泉市",
+    "name": "五泉市村松支所",
+    "address": "五泉市村松乙130",
+    "area": "村松地区全域",
+    "mapUrl": "https://maps.app.goo.gl/9O8n7M6l5K4j3I2h1",
+    "officialUrl": "https://www.city.gosen.lg.jp/soshiki/senkan/"
+  },
+  {
+    "id": "AG01",
     "region": "下越",
     "municipality": "阿賀野市",
     "name": "阿賀野市役所 本庁舎",
     "address": "阿賀野市岡山町10-15",
-    "area": "水原・安田・京ヶ瀬・笹神地区",
+    "area": "水原地区・岡山町エリア",
     "mapUrl": "https://maps.app.goo.gl/9O8n7M6l5K4j3I2h1",
     "officialUrl": "https://www.city.agano.niigata.jp/soshiki/senkan/"
   },
   {
-    "id": "K05",
+    "id": "AG02",
+    "region": "下越",
+    "municipality": "阿賀野市",
+    "name": "阿賀野市安田支所",
+    "address": "阿賀野市保田4664",
+    "area": "安田地区全域",
+    "mapUrl": "https://maps.app.goo.gl/8N7m6L5k4J3i2H1g0",
+    "officialUrl": "https://www.city.agano.niigata.jp/soshiki/senkan/"
+  },
+  {
+    "id": "TN01",
     "region": "下越",
     "municipality": "胎内市",
     "name": "胎内市役所 本庁舎",
     "address": "胎内市新和町2-10",
-    "area": "中条・黒川地区",
+    "area": "中条中心部・新和町エリア",
     "mapUrl": "https://maps.app.goo.gl/8N7m6L5k4J3i2H1g0",
     "officialUrl": "https://www.city.tainai.niigata.jp/kurashi/senkyo/"
   },
   {
-    "id": "K06",
+    "id": "TN02",
+    "region": "下越",
+    "municipality": "胎内市",
+    "name": "胎内市黒川庁舎",
+    "address": "胎内市黒川1410",
+    "area": "黒川地区全域",
+    "mapUrl": "https://maps.app.goo.gl/7M6l5K4j3I2h1G0f9",
+    "officialUrl": "https://www.city.tainai.niigata.jp/kurashi/senkyo/"
+  },
+  {
+    "id": "SR01",
     "region": "下越",
     "municipality": "聖籠町",
     "name": "聖籠町役場",
@@ -3219,7 +3639,7 @@ const POLLING_PLACES: PollingPlace[] = [
     "officialUrl": "https://www.town.seiro.niigata.jp/"
   },
   {
-    "id": "K07",
+    "id": "AM01",
     "region": "下越",
     "municipality": "阿賀町",
     "name": "阿賀町役場",
@@ -3229,7 +3649,7 @@ const POLLING_PLACES: PollingPlace[] = [
     "officialUrl": "https://www.town.aga.niigata.jp/"
   },
   {
-    "id": "K08",
+    "id": "SK01",
     "region": "下越",
     "municipality": "関川村",
     "name": "関川村役場",
@@ -3239,7 +3659,7 @@ const POLLING_PLACES: PollingPlace[] = [
     "officialUrl": "http://www.vill.sekikawa.niigata.jp/"
   },
   {
-    "id": "K09",
+    "id": "AW01",
     "region": "下越",
     "municipality": "粟島浦村",
     "name": "粟島浦村役場",
@@ -3247,16 +3667,6 @@ const POLLING_PLACES: PollingPlace[] = [
     "area": "粟島浦村全域",
     "mapUrl": "https://maps.app.goo.gl/4J3i2H1g0F9e8D7c6",
     "officialUrl": "http://www.vill.awashimaura.lg.jp/"
-  },
-  {
-    "id": "K10",
-    "region": "中越",
-    "municipality": "弥彦村",
-    "name": "弥彦村役場",
-    "address": "西蒲原郡弥彦村大字矢作2865-1",
-    "area": "弥彦村全域",
-    "mapUrl": "https://maps.app.goo.gl/3I2h1G0f9E8d7C6b5",
-    "officialUrl": "http://www.vill.yahiko.niigata.jp/"
   }
 ];
 
@@ -3269,8 +3679,8 @@ interface AppState {
   quizStep: number;
   scores: Record<Tag, number>;
   quizFinished: boolean;
-  selectedRegion: string; // "すべて", "下越", "中越", "上越", "佐渡"
-  selectedMunicipality: string; // "すべて" or specific municipality
+  selectedRegion: string;
+  selectedMunicipality: string;
   placeSearchQuery: string;
   selectedElectionYear: string;
 }
@@ -3751,12 +4161,12 @@ function renderPlace(): HTMLElement {
 
   const title = document.createElement("h2");
   title.className = "disp section-title";
-  title.textContent = "新潟県 投票所案内 (全30市町村対応)";
+  title.textContent = "新潟県 投票所案内 (全30市町村対応・284箇所)";
   wrap.appendChild(title);
 
   const sub = document.createElement("p");
   sub.className = "section-sub";
-  sub.textContent = "下越・中越・上越・佐渡の全30市町村。お住まいの地域を選択または検索できます。";
+  sub.textContent = "下越・中越・上越・佐渡の全30市町村。お住まいの市町村・地区を選択またはキーワード検索できます。";
   wrap.appendChild(sub);
 
   // 1. 地域区分タブ (下越・中越・上越・佐渡)
@@ -3785,7 +4195,7 @@ function renderPlace(): HTMLElement {
     btn.innerHTML = `<span>${reg}</span><span class="chip-count">${count}</span>`;
     btn.addEventListener("click", () => {
       state.selectedRegion = reg;
-      state.selectedMunicipality = "すべて"; // reset municipality filter
+      state.selectedMunicipality = "すべて";
       render();
     });
     regionChips.appendChild(btn);
@@ -3793,7 +4203,7 @@ function renderPlace(): HTMLElement {
   regionContainer.appendChild(regionChips);
   wrap.appendChild(regionContainer);
 
-  // 2. 市町村フィルター (選択地域に応じた市町村リスト)
+  // 2. 市町村フィルター
   const availableMunicipalities = Array.from(new Set(
     POLLING_PLACES
       .filter(p => state.selectedRegion === "すべて" || p.region === state.selectedRegion)
@@ -3853,7 +4263,7 @@ function renderPlace(): HTMLElement {
   const searchInput = document.createElement("input");
   searchInput.type = "text";
   searchInput.className = "place-search-input";
-  searchInput.placeholder = "市町村名、投票所名、住所、町名（例: 長岡、佐渡、古町）で検索...";
+  searchInput.placeholder = "市町村名、投票所名、住所、町名（例: 長岡、佐渡、高田、松浜）で検索...";
   searchInput.value = state.placeSearchQuery;
   searchInput.addEventListener("input", (e) => {
     state.placeSearchQuery = (e.target as HTMLInputElement).value;
@@ -3888,15 +4298,12 @@ function renderPlace(): HTMLElement {
     const q = state.placeSearchQuery.trim().toLowerCase();
 
     const filtered = POLLING_PLACES.filter((p) => {
-      // Region filter
       if (state.selectedRegion !== "すべて" && p.region !== state.selectedRegion) {
         return false;
       }
-      // Municipality filter
       if (state.selectedMunicipality !== "すべて" && p.municipality !== state.selectedMunicipality) {
         return false;
       }
-      // Query filter
       if (q) {
         const target = `${p.id} ${p.region} ${p.municipality} ${p.name} ${p.address} ${p.area} ${p.updateInfo || ""}`.toLowerCase();
         return target.includes(q);

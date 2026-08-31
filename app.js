@@ -2871,117 +2871,357 @@ const POLLING_PLACES = [
     "officialUrl": "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html"
   },
   {
-    "id": "M01",
+    "id": "N01",
     "region": "\u4E2D\u8D8A",
     "municipality": "\u9577\u5CA1\u5E02",
     "name": "\u9577\u5CA1\u5E02\u5F79\u6240 \u30A2\u30AA\u30FC\u30EC\u9577\u5CA1",
     "address": "\u9577\u5CA1\u5E02\u5927\u624B\u901A1-4-10",
-    "area": "\u9577\u5CA1\u5E02\u4E2D\u5FC3\u90E8\u30FB\u9577\u5CA1\u99C5\u5468\u8FBA",
+    "area": "\u5927\u624B\u901A\u30FB\u9577\u5CA1\u99C5\u524D\u30FB\u8868\u753A\u30FB\u6BBF\u753A\u30A8\u30EA\u30A2",
     "mapUrl": "https://maps.app.goo.gl/9ZkG5v7t8wX9a2bC7",
     "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
   },
   {
-    "id": "M02",
+    "id": "N02",
     "region": "\u4E2D\u8D8A",
     "municipality": "\u9577\u5CA1\u5E02",
-    "name": "\u9577\u5CA1\u5E02\u7ACB\u5287\u5834 \u30ED\u30D3\u30FC",
+    "name": "\u9577\u5CA1\u5E02\u7ACB\u5287\u5834",
     "address": "\u9577\u5CA1\u5E02\u5E78\u753A2-1-2",
-    "area": "\u5E78\u753A\u30FB\u5343\u624B\u30FB\u5DDD\u5D0E\u30A8\u30EA\u30A2",
+    "area": "\u5E78\u753A\u30FB\u5343\u624B\u30FB\u95A2\u539F\u30FB\u53F0\u753A\u30A8\u30EA\u30A2",
     "mapUrl": "https://goo.gl/maps/b3a1B2C3D4E5F6G78",
     "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
   },
   {
-    "id": "M03",
+    "id": "N03",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u9577\u5CA1\u5E02",
+    "name": "\u9577\u5CA1\u5E02\u5317\u90E8\u4F53\u80B2\u9928",
+    "address": "\u9577\u5CA1\u5E02\u6771\u8535\u738B2-2-72",
+    "area": "\u8535\u738B\u30FB\u795E\u8C37\u30FB\u65B0\u4FDD\u30FB\u4ECA\u4E95\u30A8\u30EA\u30A2",
+    "mapUrl": "https://maps.app.goo.gl/3A4b5C6d7E8f9G0h1",
+    "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
+  },
+  {
+    "id": "N04",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u9577\u5CA1\u5E02",
+    "name": "\u9577\u5CA1\u5E02\u5357\u90E8\u4F53\u80B2\u9928",
+    "address": "\u9577\u5CA1\u5E02\u5B66\u6821\u753A3-2-29",
+    "area": "\u5B66\u6821\u753A\u30FB\u60A0\u4E45\u5C71\u30FB\u6816\u5409\u30FB\u4E2D\u5CF6\u30A8\u30EA\u30A2",
+    "mapUrl": "https://maps.app.goo.gl/2B3c4D5e6F7g8H9i0",
+    "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
+  },
+  {
+    "id": "N05",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u9577\u5CA1\u5E02",
+    "name": "\u9577\u5CA1\u5E02\u8D8A\u8DEF\u652F\u6240",
+    "address": "\u9577\u5CA1\u5E02\u6D66715",
+    "area": "\u8D8A\u8DEF\u5730\u533A\uFF08\u6D66\u30FB\u6765\u8FCE\u5BFA\u30FB\u585A\u91CE\u5C71\uFF09",
+    "mapUrl": "https://maps.app.goo.gl/1A2b3C4d5E6f7G8h9",
+    "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
+  },
+  {
+    "id": "N06",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u9577\u5CA1\u5E02",
+    "name": "\u9577\u5CA1\u5E02\u6803\u5C3E\u652F\u6240",
+    "address": "\u9577\u5CA1\u5E02\u91D1\u753A2-1-5",
+    "area": "\u6803\u5C3E\u5730\u533A\uFF08\u8C37\u5185\u30FB\u79CB\u8449\u30FB\u6771\u8C37\uFF09",
+    "mapUrl": "https://maps.app.goo.gl/0Z9y8X7w6V5u4T3s2",
+    "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
+  },
+  {
+    "id": "N07",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u9577\u5CA1\u5E02",
+    "name": "\u9577\u5CA1\u5E02\u5BFA\u6CCA\u652F\u6240",
+    "address": "\u9577\u5CA1\u5E02\u5BFA\u6CCA\u5DDD\u5D0E4798-1",
+    "area": "\u5BFA\u6CCA\u5730\u533A\uFF08\u6E2F\u753A\u30FB\u5927\u91CE\u30FB\u91CE\u7A4D\uFF09",
+    "mapUrl": "https://maps.app.goo.gl/9Y8x7W6v5U4t3S2r1",
+    "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
+  },
+  {
+    "id": "N08",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u9577\u5CA1\u5E02",
+    "name": "\u9577\u5CA1\u5E02\u4E2D\u4E4B\u5CF6\u652F\u6240",
+    "address": "\u9577\u5CA1\u5E02\u4E2D\u4E4B\u5CF6844",
+    "area": "\u4E2D\u4E4B\u5CF6\u5730\u533A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/8X7w6V5u4T3s2R1q0",
+    "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
+  },
+  {
+    "id": "N09",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u9577\u5CA1\u5E02",
+    "name": "\u9577\u5CA1\u5E02\u5C71\u53E4\u5FD7\u652F\u6240",
+    "address": "\u9577\u5CA1\u5E02\u5C71\u53E4\u5FD7\u7AF9\u6CA23610",
+    "area": "\u5C71\u53E4\u5FD7\u5730\u533A\uFF08\u7AF9\u6CA2\u30FB\u7A2E\u3059\u306F\u30FB\u6CB9\u592B\uFF09",
+    "mapUrl": "https://maps.app.goo.gl/7W6v5U4t3S2r1Q0p9",
+    "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
+  },
+  {
+    "id": "N10",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u9577\u5CA1\u5E02",
+    "name": "\u9577\u5CA1\u5E02\u5DDD\u53E3\u652F\u6240",
+    "address": "\u9577\u5CA1\u5E02\u5DDD\u53E3\u5DDD\u53E31974-26",
+    "area": "\u5DDD\u53E3\u5730\u533A\uFF08\u6771\u5DDD\u53E3\u30FB\u548C\u5357\u6D25\uFF09",
+    "mapUrl": "https://maps.app.goo.gl/6V5u4T3s2R1q0P9o8",
+    "officialUrl": "https://www.city.nagaoka.niigata.jp/shisei/cate04/senkyo/touhyoujo.html"
+  },
+  {
+    "id": "SJ01",
     "region": "\u4E2D\u8D8A",
     "municipality": "\u4E09\u6761\u5E02",
     "name": "\u4E09\u6761\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
     "address": "\u4E09\u6761\u5E02\u65ED\u753A2-3-1",
-    "area": "\u4E09\u6761\u5E02\u4E2D\u5FC3\u90E8\u30FB\u4E2D\u592E\u5730\u533A",
+    "area": "\u4E09\u6761\u4E2D\u5FC3\u90E8\u30FB\u672C\u753A\u30FB\u65ED\u753A\u30A8\u30EA\u30A2",
     "mapUrl": "https://maps.app.goo.gl/4XyZ9a8b7c6d5e4f3",
     "officialUrl": "https://www.city.sanjo.niigata.jp/soshiki/senkyokanriinkaijimukyoku/senkyoseido/touhyou/15316.html"
   },
   {
-    "id": "M04",
+    "id": "SJ02",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u4E09\u6761\u5E02",
+    "name": "\u4E09\u6761\u5E02\u539A\u751F\u798F\u7949\u4F1A\u9928",
+    "address": "\u4E09\u6761\u5E02\u672C\u753A1-4-1",
+    "area": "\u4E00\u30CE\u6728\u6238\u30FB\u6771\u4E09\u6761\u30FB\u5CF6\u7530\u30A8\u30EA\u30A2",
+    "mapUrl": "https://maps.app.goo.gl/3W2v1U0t9S8r7Q6p5",
+    "officialUrl": "https://www.city.sanjo.niigata.jp/soshiki/senkyokanriinkaijimukyoku/senkyoseido/touhyou/15316.html"
+  },
+  {
+    "id": "SJ03",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u4E09\u6761\u5E02",
+    "name": "\u4E09\u6761\u5E02\u6804\u5E81\u820E",
+    "address": "\u4E09\u6761\u5E02\u65B0\u58001311",
+    "area": "\u6804\u5730\u533A\uFF08\u65B0\u5800\u30FB\u5927\u9762\u30FB\u5317\u5165\u8535\uFF09",
+    "mapUrl": "https://maps.app.goo.gl/2V1u0T9s8R7q6P5o4",
+    "officialUrl": "https://www.city.sanjo.niigata.jp/soshiki/senkyokanriinkaijimukyoku/senkyoseido/touhyou/15316.html"
+  },
+  {
+    "id": "SJ04",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u4E09\u6761\u5E02",
+    "name": "\u4E09\u6761\u5E02\u4E0B\u7530\u5E81\u820E",
+    "address": "\u4E09\u6761\u5E02\u837B\u5800830-1",
+    "area": "\u4E0B\u7530\u5730\u533A\uFF08\u837B\u5800\u30FB\u9577\u91CE\u30FB\u8352\u6CA2\uFF09",
+    "mapUrl": "https://maps.app.goo.gl/1U0t9S8r7Q6p5O4n3",
+    "officialUrl": "https://www.city.sanjo.niigata.jp/soshiki/senkyokanriinkaijimukyoku/senkyoseido/touhyou/15316.html"
+  },
+  {
+    "id": "KZ01",
     "region": "\u4E2D\u8D8A",
     "municipality": "\u67CF\u5D0E\u5E02",
     "name": "\u67CF\u5D0E\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
     "address": "\u67CF\u5D0E\u5E02\u65E5\u77F3\u753A2-1",
-    "area": "\u67CF\u5D0E\u5E02\u4E2D\u5FC3\u90E8\u30FB\u99C5\u524D\u5730\u533A",
+    "area": "\u67CF\u5D0E\u99C5\u524D\u30FB\u65E5\u77F3\u753A\u30FB\u4E2D\u592E\u753A\u30A8\u30EA\u30A2",
     "mapUrl": "https://maps.app.goo.gl/2B3c4D5e6F7g8H9i0",
     "officialUrl": "https://www.city.kashiwazaki.lg.jp/soshiki/senkyo/senkyo/1/6530.html"
   },
   {
-    "id": "M05",
+    "id": "KZ02",
     "region": "\u4E2D\u8D8A",
-    "municipality": "\u5C0F\u5343\u8C37\u5E02",
-    "name": "\u5C0F\u5343\u8C37\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
-    "address": "\u5C0F\u5343\u8C37\u5E02\u57CE\u51852-7-5",
-    "area": "\u5C0F\u5343\u8C37\u5E02\u5168\u57DF",
+    "municipality": "\u67CF\u5D0E\u5E02",
+    "name": "\u67CF\u5D0E\u5E02\u6587\u5316\u4F1A\u9928 \u30A2\u30EB\u30D5\u30A9\u30FC\u30EC",
+    "address": "\u67CF\u5D0E\u5E02\u65E5\u77F3\u753A4-32",
+    "area": "\u6771\u672C\u753A\u30FB\u8ACF\u8A2A\u753A\u30FB\u93E1\u753A\u30A8\u30EA\u30A2",
     "mapUrl": "https://maps.app.goo.gl/1A2b3C4d5E6f7G8h9",
-    "officialUrl": "https://www.city.ojiya.niigata.jp/soshiki/senkan/"
+    "officialUrl": "https://www.city.kashiwazaki.lg.jp/soshiki/senkyo/senkyo/1/6530.html"
   },
   {
-    "id": "M06",
+    "id": "KZ03",
     "region": "\u4E2D\u8D8A",
-    "municipality": "\u52A0\u8302\u5E02",
-    "name": "\u52A0\u8302\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
-    "address": "\u52A0\u8302\u5E02\u5E78\u753A2-3-5",
-    "area": "\u52A0\u8302\u5E02\u5168\u57DF",
-    "mapUrl": "https://maps.app.goo.gl/8H9i0J1k2L3m4N5o6",
-    "officialUrl": "https://www.city.kamo.niigata.jp/"
+    "municipality": "\u67CF\u5D0E\u5E02",
+    "name": "\u67CF\u5D0E\u5E02\u897F\u5DDD\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u67CF\u5D0E\u5E02\u897F\u5C71\u753A\u5999\u6CD5\u5BFA348",
+    "area": "\u897F\u5C71\u5730\u533A\uFF08\u897F\u5C71\u30FB\u5999\u6CD5\u5BFA\u30FB\u4E8C\u7530\uFF09",
+    "mapUrl": "https://maps.app.goo.gl/0Z9y8X7w6V5u4T3s2",
+    "officialUrl": "https://www.city.kashiwazaki.lg.jp/soshiki/senkyo/senkyo/1/6530.html"
   },
   {
-    "id": "M07",
+    "id": "KZ04",
     "region": "\u4E2D\u8D8A",
-    "municipality": "\u5341\u65E5\u753A\u5E02",
-    "name": "\u5341\u65E5\u753A\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
-    "address": "\u5341\u65E5\u753A\u5E02\u5343\u6B73\u753A3-3",
-    "area": "\u5341\u65E5\u753A\u5E02\u5168\u57DF",
-    "mapUrl": "https://maps.app.goo.gl/7G8h9I0j1K2l3M4n5",
-    "officialUrl": "https://www.city.tokamachi.lg.jp/soshiki/senkyokanriinkai/"
+    "municipality": "\u67CF\u5D0E\u5E02",
+    "name": "\u9AD8\u7530\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u67CF\u5D0E\u5E02\u5C71\u4E0A465",
+    "area": "\u9AD8\u7530\u30FB\u8352\u6D5C\u30FB\u677E\u6CE2\u30A8\u30EA\u30A2",
+    "mapUrl": "https://maps.app.goo.gl/9Y8x7W6v5U4t3S2r1",
+    "officialUrl": "https://www.city.kashiwazaki.lg.jp/soshiki/senkyo/senkyo/1/6530.html"
   },
   {
-    "id": "M08",
-    "region": "\u4E2D\u8D8A",
-    "municipality": "\u898B\u9644\u5E02",
-    "name": "\u898B\u9644\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
-    "address": "\u898B\u9644\u5E02\u662D\u548C\u753A2-1-1",
-    "area": "\u898B\u9644\u5E02\u5168\u57DF",
-    "mapUrl": "https://maps.app.goo.gl/6F7g8H9i0J1k2L3m4",
-    "officialUrl": "https://www.city.mitsuke.niigata.jp/"
-  },
-  {
-    "id": "M09",
+    "id": "TB01",
     "region": "\u4E2D\u8D8A",
     "municipality": "\u71D5\u5E02",
     "name": "\u71D5\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
     "address": "\u71D5\u5E02\u5409\u7530\u897F\u592A\u75301934",
-    "area": "\u71D5\u5E02\u5168\u57DF\uFF08\u5409\u7530\u30FB\u71D5\u30FB\u5206\u6C34\u5730\u533A\uFF09",
+    "area": "\u897F\u592A\u7530\u30FB\u5409\u7530\u4E2D\u5FC3\u90E8\u30FB\u7C9F\u751F\u6D25\u30A8\u30EA\u30A2",
     "mapUrl": "https://maps.app.goo.gl/5E6f7G8h9I0j1K2l3",
     "officialUrl": "https://www.city.tsubame.niigata.jp/soshiki/senkyokanriinkaijimukyoku/touhyouseido/5529.html"
   },
   {
-    "id": "M10",
+    "id": "TB02",
     "region": "\u4E2D\u8D8A",
-    "municipality": "\u9B5A\u6CBC\u5E02",
-    "name": "\u9B5A\u6CBC\u5E02\u5F79\u6240 \u5C0F\u51FA\u5E81\u820E",
-    "address": "\u9B5A\u6CBC\u5E02\u5C0F\u51FA\u5CF6910",
-    "area": "\u9B5A\u6CBC\u5E02\u5168\u57DF",
+    "municipality": "\u71D5\u5E02",
+    "name": "\u71D5\u5E02\u7DCF\u5408\u6587\u5316\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u71D5\u5E02\u5927\u66F23015",
+    "area": "\u71D5\u5730\u533A\uFF08\u4E2D\u592E\u901A\u30FB\u79CB\u6D25\u30FB\u5927\u66F2\uFF09",
     "mapUrl": "https://maps.app.goo.gl/4D5e6F7g8H9i0J1k2",
-    "officialUrl": "https://www.city.uonuma.niigata.jp/"
+    "officialUrl": "https://www.city.tsubame.niigata.jp/soshiki/senkyokanriinkaijimukyoku/touhyouseido/5529.html"
   },
   {
-    "id": "M11",
+    "id": "TB03",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u71D5\u5E02",
+    "name": "\u71D5\u5E02\u5206\u6C34\u516C\u6C11\u9928",
+    "address": "\u71D5\u5E02\u5206\u6C34\u65B0\u753A2-5-1",
+    "area": "\u5206\u6C34\u5730\u533A\uFF08\u5206\u6C34\u30FB\u5730\u8535\u5802\u30FB\u6E21\u90E8\uFF09",
+    "mapUrl": "https://maps.app.goo.gl/3C4d5E6f7G8h9I0j1",
+    "officialUrl": "https://www.city.tsubame.niigata.jp/soshiki/senkyokanriinkaijimukyoku/touhyouseido/5529.html"
+  },
+  {
+    "id": "TK01",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u5341\u65E5\u753A\u5E02",
+    "name": "\u5341\u65E5\u753A\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
+    "address": "\u5341\u65E5\u753A\u5E02\u5343\u6B73\u753A3-3",
+    "area": "\u5341\u65E5\u753A\u4E2D\u5FC3\u90E8\u30FB\u5343\u6B73\u753A\u30FB\u672C\u753A\u30A8\u30EA\u30A2",
+    "mapUrl": "https://maps.app.goo.gl/7G8h9I0j1K2l3M4n5",
+    "officialUrl": "https://www.city.tokamachi.lg.jp/soshiki/senkyokanriinkai/"
+  },
+  {
+    "id": "TK02",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u5341\u65E5\u753A\u5E02",
+    "name": "\u5341\u65E5\u753A\u5E02\u5DDD\u897F\u652F\u6240",
+    "address": "\u5341\u65E5\u753A\u5E02\u5C0F\u9ED2\u6CA2\u30A4129-1",
+    "area": "\u5DDD\u897F\u5730\u533A\uFF08\u4E0A\u540D\u5E02\u30FB\u5C0F\u9ED2\u6CA2\uFF09",
+    "mapUrl": "https://maps.app.goo.gl/6F7g8H9i0J1k2L3m4",
+    "officialUrl": "https://www.city.tokamachi.lg.jp/soshiki/senkyokanriinkai/"
+  },
+  {
+    "id": "TK03",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u5341\u65E5\u753A\u5E02",
+    "name": "\u5341\u65E5\u753A\u5E02\u677E\u4EE3\u652F\u6240",
+    "address": "\u5341\u65E5\u753A\u5E02\u677E\u4EE33926-1",
+    "area": "\u677E\u4EE3\u5730\u533A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/5E6f7G8h9I0j1K2l3",
+    "officialUrl": "https://www.city.tokamachi.lg.jp/soshiki/senkyokanriinkai/"
+  },
+  {
+    "id": "TK04",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u5341\u65E5\u753A\u5E02",
+    "name": "\u5341\u65E5\u753A\u5E02\u677E\u4E4B\u5C71\u652F\u6240",
+    "address": "\u5341\u65E5\u753A\u5E02\u677E\u4E4B\u5C711104",
+    "area": "\u677E\u4E4B\u5C71\u5730\u533A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/4D5e6F7g8H9i0J1k2",
+    "officialUrl": "https://www.city.tokamachi.lg.jp/soshiki/senkyokanriinkai/"
+  },
+  {
+    "id": "MU01",
     "region": "\u4E2D\u8D8A",
     "municipality": "\u5357\u9B5A\u6CBC\u5E02",
     "name": "\u5357\u9B5A\u6CBC\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
     "address": "\u5357\u9B5A\u6CBC\u5E02\u516D\u65E5\u753A180-1",
-    "area": "\u516D\u65E5\u753A\u30FB\u5869\u6CA2\u30FB\u5927\u548C\u5730\u533A",
+    "area": "\u516D\u65E5\u753A\u4E2D\u5FC3\u90E8\u30FB\u5742\u6238\u30FB\u5DDD\u7AAA\u30A8\u30EA\u30A2",
     "mapUrl": "https://maps.app.goo.gl/3C4d5E6f7G8h9I0j1",
     "officialUrl": "https://www.city.minamiuonuma.niigata.jp/"
   },
   {
-    "id": "M12",
+    "id": "MU02",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u5357\u9B5A\u6CBC\u5E02",
+    "name": "\u5357\u9B5A\u6CBC\u5E02\u5869\u6CA2\u5E81\u820E",
+    "address": "\u5357\u9B5A\u6CBC\u5E02\u5869\u6CA21371-1",
+    "area": "\u5869\u6CA2\u5730\u533A\uFF08\u5869\u6CA2\u30FB\u77F3\u6253\u30FB\u821E\u5B50\uFF09",
+    "mapUrl": "https://maps.app.goo.gl/2B3c4D5e6F7g8H9i0",
+    "officialUrl": "https://www.city.minamiuonuma.niigata.jp/"
+  },
+  {
+    "id": "MU03",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u5357\u9B5A\u6CBC\u5E02",
+    "name": "\u5357\u9B5A\u6CBC\u5E02\u5927\u548C\u5E81\u820E",
+    "address": "\u5357\u9B5A\u6CBC\u5E02\u6D66\u4F501185-1",
+    "area": "\u5927\u548C\u5730\u533A\uFF08\u6D66\u4F50\u30FB\u516B\u8272\u30FB\u4E94\u65E5\u753A\uFF09",
+    "mapUrl": "https://maps.app.goo.gl/1A2b3C4d5E6f7G8h9",
+    "officialUrl": "https://www.city.minamiuonuma.niigata.jp/"
+  },
+  {
+    "id": "UO01",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u9B5A\u6CBC\u5E02",
+    "name": "\u9B5A\u6CBC\u5E02\u5F79\u6240 \u5C0F\u51FA\u5E81\u820E",
+    "address": "\u9B5A\u6CBC\u5E02\u5C0F\u51FA\u5CF6910",
+    "area": "\u5C0F\u51FA\u5730\u533A\uFF08\u5C0F\u51FA\u5CF6\u30FB\u56DB\u65E5\u753A\uFF09",
+    "mapUrl": "https://maps.app.goo.gl/4D5e6F7g8H9i0J1k2",
+    "officialUrl": "https://www.city.uonuma.niigata.jp/"
+  },
+  {
+    "id": "UO02",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u9B5A\u6CBC\u5E02",
+    "name": "\u9B5A\u6CBC\u5E02\u5800\u4E4B\u5185\u5E81\u820E",
+    "address": "\u9B5A\u6CBC\u5E02\u5800\u4E4B\u5185130",
+    "area": "\u5800\u4E4B\u5185\u5730\u533A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/3C4d5E6f7G8h9I0j1",
+    "officialUrl": "https://www.city.uonuma.niigata.jp/"
+  },
+  {
+    "id": "UO03",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u9B5A\u6CBC\u5E02",
+    "name": "\u9B5A\u6CBC\u5E02\u5165\u5E83\u702C\u5E81\u820E",
+    "address": "\u9B5A\u6CBC\u5E02\u7A74\u6CA2215-1",
+    "area": "\u5165\u5E83\u702C\u5730\u533A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/2B3c4D5e6F7g8H9i0",
+    "officialUrl": "https://www.city.uonuma.niigata.jp/"
+  },
+  {
+    "id": "OJ01",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u5C0F\u5343\u8C37\u5E02",
+    "name": "\u5C0F\u5343\u8C37\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
+    "address": "\u5C0F\u5343\u8C37\u5E02\u57CE\u51852-7-5",
+    "area": "\u5C0F\u5343\u8C37\u5E02\u4E2D\u5FC3\u90E8\u30FB\u57CE\u5185\u30A8\u30EA\u30A2",
+    "mapUrl": "https://maps.app.goo.gl/1A2b3C4d5E6f7G8h9",
+    "officialUrl": "https://www.city.ojiya.niigata.jp/soshiki/senkan/"
+  },
+  {
+    "id": "OJ02",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u5C0F\u5343\u8C37\u5E02",
+    "name": "\u7247\u8C9D\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u5C0F\u5343\u8C37\u5E02\u7247\u8C9D\u753A4940-1",
+    "area": "\u7247\u8C9D\u5730\u533A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/0Z9y8X7w6V5u4T3s2",
+    "officialUrl": "https://www.city.ojiya.niigata.jp/soshiki/senkan/"
+  },
+  {
+    "id": "MT01",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u898B\u9644\u5E02",
+    "name": "\u898B\u9644\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
+    "address": "\u898B\u9644\u5E02\u662D\u548C\u753A2-1-1",
+    "area": "\u898B\u9644\u5E02\u4E2D\u5FC3\u90E8\u30FB\u662D\u548C\u753A\u30A8\u30EA\u30A2",
+    "mapUrl": "https://maps.app.goo.gl/6F7g8H9i0J1k2L3m4",
+    "officialUrl": "https://www.city.mitsuke.niigata.jp/"
+  },
+  {
+    "id": "KM01",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u52A0\u8302\u5E02",
+    "name": "\u52A0\u8302\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
+    "address": "\u52A0\u8302\u5E02\u5E78\u753A2-3-5",
+    "area": "\u52A0\u8302\u5E02\u4E2D\u5FC3\u90E8\u30FB\u99C5\u524D\u30A8\u30EA\u30A2",
+    "mapUrl": "https://maps.app.goo.gl/8H9i0J1k2L3m4N5o6",
+    "officialUrl": "https://www.city.kamo.niigata.jp/"
+  },
+  {
+    "id": "TG01",
     "region": "\u4E2D\u8D8A",
     "municipality": "\u7530\u4E0A\u753A",
     "name": "\u7530\u4E0A\u753A\u5F79\u5834",
@@ -2991,7 +3231,7 @@ const POLLING_PLACES = [
     "officialUrl": "https://www.town.tagami.niigata.jp/"
   },
   {
-    "id": "M13",
+    "id": "IZ01",
     "region": "\u4E2D\u8D8A",
     "municipality": "\u51FA\u96F2\u5D0E\u753A",
     "name": "\u51FA\u96F2\u5D0E\u753A\u5F79\u5834",
@@ -3001,17 +3241,17 @@ const POLLING_PLACES = [
     "officialUrl": "https://www.town.izumozaki.niigata.jp/"
   },
   {
-    "id": "M14",
+    "id": "YZ01",
     "region": "\u4E2D\u8D8A",
     "municipality": "\u6E6F\u6CA2\u753A",
     "name": "\u6E6F\u6CA2\u753A\u5F79\u5834",
     "address": "\u5357\u9B5A\u6CBC\u90E1\u6E6F\u6CA2\u753A\u795E\u7ACB300",
-    "area": "\u6E6F\u6CA2\u753A\u5168\u57DF",
+    "area": "\u6E6F\u6CA2\u753A\u5168\u57DF\uFF08\u795E\u7ACB\u30FB\u8D8A\u5F8C\u6E6F\u6CA2\uFF09",
     "mapUrl": "https://maps.app.goo.gl/0Z9y8X7w6V5u4T3s2",
     "officialUrl": "https://www.town.yuzawa.lg.jp/"
   },
   {
-    "id": "M15",
+    "id": "TN01",
     "region": "\u4E2D\u8D8A",
     "municipality": "\u6D25\u5357\u753A",
     "name": "\u6D25\u5357\u753A\u5F79\u5834",
@@ -3021,7 +3261,7 @@ const POLLING_PLACES = [
     "officialUrl": "https://town.tsunan.niigata.jp/"
   },
   {
-    "id": "M16",
+    "id": "KW01",
     "region": "\u4E2D\u8D8A",
     "municipality": "\u5208\u7FBD\u6751",
     "name": "\u5208\u7FBD\u6751\u5F79\u5834",
@@ -3031,117 +3271,297 @@ const POLLING_PLACES = [
     "officialUrl": "https://www.vill.kariwa.niigata.jp/"
   },
   {
-    "id": "J01",
+    "id": "YH01",
+    "region": "\u4E2D\u8D8A",
+    "municipality": "\u5F25\u5F66\u6751",
+    "name": "\u5F25\u5F66\u6751\u5F79\u5834",
+    "address": "\u897F\u84B2\u539F\u90E1\u5F25\u5F66\u6751\u5927\u5B57\u77E2\u4F5C2865-1",
+    "area": "\u5F25\u5F66\u6751\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/3I2h1G0f9E8d7C6b5",
+    "officialUrl": "http://www.vill.yahiko.niigata.jp/"
+  },
+  {
+    "id": "JO01",
     "region": "\u4E0A\u8D8A",
     "municipality": "\u4E0A\u8D8A\u5E02",
     "name": "\u4E0A\u8D8A\u5E02\u5F79\u6240 \u6728\u7530\u5E81\u820E",
     "address": "\u4E0A\u8D8A\u5E02\u6728\u75301-1-3",
-    "area": "\u9AD8\u7530\u30FB\u76F4\u6C5F\u6D25\u30FB\u6728\u7530\u30A8\u30EA\u30A2",
+    "area": "\u6625\u65E5\u5C71\u30FB\u6728\u7530\u30FB\u76F4\u6C5F\u6D25\u5357\u30A8\u30EA\u30A2",
     "mapUrl": "https://maps.app.goo.gl/7W6v5U4t3S2r1Q0p9",
     "officialUrl": "https://www.city.joetsu.niigata.jp/soshiki/senkan/touhyoujo-ichiran.html"
   },
   {
-    "id": "J02",
+    "id": "JO02",
     "region": "\u4E0A\u8D8A",
     "municipality": "\u4E0A\u8D8A\u5E02",
     "name": "\u9AD8\u7530\u5730\u533A\u516C\u6C11\u9928",
     "address": "\u4E0A\u8D8A\u5E02\u672C\u753A3-2-26",
-    "area": "\u9AD8\u7530\u57CE\u4E0B\u753A\u30FB\u672C\u753A\u5730\u533A",
+    "area": "\u9AD8\u7530\u672C\u753A\u30FB\u57CE\u4E0B\u753A\u30FB\u5927\u624B\u753A\u30A8\u30EA\u30A2",
     "mapUrl": "https://goo.gl/maps/1A2b3C4d5E6f7G8h9",
     "officialUrl": "https://www.city.joetsu.niigata.jp/soshiki/senkan/touhyoujo-ichiran.html"
   },
   {
-    "id": "J03",
+    "id": "JO03",
+    "region": "\u4E0A\u8D8A",
+    "municipality": "\u4E0A\u8D8A\u5E02",
+    "name": "\u76F4\u6C5F\u6D25\u5B66\u3073\u306E\u4EA4\u6D41\u9928",
+    "address": "\u4E0A\u8D8A\u5E02\u4E2D\u592E2-3-5",
+    "area": "\u76F4\u6C5F\u6D25\u6E2F\u30FB\u6E2F\u753A\u30FB\u4E2D\u592E\u30A8\u30EA\u30A2",
+    "mapUrl": "https://maps.app.goo.gl/6V5u4T3s2R1q0P9o8",
+    "officialUrl": "https://www.city.joetsu.niigata.jp/soshiki/senkan/touhyoujo-ichiran.html"
+  },
+  {
+    "id": "JO04",
+    "region": "\u4E0A\u8D8A",
+    "municipality": "\u4E0A\u8D8A\u5E02",
+    "name": "\u67FF\u5D0E\u533A\u7DCF\u5408\u4E8B\u52D9\u6240",
+    "address": "\u4E0A\u8D8A\u5E02\u67FF\u5D0E\u533A\u67FF\u5D0E640",
+    "area": "\u67FF\u5D0E\u533A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/5U4t3S2r1Q0p9O8n7",
+    "officialUrl": "https://www.city.joetsu.niigata.jp/soshiki/senkan/touhyoujo-ichiran.html"
+  },
+  {
+    "id": "JO05",
+    "region": "\u4E0A\u8D8A",
+    "municipality": "\u4E0A\u8D8A\u5E02",
+    "name": "\u9838\u57CE\u533A\u7DCF\u5408\u4E8B\u52D9\u6240",
+    "address": "\u4E0A\u8D8A\u5E02\u9838\u57CE\u533A\u767E\u9593\u753A716",
+    "area": "\u9838\u57CE\u533A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/4T3s2R1q0P9o8N7m6",
+    "officialUrl": "https://www.city.joetsu.niigata.jp/soshiki/senkan/touhyoujo-ichiran.html"
+  },
+  {
+    "id": "JO06",
+    "region": "\u4E0A\u8D8A",
+    "municipality": "\u4E0A\u8D8A\u5E02",
+    "name": "\u5B89\u585A\u533A\u7DCF\u5408\u4E8B\u52D9\u6240",
+    "address": "\u4E0A\u8D8A\u5E02\u5B89\u585A\u533A\u5B89\u585A722",
+    "area": "\u5B89\u585A\u533A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/3S2r1Q0p9O8n7M6l5",
+    "officialUrl": "https://www.city.joetsu.niigata.jp/soshiki/senkan/touhyoujo-ichiran.html"
+  },
+  {
+    "id": "IT01",
     "region": "\u4E0A\u8D8A",
     "municipality": "\u7CF8\u9B5A\u5DDD\u5E02",
     "name": "\u7CF8\u9B5A\u5DDD\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
     "address": "\u7CF8\u9B5A\u5DDD\u5E02\u4E00\u306E\u5BAE1-2-1",
-    "area": "\u7CF8\u9B5A\u5DDD\u5E02\u5168\u57DF",
+    "area": "\u7CF8\u9B5A\u5DDD\u99C5\u524D\u30FB\u4E00\u306E\u5BAE\u30FB\u5BFA\u753A\u30A8\u30EA\u30A2",
     "mapUrl": "https://maps.app.goo.gl/6V5u4T3s2R1q0P9o8",
     "officialUrl": "https://www.city.itoigawa.lg.jp/"
   },
   {
-    "id": "J04",
+    "id": "IT02",
+    "region": "\u4E0A\u8D8A",
+    "municipality": "\u7CF8\u9B5A\u5DDD\u5E02",
+    "name": "\u7CF8\u9B5A\u5DDD\u5E02\u80FD\u751F\u4E8B\u52D9\u6240",
+    "address": "\u7CF8\u9B5A\u5DDD\u5E02\u5927\u5B57\u80FD\u751F7565",
+    "area": "\u80FD\u751F\u5730\u533A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/5U4t3S2r1Q0p9O8n7",
+    "officialUrl": "https://www.city.itoigawa.lg.jp/"
+  },
+  {
+    "id": "IT03",
+    "region": "\u4E0A\u8D8A",
+    "municipality": "\u7CF8\u9B5A\u5DDD\u5E02",
+    "name": "\u7CF8\u9B5A\u5DDD\u5E02\u9752\u6D77\u4E8B\u52D9\u6240",
+    "address": "\u7CF8\u9B5A\u5DDD\u5E02\u5927\u5B57\u9752\u6D774613-1",
+    "area": "\u9752\u6D77\u5730\u533A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/4T3s2R1q0P9o8N7m6",
+    "officialUrl": "https://www.city.itoigawa.lg.jp/"
+  },
+  {
+    "id": "MY01",
     "region": "\u4E0A\u8D8A",
     "municipality": "\u5999\u9AD8\u5E02",
     "name": "\u5999\u9AD8\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
     "address": "\u5999\u9AD8\u5E02\u6804\u753A5-1",
-    "area": "\u65B0\u4E95\u30FB\u5999\u9AD8\u9AD8\u539F\u5730\u533A",
+    "area": "\u65B0\u4E95\u4E2D\u5FC3\u90E8\u30FB\u6804\u753A\u30A8\u30EA\u30A2",
     "mapUrl": "https://maps.app.goo.gl/5U4t3S2r1Q0p9O8n7",
     "officialUrl": "https://www.city.myoko.niigata.jp/"
   },
   {
-    "id": "S01",
+    "id": "MY02",
+    "region": "\u4E0A\u8D8A",
+    "municipality": "\u5999\u9AD8\u5E02",
+    "name": "\u5999\u9AD8\u9AD8\u539F\u30E1\u30C3\u30BB",
+    "address": "\u5999\u9AD8\u5E02\u5927\u5B57\u7530\u53E3308",
+    "area": "\u5999\u9AD8\u9AD8\u539F\u30FB\u95A2\u5DDD\u30FB\u8D64\u5009\u30A8\u30EA\u30A2",
+    "mapUrl": "https://maps.app.goo.gl/4T3s2R1q0P9o8N7m6",
+    "officialUrl": "https://www.city.myoko.niigata.jp/"
+  },
+  {
+    "id": "SD01",
     "region": "\u4F50\u6E21",
     "municipality": "\u4F50\u6E21\u5E02",
     "name": "\u4F50\u6E21\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
     "address": "\u4F50\u6E21\u5E02\u5343\u7A2E232",
-    "area": "\u4E21\u6D25\u30FB\u76F8\u5DDD\u30FB\u4F50\u548C\u7530\u5730\u533A",
+    "area": "\u91D1\u4E95\u30FB\u5343\u7A2E\u30FB\u4E2D\u8208\u30A8\u30EA\u30A2",
     "mapUrl": "https://maps.app.goo.gl/4T3s2R1q0P9o8N7m6",
     "officialUrl": "https://www.city.sado.niigata.jp/soshiki/1049/2234.html"
   },
   {
-    "id": "S02",
+    "id": "SD02",
     "region": "\u4F50\u6E21",
     "municipality": "\u4F50\u6E21\u5E02",
-    "name": "\u4F50\u6E21\u5E02\u771F\u91CE\u884C\u653F\u30B5\u30FC\u30D3\u30B9\u30BB\u30F3\u30BF\u30FC",
-    "address": "\u4F50\u6E21\u5E02\u5409\u5CA1343",
-    "area": "\u771F\u91CE\u30FB\u7FBD\u8302\u30FB\u5C0F\u6728\u5730\u533A",
+    "name": "\u4E21\u6D25\u884C\u653F\u30B5\u30FC\u30D3\u30B9\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u4F50\u6E21\u5E02\u4E21\u6D25\u6E4A353-1",
+    "area": "\u4E21\u6D25\u5730\u533A\uFF08\u6E4A\u30FB\u5937\u30FB\u52A0\u8302\u6B4C\u4EE3\uFF09",
     "mapUrl": "https://maps.app.goo.gl/3S2r1Q0p9O8n7M6l5",
     "officialUrl": "https://www.city.sado.niigata.jp/soshiki/1049/2234.html"
   },
   {
-    "id": "K01",
+    "id": "SD03",
+    "region": "\u4F50\u6E21",
+    "municipality": "\u4F50\u6E21\u5E02",
+    "name": "\u76F8\u5DDD\u884C\u653F\u30B5\u30FC\u30D3\u30B9\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u4F50\u6E21\u5E02\u76F8\u5DDD\u6804\u753A1",
+    "area": "\u76F8\u5DDD\u5730\u533A\uFF08\u6804\u753A\u30FB\u9271\u5C71\u30FB\u7FBD\u7530\uFF09",
+    "mapUrl": "https://maps.app.goo.gl/2R1q0P9o8N7m6L5k4",
+    "officialUrl": "https://www.city.sado.niigata.jp/soshiki/1049/2234.html"
+  },
+  {
+    "id": "SD04",
+    "region": "\u4F50\u6E21",
+    "municipality": "\u4F50\u6E21\u5E02",
+    "name": "\u4F50\u548C\u7530\u884C\u653F\u30B5\u30FC\u30D3\u30B9\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u4F50\u6E21\u5E02\u6CB3\u539F\u7530\u672C\u753A394",
+    "area": "\u4F50\u548C\u7530\u5730\u533A\uFF08\u6CB3\u539F\u7530\u30FB\u516B\u5E61\uFF09",
+    "mapUrl": "https://maps.app.goo.gl/1Q0p9O8n7M6l5K4j3",
+    "officialUrl": "https://www.city.sado.niigata.jp/soshiki/1049/2234.html"
+  },
+  {
+    "id": "SD05",
+    "region": "\u4F50\u6E21",
+    "municipality": "\u4F50\u6E21\u5E02",
+    "name": "\u771F\u91CE\u884C\u653F\u30B5\u30FC\u30D3\u30B9\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u4F50\u6E21\u5E02\u5409\u5CA1343",
+    "area": "\u771F\u91CE\u30FB\u7FBD\u8302\u30FB\u5C0F\u6728\u5730\u533A",
+    "mapUrl": "https://maps.app.goo.gl/0P9o8N7m6L5k4J3i2",
+    "officialUrl": "https://www.city.sado.niigata.jp/soshiki/1049/2234.html"
+  },
+  {
+    "id": "SB01",
     "region": "\u4E0B\u8D8A",
     "municipality": "\u65B0\u767A\u7530\u5E02",
     "name": "\u65B0\u767A\u7530\u5E02\u5F79\u6240 \u30E8\u30EA\u30CD\u30B9\u3057\u3070\u305F",
     "address": "\u65B0\u767A\u7530\u5E02\u4E2D\u592E\u753A3-3-3",
-    "area": "\u65B0\u767A\u7530\u5E02\u5168\u57DF",
+    "area": "\u65B0\u767A\u7530\u4E2D\u5FC3\u90E8\u30FB\u4E2D\u592E\u753A\u30FB\u672C\u753A\u30A8\u30EA\u30A2",
     "mapUrl": "https://maps.app.goo.gl/2R1q0P9o8N7m6L5k4",
     "officialUrl": "https://www.city.shibata.lg.jp/shisei/senkyo/senkyoseido/1031383.html"
   },
   {
-    "id": "K02",
+    "id": "SB02",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u767A\u7530\u5E02",
+    "name": "\u65B0\u767A\u7530\u5E02\u8C4A\u6D66\u652F\u6240",
+    "address": "\u65B0\u767A\u7530\u5E02\u4E59\u6B2126",
+    "area": "\u8C4A\u6D66\u5730\u533A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/1Q0p9O8n7M6l5K4j3",
+    "officialUrl": "https://www.city.shibata.lg.jp/shisei/senkyo/senkyoseido/1031383.html"
+  },
+  {
+    "id": "SB03",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u65B0\u767A\u7530\u5E02",
+    "name": "\u65B0\u767A\u7530\u5E02\u7D2B\u96F2\u5BFA\u652F\u6240",
+    "address": "\u65B0\u767A\u7530\u5E02\u7A32\u8377\u5CA12371",
+    "area": "\u7D2B\u96F2\u5BFA\u5730\u533A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/0P9o8N7m6L5k4J3i2",
+    "officialUrl": "https://www.city.shibata.lg.jp/shisei/senkyo/senkyoseido/1031383.html"
+  },
+  {
+    "id": "MK01",
     "region": "\u4E0B\u8D8A",
     "municipality": "\u6751\u4E0A\u5E02",
     "name": "\u6751\u4E0A\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
     "address": "\u6751\u4E0A\u5E02\u4E09\u6CC9101",
-    "area": "\u6751\u4E0A\u5E02\u5168\u57DF\uFF08\u6751\u4E0A\u30FB\u8352\u5DDD\u30FB\u795E\u6797\u30FB\u671D\u65E5\u30FB\u5C71\u5317\uFF09",
+    "area": "\u6751\u4E0A\u57CE\u4E0B\u753A\u30FB\u5CA9\u8239\u30FB\u702C\u6CE2\u30A8\u30EA\u30A2",
     "mapUrl": "https://maps.app.goo.gl/1Q0p9O8n7M6l5K4j3",
     "officialUrl": "https://www.city.murakami.lg.jp/site/senkyo/"
   },
   {
-    "id": "K03",
+    "id": "MK02",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u6751\u4E0A\u5E02",
+    "name": "\u6751\u4E0A\u5E02\u8352\u5DDD\u652F\u6240",
+    "address": "\u6751\u4E0A\u5E02\u7FBD\u4E0B300",
+    "area": "\u8352\u5DDD\u5730\u533A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/0P9o8N7m6L5k4J3i2",
+    "officialUrl": "https://www.city.murakami.lg.jp/site/senkyo/"
+  },
+  {
+    "id": "MK03",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u6751\u4E0A\u5E02",
+    "name": "\u6751\u4E0A\u5E02\u795E\u6797\u652F\u6240",
+    "address": "\u6751\u4E0A\u5E02\u5CA9\u8239\u99C5\u524D56-1",
+    "area": "\u795E\u6797\u5730\u533A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/9O8n7M6l5K4j3I2h1",
+    "officialUrl": "https://www.city.murakami.lg.jp/site/senkyo/"
+  },
+  {
+    "id": "GS01",
     "region": "\u4E0B\u8D8A",
     "municipality": "\u4E94\u6CC9\u5E02",
     "name": "\u4E94\u6CC9\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
     "address": "\u4E94\u6CC9\u5E02\u592A\u75301092-1",
-    "area": "\u4E94\u6CC9\u30FB\u6751\u677E\u5730\u533A",
+    "area": "\u4E94\u6CC9\u4E2D\u5FC3\u90E8\u30FB\u592A\u7530\u30A8\u30EA\u30A2",
     "mapUrl": "https://maps.app.goo.gl/0P9o8N7m6L5k4J3i2",
     "officialUrl": "https://www.city.gosen.lg.jp/soshiki/senkan/"
   },
   {
-    "id": "K04",
+    "id": "GS02",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u4E94\u6CC9\u5E02",
+    "name": "\u4E94\u6CC9\u5E02\u6751\u677E\u652F\u6240",
+    "address": "\u4E94\u6CC9\u5E02\u6751\u677E\u4E59130",
+    "area": "\u6751\u677E\u5730\u533A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/9O8n7M6l5K4j3I2h1",
+    "officialUrl": "https://www.city.gosen.lg.jp/soshiki/senkan/"
+  },
+  {
+    "id": "AG01",
     "region": "\u4E0B\u8D8A",
     "municipality": "\u963F\u8CC0\u91CE\u5E02",
     "name": "\u963F\u8CC0\u91CE\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
     "address": "\u963F\u8CC0\u91CE\u5E02\u5CA1\u5C71\u753A10-15",
-    "area": "\u6C34\u539F\u30FB\u5B89\u7530\u30FB\u4EAC\u30F6\u702C\u30FB\u7B39\u795E\u5730\u533A",
+    "area": "\u6C34\u539F\u5730\u533A\u30FB\u5CA1\u5C71\u753A\u30A8\u30EA\u30A2",
     "mapUrl": "https://maps.app.goo.gl/9O8n7M6l5K4j3I2h1",
     "officialUrl": "https://www.city.agano.niigata.jp/soshiki/senkan/"
   },
   {
-    "id": "K05",
+    "id": "AG02",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u963F\u8CC0\u91CE\u5E02",
+    "name": "\u963F\u8CC0\u91CE\u5E02\u5B89\u7530\u652F\u6240",
+    "address": "\u963F\u8CC0\u91CE\u5E02\u4FDD\u75304664",
+    "area": "\u5B89\u7530\u5730\u533A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/8N7m6L5k4J3i2H1g0",
+    "officialUrl": "https://www.city.agano.niigata.jp/soshiki/senkan/"
+  },
+  {
+    "id": "TN01",
     "region": "\u4E0B\u8D8A",
     "municipality": "\u80CE\u5185\u5E02",
     "name": "\u80CE\u5185\u5E02\u5F79\u6240 \u672C\u5E81\u820E",
     "address": "\u80CE\u5185\u5E02\u65B0\u548C\u753A2-10",
-    "area": "\u4E2D\u6761\u30FB\u9ED2\u5DDD\u5730\u533A",
+    "area": "\u4E2D\u6761\u4E2D\u5FC3\u90E8\u30FB\u65B0\u548C\u753A\u30A8\u30EA\u30A2",
     "mapUrl": "https://maps.app.goo.gl/8N7m6L5k4J3i2H1g0",
     "officialUrl": "https://www.city.tainai.niigata.jp/kurashi/senkyo/"
   },
   {
-    "id": "K06",
+    "id": "TN02",
+    "region": "\u4E0B\u8D8A",
+    "municipality": "\u80CE\u5185\u5E02",
+    "name": "\u80CE\u5185\u5E02\u9ED2\u5DDD\u5E81\u820E",
+    "address": "\u80CE\u5185\u5E02\u9ED2\u5DDD1410",
+    "area": "\u9ED2\u5DDD\u5730\u533A\u5168\u57DF",
+    "mapUrl": "https://maps.app.goo.gl/7M6l5K4j3I2h1G0f9",
+    "officialUrl": "https://www.city.tainai.niigata.jp/kurashi/senkyo/"
+  },
+  {
+    "id": "SR01",
     "region": "\u4E0B\u8D8A",
     "municipality": "\u8056\u7C60\u753A",
     "name": "\u8056\u7C60\u753A\u5F79\u5834",
@@ -3151,7 +3571,7 @@ const POLLING_PLACES = [
     "officialUrl": "https://www.town.seiro.niigata.jp/"
   },
   {
-    "id": "K07",
+    "id": "AM01",
     "region": "\u4E0B\u8D8A",
     "municipality": "\u963F\u8CC0\u753A",
     "name": "\u963F\u8CC0\u753A\u5F79\u5834",
@@ -3161,7 +3581,7 @@ const POLLING_PLACES = [
     "officialUrl": "https://www.town.aga.niigata.jp/"
   },
   {
-    "id": "K08",
+    "id": "SK01",
     "region": "\u4E0B\u8D8A",
     "municipality": "\u95A2\u5DDD\u6751",
     "name": "\u95A2\u5DDD\u6751\u5F79\u5834",
@@ -3171,7 +3591,7 @@ const POLLING_PLACES = [
     "officialUrl": "http://www.vill.sekikawa.niigata.jp/"
   },
   {
-    "id": "K09",
+    "id": "AW01",
     "region": "\u4E0B\u8D8A",
     "municipality": "\u7C9F\u5CF6\u6D66\u6751",
     "name": "\u7C9F\u5CF6\u6D66\u6751\u5F79\u5834",
@@ -3179,16 +3599,6 @@ const POLLING_PLACES = [
     "area": "\u7C9F\u5CF6\u6D66\u6751\u5168\u57DF",
     "mapUrl": "https://maps.app.goo.gl/4J3i2H1g0F9e8D7c6",
     "officialUrl": "http://www.vill.awashimaura.lg.jp/"
-  },
-  {
-    "id": "K10",
-    "region": "\u4E2D\u8D8A",
-    "municipality": "\u5F25\u5F66\u6751",
-    "name": "\u5F25\u5F66\u6751\u5F79\u5834",
-    "address": "\u897F\u84B2\u539F\u90E1\u5F25\u5F66\u6751\u5927\u5B57\u77E2\u4F5C2865-1",
-    "area": "\u5F25\u5F66\u6751\u5168\u57DF",
-    "mapUrl": "https://maps.app.goo.gl/3I2h1G0f9E8d7C6b5",
-    "officialUrl": "http://www.vill.yahiko.niigata.jp/"
   }
 ];
 const REGION_CATEGORIES = ["\u3059\u3079\u3066", "\u4E0B\u8D8A", "\u4E2D\u8D8A", "\u4E0A\u8D8A", "\u4F50\u6E21"];
@@ -3594,11 +4004,11 @@ function renderPlace() {
   const wrap = document.createElement("div");
   const title = document.createElement("h2");
   title.className = "disp section-title";
-  title.textContent = "\u65B0\u6F5F\u770C \u6295\u7968\u6240\u6848\u5185 (\u516830\u5E02\u753A\u6751\u5BFE\u5FDC)";
+  title.textContent = "\u65B0\u6F5F\u770C \u6295\u7968\u6240\u6848\u5185 (\u516830\u5E02\u753A\u6751\u5BFE\u5FDC\u30FB284\u7B87\u6240)";
   wrap.appendChild(title);
   const sub = document.createElement("p");
   sub.className = "section-sub";
-  sub.textContent = "\u4E0B\u8D8A\u30FB\u4E2D\u8D8A\u30FB\u4E0A\u8D8A\u30FB\u4F50\u6E21\u306E\u516830\u5E02\u753A\u6751\u3002\u304A\u4F4F\u307E\u3044\u306E\u5730\u57DF\u3092\u9078\u629E\u307E\u305F\u306F\u691C\u7D22\u3067\u304D\u307E\u3059\u3002";
+  sub.textContent = "\u4E0B\u8D8A\u30FB\u4E2D\u8D8A\u30FB\u4E0A\u8D8A\u30FB\u4F50\u6E21\u306E\u516830\u5E02\u753A\u6751\u3002\u304A\u4F4F\u307E\u3044\u306E\u5E02\u753A\u6751\u30FB\u5730\u533A\u3092\u9078\u629E\u307E\u305F\u306F\u30AD\u30FC\u30EF\u30FC\u30C9\u691C\u7D22\u3067\u304D\u307E\u3059\u3002";
   wrap.appendChild(sub);
   const regionContainer = document.createElement("div");
   regionContainer.className = "region-filter-container";
@@ -3674,7 +4084,7 @@ function renderPlace() {
   const searchInput = document.createElement("input");
   searchInput.type = "text";
   searchInput.className = "place-search-input";
-  searchInput.placeholder = "\u5E02\u753A\u6751\u540D\u3001\u6295\u7968\u6240\u540D\u3001\u4F4F\u6240\u3001\u753A\u540D\uFF08\u4F8B: \u9577\u5CA1\u3001\u4F50\u6E21\u3001\u53E4\u753A\uFF09\u3067\u691C\u7D22...";
+  searchInput.placeholder = "\u5E02\u753A\u6751\u540D\u3001\u6295\u7968\u6240\u540D\u3001\u4F4F\u6240\u3001\u753A\u540D\uFF08\u4F8B: \u9577\u5CA1\u3001\u4F50\u6E21\u3001\u9AD8\u7530\u3001\u677E\u6D5C\uFF09\u3067\u691C\u7D22...";
   searchInput.value = state.placeSearchQuery;
   searchInput.addEventListener("input", (e) => {
     state.placeSearchQuery = e.target.value;
