@@ -121,21 +121,26 @@ html, body {
   box-shadow: 0 -3px 0 #10B981 inset, 0 -2px 10px rgba(0,0,0,0.1);
 }
 
-/* Hero Section (メイン画面) */
+/* Hero Section (画面全体のトップ画面) */
 .main-hero-container {
   position: relative;
-  width: 100%;
-  border-radius: 16px;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  height: calc(100vh - 65px);
+  min-height: 520px;
+  border-radius: 0;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  margin-bottom: 24px;
+  margin-top: -24px;
+  margin-bottom: -24px;
   background-color: #1E1B4B;
 }
 .hero-bg-photo {
   width: 100%;
-  height: 380px;
+  height: 100%;
   background-size: cover;
-  background-position: center bottom;
+  background-position: center center;
   background-repeat: no-repeat;
   filter: brightness(0.95);
   transition: transform 0.5s ease;
@@ -151,6 +156,7 @@ html, body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 24px;
 }
 
 /* Center Oval Text Banner */
@@ -158,10 +164,10 @@ html, body {
   background: rgba(255, 255, 255, 0.95);
   border: 3px solid #10B981;
   border-radius: 999px;
-  padding: 14px 32px;
+  padding: 18px 42px;
   color: #047857;
   font-weight: 800;
-  font-size: 20px;
+  font-size: 24px;
   text-align: center;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   max-width: 90%;
@@ -177,15 +183,15 @@ html, body {
 /* Mascot Left: 選挙君 */
 .hero-mascot-left {
   position: absolute;
-  top: 16px;
-  left: 16px;
+  top: 24px;
+  left: 24px;
   background: #FFFFFF;
   border: 2px solid #E5E7EB;
-  border-radius: 12px;
-  padding: 6px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.18);
-  width: 120px;
-  height: 140px;
+  border-radius: 14px;
+  padding: 8px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  width: 150px;
+  height: 175px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -200,15 +206,15 @@ html, body {
 /* Mascot Bottom Left & Right: こめちゃん */
 .hero-mascot-kome-left {
   position: absolute;
-  bottom: 12px;
-  left: 16px;
+  bottom: 24px;
+  left: 24px;
   background: #FFFFFF;
   border: 2px solid #E5E7EB;
-  border-radius: 10px;
-  padding: 4px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
-  width: 70px;
-  height: 70px;
+  border-radius: 12px;
+  padding: 6px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+  width: 90px;
+  height: 90px;
   z-index: 3;
 }
 .hero-mascot-kome-left img {
@@ -219,15 +225,15 @@ html, body {
 
 .hero-mascot-kome-right {
   position: absolute;
-  bottom: 12px;
-  right: 16px;
+  bottom: 24px;
+  right: 24px;
   background: #FFFFFF;
   border: 2px solid #E5E7EB;
-  border-radius: 10px;
-  padding: 4px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
-  width: 70px;
-  height: 70px;
+  border-radius: 12px;
+  padding: 6px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+  width: 90px;
+  height: 90px;
   z-index: 3;
 }
 .hero-mascot-kome-right img {
@@ -239,17 +245,17 @@ html, body {
 /* Scroll guide */
 .scroll-indicator {
   position: absolute;
-  bottom: 12px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(30, 27, 75, 0.85);
+  background: rgba(30, 27, 75, 0.88);
   color: #FFFFFF;
-  padding: 6px 16px;
+  padding: 10px 24px;
   border-radius: 999px;
-  font-size: 12px;
+  font-size: 13.5px;
   font-weight: 700;
   letter-spacing: 0.5px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
   animation: bounceDown 2s infinite ease-in-out;
   z-index: 4;
 }
