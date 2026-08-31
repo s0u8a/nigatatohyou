@@ -108,10 +108,6 @@ const TYPE_NAMES = {
 const OFFICIAL_SCHEDULE_URL = "https://www.pref.niigata.lg.jp/site/senkyo/list803.html";
 const OFFICIAL_NIIGATA_POLLING_URL = "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html";
 const UPCOMING_ELECTIONS = [
-  { year: "\u4EE4\u548C7\u5E74\u5EA6", yearLabel: "\u4EE4\u548C7\u5E74", name: "\u7B2C27\u56DE \u53C2\u8B70\u9662\u8B70\u54E1\u901A\u5E38\u9078\u6319", notice: "7\u67083\u65E5", day: "7\u670820\u65E5", isoDate: "2025-07-20" },
-  { year: "\u4EE4\u548C7\u5E74\u5EA6", yearLabel: "\u4EE4\u548C7\u5E74", name: "\u963F\u8CC0\u91CE\u5E02\u9577\u9078\u6319", notice: "4\u670813\u65E5", day: "4\u670820\u65E5", isoDate: "2025-04-20" },
-  { year: "\u4EE4\u548C7\u5E74\u5EA6", yearLabel: "\u4EE4\u548C7\u5E74", name: "\u5341\u65E5\u753A\u5E02\u9577\u9078\u6319\u30FB\u5E02\u8B70\u9078", notice: "4\u670820\u65E5", day: "4\u670827\u65E5", isoDate: "2025-04-27" },
-  { year: "\u4EE4\u548C7\u5E74\u5EA6", yearLabel: "\u4EE4\u548C7\u5E74", name: "\u5357\u9B5A\u6CBC\u5E02\u9577\u9078\u6319", notice: "11\u67089\u65E5", day: "11\u670816\u65E5", isoDate: "2025-11-16" },
   { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u80CE\u5185\u5E02\u9577\u9078\u6319", notice: "9\u67086\u65E5", day: "9\u670813\u65E5", isoDate: "2026-09-13" },
   { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u65B0\u6F5F\u5E02\u9577\u9078\u6319", notice: "10\u670811\u65E5", day: "10\u670825\u65E5", isoDate: "2026-10-25" },
   { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u71D5\u5E02\u8B70\u4F1A\u8B70\u54E1\u9078\u6319", notice: "10\u670811\u65E5", day: "10\u670818\u65E5", isoDate: "2026-10-18" },
@@ -125,7 +121,7 @@ const UPCOMING_ELECTIONS = [
   { year: "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D", yearLabel: "\u4EE4\u548C9\u5E74", name: "\u9577\u5CA1\u5E02\u9577\u9078\u6319 (\u4EFB\u671F\u6E80\u4E86 10\u6708)", notice: "10\u6708", day: "10\u6708\u4E0B\u65EC(\u4E88\u5B9A)", isoDate: "2027-10-24" },
   { year: "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D", yearLabel: "\u4EE4\u548C9\u5E74", name: "\u4E0A\u8D8A\u5E02\u9577\u9078\u6319 (\u4EFB\u671F\u6E80\u4E86 11\u6708)", notice: "11\u6708", day: "11\u6708\u4E0B\u65EC(\u4E88\u5B9A)", isoDate: "2027-11-21" }
 ];
-const ELECTION_YEAR_FILTERS = ["\u3059\u3079\u3066", "\u4EE4\u548C7\u5E74\u5EA6", "\u4EE4\u548C8\u5E74\u5EA6", "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D"];
+const ELECTION_YEAR_FILTERS = ["\u3059\u3079\u3066", "\u4EE4\u548C8\u5E74\u5EA6", "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D"];
 const POLLING_PLACES = [
   {
     "id": "1001",
@@ -3773,7 +3769,7 @@ function renderHome() {
   scheduleHead.style.marginBottom = "12px";
   scheduleHead.innerHTML = `
     <p style="font-size:15px;font-weight:700;margin:0;">\u65B0\u6F5F\u770C\u5185\u306E\u4E88\u5B9A\u9078\u6319\uFF08\u5E74\u5EA6\u5225\uFF09</p>
-    <span style="font-size:12px;color:var(--faint);">\u4EE4\u548C7\u301C9\u5E74\u4EE5\u964D</span>
+    <span style="font-size:12px;color:var(--faint);">\u4EE4\u548C8\u301C9\u5E74\u4EE5\u964D</span>
   `;
   scheduleCard.appendChild(scheduleHead);
   const yearChips = document.createElement("div");

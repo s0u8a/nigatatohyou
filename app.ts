@@ -169,13 +169,8 @@ const TYPE_NAMES: Record<Tag, string> = {
 const OFFICIAL_SCHEDULE_URL = "https://www.pref.niigata.lg.jp/site/senkyo/list803.html";
 const OFFICIAL_NIIGATA_POLLING_URL = "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html";
 
-// 令和7年度, 令和8年度, 令和9年度以降 スケジュール
+// 令和8年度, 令和9年度以降 スケジュール
 const UPCOMING_ELECTIONS: UpcomingElection[] = [
-  { year: "令和7年度", yearLabel: "令和7年", name: "第27回 参議院議員通常選挙", notice: "7月3日", day: "7月20日", isoDate: "2025-07-20" },
-  { year: "令和7年度", yearLabel: "令和7年", name: "阿賀野市長選挙", notice: "4月13日", day: "4月20日", isoDate: "2025-04-20" },
-  { year: "令和7年度", yearLabel: "令和7年", name: "十日町市長選挙・市議選", notice: "4月20日", day: "4月27日", isoDate: "2025-04-27" },
-  { year: "令和7年度", yearLabel: "令和7年", name: "南魚沼市長選挙", notice: "11月9日", day: "11月16日", isoDate: "2025-11-16" },
-
   { year: "令和8年度", yearLabel: "令和8年", name: "胎内市長選挙", notice: "9月6日", day: "9月13日", isoDate: "2026-09-13" },
   { year: "令和8年度", yearLabel: "令和8年", name: "新潟市長選挙", notice: "10月11日", day: "10月25日", isoDate: "2026-10-25" },
   { year: "令和8年度", yearLabel: "令和8年", name: "燕市議会議員選挙", notice: "10月11日", day: "10月18日", isoDate: "2026-10-18" },
@@ -191,7 +186,7 @@ const UPCOMING_ELECTIONS: UpcomingElection[] = [
   { year: "令和9年度以降", yearLabel: "令和9年", name: "上越市長選挙 (任期満了 11月)", notice: "11月", day: "11月下旬(予定)", isoDate: "2027-11-21" },
 ];
 
-const ELECTION_YEAR_FILTERS = ["すべて", "令和7年度", "令和8年度", "令和9年度以降"];
+const ELECTION_YEAR_FILTERS = ["すべて", "令和8年度", "令和9年度以降"];
 
 // 新潟県 全30市町村 投票所データ (全284箇所)
 const POLLING_PLACES: PollingPlace[] = [
@@ -3887,7 +3882,7 @@ function renderHome(): HTMLElement {
   scheduleHead.style.marginBottom = "12px";
   scheduleHead.innerHTML = `
     <p style="font-size:15px;font-weight:700;margin:0;">新潟県内の予定選挙（年度別）</p>
-    <span style="font-size:12px;color:var(--faint);">令和7〜9年以降</span>
+    <span style="font-size:12px;color:var(--faint);">令和8〜9年以降</span>
   `;
   scheduleCard.appendChild(scheduleHead);
 
