@@ -1,0 +1,16 @@
+新潟県の選挙日がある日を設定できるアプリにする
+日程を知れるようにできるようにする
+若年層にもわかりやすい公約が欲しい
+投票日や選挙の場所が知れるようにする
+投票診断を作る
+
+
+機能メモ
+タイプスクリプトで開発
+各サイトを参照をしている新潟県の公式など
+https://niigata.openup-lab.com/vote/　新潟県の投票所
+https://www.pref.niigata.lg.jp/site/senkyo/list803.html新潟県公式サイト
+https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html新潟市投票所
+
+
+ 
