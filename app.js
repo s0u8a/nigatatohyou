@@ -1,0 +1,2818 @@
+const TAGS = ["\u7D4C\u6E08", "\u6559\u80B2", "\u74B0\u5883", "\u30C7\u30B8\u30BF\u30EB", "\u798F\u7949", "\u5730\u57DF"];
+const TAG_META = {
+  \u7D4C\u6E08: { color: "#8C3B4B", label: "\u7D4C\u6E08\u30FB\u4ED5\u4E8B" },
+  \u6559\u80B2: { color: "#3E6B8A", label: "\u6559\u80B2\u30FB\u5B66\u3073" },
+  \u74B0\u5883: { color: "#4C7A54", label: "\u74B0\u5883\u30FB\u8FB2\u696D" },
+  \u30C7\u30B8\u30BF\u30EB: { color: "#6B5B95", label: "\u30C7\u30B8\u30BF\u30EB\u30FB\u304F\u3089\u3057" },
+  \u798F\u7949: { color: "#B5762B", label: "\u798F\u7949\u30FB\u533B\u7642" },
+  \u5730\u57DF: { color: "#D6A24C", label: "\u5730\u57DF\u306E\u3064\u306A\u304C\u308A" }
+};
+const CANDIDATES = [
+  {
+    id: "a",
+    name: "\u65B0\u6F5F\u672A\u6765\u4F1A\u8B70",
+    tagline: "\u50CD\u304D\u65B9\u3068\u5B66\u3073\u3092\u30A2\u30C3\u30D7\u30C7\u30FC\u30C8",
+    weights: { \u30C7\u30B8\u30BF\u30EB: 3, \u6559\u80B2: 2, \u7D4C\u6E08: 1, \u74B0\u5883: 0, \u798F\u7949: 0, \u5730\u57DF: 0 },
+    pledges: [
+      "\u770C\u5185\u3069\u3053\u3067\u3082\u9AD8\u901F\u901A\u4FE1\u3001\u884C\u653F\u624B\u7D9A\u304D\u306F\u5168\u90E8\u30AA\u30F3\u30E9\u30A4\u30F3\u3067\u5B8C\u7D50",
+      "\u5968\u5B66\u91D1\u306E\u8FD4\u6E08\u8CA0\u62C5\u3092\u4ECA\u3088\u308A\u8EFD\u304F\u3059\u308B\u7D66\u4ED8\u578B\u652F\u63F4\u3092\u62E1\u5145",
+      "\u30EA\u30E2\u30FC\u30C8\u30EF\u30FC\u30AF\u3067\u50CD\u3051\u308B\u4F01\u696D\u8A98\u81F4\u3092\u9032\u3081\u3001\u770C\u5916\u306B\u51FA\u306A\u304F\u3066\u3082\u50CD\u3051\u308B\u74B0\u5883\u3092\u3064\u304F\u308B"
+    ]
+  },
+  {
+    id: "b",
+    name: "\u307F\u3069\u308A\u306E\u65B0\u6F5F",
+    tagline: "\u7530\u3093\u307C\u3068\u81EA\u7136\u3092\u6B21\u306E\u4E16\u4EE3\u3078",
+    weights: { \u74B0\u5883: 3, \u5730\u57DF: 2, \u30C7\u30B8\u30BF\u30EB: 0, \u7D4C\u6E08: 0, \u6559\u80B2: 0, \u798F\u7949: 0 },
+    pledges: [
+      "\u8015\u4F5C\u653E\u68C4\u5730\u3092\u518D\u751F\u3057\u3001\u82E5\u3044\u4E16\u4EE3\u304C\u65B0\u898F\u5C31\u8FB2\u3057\u3084\u3059\u3044\u88DC\u52A9\u5236\u5EA6\u3092\u3064\u304F\u308B",
+      "\u7A7A\u304D\u5BB6\u3092\u30EA\u30CE\u30D9\u30FC\u30B7\u30E7\u30F3\u3057\u3001\u79FB\u4F4F\u8005\u3068\u5730\u5143\u306E\u4EA4\u6D41\u62E0\u70B9\u306B\u3059\u308B",
+      "\u518D\u751F\u53EF\u80FD\u30A8\u30CD\u30EB\u30AE\u30FC\u306E\u5C0E\u5165\u3067\u96FB\u6C17\u4EE3\u306E\u8CA0\u62C5\u3092\u6E1B\u3089\u3059"
+    ]
+  },
+  {
+    id: "c",
+    name: "\u304F\u3089\u3057\u5B89\u5FC3\u65B0\u6F5F",
+    tagline: "\u8AB0\u3082\u304C\u5B89\u5FC3\u3057\u3066\u66AE\u3089\u305B\u308B\u65B0\u6F5F\u306B",
+    weights: { \u798F\u7949: 3, \u6559\u80B2: 1, \u5730\u57DF: 1, \u30C7\u30B8\u30BF\u30EB: 0, \u7D4C\u6E08: 0, \u74B0\u5883: 0 },
+    pledges: [
+      "\u770C\u5185\u3069\u3053\u306B\u4F4F\u3093\u3067\u3044\u3066\u3082\u5C0F\u5150\u79D1\u30FB\u7523\u5A66\u4EBA\u79D1\u306B\u30A2\u30AF\u30BB\u30B9\u3067\u304D\u308B\u4F53\u5236\u3092\u3064\u304F\u308B",
+      "\u533B\u7642\u8CBB\u306E\u7A93\u53E3\u8CA0\u62C5\u3092\u8EFD\u304F\u3059\u308B\u72EC\u81EA\u306E\u52A9\u6210\u3092\u62E1\u5145",
+      "\u5730\u57DF\u306E\u76F8\u8AC7\u7A93\u53E3\u3092\u6E1B\u3089\u3055\u305A\u3001\u5BFE\u9762\u3067\u3082\u76F8\u8AC7\u3067\u304D\u308B\u5834\u6240\u3092\u7DAD\u6301\u3059\u308B"
+    ]
+  },
+  {
+    id: "d",
+    name: "\u6539\u9769\u65B0\u6F5F",
+    tagline: "\u7A3C\u3052\u308B\u65B0\u6F5F\u3001\u66AE\u3089\u305B\u308B\u65B0\u6F5F",
+    weights: { \u7D4C\u6E08: 3, \u30C7\u30B8\u30BF\u30EB: 1, \u5730\u57DF: 1, \u6559\u80B2: 0, \u74B0\u5883: 0, \u798F\u7949: 0 },
+    pledges: [
+      "\u770C\u5185\u4F01\u696D\u306E\u8CC3\u4E0A\u3052\u3092\u652F\u63F4\u3057\u3001\u82E5\u624B\u306E\u521D\u4EFB\u7D66\u306E\u5E95\u4E0A\u3052\u3092\u76EE\u6307\u3059",
+      "\u65B0\u6F5F\u99C5\u5468\u8FBA\u306E\u518D\u958B\u767A\u3092\u9032\u3081\u3001\u901A\u52E4\u30FB\u901A\u5B66\u306E\u4EA4\u901A\u306E\u4FBF\u3092\u826F\u304F\u3059\u308B",
+      "\u884C\u653F\u306E\u30E0\u30C0\u3092\u524A\u308A\u3001\u5B50\u80B2\u3066\u4E16\u5E2F\u3078\u306E\u73FE\u91D1\u7D66\u4ED8\u306B\u56DE\u3059"
+    ]
+  }
+];
+const QUESTIONS = [
+  {
+    q: "\u5927\u5B66\u3084\u5C02\u9580\u5B66\u6821\u306E\u5B66\u8CBB\u3001\u6B63\u76F4\u3069\u3046\u601D\u3046?",
+    options: [
+      { text: "\u5968\u5B66\u91D1\u3084\u7D66\u4ED8\u3092\u3082\u3063\u3068\u5897\u3084\u3057\u3066\u307B\u3057\u3044", weights: { \u6559\u80B2: 2 } },
+      { text: "\u5B66\u8CBB\u3088\u308A\u3001\u793E\u4F1A\u4EBA\u306B\u306A\u3063\u3066\u304B\u3089\u306E\u5968\u5B66\u91D1\u8FD4\u6E08\u3092\u8EFD\u304F\u3057\u3066\u307B\u3057\u3044", weights: { \u6559\u80B2: 1, \u7D4C\u6E08: 1 } }
+    ]
+  },
+  {
+    q: "\u5C31\u8077\u306B\u3064\u3044\u3066\u4E00\u756A\u6C17\u306B\u306A\u308B\u306E\u306F?",
+    options: [
+      { text: "\u65B0\u6F5F\u770C\u5185\u3067\u7D66\u6599\u306E\u9AD8\u3044\u4ED5\u4E8B\u3092\u5897\u3084\u3057\u3066\u307B\u3057\u3044", weights: { \u7D4C\u6E08: 2 } },
+      { text: "\u770C\u5916\u306B\u51FA\u306A\u304F\u3066\u3082\u50CD\u3051\u308B\u74B0\u5883(\u30EA\u30E2\u30FC\u30C8\u30EF\u30FC\u30AF\u306A\u3069)\u304C\u307B\u3057\u3044", weights: { \u30C7\u30B8\u30BF\u30EB: 2 } }
+    ]
+  },
+  {
+    q: "10\u5E74\u5F8C\u306E\u65B0\u6F5F\u306E\u666F\u8272\u3068\u3057\u3066\u3001\u8FD1\u3044\u306E\u306F?",
+    options: [
+      { text: "\u7530\u3093\u307C\u3084\u81EA\u7136\u3092\u751F\u304B\u3057\u305F\u3001\u74B0\u5883\u3068\u5171\u5B58\u3059\u308B\u307E\u3061", weights: { \u74B0\u5883: 2 } },
+      { text: "\u65B0\u3057\u3044\u5EFA\u7269\u3084IT\u4F01\u696D\u304C\u96C6\u307E\u308B\u3001\u4FBF\u5229\u306A\u307E\u3061", weights: { \u30C7\u30B8\u30BF\u30EB: 1, \u7D4C\u6E08: 1 } }
+    ]
+  },
+  {
+    q: "\u4F53\u8ABF\u3092\u5D29\u3057\u305F\u3068\u304D\u3001\u4E00\u756A\u4E0D\u5B89\u306A\u3053\u3068\u306F?",
+    options: [
+      { text: "\u8FD1\u304F\u306B\u75C5\u9662\u3084\u5C0F\u5150\u79D1\u304C\u5C11\u306A\u3044\u3053\u3068", weights: { \u798F\u7949: 2 } },
+      { text: "\u6CBB\u7642\u8CBB\u3084\u533B\u7642\u8CBB\u306E\u8CA0\u62C5\u304C\u5927\u304D\u3044\u3053\u3068", weights: { \u798F\u7949: 1, \u7D4C\u6E08: 1 } }
+    ]
+  },
+  {
+    q: "\u884C\u653F\u30B5\u30FC\u30D3\u30B9\u306B\u3064\u3044\u3066\u601D\u3046\u3053\u3068\u306F?",
+    options: [
+      { text: "\u624B\u7D9A\u304D\u304C\u30AA\u30F3\u30E9\u30A4\u30F3\u3067\u3082\u3063\u3068\u7C21\u5358\u306B\u306A\u3063\u3066\u307B\u3057\u3044", weights: { \u30C7\u30B8\u30BF\u30EB: 2 } },
+      { text: "\u7A93\u53E3\u3067\u76F4\u63A5\u76F8\u8AC7\u3067\u304D\u308B\u5834\u6240\u3092\u6E1B\u3089\u3055\u306A\u3044\u3067\u307B\u3057\u3044", weights: { \u5730\u57DF: 2 } }
+    ]
+  },
+  {
+    q: "\u3053\u306E\u5148\u3082\u65B0\u6F5F\u306B\u4F4F\u307F\u7D9A\u3051\u305F\u3044\u7406\u7531\u306B\u8FD1\u3044\u306E\u306F?",
+    options: [
+      { text: "\u8FD1\u6240\u306E\u4EBA\u3068\u306E\u3064\u306A\u304C\u308A\u3084\u3001\u5730\u57DF\u306E\u304A\u796D\u308A\u306A\u3069\u306E\u6587\u5316", weights: { \u5730\u57DF: 2 } },
+      { text: "\u901A\u52E4\u30FB\u901A\u5B66\u306E\u4EA4\u901A\u306E\u4FBF\u306E\u826F\u3055", weights: { \u7D4C\u6E08: 1, \u30C7\u30B8\u30BF\u30EB: 1 } }
+    ]
+  }
+];
+const TYPE_NAMES = {
+  \u6559\u80B2: "\u5B66\u3073\u306E\u672A\u6765\u578B",
+  \u7D4C\u6E08: "\u66AE\u3089\u3057\u306E\u5B89\u5B9A\u578B",
+  \u74B0\u5883: "\u81EA\u7136\u3068\u5171\u306B\u578B",
+  \u30C7\u30B8\u30BF\u30EB: "\u30C6\u30AF\u30CE\u30ED\u30B8\u30FC\u6D3B\u7528\u578B",
+  \u798F\u7949: "\u5B89\u5FC3\u7B2C\u4E00\u578B",
+  \u5730\u57DF: "\u5730\u5143\u3064\u306A\u304C\u308A\u578B"
+};
+const OFFICIAL_SCHEDULE_URL = "https://www.pref.niigata.lg.jp/site/senkyo/list803.html";
+const OFFICIAL_NIIGATA_POLLING_URL = "https://www.city.niigata.lg.jp/shisei/senkyo/tohyo/tohyojo.html";
+const UPCOMING_ELECTIONS = [
+  // --- 令和7年度 (2025年) ---
+  { year: "\u4EE4\u548C7\u5E74\u5EA6", yearLabel: "\u4EE4\u548C7\u5E74", name: "\u7B2C27\u56DE \u53C2\u8B70\u9662\u8B70\u54E1\u901A\u5E38\u9078\u6319", notice: "7\u67083\u65E5", day: "7\u670820\u65E5", isoDate: "2025-07-20" },
+  { year: "\u4EE4\u548C7\u5E74\u5EA6", yearLabel: "\u4EE4\u548C7\u5E74", name: "\u963F\u8CC0\u91CE\u5E02\u9577\u9078\u6319", notice: "4\u670813\u65E5", day: "4\u670820\u65E5", isoDate: "2025-04-20" },
+  { year: "\u4EE4\u548C7\u5E74\u5EA6", yearLabel: "\u4EE4\u548C7\u5E74", name: "\u5341\u65E5\u753A\u5E02\u9577\u9078\u6319\u30FB\u5E02\u8B70\u9078", notice: "4\u670820\u65E5", day: "4\u670827\u65E5", isoDate: "2025-04-27" },
+  { year: "\u4EE4\u548C7\u5E74\u5EA6", yearLabel: "\u4EE4\u548C7\u5E74", name: "\u5357\u9B5A\u6CBC\u5E02\u9577\u9078\u6319", notice: "11\u67089\u65E5", day: "11\u670816\u65E5", isoDate: "2025-11-16" },
+  // --- 令和8年度 (2026年) ---
+  { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u80CE\u5185\u5E02\u9577\u9078\u6319", notice: "9\u67086\u65E5", day: "9\u670813\u65E5", isoDate: "2026-09-13" },
+  { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u65B0\u6F5F\u5E02\u9577\u9078\u6319", notice: "10\u670811\u65E5", day: "10\u670825\u65E5", isoDate: "2026-10-25" },
+  { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u71D5\u5E02\u8B70\u4F1A\u8B70\u54E1\u9078\u6319", notice: "10\u670811\u65E5", day: "10\u670818\u65E5", isoDate: "2026-10-18" },
+  { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u898B\u9644\u5E02\u8B70\u4F1A\u8B70\u54E1\u9078\u6319", notice: "10\u670818\u65E5", day: "10\u670825\u65E5", isoDate: "2026-10-25" },
+  { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u5999\u9AD8\u5E02\u9577\u9078\u6319", notice: "11\u67088\u65E5", day: "11\u670815\u65E5", isoDate: "2026-11-15" },
+  { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u5C0F\u5343\u8C37\u5E02\u9577\u9078\u6319", notice: "11\u67088\u65E5", day: "11\u670815\u65E5", isoDate: "2026-11-15" },
+  { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u65B0\u767A\u7530\u5E02\u9577\u9078\u6319", notice: "11\u670815\u65E5", day: "11\u670822\u65E5", isoDate: "2026-11-22" },
+  { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u963F\u8CC0\u753A\u9577\u9078\u6319", notice: "11\u670817\u65E5", day: "11\u670822\u65E5", isoDate: "2026-11-22" },
+  // --- 令和9年度以降 (2027年〜) ---
+  { year: "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D", yearLabel: "\u4EE4\u548C9\u5E74", name: "\u7B2C21\u56DE \u7D71\u4E00\u5730\u65B9\u9078\u6319 (\u65B0\u6F5F\u770C\u8B70\u4F1A\u8B70\u54E1\u9078\u6319)", notice: "3\u6708\u4E0B\u65EC", day: "4\u670811\u65E5(\u4E88\u5B9A)", isoDate: "2027-04-11" },
+  { year: "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D", yearLabel: "\u4EE4\u548C9\u5E74", name: "\u65B0\u6F5F\u5E02\u8B70\u4F1A\u8B70\u54E1\u4E00\u822C\u9078\u6319", notice: "3\u6708\u4E0B\u65EC", day: "4\u670811\u65E5(\u4E88\u5B9A)", isoDate: "2027-04-11" },
+  { year: "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D", yearLabel: "\u4EE4\u548C9\u5E74", name: "\u9577\u5CA1\u5E02\u9577\u9078\u6319 (\u4EFB\u671F\u6E80\u4E86 10\u6708)", notice: "10\u6708", day: "10\u6708\u4E0B\u65EC(\u4E88\u5B9A)", isoDate: "2027-10-24" },
+  { year: "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D", yearLabel: "\u4EE4\u548C9\u5E74", name: "\u4E0A\u8D8A\u5E02\u9577\u9078\u6319 (\u4EFB\u671F\u6E80\u4E86 11\u6708)", notice: "11\u6708", day: "11\u6708\u4E0B\u65EC(\u4E88\u5B9A)", isoDate: "2027-11-21" }
+];
+const ELECTION_YEAR_FILTERS = ["\u3059\u3079\u3066", "\u4EE4\u548C7\u5E74\u5EA6", "\u4EE4\u548C8\u5E74\u5EA6", "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D"];
+const POLLING_PLACES = [
+  {
+    "id": "1001",
+    "ward": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "wardShort": "\u5317\u533A",
+    "name": "\u677E\u6D5C\u5C0F\u5B66\u6821",
+    "address": "\u5317\u533A\u677E\u6D5C3\u201019\u20101",
+    "area": "\u677E\u6D5C1\uFF5E8\u4E01\u76EE\u3001\u677E\u6D5C\u753A\u306E\u4E00\u90E8\u3001\u677E\u6D5C\u6771\u753A1\uFF5E2\u4E01\u76EE\u3001\u677E\u6D5C\u672C\u753A1\uFF5E4\u4E01\u76EE\u3001\u677E\u6D5C\u307F\u306A\u3068",
+    "mapUrl": "https://goo.gl/maps/A8JgTEGFqyegZ6Sg9",
+    "updateInfo": ""
+  },
+  {
+    "id": "1002",
+    "ward": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "wardShort": "\u5317\u533A",
+    "name": "\u5357\u6D5C\u9023\u7D61\u6240",
+    "address": "\u5317\u533A\u5CF6\u898B\u753A2069-1",
+    "area": "\u5CF6\u898B\u753A\u3001\u767D\u52E2\u753A\u3001\u65B0\u5BCC\u753A",
+    "mapUrl": "https://maps.app.goo.gl/Y75SFNamwFrM3Pgx5",
+    "updateInfo": ""
+  },
+  {
+    "id": "1003",
+    "ward": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "wardShort": "\u5317\u533A",
+    "name": "\u592A\u592B\u6D5C\u5C0F\u5B66\u6821",
+    "address": "\u5317\u533A\u592A\u592B\u6D5C2045\u20102",
+    "area": "\u795E\u8C37\u5185\u3001\u592A\u592B\u6D5C\u3001\u592A\u592B\u6D5C\u65B0\u753A1\uFF5E2\u4E01\u76EE\u3001\u677E\u6804\u753A\u3001\u677E\u6D5C\u753A\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/11X2a6rSpcAA7dQh6",
+    "updateInfo": ""
+  },
+  {
+    "id": "1004",
+    "ward": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "wardShort": "\u5317\u533A",
+    "name": "\u592A\u90CE\u4EE3\u81EA\u6CBB\u4F1A\u9928",
+    "address": "\u5317\u533A\u592A\u90CE\u4EE3120",
+    "area": "\u592A\u90CE\u4EE3",
+    "mapUrl": "https://goo.gl/maps/MjNq7HVJYG9ALrZQ9",
+    "updateInfo": ""
+  },
+  {
+    "id": "1005",
+    "ward": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "wardShort": "\u5317\u533A",
+    "name": "\u6FC1\u5DDD\u5C0F\u5B66\u6821",
+    "address": "\u5317\u533A\u6FC1\u5DDD284",
+    "area": "\u3059\u307F\u308C\u91CE1\uFF5E3\u4E01\u76EE\u3001\u3064\u304F\u3057\u91CE1\uFF5E2\u4E01\u76EE\u3001\u65B0\u5D0E\u3001\u65B0\u5D0E1\uFF5E3\u4E01\u76EE\u3001\u6FC1\u5DDD\u3001\u6FC1\u5DDD1\u4E01\u76EE\u3001\u677E\u6F5F",
+    "mapUrl": "https://goo.gl/maps/u1Sw4KgVZPXW8FY79",
+    "updateInfo": ""
+  },
+  {
+    "id": "1006",
+    "ward": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "wardShort": "\u5317\u533A",
+    "name": "\u4E09\u8ED2\u5C4B\u753A\u81EA\u6CBB\u4F1A\u9928",
+    "address": "\u5317\u533A\u4E09\u8ED2\u5C4B\u753A19\u201016",
+    "area": "\u4E09\u8ED2\u5C4B\u753A\u3001\u65B0\u5143\u5CF6\u753A\u3001\u540D\u76EE\u6240\u3001\u540D\u76EE\u62401\uFF5E3\u4E01\u76EE\u3001\u897F\u540D\u76EE\u6240\u3001\u677E\u6D5C\u65B0\u753A",
+    "mapUrl": "https://goo.gl/maps/DPcEKnmUci1dkAcS6",
+    "updateInfo": ""
+  },
+  {
+    "id": "1007",
+    "ward": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "wardShort": "\u5317\u533A",
+    "name": "\u5317\u533A\u5F79\u6240",
+    "address": "\u5317\u533A\u6771\u6804\u753A1-1-14",
+    "area": "\u845B\u585A\u306E\u4E00\u90E8\u3001\u592A\u7530\u306E\u4E00\u90E8\u3001\u5609\u5C71\u306E\u4E00\u90E8\u3001\u524D\u65B0\u7530\u306E\u4E00\u90E8\u3001\u6A2A\u4E95\u306E\u4E00\u90E8\u3001\u767D\u65B0\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u767D\u65B0\u753A2\uFF5E3\u4E01\u76EE\u3001\u767D\u65B0\u753A4\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5609\u5C711\u4E01\u76EE\u5168\u57DF\u3001\u5609\u5C712\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5609\u5C713\uFF5E5\u4E01\u76EE\u3001\u5609\u5C716\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6771\u6804\u753A(\u3068\u3046\u3048\u3044\u3061\u3087\u3046)1\uFF5E3\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/7ueZo6wDVsU8m7uY7",
+    "updateInfo": ""
+  },
+  {
+    "id": "1008",
+    "ward": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "wardShort": "\u5317\u533A",
+    "name": "\u845B\u585A\u5C0F\u5B66\u6821",
+    "address": "\u5317\u533A\u5DDD\u897F3\u20109\u201024",
+    "area": "\u6D66\u6728\u306E\u4E00\u90E8\u3001\u5609\u5C712\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5609\u5C716\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E0A\u571F\u5730\u4E80\u3001\u5DDD\u897F1\uFF5E4\u4E01\u76EE\u3001\u7F8E\u91CC1\uFF5E2\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/W5bGYRfhKLEX8ZEq5",
+    "updateInfo": ""
+  },
+  {
+    "id": "1009",
+    "ward": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "wardShort": "\u5317\u533A",
+    "name": "\u3059\u307F\u308C\u4FDD\u80B2\u5712",
+    "address": "\u5317\u533A\u77F3\u52D51\u201010\u20101",
+    "area": "\u592A\u7530\u306E\u4E00\u90E8\u3001\u845B\u585A\u306E\u4E00\u90E8\u3001\u767D\u65B0\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u304B\u3076\u3068\u3084\u307E1\uFF5E2\u4E01\u76EE\u3001\u77F3\u52D51\uFF5E2\u4E01\u76EE\u3001\u67F3\u539F1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6A2A\u4E95\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/QowG9Y8PkUpiJs4d9",
+    "updateInfo": ""
+  },
+  {
+    "id": "1010",
+    "ward": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "wardShort": "\u5317\u533A",
+    "name": "\u3053\u307E\u304F\u3055\u4FDD\u80B2\u5712\u5B50\u80B2\u3066\u652F\u63F4\u30BB\u30F3\u30BF\u30FC\u304A\u3072\u3055\u307E\u3072\u308D\u3070",
+    "address": "\u5317\u533A\u67F3\u539F3-3-16",
+    "area": "\u845B\u585A\u306E\u4E00\u90E8\u3001\u4E0B\u571F\u5730\u4E80\u306E\u4E00\u90E8\u3001\u767D\u65B0\u753A4\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u67F3\u539F1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u67F3\u539F2\uFF5E6\u4E01\u76EE",
+    "mapUrl": "https://maps.app.goo.gl/j4XUUTgJyZ9YMsAk6",
+    "updateInfo": ""
+  },
+  {
+    "id": "1011",
+    "ward": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "wardShort": "\u5317\u533A",
+    "name": "\u845B\u585A\u6771\u5C0F\u5B66\u6821",
+    "address": "\u5317\u533A\u671D\u65E5\u753A4\u20101\u20102",
+    "area": "\u845B\u585A\u306E\u4E00\u90E8\u3001\u592A\u7530\u306E\u4E00\u90E8\u3001\u5609\u5C71\u306E\u4E00\u90E8\u3001\u6A2A\u4E95\u306E\u4E00\u90E8\u3001\u671D\u65E5\u753A1\uFF5E4\u4E01\u76EE\u3001\u524D\u65B0\u7530\u306E\u4E00\u90E8\u3001\u65B0\u9F3B\u3001\u5185\u6CBC\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/xQWSMZ8FBCRsi2R47",
+    "updateInfo": ""
+  },
+  {
+    "id": "1012",
+    "ward": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "wardShort": "\u5317\u533A",
+    "name": "\u592A\u7530\u4FDD\u80B2\u5712",
+    "address": "\u5317\u533A\u592A\u75302005",
+    "area": "\u592A\u7530\u306E\u4E00\u90E8\u3001\u7B20\u67F3\u306E\u4E00\u90E8\u3001\u6751\u65B0\u7530",
+    "mapUrl": "https://goo.gl/maps/NJn65yyWqjCaSEcH7",
+    "updateInfo": ""
+  },
+  {
+    "id": "1013",
+    "ward": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "wardShort": "\u5317\u533A",
+    "name": "\u6728\u5D0E\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u5317\u533A\u6728\u5D0E3227",
+    "area": "\u5185\u5CF6\u898B\u306E\u4E00\u90E8\u3001\u6D66\u30CE\u5165\u306E\u4E00\u90E8\u3001\u6728\u5D0E\u306E\u4E00\u90E8\u3001\u9CE5\u5C4B\u3001\u65E9\u901A\u306E\u4E00\u90E8\u3001\u7B20\u67F3\u306E\u4E00\u90E8\u3001\u6A2A\u4E95\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/7DDupDJ89oedvPuS8",
+    "updateInfo": ""
+  },
+  {
+    "id": "1014",
+    "ward": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "wardShort": "\u5317\u533A",
+    "name": "\u5C3E\u5C71\u30CB\u30E5\u30FC\u30BF\u30A6\u30F3\u516C\u6C11\u9928",
+    "address": "\u5317\u533A\u5185\u5CF6\u898B2185\u201030",
+    "area": "\u5185\u5CF6\u898B\u306E\u4E00\u90E8\u3001\u6728\u5D0E\u306E\u4E00\u90E8\u3001\u5317\u967D1\uFF5E2\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/kGQbjB1GjKQzd1Nv7",
+    "updateInfo": ""
+  },
+  {
+    "id": "1015",
+    "ward": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "wardShort": "\u5317\u533A",
+    "name": "\u6A0B\u30CE\u5165\u516C\u6C11\u9928",
+    "address": "\u5317\u533A\u6A0B\u30CE\u51651471",
+    "area": "\u6728\u5D0E\u306E\u4E00\u90E8\u3001\u4E0B\u5927\u8C37\u5185\u3001\u4E0B\u65E9\u901A\u306E\u4E00\u90E8\u3001\u6A0B\u30CE\u5165",
+    "mapUrl": "https://goo.gl/maps/SWXVvaybm2j8N1rv6",
+    "updateInfo": ""
+  },
+  {
+    "id": "1016",
+    "ward": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "wardShort": "\u5317\u533A",
+    "name": "\u7B39\u5C71\u516C\u6C11\u9928",
+    "address": "\u5317\u533A\u7B39\u5C712058",
+    "area": "\u5185\u5CF6\u898B\u306E\u4E00\u90E8\u3001\u6728\u5D0E\u306E\u4E00\u90E8\u3001\u7B39\u5C71\u3001\u6D66\u30CE\u5165\u306E\u4E00\u90E8\u3001\u6A2A\u571F\u5C45",
+    "mapUrl": "https://goo.gl/maps/JFuzQa57Yw4L14NMA",
+    "updateInfo": ""
+  },
+  {
+    "id": "1017",
+    "ward": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "wardShort": "\u5317\u533A",
+    "name": "\u65E9\u901A\u5357\u5C0F\u5B66\u6821",
+    "address": "\u5317\u533A\u9808\u62381\u20101\u20101",
+    "area": "\u4E0B\u571F\u5730\u4E80\u306E\u4E00\u90E8\u3001\u9808\u6238\u3001\u9808\u62381\uFF5E5\u4E01\u76EE\u3001\u65B0\u4E95\u90F7\u3001\u65E9\u901A\u306E\u4E00\u90E8\u3001\u4ECF\u4F1D\u3001\u65E9\u901A\u53571\uFF5E5\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/n1QqWMK8Yex7EuCe7",
+    "updateInfo": ""
+  },
+  {
+    "id": "1018",
+    "ward": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "wardShort": "\u5317\u533A",
+    "name": "\u65E9\u901A\u4E2D\u5B66\u6821",
+    "address": "\u5317\u533A\u65E9\u901A396",
+    "area": "\u5F69\u91CE1\uFF5E4\u4E01\u76EE\u3001\u65E9\u901A\u53171\uFF5E6\u4E01\u76EE\u3001\u4E0B\u65E9\u901A\u306E\u4E00\u90E8\u3001\u65E9\u901A\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/CrkF3kxvxjskzAWU7",
+    "updateInfo": ""
+  },
+  {
+    "id": "1019",
+    "ward": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "wardShort": "\u5317\u533A",
+    "name": "\u5CA1\u65B9\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u5317\u533A\u9577\u6238\u54424601",
+    "area": "\u5341\u4E8C\u3001\u5E73\u6797\u3001\u7070\u585A\u3001\u5C71\u98EF\u91CE\u3001\u5927\u4E45\u4FDD\u3001\u5927\u702C\u67F3\u3001\u5927\u8FCE\u3001\u592A\u5B50\u5802\u3001\u9577\u6238\u5442\u3001\u9577\u6238\u5442\u65B0\u7530\u3001\u4E09\u30C4\u5C4B\u3001\u5341\u4E8C\u524D",
+    "mapUrl": "https://goo.gl/maps/f6vtsJ7svwFYiddVA",
+    "updateInfo": ""
+  },
+  {
+    "id": "1020",
+    "ward": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "wardShort": "\u5317\u533A",
+    "name": "\u65E7\u4E09\u30C4\u68EE\u4FDD\u80B2\u5712",
+    "address": "\u5317\u533A\u68EE\u4E0B1409",
+    "area": "\u9AD8\u68EE\u3001\u9AD8\u68EE\u65B0\u7530\u3001\u68EE\u4E0B\u3001\u3059\u307F\u308C\u91CE4\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/KDR2eYCfXF5yew7i8",
+    "updateInfo": ""
+  },
+  {
+    "id": "1021",
+    "ward": "\u65B0\u6F5F\u5E02\u5317\u533A",
+    "wardShort": "\u5317\u533A",
+    "name": "\u9577\u6D66\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u5317\u533A\u9577\u58341834\u20101",
+    "area": "\u4E0A\u5927\u6708\u3001\u5CA1\u65B0\u7530\u3001\u4E0A\u5800\u7530\u3001\u91CC\u98EF\u91CE\u3001\u5927\u6708\u3001\u9577\u5834\u3001\u5185\u6CBC\u306E\u4E00\u90E8\u3001\u9577\u6238\u3001\u6D66\u6728\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/6QmnQaexEe7VxKkw7",
+    "updateInfo": ""
+  },
+  {
+    "id": "2001",
+    "ward": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "wardShort": "\u6771\u533A",
+    "name": "\u5C71\u306E\u4E0B\u307E\u3061\u3065\u304F\u308A\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u6771\u533A\u53E4\u5DDD\u753A4\u201012",
+    "area": "\u795E\u660E\u753A\u3001\u6D5C\u753A\u3001\u53E4\u6E4A\u753A\u3001\u5C71\u306E\u4E0B\u753A\u3001\u81E8\u6D77\u753A\u3001\u81E8\u6E2F1\u4E01\u76EE\u3001\u9577\u8005\u753A\u3001\u5927\u5C711\uFF5E2\u4E01\u76EE\u3001\u6771\u65B0\u753A\u3001\u53E4\u5DDD\u753A\u3001\u5317\u8449\u753A\u3001\u677E\u5CF61\uFF5E3\u4E01\u76EE\u3001\u672B\u5E83\u753A",
+    "mapUrl": "https://goo.gl/maps/KNotQw7rPHxDThVn6",
+    "updateInfo": ""
+  },
+  {
+    "id": "2002",
+    "ward": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "wardShort": "\u6771\u533A",
+    "name": "\u5C71\u306E\u4E0B\u4E2D\u5B66\u6821",
+    "address": "\u6771\u533A\u79CB\u8449\u901A2\u20103722\u20107",
+    "area": "\u79CB\u84491\u4E01\u76EE\u3001\u79CB\u8449\u901A2\uFF5E3\u4E01\u76EE\u3001\u6843\u5C71\u753A1\uFF5E2\u4E01\u76EE\u3001\u81E8\u6E2F\u753A2\uFF5E3\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/mKa4Xkw6wSowMr1F8",
+    "updateInfo": ""
+  },
+  {
+    "id": "2003",
+    "ward": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "wardShort": "\u6771\u533A",
+    "name": "\u6771\u5C71\u306E\u4E0B\u5C0F\u5B66\u6821",
+    "address": "\u6771\u533A\u85E4\u898B\u753A1\u201023\u201057",
+    "area": "\u6CB3\u6E21\u5E9A\u3001\u6CB3\u6E211\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6CB3\u6E212\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6CB3\u6E213\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6CB3\u6E21\u672C\u753A\u3001\u85E4\u898B\u753A1\uFF5E2\u4E01\u76EE\u3001\u6708\u898B\u753A\u3001\u4E0A\u738B\u702C\u753A",
+    "mapUrl": "https://goo.gl/maps/vD21m9k1WXP1CW6A6",
+    "updateInfo": ""
+  },
+  {
+    "id": "2004",
+    "ward": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "wardShort": "\u6771\u533A",
+    "name": "\u85E4\u898B\u4E2D\u5B66\u6821",
+    "address": "\u6771\u533A\u5C0F\u91D1\u753A3\u20105\u20101",
+    "area": "\u6CB3\u6E211\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5C0F\u91D1\u53F0\u3001\u5C0F\u91D1\u753A1\uFF5E3\u4E01\u76EE\u3001\u5B9D\u753A\u3001\u9326\u753A\u3001\u7269\u898B\u5C711\uFF5E2\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/SV44qHWAEQxxLqJw5",
+    "updateInfo": ""
+  },
+  {
+    "id": "2005",
+    "ward": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "wardShort": "\u6771\u533A",
+    "name": "\u4E2D\u5730\u533A\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u6771\u533A\u677E\u548C\u753A15\u20108",
+    "area": "\u5E78\u68041\uFF5E3\u4E01\u76EE\u3001\u6CB3\u6E212\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6CB3\u6E213\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5411\u967D1\u4E01\u76EE\u3001\u677E\u57121\uFF5E2\u4E01\u76EE\u3001\u677E\u548C\u753A\u3001\u7269\u898B\u5C713\uFF5E4\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/Kiu4JRgw93v44ubK7",
+    "updateInfo": ""
+  },
+  {
+    "id": "2006",
+    "ward": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "wardShort": "\u6771\u533A",
+    "name": "\u81E8\u7A7A\u8239\u6C5F\u4F1A\u9928",
+    "address": "\u6771\u533A\u8239\u6C5F\u753A2\u201011\u20103",
+    "area": "\u7A7A\u6E2F\u897F1\uFF5E2\u4E01\u76EE\u3001\u6D5C\u8C37\u753A1\uFF5E2\u4E01\u76EE\u3001\u8239\u6C5F\u753A1\uFF5E3\u4E01\u76EE\uFF09",
+    "mapUrl": "https://goo.gl/maps/urFTyEYMvNKnL4aWA",
+    "updateInfo": ""
+  },
+  {
+    "id": "2007",
+    "ward": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "wardShort": "\u6771\u533A",
+    "name": "\u4E0B\u5C71\u5C0F\u5B66\u6821",
+    "address": "\u6771\u533A\u592A\u5E732\u201018",
+    "area": "\u6CB3\u6E21\u7532\u3001\u6CB3\u6E21\u65B0\u753A1\uFF5E2\u4E01\u76EE\u3001\u5411\u967D3\u4E01\u76EE\u3001\u4E0B\u5C711\uFF5E3\u4E01\u76EE\u3001\u65B0\u5DDD\u753A\u3001\u592A\u5E731\uFF5E4\u4E01\u76EE\u3001\u6D25\u5CF6\u5C4B5\u4E01\u76EE\u3001\u6839\u5BA4\u65B0\u753A\u3001\u677E\u6D5C\u753A\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/3JxegsQhZJZ2R58w6",
+    "updateInfo": ""
+  },
+  {
+    "id": "2008",
+    "ward": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "wardShort": "\u6771\u533A",
+    "name": "\u677E\u5D0E\u81EA\u6CBB\u4F1A\u9928",
+    "address": "\u6771\u533A\u677E\u5D0E1\u201014\u201025",
+    "area": "\u5411\u967D2\u4E01\u76EE\u3001\u767D\u92801\uFF5E2\u4E01\u76EE\u3001\u677E\u5D0E\u3001\u677E\u5D0E1\uFF5E2\u4E01\u76EE\u3001\u6709\u697D1\uFF5E3\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/pqsgTssrBR9vUR987",
+    "updateInfo": ""
+  },
+  {
+    "id": "2009",
+    "ward": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "wardShort": "\u6771\u533A",
+    "name": "\u65B0\u6F5F\u5E02\u7ACB\u6771\u7279\u5225\u652F\u63F4\u5B66\u6821",
+    "address": "\u6771\u533A\u6D77\u8001\u30B1\u702C31",
+    "area": "\u6D25\u5CF6\u5C4B1\uFF5E4\u4E01\u76EE\u3001\u6D25\u5CF6\u5C4B6\uFF5E7\u4E01\u76EE\u3001\u6D77\u8001\u30B1\u702C\u3001\u65B0\u677E\u5D0E1\uFF5E3\u4E01\u76EE\u3001\u4E00\u65E5\u5E02\u3001\u6728\u5DE5\u65B0\u753A",
+    "mapUrl": "https://goo.gl/maps/UtFuGFnCPqKMYgbA9",
+    "updateInfo": ""
+  },
+  {
+    "id": "2010",
+    "ward": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "wardShort": "\u6771\u533A",
+    "name": "\u5927\u5F62\u5C0F\u5B66\u6821",
+    "address": "\u6771\u533A\u5927\u5F62\u672C\u753A2\u20106\u20101",
+    "area": "\u77F3\u52D5\u3001\u6D77\u8001\u30B1\u702C\u65B0\u753A\u3001\u9022\u8C37\u5185\u3001\u9022\u8C37\u51851\uFF5E6\u4E01\u76EE\u3001\u5927\u5F62\u672C\u753A\u3001\u5927\u5F62\u672C\u753A1\uFF5E6\u4E01\u76EE\u3001\u5BFA\u5C713\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E2D\u8208\u91CE\u3001\u672C\u6240\u3001\u672C\u62401\uFF5E3\u4E01\u76EE\u3001\u67F3\u30B1\u4E18\u3001\u8C4A2\uFF5E3\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/51jV3ws5FEKsudLo7",
+    "updateInfo": ""
+  },
+  {
+    "id": "2011",
+    "ward": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "wardShort": "\u6771\u533A",
+    "name": "\u6728\u6238\u4E2D\u5B66\u6821",
+    "address": "\u6771\u533A\u4E0A\u6728\u62385\u20101\u20101",
+    "area": "\u4E0A\u6728\u6238\u306E\u4E00\u90E8\u3001\u4E0A\u6728\u62381\uFF5E3\u30015\u4E01\u76EE\u3001\u6750\u6728\u753A\u3001\u4E0B\u6728\u6238\u3001\u5BFA\u5C71\u3001\u5BFA\u5C711\uFF5E2\u4E01\u76EE\u3001\u5BFA\u5C713\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E2D\u6728\u6238\u3001\u306F\u306A\u307F\u305A\u304D2\u4E01\u76EE\u3001\u8C4A1\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/6UJ7ktNL7QB8wswr6",
+    "updateInfo": ""
+  },
+  {
+    "id": "2012",
+    "ward": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "wardShort": "\u6771\u533A",
+    "name": "\u7261\u4E39\u5C71\u5C0F\u5B66\u6821",
+    "address": "\u6771\u533A\u7261\u4E39\u5C716\u201015\u20101",
+    "area": "\u4E0A\u6728\u6238\u306E\u4E00\u90E8\u3001\u4E0A\u6728\u62384\u4E01\u76EE\u3001\u4E0B\u6728\u62381\uFF5E3\u4E01\u76EE\u3001\u7AF9\u5C3E4\u4E01\u76EE\u3001\u306F\u306A\u307F\u305A\u304D1\u30013\u4E01\u76EE\u3001\u7261\u4E39\u5C713\uFF5E6\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/3e2oagGcGfPWTJdz5",
+    "updateInfo": ""
+  },
+  {
+    "id": "2013",
+    "ward": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "wardShort": "\u6771\u533A",
+    "name": "\u7AF9\u5C3E\u5C0F\u5B66\u6821",
+    "address": "\u6771\u533A\u7AF9\u5C3E2-18-1",
+    "area": "\u7AF9\u5C3E\u3001\u7AF9\u5C3E1\uFF5E3\u4E01\u76EE\u3001\u7D2B\u7AF96\uFF5E7\u4E01\u76EE\u3001\u7AF9\u5C3E\u5378\u65B0\u753A\u3001\u7D2B\u7AF9\u5378\u65B0\u753A\u3001\u5378\u65B0\u753A1\uFF5E3\u4E01\u76EE",
+    "mapUrl": "https://maps.app.goo.gl/sFfksXyUP1v3Ucia6",
+    "updateInfo": ""
+  },
+  {
+    "id": "2014",
+    "ward": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "wardShort": "\u6771\u533A",
+    "name": "\u6728\u6238\u5C0F\u5B66\u6821",
+    "address": "\u6771\u533A\u4E2D\u5C714\u20101\u20101",
+    "area": "\u4E2D\u5C711\uFF5E8\u4E01\u76EE\u3001\u7261\u4E39\u5C711\uFF5E2\u4E01\u76EE\u3001\u5C71\u6728\u62385\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/8iadA3M2RcxpdAak8",
+    "updateInfo": ""
+  },
+  {
+    "id": "2015",
+    "ward": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "wardShort": "\u6771\u533A",
+    "name": "\u6771\u65B0\u6F5F\u4E2D\u5B66\u6821",
+    "address": "\u6771\u533A\u5C71\u6728\u62381\u20102\u20101",
+    "area": "\u698E\u3001\u698E\u753A\u3001\u5C71\u6728\u62381\uFF5E4\u4E01\u76EE\u3001\u5C71\u6728\u62386\uFF5E8\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/8VVrtUV2Ecwv1nuX6",
+    "updateInfo": ""
+  },
+  {
+    "id": "2016",
+    "ward": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "wardShort": "\u6771\u533A",
+    "name": "\u6C5F\u5357\u5C0F\u5B66\u6821",
+    "address": "\u6771\u533A\u6C5F\u53575-1-1",
+    "area": "\u7D2B\u7AF92\uFF5E5\u4E01\u76EE\u3001\u6C5F\u53571\uFF5E6\u4E01\u76EE\u3001\u7D2B\u7AF9\u5C713\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5357\u7D2B\u7AF91\u4E01\u76EE",
+    "mapUrl": "https://maps.app.goo.gl/zDZqb1cxsLXcme4g9",
+    "updateInfo": ""
+  },
+  {
+    "id": "2017",
+    "ward": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "wardShort": "\u6771\u533A",
+    "name": "\u77F3\u5C71\u4E2D\u5B66\u6821",
+    "address": "\u6771\u533A\u6771\u660E6\u20102",
+    "area": "\u77F3\u5C711\uFF5E3\u30015\u4E01\u76EE\u3001\u6771\u660E1\uFF5E8\u4E01\u76EE\u3001\u5357\u7D2B\u7AF92\u4E01\u76EE\u3001\u65B0\u77F3\u5C715\u4E01\u76EE\u3001\u3082\u3048\u304E\u91CE1\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/HR2WwMbciYA8MAMC7",
+    "updateInfo": ""
+  },
+  {
+    "id": "2018",
+    "ward": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "wardShort": "\u6771\u533A",
+    "name": "\u4E2D\u91CE\u5C71\u5C0F\u5B66\u6821",
+    "address": "\u6771\u533A\u4E2D\u91CE\u5C711\u20101\u20101",
+    "area": "\u77F3\u5C716\u4E01\u76EE\u3001\u4E0B\u5834\u3001\u4E0B\u5834\u65B0\u753A\u3001\u4E0B\u5834\u672C\u753A\u3001\u65B0\u77F3\u5C711\uFF5E4\u4E01\u76EE\u3001\u4E2D\u5CF61\u4E01\u76EE\u3001\u4E2D\u91CE\u5C711\uFF5E5\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/4y3mCvMStb7psR3P8",
+    "updateInfo": ""
+  },
+  {
+    "id": "2019",
+    "ward": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "wardShort": "\u6771\u533A",
+    "name": "\u5357\u4E2D\u91CE\u5C71\u5C0F\u5B66\u6821",
+    "address": "\u6771\u533A\u4E2D\u91CE\u5C71863\u20101",
+    "area": "\u7C9F\u5C711\uFF5E4\u4E01\u76EE\u3001\u77F3\u5C714\u4E01\u76EE\u3001\u4E2D\u91CE\u5C716\uFF5E7\u4E01\u76EE\u3001\u6771\u4E2D\u91CE\u5C711\u4E01\u76EE\u3001\u3082\u3048\u304E\u91CE2\uFF5E3\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/ZPbFzcfsjpMBhP6BA",
+    "updateInfo": ""
+  },
+  {
+    "id": "2020",
+    "ward": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "wardShort": "\u6771\u533A",
+    "name": "\u30B7\u30EB\u30D0\u30FC\u30D4\u30A2\u77F3\u5C71",
+    "address": "\u6771\u533A\u77F3\u5C71\u56E3\u573010-13",
+    "area": "\u77F3\u5C71\u56E3\u5730\u3001\u733F\u30B1\u99AC\u58341\u4E01\u76EE\u3001\u4E2D\u5CF62\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E2D\u91CE\u5C718\u4E01\u76EE\u3001\u6771\u4E2D\u5CF61\uFF5E2\u4E01\u76EE\u3001\u6771\u4E2D\u91CE\u5C712\uFF5E5\u4E01\u76EE\u3001\u82E5\u8449\u753A1\uFF5E2\u4E01\u76EE",
+    "mapUrl": "https://maps.app.goo.gl/PpKqUdXsFW8e2BDQ7",
+    "updateInfo": ""
+  },
+  {
+    "id": "2021",
+    "ward": "\u65B0\u6F5F\u5E02\u6771\u533A",
+    "wardShort": "\u6771\u533A",
+    "name": "\u6771\u4E2D\u91CE\u5C71\u5C0F\u5B66\u6821",
+    "address": "\u6771\u533A\u733F\u30B1\u99AC\u58349",
+    "area": "\u5CA1\u5C71\u3001\u733F\u30B1\u99AC\u58342\u4E01\u76EE\u3001\u65B0\u5CA1\u5C712\u4E01\u76EE\u3001\u5150\u6C60\u3001\u4E2D\u5CF62\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6771\u4E2D\u5CF63\uFF5E4\u4E01\u76EE\u3001\u6771\u4E2D\u91CE\u5C716\uFF5E7\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/Lpr1ws1ERhQ9DS5G7",
+    "updateInfo": ""
+  },
+  {
+    "id": "3001",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u93E1\u6DF5\u5C0F\u5B66\u6821",
+    "address": "\u4E2D\u592E\u533A\u767D\u5C71\u6D661\u2010207\u20103",
+    "area": "\u533B\u5B66\u753A\u901A1\uFF5E2\u756A\u753A\u3001\u4E00\u756A\u5800\u901A\u753A\u306E\u4E00\u90E8\u3001\u5B66\u6821\u88CF\u753A\u3001\u5B66\u6821\u753A\u901A1\uFF5E2\u756A\u753A\u3001\u5DDD\u5CB8\u753A1\uFF5E3\u4E01\u76EE\u3001\u767D\u5C71\u6D661\uFF5E2\u4E01\u76EE\u3001\u767D\u5C71\u6D66\u65B0\u753A\u901A",
+    "mapUrl": "https://goo.gl/maps/JRhNhrDyDVezJb7y7",
+    "updateInfo": ""
+  },
+  {
+    "id": "3002",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u95A2\u5C4B\u5C0F\u5B66\u6821",
+    "address": "\u4E2D\u592E\u533A\u95A2\u5C4B\u4E0B\u5DDD\u539F\u753A2\u2010664",
+    "area": "\u5B66\u6821\u753A\u901A3\u756A\u753A\u3001\u6C34\u9053\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u95A2\u65B01\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u95A2\u5C4B\u306E\u4E00\u90E8\u3001\u95A2\u5C4B\u4E0B\u5DDD\u539F\u753A1\uFF5E2\u4E01\u76EE\u3001\u95A2\u5C4B\u65B0\u753A\u901A1\u4E01\u76EE\u3001\u95A2\u5C4B\u7530\u753A1\uFF5E3\u4E01\u76EE\u3001\u95A2\u5C4B\u672C\u6751\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u95A2\u5C4B\u677E\u6CE2\u753A1\uFF5E3\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/fWtcRkSCFTEYw6eo7",
+    "updateInfo": ""
+  },
+  {
+    "id": "3003",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u95A2\u5C4B\u5730\u533A\u516C\u6C11\u9928",
+    "address": "\u4E2D\u592E\u533A\u95A2\u5C4B\u662D\u548C\u753A3\u2010148\u20101",
+    "area": "\u95A2\u65B01\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u95A2\u65B02\uFF5E3\u4E01\u76EE\u3001\u95A2\u5C4B\u306E\u4E00\u90E8\u3001\u95A2\u5C4B\u5FA1\u8239\u8535\u753A\u3001\u95A2\u5C4B\u91D1\u9262\u5C71\u753A\u3001\u95A2\u5C4B\u662D\u548C\u753A2\uFF5E3\u4E01\u76EE\u3001\u95A2\u5C4B\u65B0\u753A\u901A2\u4E01\u76EE\u3001\u95A2\u5C4B\u7530\u753A4\u4E01\u76EE\u3001\u95A2\u5C4B\u672C\u6751\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u95A2\u5C4B\u672C\u6751\u753A2\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/LkHDKneWVFPZXhBz6",
+    "updateInfo": ""
+  },
+  {
+    "id": "3004",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u6D5C\u6D66\u5C0F\u5B66\u6821",
+    "address": "\u4E2D\u592E\u533A\u6D5C\u6D66\u753A1\u20101",
+    "area": "\u6C50\u898B\u53F0\u3001\u4FE1\u6FC3\u753A\u3001\u95A2\u5C4B\u306E\u4E00\u90E8\u3001\u95A2\u5C4B\u91D1\u885B\u753A1\uFF5E2\u4E01\u76EE\u3001\u95A2\u5C4B\u662D\u548C\u753A1\u4E01\u76EE\u3001\u95A2\u5C4B\u6D5C\u677E\u753A\u3001\u6D5C\u6D66\u753A1\uFF5E2\u4E01\u76EE\u3001\u6587\u4EAC\u753A",
+    "mapUrl": "https://goo.gl/maps/acYtsLv2w6NCHzdL9",
+    "updateInfo": ""
+  },
+  {
+    "id": "3005",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u6709\u660E\u53F0\u5C0F\u5B66\u6821",
+    "address": "\u4E2D\u592E\u533A\u6709\u660E\u53F04\u20101",
+    "area": "\u6709\u660E\u5927\u6A4B\u753A\u3001\u6709\u660E\u53F0\u3001\u95A2\u5357\u753A\u3001\u95A2\u5C4B\u5927\u5DDD\u524D1\uFF5E2\u4E01\u76EE\u3001\u95A2\u5C4B\u6075\u753A\u3001\u5800\u5272\u753A\u3001\u5F25\u751F\u753A",
+    "mapUrl": "https://goo.gl/maps/7whjQmnjUqjBzngF9",
+    "updateInfo": ""
+  },
+  {
+    "id": "3006",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u767D\u5C71\u5C0F\u5B66\u6821",
+    "address": "\u4E2D\u592E\u533A\u5DDD\u7AEF\u753A1\u20101",
+    "area": "\u4E00\u756A\u5800\u901A\u753A\u306E\u4E00\u90E8\u3001\u4E0A\u5927\u5DDD\u524D\u901A1\uFF5E5\u756A\u753A\u3001\u5DDD\u7AEF\u753A1\uFF5E5\u4E01\u76EE\u3001\u897F\u5800\u901A1\uFF5E3\u756A\u753A\u3001\u897F\u5800\u524D\u901A1\uFF5E5\u756A\u753A\u3001\u6771\u5800\u901A1\uFF5E5\u756A\u753A\u3001\u6771\u5800\u524D\u901A1\uFF5E5\u756A\u753A\u3001\u53E4\u753A\u901A1\uFF5E5\u756A\u753A\u3001\u672C\u753A\u901A1\uFF5E5\u756A\u753A\u3001\u6A2A\u4E00\u756A\u753A",
+    "mapUrl": "https://goo.gl/maps/XgfPTgBZfoQo2V7j6",
+    "updateInfo": ""
+  },
+  {
+    "id": "3007",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u5BC4\u5C45\u4E2D\u5B66\u6821",
+    "address": "\u4E2D\u592E\u533A\u55B6\u6240\u901A2\u2010592\u201012",
+    "area": "\u65ED\u753A\u901A1\uFF5E2\u756A\u753A\u3001\u55B6\u6240\u901A1\uFF5E2\u756A\u753A\u3001\u4E0B\u65ED\u753A\u3001\u6C34\u9053\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6C34\u9053\u753A2\u4E01\u76EE\u3001\u5BFA\u88CF\u901A1\uFF5E2\u756A\u753A\u3001\u897F\u4E2D\u753A\u3001\u897F\u8239\u898B\u753A\u306E\u4E00\u90E8\u3001\u897F\u5800\u901A4\uFF5E5\u756A\u753A\u3001\u897F\u5800\u524D\u901A6\u756A\u753A\u3001\u6771\u4E2D\u901A1\uFF5E2\u756A\u753A\u3001\u53E4\u753A\u901A6\u756A\u753A\u3001\u5357\u6A2A\u5800\u753A\u3001\u5BC4\u5C45\u753A",
+    "mapUrl": "https://goo.gl/maps/mikdinh2FZhriVPG9",
+    "updateInfo": ""
+  },
+  {
+    "id": "3008",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u65B0\u6F5F\u5C0F\u5B66\u6821",
+    "address": "\u4E2D\u592E\u533A\u6771\u5927\u7551\u901A1\u2010679",
+    "area": "\u5317\u5927\u7551\u753A\u3001\u5317\u6D5C\u901A1\uFF5E2\u756A\u753A\u3001\u7530\u4E2D\u753A\u306E\u4E00\u90E8\u3001\u4E2D\u5927\u7551\u753A\u3001\u897F\u5927\u7551\u753A\u3001\u897F\u5800\u901A6\uFF5E8\u756A\u753A\u3001\u897F\u5800\u524D\u901A7\uFF5E9\u756A\u753A\u3001\u6771\u5800\u901A8\uFF5E9\u756A\u753A\u3001\u6771\u5927\u7551\u901A1\uFF5E2\u756A\u753A\u3001\u4E8C\u8449\u753A1\uFF5E2\u4E01\u76EE\u3001\u53E4\u753A\u901A7\uFF5E9\u756A\u753A\u3001\u5357\u5927\u7551\u753A\u3001\u5357\u6D5C\u901A1\uFF5E2\u756A\u753A",
+    "mapUrl": "https://goo.gl/maps/QnH1qBYkpU9ZguZr8",
+    "updateInfo": ""
+  },
+  {
+    "id": "3009",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u30AF\u30ED\u30B9\u30D1\u30EB\u306B\u3044\u304C\u305F",
+    "address": "\u4E2D\u592E\u533A\u790E\u753A\u901A3\u20102086",
+    "area": "\u76F8\u751F\u753A\u3001\u790E\u753A\u901A1\uFF5E6\u30CE\u753A\u3001\u790E\u753A\u901A\u4E0A1\u30CE\u753A\u3001\u4E0A\u5927\u5DDD\u524D\u901A6\uFF5E11\u756A\u753A\u3001\u5DDD\u7AEF\u753A6\u4E01\u76EE\u3001\u5317\u591A\u9580\u753A\u3001\u5317\u6BD8\u6C99\u9580\u753A\u3001\u4E0B\u5927\u5DDD\u524D\u901A1\uFF5E7\u30CE\u753A\u3001\u65B0\u5CF6\u753A\u901A1\uFF5E5\u30CE\u753A\u3001\u4F4F\u5409\u753A\u3001\u6708\u753A\u3001\u8C4A\u7167\u753A\u3001\u4E26\u6728\u753A\u3001\u897F\u53A9\u5CF6\u753A\u3001\u82B1\u753A\u3001\u6771\u53A9\u5CF6\u753A\u3001\u6771\u5800\u901A6\uFF5E7\u756A\u753A\u3001\u6771\u5800\u524D\u901A6\uFF5E9\u756A\u753A\u3001\u6771\u6E4A\u753A\u901A1\uFF5E3\u30CE\u753A\u3001\u8239\u5834\u753A1\u4E01\u76EE\u3001\u672C\u753A\u901A6\uFF5E11\u756A\u753A\u3001\u672C\u9593\u753A1\uFF5E2\u4E01\u76EE\u3001\u79E3\u5DDD\u5CB8\u901A1\uFF5E2\u4E01\u76EE\u3001\u898B\u65B9\u753A\u3001\u6E4A\u753A\u901A1\uFF5E2\u30CE\u753A\u3001\u5357\u591A\u9580\u753A\u3001\u5357\u6BD8\u6C99\u9580\u753A\u3001\u96EA\u753A\u3001\u82B3\u753A",
+    "mapUrl": "https://goo.gl/maps/LTADrCGKW3VZNXy4A",
+    "updateInfo": ""
+  },
+  {
+    "id": "3010",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u4E8C\u8449\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30CF\u30A6\u30B9",
+    "address": "\u4E2D\u592E\u533A\u53E4\u753A\u901A13\u20105148\u20102",
+    "area": "\u66D9\u753A\u3001\u4E0A\u5927\u5DDD\u524D\u901A12\u756A\u753A\u3001\u7530\u4E2D\u753A\u306E\u4E00\u90E8\u3001\u897F\u8239\u898B\u753A\u306E\u4E00\u90E8\u3001\u897F\u5800\u901A9\uFF5E11\u756A\u753A\u3001\u897F\u5800\u524D\u901A10\uFF5E11\u756A\u753A\u3001\u6771\u5800\u901A10\uFF5E13\u756A\u753A\u3001\u6771\u5800\u524D\u901A10\uFF5E11\u756A\u753A\u3001\u4E8C\u8449\u753A3\u4E01\u76EE\u3001\u53E4\u753A\u901A10\uFF5E13\u756A\u753A\u3001\u672C\u753A\u901A12\uFF5E13\u756A\u753A\u3001\u5915\u6804\u753A\u3001\u6A2A\u516D\u756A\u753A\u3001\u6A2A\u4E03\u756A\u753A\u901A1\u4E01\u76EE\u3001\u56DB\u30C4\u5C4B\u753A1\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/YTk7sEBBs4e2FN3n7",
+    "updateInfo": ""
+  },
+  {
+    "id": "3011",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u65B0\u6F5F\u67F3\u90FD\u4E2D\u5B66\u6821",
+    "address": "\u4E2D\u592E\u533A\u6804\u753A3\u20104213",
+    "area": "\u795D\u753A\u3001\u6D6E\u6D32\u753A\u3001\u70CF\u5E3D\u5B50\u753A\u3001\u7FC1\u753A1\uFF5E2\u4E01\u76EE\u3001\u5BC4\u9644\u753A\u3001\u7AAA\u7530\u753A1\uFF5E4\u4E01\u76EE\u3001\u7AAA\u7530\u753A6\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5BFF\u753A1\uFF5E2\u4E01\u76EE\u3001\u6804\u753A1\uFF5E3\u4E01\u76EE\u3001\u83C5\u6839\u753A\u3001\u5BFA\u5C71\u753A\u3001\u897F\u53D7\u5730\u753A\u3001\u897F\u8239\u898B\u753A\u306E\u4E00\u90E8\u3001\u6771\u53D7\u5730\u753A\u3001\u96F2\u96C0\u753A\u3001\u672C\u753A\u901A14\u756A\u753A\u3001\u5143\u795D\u753A\u3001\u6A2A\u4E03\u756A\u753A\u901A2\uFF5E3\u4E01\u76EE\u3001\u56DB\u30C4\u5C4B\u753A2\uFF5E3\u4E01\u76EE\u3001\u5BC4\u5408\u753A",
+    "mapUrl": "https://goo.gl/maps/JqdnTB8ZnEbfn2Wc6",
+    "updateInfo": ""
+  },
+  {
+    "id": "3012",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u5317\u90E8\u7DCF\u5408\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u4E2D\u592E\u533A\u7A32\u8377\u753A3511-1",
+    "area": "\u8D64\u5742\u753A1\uFF5E3\u4E01\u76EE\u3001\u7A32\u8377\u753A\u3001\u5165\u8239\u753A1\uFF5E6\u4E01\u76EE\u3001\u9B41\u753A\u3001\u7530\u753A1\uFF5E3\u4E01\u76EE\u3001\u9644\u8239\u753A1\uFF5E3\u4E01\u76EE\u3001\u897F\u6E4A\u753A\u901A1\uFF5E4\u30CE\u753A\u3001\u8240\u5DDD\u5CB8\u753A\u3001\u65E9\u5DDD\u753A1\uFF5E3\u4E01\u76EE\u3001\u6771\u5165\u8239\u753A\u3001\u6771\u6E4A\u753A\u901A4\u30CE\u753A\u3001\u8239\u5834\u753A2\u4E01\u76EE\u3001\u8239\u898B\u753A1\uFF5E2\u4E01\u76EE\u3001\u672C\u9593\u753A3\u4E01\u76EE\u3001\u677E\u5CA1\u753A\u3001\u7DD1\u753A\u3001\u6E4A\u753A\u901A3\uFF5E4\u30CE\u753A\u3001\u5143\u4E0B\u5CF6\u753A\u3001\u67F3\u5CF6\u753A1\uFF5E4\u4E01\u76EE\u3001\u6A2A\u4E03\u756A\u753A\u901A4\uFF5E5\u4E01\u76EE\u3001\u6D77\u8FBA\u753A1\uFF5E2\u756A\u753A\u3001\u7AAA\u7530\u753A5\u4E01\u76EE\u3001\u7AAA\u7530\u753A6\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7AAA\u7530\u753A7\u4E01\u76EE\u3001\u5FE0\u8535\u753A\u3001\u5BA4\u753A1\uFF5E2\u4E01\u76EE\u3001\u5C71\u7530\u753A1\uFF5E2\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/WRWBaUbVwZdzTZ7s6",
+    "updateInfo": ""
+  },
+  {
+    "id": "3013",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u5357\u4E07\u4EE3\u5C0F\u5B66\u6821",
+    "address": "\u4E2D\u592E\u533A\u5E78\u897F4\u20101\u20101",
+    "area": "\u6625\u65E5\u753A\u3001\u5E78\u753A\u3001\u5E78\u897F1\uFF5E4\u4E01\u76EE\u3001\u82B1\u57121\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6771\u5927\u901A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6771\u5927\u901A2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5F01\u59291\uFF5E3\u4E01\u76EE\u3001\u6C34\u5CF6\u753A\u3001\u5357\u4E07\u4EE3\u753A\u3001\u516B\u5343\u4EE31\uFF5E2\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/Mnafq2dnzJoapLyEA",
+    "updateInfo": ""
+  },
+  {
+    "id": "3014",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u5BAE\u6D66\u4E2D\u5B66\u6821",
+    "address": "\u4E2D\u592E\u533A\u4E07\u4EE35\u20106\u20101",
+    "area": "\u4E09\u548C\u753A\u3001\u6CBC\u5782\u897F2\uFF5E3\u4E01\u76EE\u3001\u4E07\u4EE31\uFF5E5\u4E01\u76EE\u3001\u4E07\u4EE3\u5CF6",
+    "mapUrl": "https://goo.gl/maps/ti7PcJmoUJkq7F8GA",
+    "updateInfo": ""
+  },
+  {
+    "id": "3015",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u4E07\u4EE3\u9577\u5DBA\u5C0F\u5B66\u6821",
+    "address": "\u4E2D\u592E\u533A\u6771\u4E07\u4EE3\u753A4\u20101",
+    "area": "\u84B2\u539F\u753A\u3001\u5929\u660E\u753A\u3001\u6CBC\u5782\u897F1\u4E01\u76EE\u3001\u4E07\u4EE36\u4E01\u76EE\u3001\u6771\u5927\u901A2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6771\u4E07\u4EE3\u753A",
+    "mapUrl": "https://goo.gl/maps/5WebQzMQWASGDgWC9",
+    "updateInfo": ""
+  },
+  {
+    "id": "3016",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u9577\u5DBA\u4FDD\u80B2\u5712",
+    "address": "\u4E2D\u592E\u533A\u660E\u77F32\u20101\u201051",
+    "area": "\u660E\u77F31\uFF5E2\u4E01\u76EE\u3001\u9577\u5DBA\u753A\u3001\u82B1\u57121\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u82B1\u57122\u4E01\u76EE\u3001\u6771\u5927\u901A1\u4E01\u76EE\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/WX43rFLr6rSB9XUA8",
+    "updateInfo": ""
+  },
+  {
+    "id": "3017",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u6CBC\u5782\u4FDD\u80B2\u5712",
+    "address": "\u4E2D\u592E\u533A\u6CBC\u5782\u67714\u20108\u201036",
+    "area": "\u6CBC\u5782\u67713\uFF5E6\u4E01\u76EE\u3001\u65E5\u306E\u51FA3\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7ADC\u304C\u5CF61\uFF5E2\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/G9emZ2M39zDwayCVA",
+    "updateInfo": ""
+  },
+  {
+    "id": "3018",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u6CBC\u5782\u5C0F\u5B66\u6821",
+    "address": "\u4E2D\u592E\u533A\u93E1\u304C\u5CA15\u20105",
+    "area": "\u93E1\u304C\u5CA1\u3001\u7D2B\u7AF91\u4E01\u76EE\u3001\u897F\u99AC\u8D8A\u3001\u6CBC\u5782\u67711\uFF5E2\u4E01\u76EE\u3001\u65E5\u306E\u51FA1\uFF5E2\u4E01\u76EE\u3001\u65E5\u306E\u51FA3\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u672C\u99AC\u8D8A1\uFF5E2\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/11HGSBRGLyVhkYjdA",
+    "updateInfo": ""
+  },
+  {
+    "id": "3019",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u7B39\u53E3\u5C0F\u5B66\u6821",
+    "address": "\u4E2D\u592E\u533A\u7B39\u53E32\u201047",
+    "area": "\u7B39\u53E3\u3001\u7B39\u53E31\uFF5E3\u4E01\u76EE\u3001\u5357\u7B39\u53E31\uFF5E2\u4E01\u76EE\u3001\u7C73\u5C711\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/SazA6WQTyqN35yDQA",
+    "updateInfo": ""
+  },
+  {
+    "id": "3020",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u6075\u5149\u5B66\u5712\u7B2C\u4E00\u5E7C\u7A1A\u5712",
+    "address": "\u4E2D\u592E\u533A\u5929\u795E\u5C3E1-4-1",
+    "area": "\u5929\u795E1\uFF5E2\u4E01\u76EE\u3001\u5929\u795E\u5C3E1\uFF5E2\u4E01\u76EE\u3001\u82B1\u57121\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7C73\u5C71\u3001\u7C73\u5C712\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/VisyXVPMsCoxn3o66",
+    "updateInfo": ""
+  },
+  {
+    "id": "3021",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u770C\u7ACB\u65B0\u6F5F\u30C6\u30AF\u30CE\u30B9\u30AF\u30FC\u30EB",
+    "address": "\u4E2D\u592E\u533A\u9419\u897F1\u201011\u20102",
+    "area": "\u94191\uFF5E3\u4E01\u76EE\u3001\u9419\u897F1\u4E01\u76EE\u3001\u9419\u897F2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7D2B\u7AF9\u5C711\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7D2B\u7AF9\u5C712\u4E01\u76EE\u3001\u7D2B\u7AF9\u5C713\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7D2B\u7AF9\u5C714\uFF5E5\u4E01\u76EE\u3001\u7C73\u5C713\uFF5E4\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/o4nYPUsATrt6DY679",
+    "updateInfo": ""
+  },
+  {
+    "id": "3022",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u7D2B\u7AF9\u5C71\u5C0F\u5B66\u6821",
+    "address": "\u4E2D\u592E\u533A\u7D2B\u7AF9\u5C711\u201012\u20101",
+    "area": "\u9419\u897F2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u795E\u9053\u5BFA\u3001\u795E\u9053\u5BFA1\uFF5E3\u4E01\u76EE\u3001\u795E\u9053\u5BFA\u53571\uFF5E2\u4E01\u76EE\u3001\u7D2B\u7AF9\u5C711\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7D2B\u7AF9\u5C716\uFF5E7\u4E01\u76EE\u3001\u5800\u4E4B\u5185\u53572\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5973\u6C60\u67711\u4E01\u76EE\u3001\u7C73\u5C715\uFF5E6\u4E01\u76EE\u3001\u548C\u5408\u753A1\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/7QH3Cp6psutx5ZVb6",
+    "updateInfo": ""
+  },
+  {
+    "id": "3023",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u685C\u304C\u4E18\u5C0F\u5B66\u6821",
+    "address": "\u4E2D\u592E\u533A\u59E5\u30B1\u5C716\u20101\u201021",
+    "area": "\u59E5\u30B1\u5C71\u306E\u4E00\u90E8\u3001\u59E5\u30B1\u5C713\uFF5E6\u4E01\u76EE\u3001\u4EAC\u738B1\uFF5E3\u4E01\u76EE\u3001\u9AD8\u5FD71\uFF5E2\u4E01\u76EE\u3001\u5C71\u4E8C\u30C4\u306E\u4E00\u90E8\u3001\u5C71\u4E8C\u30C41\uFF5E5\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/tn2jHznzGW14VDq19",
+    "updateInfo": ""
+  },
+  {
+    "id": "3024",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u5C71\u6F5F\u5C0F\u5B66\u6821",
+    "address": "\u4E2D\u592E\u533A\u5F01\u5929\u6A4B\u901A3\u20103\u20101",
+    "area": "\u59E5\u30B1\u5C71\u306E\u4E00\u90E8\u3001\u59E5\u30B1\u5C711\uFF5E2\u4E01\u76EE\u3001\u6E05\u4E94\u90CE\u3001\u9577\u6F5F\u3001\u9577\u6F5F1\uFF5E3\u4E01\u76EE\u3001\u5F01\u5929\u6A4B\u901A1\uFF5E3\u4E01\u76EE\u3001\u5357\u9577\u6F5F\u3001\u7F8E\u306E\u91CC\u3001\u9418\u6728",
+    "mapUrl": "https://goo.gl/maps/ukFsL3iy22ioRWiUA",
+    "updateInfo": ""
+  },
+  {
+    "id": "3025",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u611B\u6CC9\u3053\u3069\u3082\u5712",
+    "address": "\u4E2D\u592E\u533A\u4E0A\u62403\u201014\u20101",
+    "area": "\u4E0A\u62401\uFF5E3\u4E01\u76EE\u3001\u4E0A\u6240\u4E2D1\uFF5E3\u4E01\u76EE\u3001\u4E0B\u6240\u5CF61\uFF5E2\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/q3TvZnbsTXTQ9BhG6",
+    "updateInfo": ""
+  },
+  {
+    "id": "3026",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u4E0A\u6240\u5C0F\u5B66\u6821",
+    "address": "\u4E2D\u592E\u533A\u8FD1\u6C5F3\u20102\u20101",
+    "area": "\u8FD1\u6C5F1\uFF5E3\u4E01\u76EE\u3001\u4E0A\u8FD1\u6C5F1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E0B\u6240\u5CF6\u3001\u65B0\u548C1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u65B0\u548C2\u4E01\u76EE\u3001\u6771\u5E78\u753A\u3001\u5800\u4E4B\u5185\u3001\u5800\u4E4B\u5185\u53571\u4E01\u76EE\u3001\u5800\u4E4B\u5185\u53572\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5800\u4E4B\u5185\u53573\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/rtW3t3dnx6X1tDj46",
+    "updateInfo": ""
+  },
+  {
+    "id": "3027",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u4E0A\u5C71\u5C0F\u5B66\u6821",
+    "address": "\u4E2D\u592E\u533A\u5973\u6C60\u4E0A\u5C711\u20101\u201028",
+    "area": "\u611B\u5B951\u4E01\u76EE\u3001\u4E0A\u8FD1\u6C5F1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E0A\u8FD1\u6C5F3\uFF5E4\u4E01\u76EE\u3001\u4E0A\u6240\u4E0A1\uFF5E3\u4E01\u76EE\u3001\u65B0\u5149\u753A\u306E\u4E00\u90E8\u3001\u6771\u51FA\u6765\u5CF6\u3001\u5357\u51FA\u6765\u5CF61\u4E01\u76EE\u3001\u5973\u6C60\u4E0A\u5C711\uFF5E2\u30015\u4E01\u76EE\u3001\u5973\u6C60\u53171\u4E01\u76EE\u3001\u5973\u6C60\u795E\u660E2\uFF5E3\u4E01\u76EE\u3001\u5973\u6C60\u897F1\uFF5E2\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/eq1BjuyH5iBXdB6u6",
+    "updateInfo": ""
+  },
+  {
+    "id": "3028",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u5973\u6C60\u5C0F\u5B66\u6821",
+    "address": "\u4E2D\u592E\u533A\u5973\u6C606\u20104\u20101",
+    "area": "\u5C0F\u5F35\u67281\uFF5E3\u4E01\u76EE\u3001\u685C\u6728\u753A\u3001\u9CE5\u5C4B\u91CE\u306E\u4E00\u90E8\u3001\u5973\u6C601\u30012\u30015\uFF5E8\u4E01\u76EE\u3001\u5973\u6C60\u795E\u660E1\u4E01\u76EE\u3001\u5973\u6C60\u53571\uFF5E3\u4E01\u76EE\u3001\u548C\u5408\u753A2\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/xg6rwgkMEy8pH2d76",
+    "updateInfo": ""
+  },
+  {
+    "id": "3029",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u9CE5\u5C4B\u91CE\u5C0F\u5B66\u6821",
+    "address": "\u4E2D\u592E\u533A\u7F8E\u54B2\u753A2\u20104\u20107",
+    "area": "\u611B\u5B952\u4E01\u76EE\u3001\u4E0A\u6CBC\u3001\u5927\u5CF6\u3001\u89AA\u677E\u3001\u6E56\u5357\u3001\u592A\u53F3\u30A8\u9580\u65B0\u7530\u306E\u4E00\u90E8\u3001\u9AD8\u7F8E\u753A\u3001\u9CE5\u5C4B\u91CE\u306E\u4E00\u90E8\u3001\u9CE5\u5C4B\u91CE2\uFF5E4\u4E01\u76EE\u3001\u9CE5\u5C4B\u91CE\u53571\uFF5E3\u4E01\u76EE\u3001\u7F8E\u54B2\u753A2\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/1jaUpGRLmocrAJan8",
+    "updateInfo": ""
+  },
+  {
+    "id": "3030",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u9CE5\u5C4B\u91CE\u4E2D\u5B66\u6821",
+    "address": "\u4E2D\u592E\u533A\u5973\u6C604\u201031\u20101",
+    "area": "\u4E0A\u8FD1\u6C5F2\u4E01\u76EE\u3001\u65B0\u548C1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u65B0\u548C3\uFF5E4\u4E01\u76EE\u3001\u5973\u6C603\uFF5E4\u4E01\u76EE\u3001\u548C\u5408\u753A3\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/vfXfw4qd4aHpZB9a6",
+    "updateInfo": ""
+  },
+  {
+    "id": "3031",
+    "ward": "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    "wardShort": "\u4E2D\u592E\u533A",
+    "name": "\u4E0A\u5C71\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30CF\u30A6\u30B9",
+    "address": "\u4E2D\u592E\u533A\u7DB2\u5DDD\u539F2\u20101\u201015",
+    "area": "\u611B\u5B953\u4E01\u76EE\u3001\u7DB2\u5DDD\u539F1\uFF5E2\u4E01\u76EE\u3001\u65B0\u5149\u753A\u306E\u4E00\u90E8\u3001\u51FA\u6765\u5CF61\uFF5E2\u4E01\u76EE\u3001\u9CE5\u5C4B\u91CE1\u4E01\u76EE\u3001\u7F8E\u54B2\u753A1\u4E01\u76EE\u3001\u5357\u51FA\u6765\u5CF62\u4E01\u76EE\u3001\u5973\u6C60\u4E0A\u5C713\uFF5E4\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/DqMKF8h91RSu8y537",
+    "updateInfo": ""
+  },
+  {
+    "id": "4001",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u4E80\u7530\u7B2C\u4E00\u4FDD\u80B2\u5712",
+    "address": "\u6C5F\u5357\u533A\u4E80\u7530\u65B0\u660E\u753A2\u20106\u20101",
+    "area": "\u4E80\u7530\u65B0\u660E\u753A1\uFF5E3\u4E01\u76EE\u3001\u4E80\u7530\u672C\u753A2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u672C\u753A3\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u672C\u753A4\u4E01\u76EE\u3001\u6771\u672C\u753A4\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6771\u672C\u753A5\u4E01\u76EE\u3001\u8239\u6238\u5C714\u4E01\u76EE\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/tJhzeYfjGauwg12w8",
+    "updateInfo": ""
+  },
+  {
+    "id": "4002",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u4E80\u7530\u7B2C\u4E8C\u4FDD\u80B2\u5712",
+    "address": "\u6C5F\u5357\u533A\u8ACF\u8A2A1\u20106\u201010",
+    "area": "\u7A32\u84491\uFF5E3\u4E01\u76EE\u3001\u4E80\u7530\u5411\u967D1\uFF5E4\u4E01\u76EE\u3001\u4E80\u7530\u6C34\u9053\u753A1\u4E01\u76EE\u3001\u4E80\u7530\u6C34\u9053\u753A2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u8ACF\u8A2A1\uFF5E3\u4E01\u76EE\u3001\u6771\u672C\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6771\u672C\u753A3\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6771\u672C\u753A4\u4E01\u76EE\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/ZmW3jieeJUH7WZRY8",
+    "updateInfo": ""
+  },
+  {
+    "id": "4003",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u4E80\u7530\u5E02\u6C11\u4F1A\u9928",
+    "address": "\u6C5F\u5357\u533A\u8239\u6238\u5C715\u20107\u20102",
+    "area": "\u837B\u66FD\u6839\u306E\u4E00\u90E8\u3001\u6885\u898B\u53F01\uFF5E3\u4E01\u76EE\u3001\u837B\u66FD\u6839\u3001\u837B\u66FD\u68391\uFF5E4\u4E01\u76EE\u3001\u837B\u66FD\u68395\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u7DD1\u753A4\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u672C\u753A2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u672C\u753A3\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u57CE\u62402\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u8305\u91CE\u5C711\uFF5E3\u4E01\u76EE\u3001\u624B\u4EE3\u5C711\uFF5E2\u4E01\u76EE\u3001\u65E5\u6C341\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u65E5\u6C342\u30013\u4E01\u76EE\u3001\u8239\u6238\u5C711\u4E01\u76EE\u3001\u8239\u6238\u5C712\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u8239\u6238\u5C713\u4E01\u76EE\u3001\u8239\u6238\u5C714\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u8239\u6238\u5C715\u4E01\u76EE\u3001\u5143\u753A2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5143\u753A3\uFF5E5\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/PYwPMwmTqsaBKipS9",
+    "updateInfo": ""
+  },
+  {
+    "id": "4004",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u4E80\u7530\u7B2C\u4E09\u4FDD\u80B2\u5712",
+    "address": "\u6C5F\u5357\u533A\u4E80\u7530\u6771\u753A3\u20105\u201015",
+    "area": "\u66D9\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u6771\u753A1\uFF5E4\u4E01\u76EE\u3001\u4E80\u7530\u6C34\u9053\u753A2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u6C34\u9053\u753A3\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u6C34\u9053\u753A4\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6240\u5CF61\uFF5E2\u4E01\u76EE\u3001\u888B\u6D251\uFF5E4\u4E01\u76EE\u3001\u888B\u6D255\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u888B\u6D256\u4E01\u76EE\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/H74Mj43DRuwq8mMh6",
+    "updateInfo": ""
+  },
+  {
+    "id": "4005",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u4E80\u7530\u4E2D\u5B66\u6821",
+    "address": "\u6C5F\u5357\u533A\u57CE\u5C711\u20103\u20105",
+    "area": "\u57CE\u6240\u3001\u4E80\u7530\u65B0\u660E\u753A4\u30015\u4E01\u76EE\u3001\u57CE\u62401\u4E01\u76EE\u3001\u57CE\u62402\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u57CE\u5C711\uFF5E4\u4E01\u76EE\u3001\u65E5\u6C341\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5143\u753A1\u4E01\u76EE\u3001\u5143\u753A2\u4E01\u76EE\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/NSyHpFMAsXvchW9W8",
+    "updateInfo": ""
+  },
+  {
+    "id": "4006",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u65E9\u901A\u5C0F\u5B66\u6821",
+    "address": "\u6C5F\u5357\u533A\u65E9\u901A5-7-2",
+    "area": "\u4E0B\u65E9\u901A1\u30012\u30013\u4E01\u76EE\u3001\u9577\u6F5F1\u4E01\u76EE\u3001\u4E80\u7530\u65E9\u901A1\uFF5E6\u4E01\u76EE\u3001\u6771\u65E9\u901A2\u4E01\u76EE\u3001\u4E38\u6F5F1\u4E01\u76EE\u3001\u4E0B\u65E9\u901A\u67F3\u75301\uFF5E2\u4E01\u76EE",
+    "mapUrl": "https://maps.app.goo.gl/npkJtEedfzV7J92d9",
+    "updateInfo": ""
+  },
+  {
+    "id": "4007",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u4E80\u7530\u7B2C\u56DB\u4FDD\u80B2\u5712",
+    "address": "\u6C5F\u5357\u533A\u897F\u753A4\u20106\u201024",
+    "area": "\u65ED1\uFF5E4\u4E01\u76EE\u3001\u4E80\u7530\u5927\u67081\u4E01\u76EE\u3001\u4E80\u7530\u672C\u753A1\u4E01\u76EE\u3001\u4E80\u7530\u672C\u753A2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u897F\u753A1\uFF5E6\u4E01\u76EE\u3001\u6771\u8239\u58341\uFF5E5\u4E01\u76EE\u3001\u6771\u672C\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6771\u672C\u753A2\u4E01\u76EE\u3001\u6771\u672C\u753A3\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u8239\u6238\u5C712\u4E01\u76EE\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/Roe1GXK7RCxf8fKr7",
+    "updateInfo": ""
+  },
+  {
+    "id": "4008",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u4E80\u7530\u6771\u5C0F\u5B66\u6821",
+    "address": "\u6C5F\u5357\u533A\u4E80\u7530\u6C34\u9053\u753A3-2-45",
+    "area": "\u7802\u5D29\u3001\u888B\u6D25\u306E\u4E00\u90E8\u3001\u4E80\u7530\u6C34\u9053\u753A3\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u6C34\u9053\u753A4\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u6C34\u9053\u753A5\u4E01\u76EE\u3001\u4E09\u689D\u5CA11\u30012\u4E01\u76EE\u3001\u7802\u5CA11\u4E01\u76EE\u3001\u7802\u5CA12\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7802\u5CA13\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7802\u5CA14\u4E01\u76EE\u3001\u7802\u5C711\u30012\u4E01\u76EE\u3001\u888B\u6D256\u4E01\u76EE\u306E\u4E00\u90E8",
+    "mapUrl": "https://maps.app.goo.gl/xq73HsHg1F2WJQxK7",
+    "updateInfo": "\u6295\u7968\u6240\u3092\u4E80\u7530\u6771\u5150\u7AE5\u9928\u304B\u3089\u4E80\u7530\u6771\u5C0F\u5B66\u6821\u3078\u5909\u66F4"
+  },
+  {
+    "id": "4009",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u4E80\u7530\u7B2C\u4E94\u4FDD\u80B2\u5712",
+    "address": "\u6C5F\u5357\u533A\u4E80\u7530\u4E2D\u5CF62\u20104\u201014",
+    "area": "\u4E80\u7530\u5927\u67082\u30013\u4E01\u76EE\u3001\u4E80\u7530\u4E2D\u5CF61\uFF5E4\u4E01\u76EE\u3001\u5C71\u4E8C\u30C4\u306E\u4E00\u90E8\u3001\u4E80\u7530\u3001\u4E80\u7530\u30CE\u5185\u9AD8\u5C71",
+    "mapUrl": "https://goo.gl/maps/tZRtNKBMTsfmQ9c99",
+    "updateInfo": ""
+  },
+  {
+    "id": "4010",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u6C5F\u5357\u533A\u5F79\u6240",
+    "address": "\u6C5F\u5357\u533A\u6CC9\u753A3\u20104\u20105",
+    "area": "\u6CC9\u753A1\uFF5E5\u4E01\u76EE\u3001\u9D5C\u30CE\u5B501\uFF5E4\u4E01\u76EE\u3001\u837B\u66FD\u6839\u306E\u4E00\u90E8\u3001\u837B\u66FD\u68395\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u7DD1\u753A1\uFF5E3\u4E01\u76EE\u3001\u4E80\u7530\u7DD1\u753A4\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E80\u7530\u56DB\u30C4\u8208\u91CE1\uFF5E5\u4E01\u76EE\u3001\u4E94\u6708\u753A1\uFF5E3\u4E01\u76EE\u3001\u65E9\u82D71\uFF5E2\u4E01\u76EE\u3001\u8239\u6238\u5C71",
+    "mapUrl": "https://goo.gl/maps/Du5QVGbd3dEHqSjB6",
+    "updateInfo": ""
+  },
+  {
+    "id": "4011",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u3042\u3051\u307C\u306E\u5370\u5237\u56E3\u5730\u4E8B\u696D\u5354\u540C\u7D44\u5408\u4E8B\u52D9\u6240",
+    "address": "\u6C5F\u5357\u533A\u66D9\u753A3-15-13",
+    "area": "\u888B\u6D25\u306E\u4E00\u90E8\u3001\u66D9\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u66D9\u753A2\uFF5E5\u4E01\u76EE\u3001\u7802\u5CA12\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7802\u5CA13\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7802\u5CA15\u4E01\u76EE\u3001\u888B\u6D255\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u888B\u6D256\u4E01\u76EE\u306E\u4E00\u90E8",
+    "mapUrl": "https://maps.app.goo.gl/umfYJ4Xsn4AK4SK68",
+    "updateInfo": ""
+  },
+  {
+    "id": "4012",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u6C5F\u5357\u533A\u5F79\u6240\u6A2A\u8D8A\u51FA\u5F35\u6240",
+    "address": "\u6C5F\u5357\u533A\u6A2A\u8D8A\u4E2D\u592E1\u20101\u20101",
+    "area": "\u3044\u3076\u304D\u91CE1\uFF5E2\u4E01\u76EE\u3001\u6A2A\u8D8A\u3001\u6A2A\u8D8A\u4E0A\u753A1\uFF5E5\u4E01\u76EE\u3001\u6A2A\u8D8A\u4E2D\u592E1\uFF5E8\u4E01\u76EE\u3001\u6A2A\u8D8A\u6771\u753A1\uFF5E2\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/WMPii67RkgxYc5wu9",
+    "updateInfo": ""
+  },
+  {
+    "id": "4013",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u6A2A\u8D8A\u8FB2\u6751\u74B0\u5883\u6539\u5584\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u6C5F\u5357\u533A\u6CA2\u6D773\u20101\u201030",
+    "area": "\u6CA2\u6D771\uFF5E3\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/PG9iQT8TCQ4xHVKT6",
+    "updateInfo": ""
+  },
+  {
+    "id": "4014",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u6728\u6D25\u5730\u57DF\u7814\u4FEE\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u6C5F\u5357\u533A\u6728\u6D252\u20103\u201028",
+    "area": "\u6728\u6D251\uFF5E5\u4E01\u76EE\u3001\u6728\u6D25\u5DE5\u696D\u56E3\u5730",
+    "mapUrl": "https://goo.gl/maps/zxr2HvchprrvvoMU6",
+    "updateInfo": ""
+  },
+  {
+    "id": "4015",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u4E8C\u672C\u6728\u5730\u533A\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u6C5F\u5357\u533A\u4E8C\u672C\u67283\u20102\u201050",
+    "area": "\u4E8C\u672C\u67281\uFF5E5\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/tpZoKajAcCLcDU3u8",
+    "updateInfo": ""
+  },
+  {
+    "id": "4016",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u5C0F\u6749\u5730\u533A\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u6C5F\u5357\u533A\u5C0F\u67493\u201011\u201026",
+    "area": "\u5C0F\u67491\uFF5E5\u4E01\u76EE\u3001\u5E73\u5C71",
+    "mapUrl": "https://goo.gl/maps/m3xu6LRPEgYZbZW4A",
+    "updateInfo": ""
+  },
+  {
+    "id": "4017",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u85E4\u5C71\u4F1A\u9928",
+    "address": "\u6C5F\u5357\u533A\u85E4\u5C711\u20106\u201028",
+    "area": "\u3046\u3050\u3044\u30591\uFF5E2\u4E01\u76EE\u3001\u99D2\u8FBC1\uFF5E2\u4E01\u76EE\u3001\u85E4\u5C711\uFF5E2\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/RtDZiJ4ajZaA6Tfn9",
+    "updateInfo": ""
+  },
+  {
+    "id": "4018",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u713C\u5C71\u96C6\u843D\u958B\u767A\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u6C5F\u5357\u533A\u963F\u8CC0\u91CE2\u20101\u201020",
+    "area": "\u963F\u8CC0\u91CE1\uFF5E2\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/FesEnZWztaXRDzTr7",
+    "updateInfo": ""
+  },
+  {
+    "id": "4019",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u30B5\u30F3\u30A6\u30A3\u30F3\u30B0\u6A2A\u8D8A",
+    "address": "\u6C5F\u5357\u533A\u6A2A\u8D8A\u5DDD\u6839\u753A2\u201020\u20101",
+    "area": "\u831C\u30B1\u4E18\u3001\u6A2A\u8D8A\u5DDD\u6839\u753A1\uFF5E5\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/3mSjv6sJWVEdfGhn6",
+    "updateInfo": ""
+  },
+  {
+    "id": "4020",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u5927\u6C5F\u5C71\u8FB2\u6751\u74B0\u5883\u6539\u5584\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u6C5F\u5357\u533A\u7D30\u5C71401",
+    "area": "\u8535\u5CA1\u3001\u7B39\u5C71\u3001\u76F4\u308A\u5C71\u3001\u897F\u5C71\u3001\u7D30\u5C71\u3001\u677E\u5C71",
+    "mapUrl": "https://goo.gl/maps/iBjAHAZBHUVEoipD7",
+    "updateInfo": ""
+  },
+  {
+    "id": "4021",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u4E38\u5C71\u5C0F\u5B66\u6821",
+    "address": "\u6C5F\u5357\u533A\u4E38\u5C71300",
+    "area": "\u5317\u5C71\u3001\u4E38\u5C71\u3001\u4E38\u5C71\u30CE\u5185\u5584\u4E4B\u4E1E\u7D44\u3001\u8317\u8377\u8C37",
+    "mapUrl": "https://goo.gl/maps/XAnw8Dkdwh1uMEfB8",
+    "updateInfo": ""
+  },
+  {
+    "id": "4022",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u5927\u6DF5\u5C0F\u5B66\u6821",
+    "address": "\u6C5F\u5357\u533A\u5927\u6E151760\u20101",
+    "area": "\u6C5F\u53E3\u3001\u5927\u6E15\u3001\u4E09\u767E\u5730\u3001\u897F\u91CE",
+    "mapUrl": "https://goo.gl/maps/zRgLM4U6yptKqacx6",
+    "updateInfo": ""
+  },
+  {
+    "id": "4023",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u66FD\u91CE\u6728\u9023\u7D61\u6240",
+    "address": "\u6C5F\u5357\u533A\u5929\u91CE2\u20107\u20102",
+    "area": "\u5929\u91CE\u3001\u5929\u91CE1\uFF5E3\u4E01\u76EE\u3001\u5609\u6728\u3001\u695A\u5DDD\u3001\u66FD\u5DDD\u3001\u4FF5\u67F3\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/WUBLCvmvTD56xXUYA",
+    "updateInfo": ""
+  },
+  {
+    "id": "4024",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u934B\u6F5F\u65B0\u7530\u81EA\u6CBB\u4F1A\u9928",
+    "address": "\u6C5F\u5357\u533A\u934B\u6F5F\u65B0\u7530275",
+    "area": "\u934B\u6F5F\u65B0\u7530\u3001\u4E38\u6F5F\u65B0\u7530",
+    "mapUrl": "https://goo.gl/maps/tPWTyTyDKXgVofZW7",
+    "updateInfo": ""
+  },
+  {
+    "id": "4025",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u4E21\u5DDD\u9023\u7D61\u6240",
+    "address": "\u6C5F\u5357\u533A\u9152\u5C4B\u753A821\u20108",
+    "area": "\u5609\u702C\u3001\u4E0A\u548C\u7530\u3001\u9152\u5C4B\u753A\u3001\u82B1\u30CE\u7267\u3001\u4E21\u5DDD1\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/56KghZz3RpyccDky9",
+    "updateInfo": ""
+  },
+  {
+    "id": "4026",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u5272\u91CE\u96C6\u843D\u958B\u767A\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u6C5F\u5357\u533A\u5272\u91CE684",
+    "area": "\u4E21\u5DDD2\u4E01\u76EE\u3001\u5272\u91CE",
+    "mapUrl": "https://goo.gl/maps/k9vTfybwDuKYvySy7",
+    "updateInfo": ""
+  },
+  {
+    "id": "4027",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u548C\u7530\u516C\u6C11\u9928",
+    "address": "\u6C5F\u5357\u533A\u548C\u75301482",
+    "area": "\u5E73\u8CC0\u3001\u821E\u6F5F\u3001\u548C\u7530",
+    "mapUrl": "https://goo.gl/maps/WPoQSheL7b5WYfbV9",
+    "updateInfo": ""
+  },
+  {
+    "id": "4028",
+    "ward": "\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A",
+    "wardShort": "\u6C5F\u5357\u533A",
+    "name": "\u66FD\u91CE\u6728\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u6C5F\u5357\u533A\u66FD\u91CE\u67281-21-8",
+    "area": "\u7956\u7236\u8208\u91CE\u3001\u4E45\u8535\u8208\u91CE\u3001\u9418\u6728\u3001\u66FD\u91CE\u67281\uFF5E2\u4E01\u76EE\u3001\u592A\u53F3\u30A8\u9580\u65B0\u7530\u306E\u4E00\u90E8\u3001\u4FF5\u67F3\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/X2zMFuAMvbbx7GbTA",
+    "updateInfo": ""
+  },
+  {
+    "id": "5001",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u65B0\u6D25\u7B2C\u4E00\u5C0F\u5B66\u6821",
+    "address": "\u79CB\u8449\u533A\u65B0\u6D25\u672C\u753A4\u20104\u20103",
+    "area": "\u5584\u9053\u753A1\u30012\u4E01\u76EE\u3001\u7530\u5BB61\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E2D\u6CA2\u753A\u3001\u65B0\u6D25\u672C\u753A1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u65B0\u6D25\u672C\u753A2\uFF5E4\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/WHBorwT1b7ngYuE97",
+    "updateInfo": ""
+  },
+  {
+    "id": "5002",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u5317\u4E0A\u516C\u4F1A\u5802",
+    "address": "\u79CB\u8449\u533A\u5317\u4E0A3\u201013\u201011",
+    "area": "\u5317\u4E0A1\u4E01\u76EE\u3001\u5317\u4E0A2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5317\u4E0A3\u4E01\u76EE\u3001\u4E0B\u8208\u91CE\u753A",
+    "mapUrl": "https://goo.gl/maps/Vax2Ak1fMUifSv8cA",
+    "updateInfo": ""
+  },
+  {
+    "id": "5003",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u65B0\u6D25\u7B2C\u4E09\u5C0F\u5B66\u6821",
+    "address": "\u79CB\u8449\u533A\u5C71\u8C37\u753A3\u20104785",
+    "area": "\u5927\u9E7F\u306E\u4E00\u90E8\u3001\u53E4\u7530\u3001\u53E4\u75301\uFF5E2\u4E01\u76EE\u3001\u53E4\u75303\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u53E4\u75304\u4E01\u76EE\u3001\u7F8E\u5E78\u753A1\uFF5E3\u4E01\u76EE\u3001\u7F8E\u55841\u30012\u4E01\u76EE\u3001\u5C71\u8C37\u753A1\uFF5E3\u4E01\u76EE\u3001\u65B0\u6D25\u672C\u753A1\u4E01\u76EE\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/Pc9PeyFanR9H2Mbo9",
+    "updateInfo": ""
+  },
+  {
+    "id": "5004",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u79CB\u8449\u533A\u5F79\u6240",
+    "address": "\u79CB\u8449\u533A\u7A0B\u5CF62009",
+    "area": "\u671D\u65E5\u306E\u4E00\u90E8\u3001\u65B0\u6804\u753A\u3001\u7530\u5BB62\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E2D\u6751\u3001\u65B0\u6D25\u3001\u65B0\u6D25\u7DD1\u753A\u3001\u897F\u5CF6\u3001\u897F\u53E4\u6D25\u306E\u4E00\u90E8\u3001\u6771\u5CF6\u306E\u4E00\u90E8\u3001\u7A0B\u5CF6\u3001\u5357\u753A",
+    "mapUrl": "https://goo.gl/maps/tt4JJu87KzHhYHTZ9",
+    "updateInfo": ""
+  },
+  {
+    "id": "5005",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u7530\u5BB6\u753A\u5185\u4F1A\u9928\uFF08\u6C0F\u5B50\u4F1A\u9928\uFF09",
+    "address": "\u79CB\u8449\u533A\u7530\u5BB63\u20101",
+    "area": "\u7530\u5BB6\u3001\u7530\u5BB61\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7530\u5BB62\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7530\u5BB63\u4E01\u76EE\u3001\u5409\u5CA1\u753A",
+    "mapUrl": "https://goo.gl/maps/TFz99QaocHGZJtbT6",
+    "updateInfo": ""
+  },
+  {
+    "id": "5006",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u8349\u6C34\u753A\u5185\u4F1A\u9928",
+    "address": "\u79CB\u8449\u533A\u8349\u6C34\u753A3\u20105\u20101",
+    "area": "\u8349\u6C34\u753A1\uFF5E3\u4E01\u76EE\u3001\u5C0F\u53E3\u306E\u4E00\u90E8\u3001\u6EDD\u8C37\u753A\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/ygWEArJajiLBrNcw8",
+    "updateInfo": ""
+  },
+  {
+    "id": "5007",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u67C4\u76EE\u6728\u81EA\u6CBB\u4F1A\u9928",
+    "address": "\u79CB\u8449\u533A\u67C4\u76EE\u6728309\u20104",
+    "area": "\u98EF\u67F3\u3001\u67C4\u76EE\u6728\u3001\u6EDD\u8C37\u753A\u306E\u4E00\u90E8\u3001\u79CB\u84492\u4E01\u76EE\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/JaxKuZzPtoDhG2NP8",
+    "updateInfo": ""
+  },
+  {
+    "id": "5008",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u5927\u5B89\u5BFA\u96C6\u843D\u958B\u767A\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u79CB\u8449\u533A\u5927\u5B89\u5BFA318\u20102",
+    "area": "\u5927\u5B89\u5BFA\u3001\u4E2D\u65B0\u7530\u3001\u6771\u91D1\u6CA2\u3001\u516D\u90F7\u306E\u4E00\u90E8\u3001\u91D1\u5C4B\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/uaXV3WbzqRRvSZdE6",
+    "updateInfo": ""
+  },
+  {
+    "id": "5009",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u65E7\u6E80\u65E5\u5C0F\u5B66\u6821",
+    "address": "\u79CB\u8449\u533A\u4E03\u65E5\u753A17\u2010\u4E59",
+    "area": "\u5927\u8535\u3001\u4E03\u65E5\u753A\u3001\u6E80\u9858\u5BFA\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/Db8WYui4wWg5TmWr7",
+    "updateInfo": ""
+  },
+  {
+    "id": "5010",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u7D50\u5E7C\u7A1A\u5712",
+    "address": "\u79CB\u8449\u533A\u7D50160\u20103",
+    "area": "\u837B\u5CF61\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u837B\u5CF62\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u7530\u5CF6\u306E\u4E00\u90E8\u3001\u798F\u5CF6\u3001\u7D50\u3001\u307F\u305D\u3089\u91CE1\uFF5E3\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/YvRn3MD6TMwafCBdA",
+    "updateInfo": ""
+  },
+  {
+    "id": "5011",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u304A\u304E\u304B\u308F\u3053\u3069\u3082\u5712",
+    "address": "\u79CB\u8449\u533A\u4E2D\u91CE3\u201020\u20107",
+    "area": "\u837B\u5CF61\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u837B\u5CF62\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u837B\u5CF63\u4E01\u76EE\u3001\u8ECA\u58341\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u8ECA\u58342\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E2D\u91CE1\uFF5E3\u4E01\u76EE\u3001\u7530\u5CF6\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/BXSkYcB4aSqnAwtL7",
+    "updateInfo": ""
+  },
+  {
+    "id": "5012",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u5E02\u4E4B\u702C\u96C6\u843D\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u79CB\u8449\u533A\u5E02\u4E4B\u702C452",
+    "area": "\u5E02\u4E4B\u702C\u3001\u899A\u8DEF\u6D25\u306E\u4E00\u90E8\u3001\u8ECA\u58341\u4E01\u76EE\u306E\u4E00\u90E8",
+    "mapUrl": "https://maps.app.goo.gl/upkcKXyb1tPiqMG37",
+    "updateInfo": ""
+  },
+  {
+    "id": "5013",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u5C0F\u5408\u5C0F\u5B66\u6821",
+    "address": "\u79CB\u8449\u533A\u51FA\u6238180",
+    "area": "\u6D66\u8208\u91CE\u3001\u5DDD\u6839\u3001\u5B50\u6210\u5834\u3001\u51FA\u6238\u3001\u65B0\u6D25\u56DB\u30C4\u8208\u91CE\u3001\u8568\u66FD\u6839\u3001\u5927\u79CB\u3001\u6885\u30CE\u6728\u3001\u5C0F\u5C4B\u5834\u3001\u5C0F\u6238\u4E0B\u7D44\u306E\u4E00\u90E8\u3001\u899A\u8DEF\u6D25\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/FuoQVTT41fANpysC8",
+    "updateInfo": ""
+  },
+  {
+    "id": "5014",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u5C0F\u5408\u6771\u5C0F\u5B66\u6821",
+    "address": "\u79CB\u8449\u533A\u5C0F\u6238\u4E0A\u7D44234",
+    "area": "\u5927\u9E7F\u306E\u4E00\u90E8\u3001\u6817\u5BAE\u3001\u53E4\u75303\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5C0F\u6238\u4E0A\u7D44\u3001\u5C0F\u6238\u4E0B\u7D44\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/rKcrsu1GQncvPPfq9",
+    "updateInfo": ""
+  },
+  {
+    "id": "5015",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u91D1\u6D25\u5730\u533A\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u79CB\u8449\u533A\u53E4\u6D25597",
+    "area": "\u671D\u65E5\u306E\u4E00\u90E8\u3001\u91D1\u6D25\u306E\u4E00\u90E8\u3001\u84B2\u30B1\u6CA2\u3001\u897F\u53E4\u6D25\u306E\u4E00\u90E8\u3001\u6771\u5CF6\u306E\u4E00\u90E8\u3001\u53E4\u6D25\u3001\u5272\u753A\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/UxPADxgGJbiRirq4A",
+    "updateInfo": ""
+  },
+  {
+    "id": "5016",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u91D1\u6D25\u516C\u4F1A\u5802",
+    "address": "\u79CB\u8449\u533A\u91D1\u6D25618-2",
+    "area": "\u91D1\u6D25\u306E\u4E00\u90E8\u3001\u5869\u8C37\u3001\u5272\u753A\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/FvB73QpCL3KcMLBy9",
+    "updateInfo": ""
+  },
+  {
+    "id": "5017",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u5C0F\u53E3\u516C\u4F1A\u5802",
+    "address": "\u79CB\u8449\u533A\u5C0F\u53E31013",
+    "area": "\u5C0F\u53E3\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/5wdbMqdBKxk4cFrE8",
+    "updateInfo": ""
+  },
+  {
+    "id": "5018",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u65B0\u95A2\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u79CB\u8449\u533A\u4E0B\u65B0364\u20101",
+    "area": "\u5B89\u90E8\u65B0\u3001\u4E0B\u65B0\u3001\u5E02\u65B0\u3001\u65B0\u90F7\u5C4B\u3001\u91D1\u5C4B\u306E\u4E00\u90E8\u3001\u7FBD\u4E0B\u3001\u5317\u3001\u5927\u95A2\u3001\u5CA1\u7530\u3001\u5C0F\u53E3\u306E\u4E00\u90E8\u3001\u516D\u90F7\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/FJDCE9NazVjJ1sG88",
+    "updateInfo": ""
+  },
+  {
+    "id": "5019",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u79CB\u8449\u4F1A\u9928",
+    "address": "\u79CB\u8449\u533A\u79CB\u84491\u201017\u20103",
+    "area": "\u79CB\u84491\u4E01\u76EE\u3001\u79CB\u84492\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u79CB\u84493\u4E01\u76EE\u3001\u6EDD\u8C37\u753A\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/9UWF9ySQFgH4iCtw9",
+    "updateInfo": ""
+  },
+  {
+    "id": "5020",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u65B0\u6D25\u7B2C\u4E8C\u5C0F\u5B66\u6821",
+    "address": "\u79CB\u8449\u533A\u65B0\u753A2\u20103\u20103",
+    "area": "\u79CB\u84492\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u91D1\u6CA2\u753A1\uFF5E4\u4E01\u76EE\u3001\u65B0\u753A1\uFF5E3\u4E01\u76EE\u3001\u6EDD\u8C37\u672C\u753A\u3001\u65E5\u5B9D\u753A",
+    "mapUrl": "https://goo.gl/maps/kcKca6ppHBbABRfx9",
+    "updateInfo": ""
+  },
+  {
+    "id": "5021",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u65B0\u6D25\u5730\u57DF\u5B66\u5712",
+    "address": "\u79CB\u8449\u533A\u65B0\u6D25\u6771\u753A2-5-6",
+    "area": "\u65B0\u91D1\u6CA2\u753A\u3001\u65B0\u6D25\u6771\u753A1\uFF5E3\u4E01\u76EE\u3001\u897F\u91D1\u6CA2\u3001\u6E80\u9858\u5BFA\u306E\u4E00\u90E8",
+    "mapUrl": "https://maps.app.goo.gl/6NxYs4BERuW46mWa6",
+    "updateInfo": ""
+  },
+  {
+    "id": "5022",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u837B\u5DDD\u5C0F\u5B66\u6821",
+    "address": "\u79CB\u8449\u533A\u8ECA\u5834922\u20101",
+    "area": "\u3042\u304A\u3070\u901A1\uFF5E2\u4E01\u76EE\u3001\u837B\u91CE\u753A\u3001\u3053\u304C\u306D\u753A\u3001\u8ECA\u5834\u3001\u8ECA\u58341\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u8ECA\u58342\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u8ECA\u58343\uFF5E5\u4E01\u76EE\u3001\u4E2D\u91CE4\uFF5E5\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/GLvdi5V9hMzQLEFs6",
+    "updateInfo": ""
+  },
+  {
+    "id": "5023",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u5DDD\u53E3\u5730\u57DF\u4EA4\u6D41\u4F1A\u9928",
+    "address": "\u79CB\u8449\u533A\u5DDD\u53E3392\u20105",
+    "area": "\u5DDD\u53E3\u3001\u5317\u6F5F\u3001\u5317\u4E0A\u3001\u5317\u4E0A2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5317\u4E0A\u65B0\u7530\u3001\u53E4\u7530\u30CE\u5185\u5927\u91CE\u958B\u3001\u3055\u3064\u304D\u91CE1\uFF5E4\u4E01\u76EE\u3001\u6E80\u9858\u5BFA\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/Mim5CiHDZcwK5K6s8",
+    "updateInfo": ""
+  },
+  {
+    "id": "5024",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u5C0F\u9808\u6238\u307E\u3061\u3065\u304F\u308A\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u79CB\u8449\u533A\u5C0F\u9808\u6238120\u20101",
+    "area": "\u5C0F\u9808\u6238\u3001\u65B0\u4FDD\u3001\u6A2A\u5DDD\u6D5C\u306E\u4E00\u90E8\u3001\u7ADC\u7384",
+    "mapUrl": "https://goo.gl/maps/i8JYFAmv48RentCy6",
+    "updateInfo": ""
+  },
+  {
+    "id": "5025",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u5C0F\u9808\u6238\u304D\u305A\u306A\u306E\u5BB6\uFF08\u300C\u30EF\u30FC\u30AF\u30BB\u30F3\u30BF\u30FC\u307B\u307B\u3048\u307F\u300D\u3068\u540C\u3058\u5EFA\u7269\u3067\u3059\uFF09",
+    "address": "\u79CB\u8449\u533A\u5C0F\u54111744",
+    "area": "\u5C0F\u5411\u3001\u6C34\u7530\u3001\u6A2A\u5DDD\u6D5C\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/Wx35ufPzhWh9nDLb6",
+    "updateInfo": ""
+  },
+  {
+    "id": "5026",
+    "ward": "\u65B0\u6F5F\u5E02\u79CB\u8449\u533A",
+    "wardShort": "\u79CB\u8449\u533A",
+    "name": "\u5C0F\u9808\u6238\u5730\u533A\u3075\u308C\u3042\u3044\u4F1A\u9928",
+    "address": "\u79CB\u8449\u533A\u77E2\u4EE3\u753035",
+    "area": "\u5929\u30F6\u6CA2\u3001\u938C\u5009\u3001\u821F\u62381\uFF5E2\u4E01\u76EE\u3001\u677E\u30F6\u4E181\u4E01\u76EE\u3001\u77E2\u4EE3\u7530",
+    "mapUrl": "https://goo.gl/maps/PY2Vy8UaYZswNy1u6",
+    "updateInfo": ""
+  },
+  {
+    "id": "6001",
+    "ward": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "wardShort": "\u5357\u533A",
+    "name": "\u767D\u6839\u5065\u5EB7\u798F\u7949\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u5357\u533A\u767D\u68391364-12",
+    "area": "\u4E0A\u4E0B\u8ACF\u8A2A\u6728\u306E\u4E00\u90E8\u3001\u767D\u6839\u306E\u4E00\u90E8\u3001\u767D\u6839\u9B5A\u753A\u3001\u80FD\u767B\u306E\u4E00\u90E8\u3001\u80FD\u767B1\uFF5E2\u4E01\u76EE\u3001\u5341\u4E94\u9593\u3001\u5C0F\u5742\u3001\u9BF5\u6F5F\u306E\u4E00\u90E8\u3001\u9BF5\u6F5F1\u4E01\u76EE\u3001\u4E03\u8ED2\u306E\u4E00\u90E8\u3001\u4E03\u8ED2\u753A\u3001\u767D\u6839\u56DB\u30C4\u8208\u91CE\u3001\u795E\u5C4B\u306E\u4E00\u90E8\u3001\u4FDD\u5742\u3001\u767D\u6839\u30CE\u5185\u4E03\u8ED2\u306E\u4E00\u90E8\u3001\u52A9\u6B21\u53F3\u30A8\u9580\u7D44\u306E\u4E00\u90E8",
+    "mapUrl": "https://maps.app.goo.gl/cFUiUfcdgEBvcRpm8",
+    "updateInfo": ""
+  },
+  {
+    "id": "6002",
+    "ward": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "wardShort": "\u5357\u533A",
+    "name": "\u8ACF\u8A2A\u6728\u4FDD\u80B2\u5712",
+    "address": "\u5357\u533A\u767D\u6839\u6C34\u9053\u753A10\u201035",
+    "area": "\u4E0A\u4E0B\u8ACF\u8A2A\u6728\u306E\u4E00\u90E8\u3001\u767D\u6839\u306E\u4E00\u90E8\u3001\u767D\u6839\u6C34\u9053\u753A\u3001\u767D\u6839\u30CE\u5185\u4E03\u8ED2\u306E\u4E00\u90E8\u3001\u767D\u6839\u65E5\u306E\u51FA\u753A\u3001\u7530\u4E2D\u3001\u6238\u982D\u306E\u4E00\u90E8\u3001\u80FD\u767B\u306E\u4E00\u90E8\u3001\u5E73\u6210\u753A\u3001\u52A9\u6B21\u53F3\u30A8\u9580\u7D44\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/SyC8nYEUYSA8NXbQ7",
+    "updateInfo": ""
+  },
+  {
+    "id": "6003",
+    "ward": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "wardShort": "\u5357\u533A",
+    "name": "\u8328\u66FD\u6839\u5C0F\u5B66\u6821",
+    "address": "\u5357\u533A\u8328\u66FD\u68391432\u20101",
+    "area": "\u8328\u66FD\u6839\u306E\u4E00\u90E8\u3001\u6E05\u6C34\u3001\u6771\u8431\u5834",
+    "mapUrl": "https://goo.gl/maps/RTaDWTmHMZBw3wzJ9",
+    "updateInfo": ""
+  },
+  {
+    "id": "6004",
+    "ward": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "wardShort": "\u5357\u533A",
+    "name": "\u65B0\u98EF\u7530\u5730\u57DF\u751F\u6D3B\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u5357\u533A\u65B0\u98EF\u75301261\u20101",
+    "area": "\u4E0A\u65B0\u7530\u3001\u65B0\u98EF\u7530",
+    "mapUrl": "https://goo.gl/maps/3McE43ccMVqHLmcv7",
+    "updateInfo": ""
+  },
+  {
+    "id": "6005",
+    "ward": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "wardShort": "\u5357\u533A",
+    "name": "\u5E84\u702C\u5C0F\u5B66\u6821",
+    "address": "\u5357\u533A\u83F1\u6F5F\u65B0\u7530193",
+    "area": "\u8328\u66FD\u6839\u306E\u4E00\u90E8\u3001\u514E\u65B0\u7530\u3001\u725B\u5D0E\u3001\u5E84\u702C\u3001\u83F1\u6F5F\u3001\u98EF\u5CF6\u3001\u6C96\u65B0\u4FDD\u3001\u83F1\u6F5F\u65B0\u7530\u3001\u53E4\u5DDD\u65B0\u7530\u3001\u771F\u6728\u3001\u4E0A\u9053\u6F5F\u3001\u4E0B\u9053\u6F5F\u306E\u4E00\u90E8\u3001\u92F3\u7269\u5E2B\u8208\u91CE\u3001\u8718\u624B\u8208\u91CE\u3001\u5341\u4E8C\u9053\u5CF6\u3001\u6B21\u90CE\u53F3\u30A8\u9580\u8208\u91CE\u3001\u4E0A\u516B\u679A\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/Sz6344bkEP46hC3i8",
+    "updateInfo": ""
+  },
+  {
+    "id": "6006",
+    "ward": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "wardShort": "\u5357\u533A",
+    "name": "\u5C0F\u6797\u4FDD\u80B2\u5712",
+    "address": "\u5357\u533A\u4E0B\u6728\u5C71613",
+    "area": "\u6D66\u68A8\u3001\u4E0A\u6728\u5C71\u3001\u4E0B\u6728\u5C71\u3001\u6ADB\u7B25\u3001\u4E0A\u516B\u679A\u306E\u4E00\u90E8\u3001\u4E0B\u9053\u6F5F\u306E\u4E00\u90E8\u3001\u548C\u6CC9\u3001\u8535\u4E3B\u3001\u7530\u5C3E\u3001\u934B\u6F5F\u3001\u5E73\u6F5F\u3001\u5E73\u6F5F\u65B0\u7530\u3001\u4E07\u5E74",
+    "mapUrl": "https://goo.gl/maps/VCAkgToDNbx3d8LZA",
+    "updateInfo": ""
+  },
+  {
+    "id": "6007",
+    "ward": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "wardShort": "\u5357\u533A",
+    "name": "\u5357\u533A\u5F79\u6240",
+    "address": "\u5357\u533A\u767D\u68391235",
+    "area": "\u4E0A\u4E0B\u8ACF\u8A2A\u6728\u306E\u4E00\u90E8\u3001\u767D\u6839\u306E\u4E00\u90E8\u3001\u767D\u6839\u30CE\u5185\u4E03\u8ED2\u306E\u4E00\u90E8\u3001\u52A9\u6B21\u53F3\u30A8\u9580\u7D44\u306E\u4E00\u90E8\u3001\u6238\u982D\u306E\u4E00\u90E8\u3001\u89AA\u548C\u753A\u3001\u80FD\u767B\u306E\u4E00\u90E8\u3001 \u9BF5\u6F5F\u306E\u4E00\u90E8\u3001\u5C0F\u8535\u5B50\u306E\u4E00\u90E8\u3001\u4E03\u8ED2\u306E\u4E00\u90E8\u3001\u767D\u6839\u6771\u753A1\u4E01\u76EE\u3001\u767D\u6839\u53E4\u5DDD\u3001\u6749\u83DC\u3001\u795E\u5C4B\u306E\u4E00\u90E8",
+    "mapUrl": "https://maps.app.goo.gl/ekN6imfigvg3wvLdA",
+    "updateInfo": ""
+  },
+  {
+    "id": "6008",
+    "ward": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "wardShort": "\u5357\u533A",
+    "name": "\u30EF\u30FC\u30AF\u30BB\u30F3\u30BF\u30FC\u3057\u3089\u306F\u3059",
+    "address": "\u5357\u533A\u6238\u77F345\u20102",
+    "area": "\u4E0A\u6D66\u3001\u4E0A\u516B\u679A\u306E\u4E00\u90E8\u3001\u4E0B\u516B\u679A\u3001\u65B0\u751F\u753A1\uFF5E3\u4E01\u76EE\u3001\u6238\u77F3\u3001\u4E2D\u5C0F\u898B",
+    "mapUrl": "https://goo.gl/maps/wfFUWRhRNT8Szu3m7",
+    "updateInfo": ""
+  },
+  {
+    "id": "6009",
+    "ward": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "wardShort": "\u5357\u533A",
+    "name": "\u81FC\u4E95\u5730\u57DF\u751F\u6D3B\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u5357\u533A\u81FC\u4E951193\u20101",
+    "area": "\u8D64\u6E0B\u3001\u671D\u6372\u3001\u81FC\u4E95\u3001\u5C0F\u8535\u5B50\u306E\u4E00\u90E8\u3001\u4E2D\u5C71\u3001\u897F\u7B20\u5DFB\u3001\u5800\u639B\u3001\u5F15\u8D8A\u3001\u5927\u90F7\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/KA2JafV43KGgwpyz5",
+    "updateInfo": ""
+  },
+  {
+    "id": "6010",
+    "ward": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "wardShort": "\u5357\u533A",
+    "name": "\u5927\u90F7\u5730\u57DF\u751F\u6D3B\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u5357\u533A\u72AC\u5E30\u65B0\u7530751\u20106",
+    "area": "\u72AC\u5E30\u65B0\u7530\u3001\u5927\u90F7\u306E\u4E00\u90E8\u3001\u897F\u9152\u5C4B\u3001\u6771\u7B20\u5DFB\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/66FdVuiU7sF2S7cv7",
+    "updateInfo": ""
+  },
+  {
+    "id": "6011",
+    "ward": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "wardShort": "\u5357\u533A",
+    "name": "\u5927\u9DF2\u4FDD\u80B2\u5712",
+    "address": "\u5357\u533A\u6771\u7B20\u5DFB\u65B0\u7530270\u20102",
+    "area": "\u897F\u7B20\u5DFB\u65B0\u7530\u3001\u6771\u7B20\u5DFB\u306E\u4E00\u90E8\u3001\u6771\u7B20\u5DFB\u65B0\u7530\u3001\u9DF2\u30CE\u6728\u65B0\u7530\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/e9NbNHarhgLS2SJT6",
+    "updateInfo": ""
+  },
+  {
+    "id": "6012",
+    "ward": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "wardShort": "\u5357\u533A",
+    "name": "\u4E2D\u9DF2\u30CE\u6728\u3075\u308C\u3042\u3044\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u5357\u533A\u9DF2\u30CE\u6728\u65B0\u7530973",
+    "area": "\u737A\u30F6\u901A\u3001\u6771\u7B20\u5DFB\u306E\u4E00\u90E8\u3001\u9DF2\u30CE\u6728\u65B0\u7530\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/UQDNwiLRVt87DiPm8",
+    "updateInfo": ""
+  },
+  {
+    "id": "6013",
+    "ward": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "wardShort": "\u5357\u533A",
+    "name": "\u6839\u5CB8\u5C0F\u5B66\u6821",
+    "address": "\u5357\u533A\u5C71\u5D0E\u8208\u91CE2288",
+    "area": "\u4E0A\u5869\u4FF5\u306E\u4E00\u90E8\u3001\u5317\u7530\u4E2D\u3001\u4E0B\u5869\u4FF5\u3001\u4E0B\u5C71\u5D0E\u3001\u65B0\u5C71\u5D0E\u753A1\uFF5E3\u4E01\u76EE\u3001\u9AD8\u4E95\u8208\u91CE\u3001\u9AD8\u4E95\u67711\uFF5E3\u4E01\u76EE\u3001\u4E2D\u5869\u4FF5\u3001\u6839\u5CB8\u3001\u677E\u6A4B\u3001\u5C71\u5D0E\u8208\u91CE",
+    "mapUrl": "https://goo.gl/maps/cUhCjwG2wfKThfbH8",
+    "updateInfo": ""
+  },
+  {
+    "id": "6014",
+    "ward": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "wardShort": "\u5357\u533A",
+    "name": "\u5927\u901A\u4FDD\u80B2\u5712",
+    "address": "\u5357\u533A\u9DF2\u30CE\u6728\u65B0\u75305681",
+    "area": "\u5927\u901A1\uFF5E2\u4E01\u76EE\u3001\u5927\u901A\u897F\u3001\u9DF2\u30CE\u6728\u65B0\u7530\u306E\u4E00\u90E8\u3001\u5927\u901A\u53576\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/6c5b9Gcj6bZnkC3t8",
+    "updateInfo": ""
+  },
+  {
+    "id": "6015",
+    "ward": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "wardShort": "\u5357\u533A",
+    "name": "\u5927\u901A\u5730\u57DF\u751F\u6D3B\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u5357\u533A\u5927\u901A\u53574\u2010105",
+    "area": "\u5927\u901A\u9EC4\u91D11\uFF5E7\u4E01\u76EE\u3001\u5927\u901A\u53571\uFF5E5\u4E01\u76EE\u3001\u4E0A\u5869\u4FF5\u306E\u4E00\u90E8\u3001\u9DF2\u30CE\u6728\u65B0\u7530\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/595mRxzoocPUkU5JA",
+    "updateInfo": ""
+  },
+  {
+    "id": "6016",
+    "ward": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "wardShort": "\u5357\u533A",
+    "name": "\u5473\u65B9\u51FA\u5F35\u6240",
+    "address": "\u5357\u533A\u5473\u65B91544",
+    "area": "\u5473\u65B9",
+    "mapUrl": "https://goo.gl/maps/rg1Qhk2p2hEmAeEG9",
+    "updateInfo": ""
+  },
+  {
+    "id": "6017",
+    "ward": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "wardShort": "\u5357\u533A",
+    "name": "\u897F\u767D\u6839\u516C\u6C11\u9928",
+    "address": "\u5357\u533A\u897F\u767D\u68391563\u20101",
+    "area": "\u897F\u767D\u6839",
+    "mapUrl": "https://goo.gl/maps/B7SLxUvPmpcduC2T8",
+    "updateInfo": ""
+  },
+  {
+    "id": "6018",
+    "ward": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "wardShort": "\u5357\u533A",
+    "name": "\u4E03\u7A42\u516C\u6C11\u9928",
+    "address": "\u5357\u533A\u5409\u6C5F238\u20101",
+    "area": "\u5C45\u5BBF\u3001\u5927\u5009\u3001\u5927\u5009\u65B0\u7530\u3001\u5C71\u738B\u3001\u5C71\u738B\u65B0\u7530\u3001\u4E03\u7A42\u3001\u5409\u6C5F\u3001\u5409\u7530\u65B0\u7530",
+    "mapUrl": "https://goo.gl/maps/96e2zG3PZkgY8w2a6",
+    "updateInfo": ""
+  },
+  {
+    "id": "6019",
+    "ward": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "wardShort": "\u5357\u533A",
+    "name": "\u6708\u6F5F\u51FA\u5F35\u6240",
+    "address": "\u5357\u533A\u6708\u6F5F535",
+    "area": "\u5927\u5225\u7576\u3001\u6708\u6F5F\u3001\u897F\u8431\u5834",
+    "mapUrl": "https://goo.gl/maps/xyo8ahTxu5HYdQmAA",
+    "updateInfo": ""
+  },
+  {
+    "id": "6020",
+    "ward": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "wardShort": "\u5357\u533A",
+    "name": "\u66F2\u901A\u591A\u76EE\u7684\u5171\u540C\u5229\u7528\u65BD\u8A2D",
+    "address": "\u5357\u533A\u4E0A\u66F2\u901A24",
+    "area": "\u4E0A\u66F2\u901A\u3001\u4E0B\u66F2\u901A",
+    "mapUrl": "https://maps.app.goo.gl/xVSfy9sFUsNQZ8kv7",
+    "updateInfo": ""
+  },
+  {
+    "id": "6021",
+    "ward": "\u65B0\u6F5F\u5E02\u5357\u533A",
+    "wardShort": "\u5357\u533A",
+    "name": "\u6771\u9577\u5D8B\u96C6\u843D\u958B\u767A\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u5357\u533A\u6771\u9577\u5D8B89\u20107",
+    "area": "\u6771\u9577\u5D8B\u3001\u6728\u6ED1\u3001\u91E3\u5BC4\u65B0\u3001\u91E3\u5BC4",
+    "mapUrl": "https://maps.app.goo.gl/tQu6CMCyQwJwuBi6A",
+    "updateInfo": ""
+  },
+  {
+    "id": "7001",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u897F\u533A\u5F79\u6240",
+    "address": "\u897F\u533A\u5BFA\u5C3E\u67713-14-41",
+    "area": "\u5BFA\u5C3E\u306E\u4E00\u90E8\u3001\u5BFA\u5C3E\u4E0A1\uFF5E4\u4E01\u76EE\u3001\u5BFA\u5C3E\u4E0A5\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5BFA\u5C3E\u4E0A6\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5BFA\u5C3E\u67711\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5BFA\u5C3E\u67712\uFF5E3\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/ixqjVkg4PaES8bjy5",
+    "updateInfo": ""
+  },
+  {
+    "id": "7002",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u65B0\u901A\u5C0F\u5B66\u6821",
+    "address": "\u897F\u533A\u5742\u4E95\u67716\u201018\u20101",
+    "area": "\u5742\u4E95\u306E\u4E00\u90E8\u3001\u5742\u4E953\u4E01\u76EE\u3001\u5742\u4E95\u7802\u5C711\uFF5E4\u4E01\u76EE\u3001\u5742\u4E95\u67716\u4E01\u76EE\u3001\u65B0\u7530\u306E\u4E00\u90E8\u3001\u65B0\u901A\u306E\u4E00\u90E8\u3001\u5BFA\u5C3E\u4E0A5\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5BFA\u5C3E\u4E0A6\u4E01\u76EE\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/miLWtF3X8G9kh14N6",
+    "updateInfo": ""
+  },
+  {
+    "id": "7003",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u5742\u4E95\u6771\u5C0F\u5B66\u6821",
+    "address": "\u897F\u533A\u5742\u4E95\u67715\u201017\u20101",
+    "area": "\u4E80\u8C9D\u3001\u5C0F\u65B0\u306E\u4E00\u90E8\u3001\u5742\u4E951\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5742\u4E952\u4E01\u76EE\u3001\u5742\u4E95\u67713\uFF5E5\u4E01\u76EE\u3001\u65B0\u901A\u306E\u4E00\u90E8\u3001\u9808\u8CC0\u3001\u6D41\u901A\u30BB\u30F3\u30BF\u30FC1\uFF5E6\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/mM7n4c312cpHHy4u6",
+    "updateInfo": ""
+  },
+  {
+    "id": "7004",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u5742\u4E95\u8F2A\u5C0F\u5B66\u6821",
+    "address": "\u897F\u533A\u5742\u4E95\u67711\u20102\u20101",
+    "area": "\u5C0F\u91DD6\uFF5E8\u4E01\u76EE\u3001\u5C0F\u91DD\u5357\u3001\u5C0F\u91DD\u5357\u53F0\u306E\u4E00\u90E8\u3001\u5742\u4E951\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5742\u4E95\u67711\uFF5E2\u4E01\u76EE\u3001\u5BFA\u5C3E\u306E\u4E00\u90E8\u3001\u5BFA\u5C3E\u671D\u65E5\u901A\u3001\u5BFA\u5C3E\u67711\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5BFA\u5C3E\u524D\u901A1\uFF5E3\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/uUghqFa6vwsZezcu6",
+    "updateInfo": ""
+  },
+  {
+    "id": "7005",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u5C0F\u65B0\u4E2D\u5B66\u6821",
+    "address": "\u897F\u533A\u5C0F\u65B0\u897F3\u201018\u20101",
+    "area": "\u5C0F\u65B0\u306E\u4E00\u90E8\u3001\u5C0F\u65B0\u5927\u901A1\uFF5E2\u4E01\u76EE\u3001\u5C0F\u65B0\u897F1\uFF5E3\u4E01\u76EE\u3001\u5C0F\u65B0\u53571\uFF5E2\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/QwkoHt4Lb9Jn53js5",
+    "updateInfo": ""
+  },
+  {
+    "id": "7006",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u5C0F\u91DD\u5C0F\u5B66\u6821",
+    "address": "\u897F\u533A\u5C0F\u91DD2\u201036\u20101",
+    "area": "\u9752\u5C71\u6C34\u9053\u3001\u5C0F\u91DD2\u4E01\u76EE\u3001\u5C0F\u91DD4\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5C0F\u91DD5\u4E01\u76EE\u3001\u5C0F\u91DD\u4E0A\u5C71\u306E\u4E00\u90E8\u3001\u5C0F\u91DD\u304C\u4E18\u306E\u4E00\u90E8\u3001\u5C0F\u91DD\u85E4\u5C71\u3001\u5C0F\u91DD\u5357\u53F0\u306E\u4E00\u90E8\u3001\u6771\u9752\u5C711\u4E01\u76EE\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/6EdxJMToBjab4DQC9",
+    "updateInfo": ""
+  },
+  {
+    "id": "7007",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u5C0F\u91DD\u4E2D\u5B66\u6821",
+    "address": "\u897F\u533A\u5C0F\u91DD1\u201037\u20101",
+    "area": "\u5C0F\u65B0\u306E\u4E00\u90E8\u3001\u5C0F\u65B01\uFF5E5\u4E01\u76EE\u3001\u5C0F\u91DD1\u30013\u4E01\u76EE\u3001\u5C0F\u91DD4\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5E73\u5CF61\u4E01\u76EE\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/QFWXG2kjtnDB6mea6",
+    "updateInfo": ""
+  },
+  {
+    "id": "7008",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u6771\u9752\u5C71\u5C0F\u5B66\u6821",
+    "address": "\u897F\u533A\u9752\u5C71261\u20101",
+    "area": "\u9752\u5C71\u306E\u4E00\u90E8\u3001\u9752\u5C711\uFF5E3\u4E01\u76EE\u3001\u9752\u5C71\u65B0\u753A\u3001\u6D66\u5C711\u4E01\u76EE\u3001\u6771\u9752\u5C711\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u6771\u9752\u5C712\u4E01\u76EE\u3001\u5E73\u5CF6\u3001\u5E73\u5CF61\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5E73\u5CF62\uFF5E3\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/wd1LN6S6BdvQNgXk6",
+    "updateInfo": ""
+  },
+  {
+    "id": "7009",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u9752\u5C71\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30CF\u30A6\u30B9",
+    "address": "\u897F\u533A\u9752\u5C716\u201016\u201020",
+    "area": "\u9752\u5C714\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u9752\u5C715\uFF5E6\u4E01\u76EE\u3001\u6D66\u5C712\uFF5E4\u4E01\u76EE\u3001\u95A2\u5C4B\u5800\u5272\u753A",
+    "mapUrl": "https://goo.gl/maps/gnRx5Jo7AdkomXQR7",
+    "updateInfo": ""
+  },
+  {
+    "id": "7010",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u9752\u5C71\u5C0F\u5B66\u6821",
+    "address": "\u897F\u533A\u897F\u6709\u660E\u753A4\u20101",
+    "area": "\u9752\u5C71\u306E\u4E00\u90E8\u3001\u9752\u5C714\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u9752\u5C717\uFF5E8\u4E01\u76EE\u3001\u6709\u660E\u753A\u3001\u5C0F\u91DD\u4E0A\u5C71\u306E\u4E00\u90E8\u3001\u897F\u6709\u660E\u753A\u3001\u677E\u7F8E\u53F0",
+    "mapUrl": "https://goo.gl/maps/eP2a5QqZPDTdnwBm9",
+    "updateInfo": ""
+  },
+  {
+    "id": "7011",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u771F\u7802\u5C0F\u5B66\u6821",
+    "address": "\u897F\u533A\u771F\u78023\u201024\u20101",
+    "area": "\u897F\u5C0F\u91DD\u53F03\u4E01\u76EE\u3001\u771F\u78021\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u771F\u78022\uFF5E4\u4E01\u76EE\u3001\u677E\u6D77\u304C\u4E181\uFF5E4\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/b4vksvgTkmT1kpaD7",
+    "updateInfo": ""
+  },
+  {
+    "id": "7012",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u5742\u4E95\u8F2A\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u897F\u533A\u5C0F\u91DD\u897F1\u201012\u201012",
+    "area": "\u5C0F\u91DD\u304C\u4E18\u306E\u4E00\u90E8\u3001\u5C0F\u91DD\u53F0\u3001\u5C0F\u91DD\u897F1\uFF5E2\u4E01\u76EE\u3001\u5BFA\u5C3E\u53F01\uFF5E2\u4E01\u76EE\u3001\u897F\u5C0F\u91DD\u53F01\uFF5E2\u4E01\u76EE\u3001\u771F\u78021\u4E01\u76EE\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/2LPTvWPR3NuiKjrN7",
+    "updateInfo": ""
+  },
+  {
+    "id": "7013",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u4E94\u5341\u5D50\u4E2D\u5B66\u6821",
+    "address": "\u897F\u533A\u4E0A\u65B0\u6804\u753A5\u20103\u20101",
+    "area": "\u4E0A\u65B0\u6804\u753A1\uFF5E4\u4E01\u76EE\u3001\u4E0A\u65B0\u6804\u753A5\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5BFA\u5C3E\u53171\uFF5E2\u4E01\u76EE\u3001\u5BFA\u5C3E\u53F03\u4E01\u76EE\u3001\u5BFA\u5C3E\u4E2D\u592E\u516C\u5712\u3001\u5BFA\u5C3E\u897F1\u4E01\u76EE\u3001\u5BFA\u5C3E\u897F5\u4E01\u76EE\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/qigsmVUrCKh4xfW17",
+    "updateInfo": ""
+  },
+  {
+    "id": "7014",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u4E94\u5341\u5D50\u5C0F\u5B66\u6821",
+    "address": "\u897F\u533A\u5BFA\u5C3E\u897F4\u201023\u20101",
+    "area": "\u4E94\u5341\u5D501\u306E\u753A\u3001\u4E94\u5341\u5D50\u67711\uFF5E3\u4E01\u76EE\u3001\u4E0A\u65B0\u6804\u753A5\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E0A\u65B0\u6804\u753A6\u4E01\u76EE\u3001\u5927\u5B66\u53571\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5BFA\u5C3E\u897F2\uFF5E4\u4E01\u76EE\u3001\u5BFA\u5C3E\u897F5\u4E01\u76EE\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/ujYETbyimyMmcq8aA",
+    "updateInfo": ""
+  },
+  {
+    "id": "7015",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u4E0A\u4E94\u5341\u5D50\u4FDD\u80B2\u5712",
+    "address": "\u897F\u533A\u4E94\u5341\u5D502\u306E\u753A8404\u20101",
+    "area": "\u4E94\u5341\u5D502\u306E\u753A\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/1q2v4ozTKrp9ZfaP6",
+    "updateInfo": ""
+  },
+  {
+    "id": "7016",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u5185\u91CE\u5C0F\u5B66\u6821",
+    "address": "\u897F\u533A\u5185\u91CE\u5C71\u624B2\u201018\u201036",
+    "area": "\u4E94\u5341\u5D502\u306E\u753A\u306E\u4E00\u90E8\u3001\u5185\u91CE\u5C71\u624B1\uFF5E2\u4E01\u76EE\u3001\u5927\u5B66\u53571\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5927\u5B66\u53572\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/fs2q1Saejpvj9uAA9",
+    "updateInfo": ""
+  },
+  {
+    "id": "7017",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u897F\u51FA\u5F35\u6240\uFF08\u5185\u91CE\u307E\u3061\u3065\u304F\u308A\u30BB\u30F3\u30BF\u30FC\uFF09",
+    "address": "\u897F\u533A\u5185\u91CE\u753A413",
+    "area": "\u5185\u91CE\u753A\u3001\u69D9\u5C3E",
+    "mapUrl": "https://goo.gl/maps/WTHtnYg8hjJUVmhM9",
+    "updateInfo": ""
+  },
+  {
+    "id": "7018",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u5185\u91CE\u4E2D\u5B66\u6821",
+    "address": "\u897F\u533A\u5185\u91CE\u897F1\u201010\u20101",
+    "area": "\u4E94\u5341\u5D503\u306E\u753A\u5317\u3001\u4E94\u5341\u5D503\u306E\u753A\u4E2D\u3001\u4E94\u5341\u5D503\u306E\u753A\u897F\u3001\u4E94\u5341\u5D503\u306E\u753A\u6771\u3001\u4E94\u5341\u5D503\u306E\u753A\u5357\u3001\u4E94\u5341\u5D50\u4E0B\u5D0E\u5C71\u3001\u4E94\u5341\u5D50\u4E2D\u5CF6\u3001\u4E94\u5341\u5D50\u4E2D\u5CF61\uFF5E2\u4E01\u76EE\u3001\u4E94\u5341\u5D50\u4E2D\u5CF63\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u5185\u91CE\u6F5F\u7AEF\u3001\u5185\u91CE\u6238\u4E2D\u624D\u3001\u5185\u91CE\u897F1\uFF5E3\u4E01\u76EE\u3001\u5185\u91CE\u897F\u304C\u4E181\uFF5E2\u4E01\u76EE\u3001\u5185\u91CE\u6F5F\u5411\u3001\u5185\u91CE\u5D0E\u5C71\u3001\u5185\u91CE\u9577\u6F5F\u3001\u5185\u91CE\u65E9\u89D2",
+    "mapUrl": "https://goo.gl/maps/HCMhjAhvCW3pWUzy5",
+    "updateInfo": ""
+  },
+  {
+    "id": "7019",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u897F\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u897F\u533A\u5185\u91CE\u4E0A\u65B0\u753A11810",
+    "area": "\u4E94\u5341\u5D50\u4E0A\u5D0E\u5C71\u3001\u4E94\u5341\u5D50\u4E2D\u5CF63\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u4E94\u5341\u5D50\u4E2D\u5CF64\uFF5E5\u4E01\u76EE\u3001\u4E94\u5341\u5D50\u897F\u3001\u5185\u91CE\u4E0A\u65B0\u753A\u3001\u5185\u91CE\u95A2\u5834\u3001\u5185\u91CE\u897F\u304C\u4E183\u4E01\u76EE\u3001\u65B0\u4E2D\u6D5C1\uFF5E6\u4E01\u76EE\u3001\u4E2D\u6A29\u5BFA\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/CBJZJbrzwTXCJbvT7",
+    "updateInfo": ""
+  },
+  {
+    "id": "7020",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u65B0\u901A\u3064\u3070\u3055\u5C0F\u5B66\u6821",
+    "address": "\u897F\u533A\u5927\u91CE137",
+    "area": "\u5927\u91CE\u3001\u5742\u4E95\u306E\u4E00\u90E8\u3001\u65B0\u901A\u306E\u4E00\u90E8\u3001\u65B0\u901A\u897F1\uFF5E2\u4E01\u76EE\u3001\u65B0\u901A\u53571\uFF5E3\u4E01\u76EE\u3001\u5927\u5B66\u53571\u4E01\u76EE\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/DYRP6a1mEbamwBTNA",
+    "updateInfo": ""
+  },
+  {
+    "id": "7021",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u6728\u5C71\u5C0F\u5B66\u6821",
+    "address": "\u897F\u533A\u8C37\u51851886",
+    "area": "\u8D64\u585A\u306E\u4E00\u90E8\u3001\u795E\u5C71\u3001\u6728\u5C71\u3001\u6771\u5C71\u3001\u8C37\u5185\u3001\u4E2D\u6A29\u5BFA\u306E\u4E00\u90E8\u3001\u56DB\u30C4\u90F7\u5C4B",
+    "mapUrl": "https://goo.gl/maps/KEDJYQWo318CenuNA",
+    "updateInfo": ""
+  },
+  {
+    "id": "7022",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u8D64\u585A\u5C0F\u5B66\u6821",
+    "address": "\u897F\u533A\u8D64\u585A4478",
+    "area": "\u8D64\u585A\u306E\u4E00\u90E8\u3001\u5742\u7530\u3001\u5C71\u5D0E",
+    "mapUrl": "https://goo.gl/maps/GAwTsKjHbD5ZVNWy7",
+    "updateInfo": ""
+  },
+  {
+    "id": "7023",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u65B0\u6F5F\u56FD\u969B\u60C5\u5831\u5927\u5B66",
+    "address": "\u897F\u533A\u307F\u305A\u304D\u91CE3\u20101\u20101",
+    "area": "\u8D64\u585A\u306E\u4E00\u90E8\u3001\u85E4\u8535\u65B0\u7530\u3001\u307F\u305A\u304D\u91CE1\uFF5E6\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/TFK5pVjNyNKs7TaE6",
+    "updateInfo": ""
+  },
+  {
+    "id": "7024",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u4FDD\u53E4\u91CE\u6728\u4FDD\u80B2\u5712",
+    "address": "\u897F\u533A\u4FDD\u53E4\u91CE\u6728901",
+    "area": "\u5C0F\u898B\u90F7\u5C4B\u3001\u52D8\u52A9\u90F7\u5C4B\u3001\u5C0F\u702C\u3001\u65E9\u6F5F\u3001\u85E4\u91CE\u6728\u3001\u4FDD\u53E4\u91CE\u6728\u3001\u524D\u91CE\u5916\u65B0\u7530\u3001\u660E\u7530",
+    "mapUrl": "https://goo.gl/maps/uaXZnMam52BZgBLW7",
+    "updateInfo": ""
+  },
+  {
+    "id": "7025",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u4E2D\u91CE\u5C0F\u5C4B\u9023\u7D61\u6240",
+    "address": "\u897F\u533A\u4E2D\u91CE\u5C0F\u5C4B590\u20104",
+    "area": "\u5927\u53CB\u3001\u91D1\u5DFB\u65B0\u7530\u3001\u7530\u6F5F\u3001\u7530\u5CF6\u3001\u9053\u6CB3\u539F\u3001\u4E2D\u91CE\u5C0F\u5C4B",
+    "mapUrl": "https://goo.gl/maps/jescwx7ucb39RyyJ7",
+    "updateInfo": ""
+  },
+  {
+    "id": "7026",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u7B20\u6728\u5C0F\u5B66\u6821",
+    "address": "\u897F\u533A\u7B20\u67281695",
+    "area": "\u7B20\u6728\u3001\u65B0\u901A\u306E\u4E00\u90E8\u3001\u66FD\u548C\u3001\u9AD8\u5C71\u3001\u65B0\u7530\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/3n2DiyZgGZbKBasQA",
+    "updateInfo": ""
+  },
+  {
+    "id": "7027",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u9ED2\u57FC\u5357\u90E8\u516C\u6C11\u9928",
+    "address": "\u897F\u533A\u9ED2\u9CE5974\u20102",
+    "area": "\u7DD2\u7ACB\u6D41\u901A1\uFF5E2\u4E01\u76EE\u3001\u5317\u5834\u306E\u4E00\u90E8\u3001\u9ED2\u9CE5\u3001\u9CE5\u539F\u306E\u4E00\u90E8\u3001\u6D41\u901A3\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/tXcbzwB412nrbXqz6",
+    "updateInfo": ""
+  },
+  {
+    "id": "7028",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u9ED2\u57FC\u5357\u5C0F\u5B66\u6821",
+    "address": "\u897F\u533A\u6728\u5834911\u20101",
+    "area": "\u677F\u4E95\u306E\u4E00\u90E8\u3001\u91D1\u5DFB\u306E\u4E00\u90E8\u3001\u6728\u5834\u3001\u5C0F\u5E73\u65B9\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/PiXSoZQr4SUyyMnN7",
+    "updateInfo": ""
+  },
+  {
+    "id": "7029",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u677F\u4E95\u516C\u6C11\u9928",
+    "address": "\u897F\u533A\u677F\u4E952597",
+    "area": "\u677F\u4E95\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/JPdZizqyJbaSzBvG8",
+    "updateInfo": ""
+  },
+  {
+    "id": "7030",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u9ED2\u57FC\u8FB2\u6751\u74B0\u5883\u6539\u5584\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u897F\u533A\u91D1\u5DFB746\u20103",
+    "area": "\u5927\u91CE\u753A\u306E\u4E00\u90E8\u3001\u91D1\u5DFB\u306E\u4E00\u90E8\u3001\u5C0F\u5E73\u65B9\u306E\u4E00\u90E8\u3001\u9CE5\u539F\u306E\u4E00\u90E8\u3001\u9CE5\u539F\u65B0\u7530",
+    "mapUrl": "https://goo.gl/maps/Pg31VQQESDV19j21A",
+    "updateInfo": ""
+  },
+  {
+    "id": "7031",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u5927\u91CE\u5C0F\u5B66\u6821",
+    "address": "\u897F\u533A\u5927\u91CE\u753A3140\u4E59",
+    "area": "\u5927\u91CE\u753A\u306E\u4E00\u90E8\u3001\u9CE5\u539F\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/anEZT6eL1A41ZcaD8",
+    "updateInfo": ""
+  },
+  {
+    "id": "7032",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u9ED2\u57FC\u5E02\u6C11\u4F1A\u9928",
+    "address": "\u897F\u533A\u9CE5\u539F909\u20101",
+    "area": "\u5317\u5834\u306E\u4E00\u90E8\u3001\u5584\u4E45\u3001\u7ACB\u4ECF\u306E\u4E00\u90E8\u3001\u9CE5\u539F\u306E\u4E00\u90E8\u3001\u5C71\u7530\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/eWnaExcnLVYF65GXA",
+    "updateInfo": ""
+  },
+  {
+    "id": "7033",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u5C71\u7530\u5C0F\u5B66\u6821",
+    "address": "\u897F\u533A\u5C71\u75302781\u20102",
+    "area": "\u7ACB\u4ECF\u306E\u4E00\u90E8\u3001\u9CE5\u539F\u306E\u4E00\u90E8\u3001\u5C71\u7530\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/y2PSGEgXkrEPRsJ76",
+    "updateInfo": ""
+  },
+  {
+    "id": "7034",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u533A",
+    "wardShort": "\u897F\u533A",
+    "name": "\u9ED2\u57FC\u5317\u90E8\u516C\u6C11\u9928",
+    "address": "\u897F\u533A\u3068\u304D\u3081\u304D\u897F4\u20101\u20101",
+    "area": "\u7ACB\u4ECF\u306E\u4E00\u90E8\u3001\u5BFA\u5730\u3001\u3068\u304D\u3081\u304D\u897F1\uFF5E4\u4E01\u76EE\u3001\u3068\u304D\u3081\u304D\u67711\u4E01\u76EE\u3001\u5C71\u7530\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/Rxx28YSgYGEa954g8",
+    "updateInfo": ""
+  },
+  {
+    "id": "8001",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u5DFB\u5730\u533A\u516C\u6C11\u9928",
+    "address": "\u897F\u84B2\u533A\u5DFB\u7532635",
+    "area": "\u8D64\u93E5\u306E\u4E00\u90E8\u3001\u5DFB\u7532\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/GXe9FPcgsjXL45gN7",
+    "updateInfo": ""
+  },
+  {
+    "id": "8002",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u5DFB\u3064\u304F\u3057\u4FDD\u80B2\u5712",
+    "address": "\u897F\u84B2\u533A\u5800\u5C71\u65B0\u7530256",
+    "area": "\u5B89\u5C3B\u306E\u4E00\u90E8\u3001\u4E0B\u548C\u7D0D\u3001\u5800\u5C71\u65B0\u7530\u3001\u5DFB\u4E59",
+    "mapUrl": "https://goo.gl/maps/1y6p8rDbJhanV6Et9",
+    "updateInfo": ""
+  },
+  {
+    "id": "8003",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u84B2\u539F\u30AC\u30B9\u682A\u5F0F\u4F1A\u793E\u30B7\u30E7\u30FC\u30EB\u30FC\u30E0\u68DF",
+    "address": "\u897F\u84B2\u533A\u5DFB\u7532\uFF14\uFF11\uFF11\uFF11",
+    "area": "\u4E2D\u90F7\u5C4B\u3001\u8449\u8431\u5834\u3001\u5DFB\u7532\u306E\u4E00\u90E8\u3001\u5272\u524D\u306E\u4E00\u90E8",
+    "mapUrl": "https://maps.app.goo.gl/LLWjd1omQANwXU6YA",
+    "updateInfo": "\u897F\u84B2\u533A\u5F79\u6240\u304B\u3089\u84B2\u539F\u30AC\u30B9\u682A\u5F0F\u4F1A\u793E\u30B7\u30E7\u30FC\u30EB\u30FC\u30E0\u68DF\u3078\u5909\u66F4"
+  },
+  {
+    "id": "8004",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u5DFB\u5730\u57DF\u4FDD\u5065\u798F\u7949\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u897F\u84B2\u533A\u5DFB\u75324363",
+    "area": "\u8D64\u93E5\u306E\u4E00\u90E8\u3001\u5B89\u5C3B\u306E\u4E00\u90E8\u3001\u6F5F\u982D\u306E\u4E00\u90E8\u3001\u5DFB\u7532\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/8tRN6HhZyPcZenPu8",
+    "updateInfo": ""
+  },
+  {
+    "id": "8005",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u5DFB\u3084\u3059\u3089\u304E\u4F1A\u9928",
+    "address": "\u897F\u84B2\u533A\u5DFB\u7532121\u20101",
+    "area": "\u7FBD\u7530\u3001\u6771\u6C70\u4E0A\u3001\u5DFB\u7532\u306E\u4E00\u90E8\u3001\u5272\u524D\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/MdGBA3pwQEXGSRVa8",
+    "updateInfo": ""
+  },
+  {
+    "id": "8006",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u6F06\u5C71\u897F\u4FDD\u80B2\u5712",
+    "address": "\u897F\u84B2\u533A\u4E26\u5CA110\u20102",
+    "area": "\u6F06\u5C71\u306E\u4E00\u90E8\u3001\u6F5F\u982D\u306E\u4E00\u90E8\u3001\u67FF\u5CF6\u3001\u6CB3\u4E95\u3001\u6804\u753A\u3001\u685C\u6797\u3001\u4E26\u5CA1\u3001\u99AC\u5800\u3001\u5C71\u5CF6",
+    "mapUrl": "https://goo.gl/maps/CaW1GnueFktpjwmn6",
+    "updateInfo": ""
+  },
+  {
+    "id": "8007",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u6F06\u5C71\u6771\u4FDD\u80B2\u5712",
+    "address": "\u897F\u84B2\u533A\u6F06\u5C713320",
+    "area": "\u6F06\u5C71\u306E\u4E00\u90E8\u3001\u5DFB\u6771\u753A",
+    "mapUrl": "https://goo.gl/maps/NcJgs4wKePyG5cuP9",
+    "updateInfo": ""
+  },
+  {
+    "id": "8008",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u304B\u304D\u306E\u5B9F\u4FDD\u80B2\u5712",
+    "address": "\u897F\u84B2\u533A\u4EC1\u7B871443\u20101",
+    "area": "\u7AF9\u91CE\u753A\u3001\u7A32\u5CF6\u3001\u4EC1\u7B87\u3001\u5E03\u76EE\u3001\u4F0F\u90E8\u3001\u524D\u7530\u3001\u9DF2\u30CE\u6728\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/SUQPJ68iofrphExb7",
+    "updateInfo": ""
+  },
+  {
+    "id": "8009",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u5CF0\u5CA1\u516C\u6C11\u9928",
+    "address": "\u897F\u84B2\u533A\u9DF2\u30CE\u67281633-9",
+    "area": "\u4E0A\u6728\u5CF6\u3001\u4E94\u30B1\u6D5C\u3001\u4E0B\u6728\u5CF6\u3001\u5E73\u6CA2\u3001\u798F\u4E95\u3001\u821F\u6238\u3001\u677E\u90F7\u5C4B\u3001\u5CF0\u5CA1\u3001\u9DF2\u30CE\u6728\u306E\u4E00\u90E8\u3001\u89D2\u6D77\u6D5C",
+    "mapUrl": "https://maps.app.goo.gl/mpUyJmseHTCKDkZ97",
+    "updateInfo": ""
+  },
+  {
+    "id": "8010",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u677E\u91CE\u5C3E\u5730\u57DF\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u897F\u84B2\u533A\u677E\u91CE\u5C3E2852-3",
+    "area": "\u65B0\u4FDD\u3001\u5DFB\u5927\u539F\u3001\u677E\u91CE\u5C3E\u3001\u677E\u5C71",
+    "mapUrl": "https://goo.gl/maps/okvd9Zc1oFr2Rf469",
+    "updateInfo": ""
+  },
+  {
+    "id": "8011",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u89D2\u7530\u5730\u533A\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u897F\u84B2\u533A\u89D2\u7530\u6D5C1815-1",
+    "area": "\u8D8A\u524D\u6D5C\u3001\u89D2\u7530\u6D5C",
+    "mapUrl": "https://maps.app.goo.gl/EcACQcKD1XbzGrSU9",
+    "updateInfo": ""
+  },
+  {
+    "id": "8012",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u5CA9\u5BA4\u8FB2\u6751\u74B0\u5883\u6539\u5584\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u897F\u84B2\u533A\u548C\u7D0D2\u201021\u20101",
+    "area": "\u548C\u7D0D\u306E\u4E00\u90E8\u3001\u548C\u7D0D1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u548C\u7D0D2\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u548C\u7D0D3\u4E01\u76EE",
+    "mapUrl": "https://goo.gl/maps/DdUtkxeA3d95EUH96",
+    "updateInfo": ""
+  },
+  {
+    "id": "8013",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u548C\u7D0D\u5C0F\u5B66\u6821",
+    "address": "\u897F\u84B2\u533A\u548C\u7D0D1212",
+    "area": "\u9AD8\u6A4B\u3001\u6D25\u96F2\u7530\u3001\u5BCC\u5CA1\u3001\u539F\u3001\u548C\u7D0D\u306E\u4E00\u90E8\u3001\u548C\u7D0D1\u4E01\u76EE\u306E\u4E00\u90E8\u3001\u548C\u7D0D2\u4E01\u76EE\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/1tnYdpEZLKgfKykd9",
+    "updateInfo": ""
+  },
+  {
+    "id": "8014",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u5CA9\u5BA4\u51FA\u5F35\u6240",
+    "address": "\u897F\u84B2\u533A\u897F\u4E2D860",
+    "area": "\u6CB9\u5CF6\u3001\u65B0\u8C37\u3001\u690D\u91CE\u65B0\u7530\u3001\u6F5F\u4E0A\u3001\u5317\u91CE\u3001\u767D\u9CE5\u3001\u9AD8\u7551\u3001\u590F\u4E95\u3001\u897F\u4E2D\u3001\u897F\u9577\u5CF6\u3001\u897F\u8239\u8D8A\u3001\u5357\u8C37\u5185\u3001\u6A2A\u66FD\u6839",
+    "mapUrl": "https://goo.gl/maps/Jb9PbrQqb7TxfdWt9",
+    "updateInfo": ""
+  },
+  {
+    "id": "8015",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u5CA9\u5BA4\u4FDD\u80B2\u5712",
+    "address": "\u897F\u84B2\u533A\u6A4B\u672C101\u20101",
+    "area": "\u77F3\u702C\u3001\u5CA9\u5BA4\u6E29\u6CC9\u3001\u91D1\u6C60\u3001\u4E45\u4FDD\u7530\u3001\u6804\u3001\u733F\u30F6\u702C\u3001\u6A4B\u672C\u3001\u6A0B\u66FD",
+    "mapUrl": "https://goo.gl/maps/MNoXB5AwU5ttxeHt8",
+    "updateInfo": ""
+  },
+  {
+    "id": "8016",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u5CA9\u5BA4\u3059\u3053\u3084\u304B\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u897F\u84B2\u533A\u9593\u702C4290-1",
+    "area": "\u9593\u702C",
+    "mapUrl": "https://goo.gl/maps/g8BAiiWJnaXai1uH8",
+    "updateInfo": ""
+  },
+  {
+    "id": "8017",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u93A7\u90F7\u5C0F\u5B66\u6821",
+    "address": "\u897F\u84B2\u533A\u5929\u7AFA\u5802412\u20104",
+    "area": "\u5DDD\u5D0E\u306E\u4E00\u90E8\u3001\u771F\u7530\u3001\u4E0B\u5C71\u3001\u5929\u7AFA\u5802\u3001\u4E2D\u5CF6\u3001\u897F\u6C70\u4E0A\u3001\u69C7\u5CF6\u306E\u4E00\u90E8\u3001\u5E73\u91CE",
+    "mapUrl": "https://goo.gl/maps/U2YSqgHv1RmVQRDR6",
+    "updateInfo": ""
+  },
+  {
+    "id": "8018",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u3044\u3053\u3044\u306E\u5BB6\u897F\u5DDD\u8358",
+    "address": "\u897F\u84B2\u533A\u5DDD\u5D0E308\u20104",
+    "area": "\u62BC\u4ED8\u306E\u4E00\u90E8\u3001\u5DDD\u5D0E\u306E\u4E00\u90E8\u3001\u9C78\u3001\u65D7\u5C4B\u306E\u4E00\u90E8\u3001\u69C7\u5CF6\u306E\u4E00\u90E8\u3001\u677E\u5D0E\u306E\u4E00\u90E8\u3001\u77E2\u5CF6",
+    "mapUrl": "https://goo.gl/maps/ddXrJrpJKkdxKHr96",
+    "updateInfo": ""
+  },
+  {
+    "id": "8019",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u897F\u5DDD\u51FA\u5F35\u6240",
+    "address": "\u897F\u84B2\u533A\u65D7\u5C4B585\u20101",
+    "area": "\u62BC\u4ED8\u306E\u4E00\u90E8\u3001\u66FD\u6839\u306E\u4E00\u90E8\u3001\u65D7\u5C4B\u306E\u4E00\u90E8\u3001\u677E\u5D0E\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/33J8PMrv9aMegg9n8",
+    "updateInfo": ""
+  },
+  {
+    "id": "8020",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u66FD\u6839\u5C0F\u5B66\u6821",
+    "address": "\u897F\u84B2\u533A\u66FD\u6839750",
+    "area": "\u6851\u5C71\u3001\u5584\u5149\u5BFA\u3001\u5584\u5149\u5BFA\u6751\u53D7\u3001\u66FD\u6839\u306E\u4E00\u90E8\u3001\u65D7\u5C4B\u6751\u53D7",
+    "mapUrl": "https://goo.gl/maps/g2niY5L3Ydjdymef6",
+    "updateInfo": ""
+  },
+  {
+    "id": "8021",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u5347\u6F5F\u5C0F\u5B66\u6821",
+    "address": "\u897F\u84B2\u533A\u5347\u6F5F2179",
+    "area": "\u6D66\u6751\u306E\u4E00\u90E8\u3001\u5927\u6F5F\u306E\u4E00\u90E8\u3001\u5927\u95A2\u306E\u4E00\u90E8\u3001\u5175\u53F3\u885B\u9580\u65B0\u7530\u306E\u4E00\u90E8\u3001\u5347\u6F5F\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/sxCsbzaNwSWRX6dU9",
+    "updateInfo": ""
+  },
+  {
+    "id": "8022",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u8C9D\u67C4\u5730\u533A\u96C6\u4F1A\u6240",
+    "address": "\u897F\u84B2\u533A\u8C9D\u67C4805\u20106",
+    "area": "\u6D66\u6751\u306E\u4E00\u90E8\u3001\u5927\u6F5F\u306E\u4E00\u90E8\u3001\u5927\u6F5F\u6751\u53E4\u65B0\u7530\u53D7\u3001\u5927\u95A2\u306E\u4E00\u90E8\u3001\u8C9D\u67C4\u3001\u8C9D\u67C4\u65B0\u7530\u3001\u4E09\u89D2\u91CE\u65B0\u7530\u3001\u5175\u53F3\u885B\u9580\u65B0\u7530\u306E\u4E00\u90E8\u3001\u5800\u4E0A\u65B0\u7530\u3001\u5347\u5CA1\u3001\u5347\u6F5F\u306E\u4E00\u90E8\u3001\u8207\u5175\u885B\u91CE\u65B0\u7530",
+    "mapUrl": "https://maps.app.goo.gl/Kf7VC47f84FYA5by8",
+    "updateInfo": ""
+  },
+  {
+    "id": "8023",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u6F5F\u6771\u51FA\u5F35\u6240",
+    "address": "\u897F\u84B2\u533A\u4E09\u65B91",
+    "area": "\u4E95\u968F\u3001\u5927\u539F\u3001\u718A\u8C37\u3001\u4E09\u65B9\u3001\u756A\u5C4B\u3001\u5C71\u53E3\u65B0\u7530",
+    "mapUrl": "https://goo.gl/maps/i7sv5rhto4aPtHzw8",
+    "updateInfo": ""
+  },
+  {
+    "id": "8024",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u6A2A\u6238\u96C6\u4F1A\u6240",
+    "address": "\u897F\u84B2\u533A\u6A2A\u6238137",
+    "area": "\u536F\u516B\u90CE\u53D7\u3001\u9060\u85E4\u3001\u6A2A\u6238",
+    "mapUrl": "https://goo.gl/maps/iUtXTYM5pu8jcaVh9",
+    "updateInfo": ""
+  },
+  {
+    "id": "8025",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u5927\u66FD\u6839\u96C6\u843D\u958B\u767A\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u897F\u84B2\u533A\u5927\u66FD\u68391298",
+    "area": "\u8328\u5CF6\u3001\u4ECA\u4E95\u3001\u5927\u66FD\u6839\u3001\u56FD\u898B\u3001\u79F0\u540D\u3001\u7F8E\u91CC\u3001\u5357",
+    "mapUrl": "https://goo.gl/maps/vj3oBncRQUcE57GKA",
+    "updateInfo": ""
+  },
+  {
+    "id": "8026",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u4E94\u4E4B\u4E0A\u3075\u308C\u3042\u3044\u30BB\u30F3\u30BF\u30FC",
+    "address": "\u897F\u84B2\u533A\u4E94\u4E4B\u4E0A253",
+    "area": "\u4E94\u4E4B\u4E0A",
+    "mapUrl": "https://goo.gl/maps/NEzGTeLf7msCPNkU9",
+    "updateInfo": ""
+  },
+  {
+    "id": "8027",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u4E2D\u4E4B\u53E3\u6771\u5C0F\u5B66\u6821",
+    "address": "\u897F\u84B2\u533A\u5C0F\u54091100",
+    "area": "\u6F5F\u6D66\u65B0\u3001\u4E0A\u5C0F\u5409\u3001\u9AD8\u91CE\u5BAE\u3001\u5C0F\u5409\u306E\u4E00\u90E8\u3001\u4E2D\u4E4B\u53E3\u306E\u4E00\u90E8\u3001\u9577\u5834\u3001\u91DD\u30F6\u66FD\u6839\u3001\u6771\u5C0F\u5409\u3001\u6771\u4E2D\u3001\u516D\u5206\u3001\u9580\u7530\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/7eVPQA2sePbchEtYA",
+    "updateInfo": ""
+  },
+  {
+    "id": "8028",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u4E2D\u4E4B\u53E3\u51FA\u5F35\u6240",
+    "address": "\u897F\u84B2\u533A\u4E2D\u4E4B\u53E3626",
+    "area": "\u59E5\u5CF6\u3001\u5C0F\u5409\u306E\u4E00\u90E8\u3001\u4E2D\u4E4B\u53E3\u306E\u4E00\u90E8\u3001\u7FBD\u9ED2\u3001\u6771\u8239\u8D8A\u3001\u798F\u5CF6\u306E\u4E00\u90E8\u3001\u771F\u6728\u3001\u9580\u7530\u306E\u4E00\u90E8",
+    "mapUrl": "https://goo.gl/maps/KDftcijoMzPukgHP7",
+    "updateInfo": ""
+  },
+  {
+    "id": "8029",
+    "ward": "\u65B0\u6F5F\u5E02\u897F\u84B2\u533A",
+    "wardShort": "\u897F\u84B2\u533A",
+    "name": "\u4E2D\u4E4B\u53E3\u897F\u5C0F\u5B66\u6821",
+    "address": "\u897F\u84B2\u533A\u6253\u8D8A\u7532244",
+    "area": "\u6253\u8D8A\u3001\u6CB3\u9593\u3001\u9053\u4E0A\u3001\u798F\u5CF6\u306E\u4E00\u90E8\u3001\u7267\u30F6\u5CF6\u3001\u4E09\u30C4\u9580",
+    "mapUrl": "https://goo.gl/maps/BmJCjzEXRrB5K5Lh8",
+    "updateInfo": ""
+  }
+];
+const NIIGATA_WARDS = ["\u3059\u3079\u3066", "\u5317\u533A", "\u6771\u533A", "\u4E2D\u592E\u533A", "\u6C5F\u5357\u533A", "\u79CB\u8449\u533A", "\u5357\u533A", "\u897F\u533A", "\u897F\u84B2\u533A"];
+function freshScores() {
+  const s = {};
+  TAGS.forEach((t) => s[t] = 0);
+  return s;
+}
+const state = {
+  tab: "home",
+  electionDate: "2026-10-25",
+  // 初期値: 新潟市長選挙
+  quizStep: 0,
+  scores: freshScores(),
+  quizFinished: false,
+  selectedWard: "\u3059\u3079\u3066",
+  placeSearchQuery: "",
+  selectedElectionYear: "\u3059\u3079\u3066"
+};
+function daysUntil(dateStr) {
+  const target = /* @__PURE__ */ new Date(dateStr + "T00:00:00");
+  const now = /* @__PURE__ */ new Date();
+  now.setHours(0, 0, 0, 0);
+  return Math.ceil((target.getTime() - now.getTime()) / (1e3 * 60 * 60 * 24));
+}
+function dateLabel(dateStr) {
+  const d = /* @__PURE__ */ new Date(dateStr + "T00:00:00");
+  if (isNaN(d.getTime())) return "";
+  const weekday = ["\u65E5", "\u6708", "\u706B", "\u6C34", "\u6728", "\u91D1", "\u571F"][d.getDay()];
+  return `${d.getFullYear()}\u5E74${d.getMonth() + 1}\u6708${d.getDate()}\u65E5(${weekday})`;
+}
+function topTag(scores) {
+  return TAGS.reduce((best, t) => scores[t] > scores[best] ? t : best, TAGS[0]);
+}
+function matchedCandidate(scores) {
+  let best = CANDIDATES[0];
+  let bestScore = -Infinity;
+  for (const c of CANDIDATES) {
+    let dot = 0;
+    TAGS.forEach((t) => dot += (scores[t] || 0) * (c.weights[t] || 0));
+    if (dot > bestScore) {
+      bestScore = dot;
+      best = c;
+    }
+  }
+  return best;
+}
+function elJpDateToIso(day) {
+  const match = day.match(/(\d+)月(\d+)日/);
+  if (!match) return state.electionDate;
+  const [, m, d] = match;
+  return `2026-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
+}
+function icon(name, size = 16) {
+  const common = `width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"`;
+  switch (name) {
+    case "calendar":
+      return `<svg ${common}><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>`;
+    case "clipboard":
+      return `<svg ${common}><rect x="6" y="4" width="12" height="16" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M9 11h6M9 15h6"/></svg>`;
+    case "vote":
+      return `<svg ${common}><path d="M12 3l8 4v2H4V7l8-4z"/><path d="M4 10v9h16v-9M9 14l2 2 4-4"/></svg>`;
+    case "map-pin":
+      return `<svg ${common}><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>`;
+    case "chevron-right":
+      return `<svg ${common}><path d="M9 6l6 6-6 6"/></svg>`;
+    case "rotate-ccw":
+      return `<svg ${common}><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>`;
+    case "external-link":
+      return `<svg ${common}><path d="M14 3h7v7"/><path d="M10 14L21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>`;
+    case "search":
+      return `<svg ${common}><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>`;
+    case "x":
+      return `<svg ${common}><path d="M18 6 6 18M6 6l12 12"/></svg>`;
+    case "info":
+      return `<svg ${common}><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>`;
+    default:
+      return "";
+  }
+}
+const root = document.getElementById("app");
+function render() {
+  root.innerHTML = "";
+  root.appendChild(renderNav());
+  const content = document.createElement("div");
+  content.className = "wrap content";
+  switch (state.tab) {
+    case "home":
+      content.appendChild(renderHome());
+      break;
+    case "pledges":
+      content.appendChild(renderPledges());
+      break;
+    case "quiz":
+      content.appendChild(
+        state.quizFinished ? renderQuizResult() : renderQuizQuestion()
+      );
+      break;
+    case "place":
+      content.appendChild(renderPlace());
+      break;
+  }
+  root.appendChild(content);
+}
+function renderNav() {
+  const nav = document.createElement("div");
+  nav.className = "nav";
+  const inner = document.createElement("div");
+  inner.className = "wrap nav-inner";
+  const title = document.createElement("h1");
+  title.className = "disp nav-title";
+  title.textContent = "\u306B\u3044\u304C\u305F\u3001\u6295\u7968\u307E\u3067\u306E\u9053";
+  inner.appendChild(title);
+  const tabs = document.createElement("div");
+  tabs.className = "tabs";
+  const tabDefs = [
+    ["home", "\u65E5\u7A0B", "calendar"],
+    ["pledges", "\u516C\u7D04", "clipboard"],
+    ["quiz", "\u6295\u7968\u8A3A\u65AD", "vote"],
+    ["place", "\u6295\u7968\u6240", "map-pin"]
+  ];
+  tabDefs.forEach(([key, label, iconName]) => {
+    const btn = document.createElement("button");
+    btn.className = "tab-btn" + (state.tab === key ? " active" : "");
+    btn.innerHTML = `${icon(iconName, 15)}<span>${label}</span>`;
+    btn.addEventListener("click", () => {
+      state.tab = key;
+      render();
+    });
+    tabs.appendChild(btn);
+  });
+  inner.appendChild(tabs);
+  nav.appendChild(inner);
+  return nav;
+}
+function renderHome() {
+  const wrap = document.createElement("div");
+  const days = daysUntil(state.electionDate);
+  const heroRow = document.createElement("div");
+  heroRow.className = "hero-row";
+  heroRow.innerHTML = `
+    <span class="disp hero-num">${days >= 0 ? days : "\u2015"}</span>
+    <span class="hero-suffix">${days >= 0 ? "\u65E5\u5F8C\u304C\u9078\u629E\u3057\u305F\u6295\u7968\u65E5" : "\u6295\u7968\u65E5\u3092\u904E\u304E\u3066\u3044\u307E\u3059"}</span>
+  `;
+  wrap.appendChild(heroRow);
+  const sub = document.createElement("p");
+  sub.className = "subtext";
+  sub.textContent = `${dateLabel(state.electionDate)} \u6295\u7968\u65E5 (\u30EA\u30B9\u30C8\u3092\u30BF\u30C3\u30D7\u3067\u65E5\u4ED8\u5909\u66F4)`;
+  wrap.appendChild(sub);
+  const dateCard = document.createElement("div");
+  dateCard.className = "card";
+  const dateLabelEl = document.createElement("label");
+  dateLabelEl.className = "card-label";
+  dateLabelEl.textContent = "\u6295\u7968\u65E5\u3092\u624B\u52D5\u8A2D\u5B9A\u3059\u308B";
+  const dateInput = document.createElement("input");
+  dateInput.type = "date";
+  dateInput.className = "date-input";
+  dateInput.value = state.electionDate;
+  dateInput.addEventListener("change", (e) => {
+    state.electionDate = e.target.value;
+    render();
+  });
+  dateCard.appendChild(dateLabelEl);
+  dateCard.appendChild(dateInput);
+  wrap.appendChild(dateCard);
+  const scheduleCard = document.createElement("div");
+  scheduleCard.className = "card";
+  const scheduleHead = document.createElement("div");
+  scheduleHead.style.display = "flex";
+  scheduleHead.style.justifyContent = "space-between";
+  scheduleHead.style.alignItems = "center";
+  scheduleHead.style.marginBottom = "12px";
+  scheduleHead.innerHTML = `
+    <p style="font-size:15px;font-weight:700;margin:0;">\u65B0\u6F5F\u770C\u5185\u306E\u4E88\u5B9A\u9078\u6319\uFF08\u5E74\u5EA6\u5225\uFF09</p>
+    <span style="font-size:12px;color:var(--faint);">\u4EE4\u548C7\u301C9\u5E74\u4EE5\u964D</span>
+  `;
+  scheduleCard.appendChild(scheduleHead);
+  const yearChips = document.createElement("div");
+  yearChips.className = "year-chips";
+  yearChips.style.display = "flex";
+  yearChips.style.gap = "6px";
+  yearChips.style.flexWrap = "wrap";
+  yearChips.style.marginBottom = "14px";
+  ELECTION_YEAR_FILTERS.forEach((y) => {
+    const btn = document.createElement("button");
+    btn.className = "year-chip" + (state.selectedElectionYear === y ? " active" : "");
+    btn.textContent = y;
+    btn.addEventListener("click", () => {
+      state.selectedElectionYear = y;
+      render();
+    });
+    yearChips.appendChild(btn);
+  });
+  scheduleCard.appendChild(yearChips);
+  const filteredElections = UPCOMING_ELECTIONS.filter((e) => {
+    if (state.selectedElectionYear === "\u3059\u3079\u3066") return true;
+    return e.year === state.selectedElectionYear;
+  });
+  filteredElections.forEach((e) => {
+    const btn = document.createElement("button");
+    btn.className = "election-btn";
+    btn.innerHTML = `
+      <div style="display:flex;align-items:center;gap:6px;">
+        <span class="year-badge">${e.yearLabel}</span>
+        <span style="font-weight:500;">${e.name}</span>
+      </div>
+      <span style="font-size:13px;color:var(--muted);">\u6295\u7968\u65E5 ${e.day} (\u544A\u793A ${e.notice})</span>
+    `;
+    btn.addEventListener("click", () => {
+      state.electionDate = e.isoDate || elJpDateToIso(e.day);
+      render();
+    });
+    scheduleCard.appendChild(btn);
+  });
+  const officialLink = document.createElement("a");
+  officialLink.className = "official-link";
+  officialLink.href = OFFICIAL_SCHEDULE_URL;
+  officialLink.target = "_blank";
+  officialLink.rel = "noopener noreferrer";
+  officialLink.innerHTML = `\u65B0\u6F5F\u770C\u9078\u6319\u7BA1\u7406\u59D4\u54E1\u4F1A\u300C\u770C\u5185\u9078\u6319\u30B9\u30B1\u30B8\u30E5\u30FC\u30EB\u300D\u3092\u898B\u308B ${icon(
+    "external-link",
+    13
+  )}`;
+  scheduleCard.appendChild(officialLink);
+  wrap.appendChild(scheduleCard);
+  const infoRows = [
+    ["\u6295\u7968\u6642\u9593", "7:00 \u301C 20:00"],
+    ["\u671F\u65E5\u524D\u6295\u7968", "\u6295\u7968\u65E5\u306E\u524D\u65E5\u307E\u3067\u3001\u533A\u5F79\u6240\u306A\u3069\u3067\u53EF\u80FD"],
+    ["\u6301\u3061\u7269", "\u6295\u7968\u6240\u5165\u5834\u5238(\u306A\u304F\u3066\u3082\u672C\u4EBA\u78BA\u8A8D\u3067\u6295\u7968\u53EF)"]
+  ];
+  infoRows.forEach(([label, value]) => {
+    const row = document.createElement("div");
+    row.className = "info-row";
+    row.innerHTML = `<span class="label">${label}</span><span>${value}</span>`;
+    wrap.appendChild(row);
+  });
+  const footnote = document.createElement("p");
+  footnote.className = "footnote";
+  footnote.textContent = "\u203B\u4E0A\u8A18\u306E\u9078\u6319\u4E00\u89A7\u306F\u65B0\u6F5F\u770C\u9078\u6319\u7BA1\u7406\u59D4\u54E1\u4F1A\u306E\u516C\u8868\u60C5\u5831\u3092\u3082\u3068\u306B\u3057\u305F\u629C\u7C8B\u3067\u3001\u81EA\u52D5\u66F4\u65B0\u306F\u3055\u308C\u307E\u305B\u3093\u3002\u6700\u65B0\u306E\u6295\u7968\u65E5\u30FB\u6295\u7968\u6240\u306F\u5FC5\u305A\u516C\u5F0F\u30B5\u30A4\u30C8\u3067\u3054\u78BA\u8A8D\u304F\u3060\u3055\u3044\u3002";
+  wrap.appendChild(footnote);
+  return wrap;
+}
+function renderPledges() {
+  const wrap = document.createElement("div");
+  const title = document.createElement("h2");
+  title.className = "disp section-title";
+  title.textContent = "\u516C\u7D04\u3092\u308F\u304B\u308A\u3084\u3059\u304F";
+  wrap.appendChild(title);
+  const sub = document.createElement("p");
+  sub.className = "section-sub";
+  sub.textContent = "\u5C02\u9580\u7528\u8A9E\u3092\u3067\u304D\u308B\u3060\u3051\u4F7F\u308F\u305A\u3001\u8981\u70B9\u3060\u3051\u307E\u3068\u3081\u307E\u3057\u305F(\u30B5\u30F3\u30D7\u30EB\u30C7\u30FC\u30BF)";
+  wrap.appendChild(sub);
+  CANDIDATES.forEach((c) => {
+    const card = document.createElement("div");
+    card.className = "card candidate-card";
+    const name = document.createElement("h3");
+    name.className = "disp candidate-name";
+    name.textContent = c.name;
+    card.appendChild(name);
+    const tagline = document.createElement("p");
+    tagline.className = "candidate-tagline";
+    tagline.textContent = c.tagline;
+    card.appendChild(tagline);
+    const list = document.createElement("ul");
+    list.className = "pledge-list";
+    c.pledges.forEach((p) => {
+      const li = document.createElement("li");
+      li.textContent = p;
+      list.appendChild(li);
+    });
+    card.appendChild(list);
+    const chips = document.createElement("div");
+    TAGS.filter((t) => c.weights[t] > 0).forEach((t) => {
+      const meta = TAG_META[t];
+      const chip = document.createElement("span");
+      chip.className = "tag-chip";
+      chip.style.backgroundColor = meta.color + "1A";
+      chip.style.color = meta.color;
+      chip.style.border = `1px solid ${meta.color}55`;
+      chip.textContent = meta.label;
+      chips.appendChild(chip);
+    });
+    card.appendChild(chips);
+    wrap.appendChild(card);
+  });
+  return wrap;
+}
+function renderQuizQuestion() {
+  const wrap = document.createElement("div");
+  const q = QUESTIONS[state.quizStep];
+  const head = document.createElement("div");
+  head.className = "quiz-head";
+  head.innerHTML = `
+    <h2 class="disp section-title" style="margin:0;">\u6295\u7968\u8A3A\u65AD</h2>
+    <span style="font-size:14px;color:var(--faint);">\u8CEA\u554F ${state.quizStep + 1} / ${QUESTIONS.length}</span>
+  `;
+  wrap.appendChild(head);
+  const track = document.createElement("div");
+  track.className = "progress-track";
+  const fill = document.createElement("div");
+  fill.className = "progress-fill";
+  fill.style.width = `${state.quizStep / QUESTIONS.length * 100}%`;
+  track.appendChild(fill);
+  wrap.appendChild(track);
+  const question = document.createElement("p");
+  question.className = "disp quiz-question";
+  question.textContent = q.q;
+  wrap.appendChild(question);
+  const options = document.createElement("div");
+  options.className = "quiz-options";
+  q.options.forEach((opt) => {
+    const btn = document.createElement("button");
+    btn.className = "quiz-option";
+    btn.innerHTML = `<span>${opt.text}</span>${icon("chevron-right", 16)}`;
+    btn.addEventListener("click", () => {
+      TAGS.forEach((t) => {
+        if (opt.weights[t]) state.scores[t] += opt.weights[t];
+      });
+      if (state.quizStep + 1 < QUESTIONS.length) {
+        state.quizStep += 1;
+      } else {
+        state.quizFinished = true;
+      }
+      render();
+    });
+    options.appendChild(btn);
+  });
+  wrap.appendChild(options);
+  return wrap;
+}
+function renderQuizResult() {
+  const wrap = document.createElement("div");
+  const title = document.createElement("h2");
+  title.className = "disp section-title";
+  title.textContent = "\u8A3A\u65AD\u7D50\u679C";
+  wrap.appendChild(title);
+  const sub = document.createElement("p");
+  sub.className = "section-sub";
+  sub.textContent = "\u3042\u306A\u305F\u306E\u56DE\u7B54\u304B\u3089\u898B\u3048\u3066\u304D\u305F\u30BF\u30A4\u30D7\u3067\u3059";
+  wrap.appendChild(sub);
+  const top = topTag(state.scores);
+  const meta = TAG_META[top];
+  const resultCard = document.createElement("div");
+  resultCard.className = "result-card";
+  resultCard.style.border = `1px solid ${meta.color}55`;
+  resultCard.innerHTML = `
+    <p class="result-eyebrow">\u3042\u306A\u305F\u306F</p>
+    <p class="disp result-type" style="color:${meta.color};">${TYPE_NAMES[top]}</p>
+    <p class="result-desc">\u7279\u306B\u300C${meta.label}\u300D\u3092\u91CD\u8996\u3059\u308B\u50BE\u5411\u304C\u3042\u308A\u307E\u3059</p>
+  `;
+  wrap.appendChild(resultCard);
+  const balanceLabel = document.createElement("p");
+  balanceLabel.style.fontSize = "14px";
+  balanceLabel.style.color = "var(--muted)";
+  balanceLabel.style.marginBottom = "12px";
+  balanceLabel.textContent = "\u91CD\u8996\u30DD\u30A4\u30F3\u30C8\u306E\u30D0\u30E9\u30F3\u30B9";
+  wrap.appendChild(balanceLabel);
+  const maxScore = Math.max(...TAGS.map((t) => state.scores[t]), 1);
+  TAGS.forEach((t) => {
+    const row = document.createElement("div");
+    row.className = "balance-row";
+    const pct = state.scores[t] / maxScore * 100;
+    row.innerHTML = `
+      <span class="balance-label">${TAG_META[t].label}</span>
+      <div class="balance-track"><div class="balance-fill" style="width:${pct}%;background-color:${TAG_META[t].color};"></div></div>
+    `;
+    wrap.appendChild(row);
+  });
+  const cand = matchedCandidate(state.scores);
+  const matchCard = document.createElement("div");
+  matchCard.className = "match-card";
+  matchCard.innerHTML = `
+    <p class="match-eyebrow">\u516C\u7D04\u304C\u8FD1\u3044\u5019\u88DC(\u30B5\u30F3\u30D7\u30EB)</p>
+    <p class="disp match-name">${cand.name}</p>
+    <p class="match-tagline">${cand.tagline}</p>
+  `;
+  const viewPledgeBtn = document.createElement("button");
+  viewPledgeBtn.className = "match-link";
+  viewPledgeBtn.textContent = "\u516C\u7D04\u306E\u8A73\u3057\u3044\u5185\u5BB9\u3092\u898B\u308B";
+  viewPledgeBtn.addEventListener("click", () => {
+    state.tab = "pledges";
+    render();
+  });
+  matchCard.appendChild(viewPledgeBtn);
+  wrap.appendChild(matchCard);
+  const resetBtn = document.createElement("button");
+  resetBtn.className = "reset-btn";
+  resetBtn.innerHTML = `${icon("rotate-ccw", 14)}<span>\u3082\u3046\u4E00\u5EA6\u8A3A\u65AD\u3059\u308B</span>`;
+  resetBtn.addEventListener("click", () => {
+    state.quizStep = 0;
+    state.scores = freshScores();
+    state.quizFinished = false;
+    render();
+  });
+  wrap.appendChild(resetBtn);
+  const footnote = document.createElement("p");
+  footnote.className = "footnote";
+  footnote.textContent = "\u203B\u3053\u306E\u8A3A\u65AD\u306F\u8003\u3048\u3092\u6574\u7406\u3059\u308B\u305F\u3081\u306E\u7C21\u6613\u7684\u306A\u3082\u306E\u3067\u3059\u3002\u5B9F\u969B\u306E\u6295\u7968\u5148\u306F\u3001\u516C\u5F0F\u306E\u516C\u7D04\u3084\u653F\u7B56\u3092\u5FC5\u305A\u3054\u81EA\u8EAB\u3067\u78BA\u8A8D\u3057\u3066\u6C7A\u3081\u3066\u304F\u3060\u3055\u3044\u3002";
+  wrap.appendChild(footnote);
+  return wrap;
+}
+function renderPlace() {
+  const wrap = document.createElement("div");
+  const title = document.createElement("h2");
+  title.className = "disp section-title";
+  title.textContent = "\u65B0\u6F5F\u5E02\u306E\u6295\u7968\u6240\u4E00\u89A7\u30FB\u691C\u7D22";
+  wrap.appendChild(title);
+  const sub = document.createElement("p");
+  sub.className = "section-sub";
+  sub.textContent = "\u65B0\u6F5F\u5E02\u51688\u533A\u30FB211\u7B87\u6240\u306E\u6295\u7968\u6240\u60C5\u5831\u3002\u533A\u306E\u5207\u308A\u66FF\u3048\u3084\u30AD\u30FC\u30EF\u30FC\u30C9\u691C\u7D22\u3067\u7C21\u5358\u306B\u63A2\u305B\u307E\u3059\u3002";
+  wrap.appendChild(sub);
+  const officialBanner = document.createElement("div");
+  officialBanner.className = "niigata-official-banner";
+  officialBanner.innerHTML = `
+    <div class="banner-text">
+      <p class="banner-title">${icon("info", 16)} \u65B0\u6F5F\u5E02\u516C\u5F0F\u300C\u6295\u7968\u6240\u4E00\u89A7\u300D\u3092\u53C2\u7167\u4E2D</p>
+      <p class="banner-desc">\u4EE4\u548C8\u5E74\u6700\u65B0\u306E\u6295\u7968\u533A\u30FB\u6295\u7968\u6240\u30C7\u30FC\u30BF\u3002\u897F\u84B2\u533A\u3084\u6771\u533A\u7B49\u306E\u6295\u7968\u6240\u5909\u66F4\u60C5\u5831\u306B\u5BFE\u5FDC\u3002</p>
+    </div>
+    <a href="${OFFICIAL_NIIGATA_POLLING_URL}" target="_blank" rel="noopener noreferrer" class="official-banner-btn">
+      \u516C\u5F0FHP\u3067\u78BA\u8A8D ${icon("external-link", 13)}
+    </a>
+  `;
+  wrap.appendChild(officialBanner);
+  const tipsCard = document.createElement("div");
+  tipsCard.className = "voting-tips-card";
+  tipsCard.innerHTML = `
+    <p class="tips-title">\u{1F4A1} \u6295\u7968\u3078\u884C\u304F\u3068\u304D\u306E\u30DD\u30A4\u30F3\u30C8</p>
+    <ul class="tips-list">
+      <li><strong>\u6295\u7968\u6642\u9593:</strong> \u539F\u5247 7:00 \u301C 20:00 \uFF08\u6295\u7968\u6240\u306B\u3088\u308A\u7570\u306A\u308B\u5834\u5408\u3042\u308A\uFF09</li>
+      <li><strong>\u5165\u5834\u5238\u304C\u306A\u304F\u3066\u3082OK:</strong> \u300C\u6295\u7968\u6240\u5165\u5834\u5238\u300D\u3092\u5FD8\u308C\u3066\u3082\u672C\u4EBA\u78BA\u8A8D\uFF08\u6C0F\u540D\u30FB\u4F4F\u6240\u30FB\u751F\u5E74\u6708\u65E5\uFF09\u3067\u6295\u7968\u3067\u304D\u307E\u3059\uFF01</li>
+      <li><strong>\u5F53\u65E5\u306E\u6295\u7968\u5834\u6240:</strong> \u9078\u6319\u5F53\u65E5\u306F\u3001\u3054\u81EA\u8EAB\u306E\u5165\u5834\u5238\u306B\u6307\u5B9A\u3055\u308C\u305F\u6295\u7968\u6240\u306B\u3057\u304B\u884C\u3051\u307E\u305B\u3093\u3002</li>
+      <li><strong>\u671F\u65E5\u524D\u6295\u7968:</strong> \u5F53\u65E5\u90FD\u5408\u304C\u60AA\u3044\u65B9\u306F\u3001\u544A\u793A\u30FB\u516C\u793A\u65E5\u306E\u7FCC\u65E5\u304B\u3089\u533A\u5F79\u6240\u306A\u3069\u3067\u671F\u65E5\u524D\u6295\u7968\u304C\u3067\u304D\u307E\u3059\u3002</li>
+    </ul>
+  `;
+  wrap.appendChild(tipsCard);
+  const wardContainer = document.createElement("div");
+  wardContainer.className = "ward-filter-container";
+  const wardLabel = document.createElement("p");
+  wardLabel.className = "filter-label";
+  wardLabel.textContent = "\u884C\u653F\u533A\u3067\u7D5E\u308A\u8FBC\u307F:";
+  wardContainer.appendChild(wardLabel);
+  const wardChips = document.createElement("div");
+  wardChips.className = "ward-chips";
+  NIIGATA_WARDS.forEach((w) => {
+    const count = w === "\u3059\u3079\u3066" ? POLLING_PLACES.length : POLLING_PLACES.filter((p) => p.wardShort === w).length;
+    const btn = document.createElement("button");
+    btn.className = "ward-chip" + (state.selectedWard === w ? " active" : "");
+    btn.innerHTML = `<span>${w}</span><span class="chip-count">${count}</span>`;
+    btn.addEventListener("click", () => {
+      state.selectedWard = w;
+      render();
+    });
+    wardChips.appendChild(btn);
+  });
+  wardContainer.appendChild(wardChips);
+  wrap.appendChild(wardContainer);
+  const searchBox = document.createElement("div");
+  searchBox.className = "place-search-box";
+  const searchIcon = document.createElement("span");
+  searchIcon.className = "search-icon";
+  searchIcon.innerHTML = icon("search", 16);
+  searchBox.appendChild(searchIcon);
+  const searchInput = document.createElement("input");
+  searchInput.type = "text";
+  searchInput.className = "place-search-input";
+  searchInput.placeholder = "\u6295\u7968\u6240\u540D\u3001\u4F4F\u6240\u3001\u753A\u540D\uFF08\u4F8B: \u677E\u6D5C\u3001\u53E4\u753A\u3001\u5742\u4E95\uFF09\u3067\u691C\u7D22...";
+  searchInput.value = state.placeSearchQuery;
+  searchInput.addEventListener("input", (e) => {
+    state.placeSearchQuery = e.target.value;
+    updatePollingListContainer();
+  });
+  searchBox.appendChild(searchInput);
+  if (state.placeSearchQuery) {
+    const clearBtn = document.createElement("button");
+    clearBtn.className = "search-clear-btn";
+    clearBtn.innerHTML = icon("x", 14);
+    clearBtn.addEventListener("click", () => {
+      state.placeSearchQuery = "";
+      render();
+    });
+    searchBox.appendChild(clearBtn);
+  }
+  wrap.appendChild(searchBox);
+  const countBadge = document.createElement("div");
+  countBadge.className = "result-count-badge";
+  wrap.appendChild(countBadge);
+  const listContainer = document.createElement("div");
+  listContainer.className = "polling-list-container";
+  wrap.appendChild(listContainer);
+  function updatePollingListContainer() {
+    listContainer.innerHTML = "";
+    const q = state.placeSearchQuery.trim().toLowerCase();
+    const filtered = POLLING_PLACES.filter((p) => {
+      if (state.selectedWard !== "\u3059\u3079\u3066" && p.wardShort !== state.selectedWard) {
+        return false;
+      }
+      if (q) {
+        const target = `${p.id} ${p.ward} ${p.name} ${p.address} ${p.area} ${p.updateInfo || ""}`.toLowerCase();
+        return target.includes(q);
+      }
+      return true;
+    });
+    countBadge.textContent = q ? `\u{1F50D} \u300C${state.selectedWard}\u300D\u306E\u691C\u7D22\u7D50\u679C: ${filtered.length}\u4EF6\u306E\u6295\u7968\u6240\u304C\u898B\u3064\u304B\u308A\u307E\u3057\u305F` : `\u{1F4CD} \u300C${state.selectedWard}\u300D: \u5168${filtered.length}\u4EF6\u306E\u6295\u7968\u6240\u3092\u8868\u793A\u4E2D`;
+    if (filtered.length === 0) {
+      const emptyState = document.createElement("div");
+      emptyState.className = "empty-polling-state";
+      emptyState.innerHTML = `
+        <p class="empty-title">\u6761\u4EF6\u306B\u4E00\u81F4\u3059\u308B\u6295\u7968\u6240\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093\u3067\u3057\u305F</p>
+        <p class="empty-desc">\u691C\u7D22\u30AD\u30FC\u30EF\u30FC\u30C9\u3092\u5909\u66F4\u3059\u308B\u304B\u3001\u300C\u3059\u3079\u3066\u300D\u306E\u533A\u3092\u9078\u629E\u3057\u3066\u304A\u8A66\u3057\u304F\u3060\u3055\u3044\u3002</p>
+      `;
+      const resetFilterBtn = document.createElement("button");
+      resetFilterBtn.className = "reset-btn";
+      resetFilterBtn.style.marginTop = "12px";
+      resetFilterBtn.innerHTML = `${icon("rotate-ccw", 14)} \u691C\u7D22\u6761\u4EF6\u3092\u30AF\u30EA\u30A2`;
+      resetFilterBtn.addEventListener("click", () => {
+        state.selectedWard = "\u3059\u3079\u3066";
+        state.placeSearchQuery = "";
+        render();
+      });
+      emptyState.appendChild(resetFilterBtn);
+      listContainer.appendChild(emptyState);
+      return;
+    }
+    filtered.forEach((p) => {
+      const card = document.createElement("div");
+      card.className = "polling-card";
+      const cardHead = document.createElement("div");
+      cardHead.className = "polling-card-head";
+      cardHead.innerHTML = `
+        <div class="head-tags">
+          <span class="ward-tag">${p.wardShort}</span>
+          <span class="code-tag">No.${p.id}</span>
+        </div>
+      `;
+      card.appendChild(cardHead);
+      const nameEl = document.createElement("h3");
+      nameEl.className = "polling-name";
+      nameEl.textContent = p.name;
+      card.appendChild(nameEl);
+      const addressEl = document.createElement("p");
+      addressEl.className = "polling-address";
+      addressEl.innerHTML = `${icon("map-pin", 14)} <span>${p.address}</span>`;
+      card.appendChild(addressEl);
+      if (p.area) {
+        const areaEl = document.createElement("div");
+        areaEl.className = "polling-area";
+        areaEl.innerHTML = `<span class="area-label">\u5BFE\u8C61\u533A\u57DF:</span> ${p.area}`;
+        card.appendChild(areaEl);
+      }
+      if (p.updateInfo) {
+        const noticeEl = document.createElement("div");
+        noticeEl.className = "polling-notice";
+        noticeEl.innerHTML = `\u26A0\uFE0F <strong>\u5909\u66F4\u6CE8\u610F:</strong> ${p.updateInfo}`;
+        card.appendChild(noticeEl);
+      }
+      if (p.mapUrl) {
+        const mapBtn = document.createElement("a");
+        mapBtn.className = "map-direct-btn";
+        mapBtn.href = p.mapUrl;
+        mapBtn.target = "_blank";
+        mapBtn.rel = "noopener noreferrer";
+        mapBtn.innerHTML = `${icon("map-pin", 14)} Google Maps\u3067\u5834\u6240\u3092\u78BA\u8A8D \u2197`;
+        card.appendChild(mapBtn);
+      }
+      listContainer.appendChild(card);
+    });
+  }
+  updatePollingListContainer();
+  const footnote = document.createElement("p");
+  footnote.className = "footnote";
+  footnote.textContent = "\u203B\u63B2\u8F09\u30C7\u30FC\u30BF\u306F\u65B0\u6F5F\u5E02\u516C\u5F0F\u300C\u6295\u7968\u6240\u4E00\u89A7\uFF08\u4EE4\u548C8\u5E745\u67081\u65E5\u6642\u70B9\uFF09\u300D\u306B\u57FA\u3065\u3044\u3066\u3044\u307E\u3059\u3002\u6295\u7968\u6240\u306F\u4F4F\u6C11\u767B\u9332\u4F4F\u6240\u306B\u3088\u3063\u3066\u6307\u5B9A\u3055\u308C\u307E\u3059\u3002\u6295\u7968\u6240\u5165\u5834\u5238\u306B\u8A18\u8F09\u306E\u5834\u6240\u304C\u6B63\u5F0F\u306A\u6295\u7968\u5834\u6240\u3067\u3059\u3002";
+  wrap.appendChild(footnote);
+  return wrap;
+}
+document.addEventListener("DOMContentLoaded", () => {
+  render();
+});
