@@ -3821,8 +3821,7 @@ function renderTopLandingPage() {
         <span class="stat-sub">37\u540D</span>
       </div>
     </div>
-    <div class="survey-mascot-comment">
-      <img src="\u9078\u6319\u541B.png" alt="\u9078\u6319\u541B" class="comment-mascot-img">
+    <div class="survey-text-box">
       <p>\u300C\u534A\u6570\u306E\u82E5\u8005\u304C\u6295\u7968\u306B\u53C2\u52A0\uFF01\u6B8B\u308A\u306E50%\u306E\u82E5\u8005\u3082\u3001\u81EA\u5206\u305F\u3061\u306E\u58F0\u3084\u9858\u3044\u3092\u793E\u4F1A\u306B\u5C4A\u3051\u308B\u305F\u3081\u306B\u4E00\u6B69\u3092\u8E0F\u307F\u51FA\u305D\u3046\uFF01\u300D</p>
     </div>
   `;
@@ -3850,8 +3849,7 @@ function renderTopLandingPage() {
         <span class="stat-sub">17\u540D</span>
       </div>
     </div>
-    <div class="survey-mascot-comment">
-      <img src="\u3053\u3081.png" alt="\u3053\u3081\u3061\u3083\u3093" class="comment-mascot-img">
+    <div class="survey-text-box">
       <p>\u300C\u6295\u7968\u306B\u884C\u3063\u305F\u4EBA\u306E\u3046\u3061\u7D0446%\u304C\u300E\u671F\u65E5\u524D\u6295\u7968\u300F\u3092\u6D3B\u7528\uFF01\u5F53\u65E5\u4ED5\u4E8B\u3084\u5B66\u6821\u304C\u3042\u3063\u3066\u3082\u624B\u3076\u3089\u3067\u4E8B\u524D\u306B\u6295\u7968\u3067\u304D\u307E\u3059\uFF01\u300D</p>
     </div>
   `;

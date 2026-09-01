@@ -3947,8 +3947,7 @@ function renderTopLandingPage(): HTMLElement {
         <span class="stat-sub">37名</span>
       </div>
     </div>
-    <div class="survey-mascot-comment">
-      <img src="選挙君.png" alt="選挙君" class="comment-mascot-img">
+    <div class="survey-text-box">
       <p>「半数の若者が投票に参加！残りの50%の若者も、自分たちの声や願いを社会に届けるために一歩を踏み出そう！」</p>
     </div>
   `;
@@ -3978,8 +3977,7 @@ function renderTopLandingPage(): HTMLElement {
         <span class="stat-sub">17名</span>
       </div>
     </div>
-    <div class="survey-mascot-comment">
-      <img src="こめ.png" alt="こめちゃん" class="comment-mascot-img">
+    <div class="survey-text-box">
       <p>「投票に行った人のうち約46%が『期日前投票』を活用！当日仕事や学校があっても手ぶらで事前に投票できます！」</p>
     </div>
   `;
