@@ -943,19 +943,20 @@
         value: "\u6295\u7968\u6240\u5165\u5834\u5238\uFF08\u672C\u4EBA\u78BA\u8A8D\u304C\u3067\u304D\u308C\u3070\u6295\u7968\u3067\u304D\u307E\u3059\uFF09"
       }
     ];
-    infoRows.forEach(({ label, value, note }) => {
+    infoRows.forEach(({ label, value, note }, idx) => {
       const row = document.createElement("div");
       row.className = "info-row";
       row.style.display = "flex";
       row.style.justifyContent = "space-between";
       row.style.alignItems = "flex-start";
       row.style.gap = "16px";
-      row.style.padding = "12px 0";
+      row.style.padding = "14px 0";
+      const valueStyle = idx === 0 ? "font-size: 22px; font-weight: 800; color: #7C3AED; letter-spacing: 0.5px; line-height: 1.2;" : "font-weight: 600; color: #0F172A; line-height: 1.4;";
       row.innerHTML = `
-      <span class="label" style="flex-shrink:0;font-weight:700;">${label}</span>
+      <span class="label" style="flex-shrink:0;font-weight:700;padding-top:2px;">${label}</span>
       <div style="text-align:right;">
-        <div style="font-weight:600;color:#0F172A;line-height:1.4;">${value}</div>
-        ${note ? `<div style="font-size:12px;color:var(--muted);margin-top:3px;">${note}</div>` : ""}
+        <div style="${valueStyle}">${value}</div>
+        ${note ? `<div style="font-size:12px;color:var(--muted);margin-top:4px;">${note}</div>` : ""}
       </div>
     `;
       wrap.appendChild(row);
