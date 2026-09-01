@@ -115,15 +115,38 @@ export function renderSchedulePage(renderFn: () => void): HTMLElement {
 
   wrap.appendChild(scheduleCard);
 
-  const infoRows: [string, string][] = [
-    ["投票時間", "7:00 〜 20:00"],
-    ["期日前投票", "投票日の前日まで、区役所などで可能"],
-    ["持ち物", "投票所入場券(なくても本人確認で投票可)"],
+  const infoRows: { label: string; value: string; note?: string }[] = [
+    {
+      label: "投票時間",
+      value: "7:00 ～ 20:00",
+      note: "※一部の投票所では時間が異なる場合があります。",
+    },
+    {
+      label: "期日前投票",
+      value: "投票日の前日まで、各市区町村が指定する期日前投票所で投票できます。",
+    },
+    {
+      label: "持ち物",
+      value: "投票所入場券（本人確認ができれば投票できます）",
+    },
   ];
-  infoRows.forEach(([label, value]) => {
+
+  infoRows.forEach(({ label, value, note }) => {
     const row = document.createElement("div");
     row.className = "info-row";
-    row.innerHTML = `<span class="label">${label}</span><span>${value}</span>`;
+    row.style.display = "flex";
+    row.style.justifyContent = "space-between";
+    row.style.alignItems = "flex-start";
+    row.style.gap = "16px";
+    row.style.padding = "12px 0";
+
+    row.innerHTML = `
+      <span class="label" style="flex-shrink:0;font-weight:700;">${label}</span>
+      <div style="text-align:right;">
+        <div style="font-weight:600;color:#0F172A;line-height:1.4;">${value}</div>
+        ${note ? `<div style="font-size:12px;color:var(--muted);margin-top:3px;">${note}</div>` : ""}
+      </div>
+    `;
     wrap.appendChild(row);
   });
 

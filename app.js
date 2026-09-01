@@ -929,14 +929,35 @@
     scheduleCard.appendChild(officialLink);
     wrap.appendChild(scheduleCard);
     const infoRows = [
-      ["\u6295\u7968\u6642\u9593", "7:00 \u301C 20:00"],
-      ["\u671F\u65E5\u524D\u6295\u7968", "\u6295\u7968\u65E5\u306E\u524D\u65E5\u307E\u3067\u3001\u533A\u5F79\u6240\u306A\u3069\u3067\u53EF\u80FD"],
-      ["\u6301\u3061\u7269", "\u6295\u7968\u6240\u5165\u5834\u5238(\u306A\u304F\u3066\u3082\u672C\u4EBA\u78BA\u8A8D\u3067\u6295\u7968\u53EF)"]
+      {
+        label: "\u6295\u7968\u6642\u9593",
+        value: "7:00 \uFF5E 20:00",
+        note: "\u203B\u4E00\u90E8\u306E\u6295\u7968\u6240\u3067\u306F\u6642\u9593\u304C\u7570\u306A\u308B\u5834\u5408\u304C\u3042\u308A\u307E\u3059\u3002"
+      },
+      {
+        label: "\u671F\u65E5\u524D\u6295\u7968",
+        value: "\u6295\u7968\u65E5\u306E\u524D\u65E5\u307E\u3067\u3001\u5404\u5E02\u533A\u753A\u6751\u304C\u6307\u5B9A\u3059\u308B\u671F\u65E5\u524D\u6295\u7968\u6240\u3067\u6295\u7968\u3067\u304D\u307E\u3059\u3002"
+      },
+      {
+        label: "\u6301\u3061\u7269",
+        value: "\u6295\u7968\u6240\u5165\u5834\u5238\uFF08\u672C\u4EBA\u78BA\u8A8D\u304C\u3067\u304D\u308C\u3070\u6295\u7968\u3067\u304D\u307E\u3059\uFF09"
+      }
     ];
-    infoRows.forEach(([label, value]) => {
+    infoRows.forEach(({ label, value, note }) => {
       const row = document.createElement("div");
       row.className = "info-row";
-      row.innerHTML = `<span class="label">${label}</span><span>${value}</span>`;
+      row.style.display = "flex";
+      row.style.justifyContent = "space-between";
+      row.style.alignItems = "flex-start";
+      row.style.gap = "16px";
+      row.style.padding = "12px 0";
+      row.innerHTML = `
+      <span class="label" style="flex-shrink:0;font-weight:700;">${label}</span>
+      <div style="text-align:right;">
+        <div style="font-weight:600;color:#0F172A;line-height:1.4;">${value}</div>
+        ${note ? `<div style="font-size:12px;color:var(--muted);margin-top:3px;">${note}</div>` : ""}
+      </div>
+    `;
       wrap.appendChild(row);
     });
     const footnote = document.createElement("p");
