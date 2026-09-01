@@ -142,7 +142,7 @@ export function renderSchedulePage(renderFn: () => void): HTMLElement {
 
     const valueStyle = idx === 0
       ? "font-size: 22px; font-weight: 800; color: #7C3AED; letter-spacing: 0.5px; line-height: 1.2;"
-      : "font-weight: 600; color: #0F172A; line-height: 1.4;";
+      : "font-size: 14.5px; font-weight: 700; color: #7C3AED; line-height: 1.5;";
 
     row.innerHTML = `
       <span class="label" style="flex-shrink:0;font-weight:700;padding-top:2px;">${label}</span>
