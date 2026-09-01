@@ -3686,7 +3686,7 @@ function freshScores(): Record<Tag, number> {
 }
 
 const state: AppState = {
-  tab: "top", // 最初に開いたときは必ずこのトップ画面のみ
+  tab: "top", // 最初に開いた時は必ずこのトップ画面
   electionDate: "2026-10-25",
   quizStep: 0,
   scores: freshScores(),
@@ -3823,7 +3823,7 @@ function renderHeader(): HTMLElement {
   logoBox.appendChild(logoImg);
   container.appendChild(logoBox);
 
-  // Tabs
+  // Header Tabs
   const navTabs = document.createElement("nav");
   navTabs.className = "nav-tabs-container";
 
@@ -3851,11 +3851,11 @@ function renderHeader(): HTMLElement {
   return header;
 }
 
-// ---------- 【ホームページ (トップ画面)】最初にアクセスした時に開く専用の画面 ----------
+// ---------- 【ホームページ (トップ画面)】ファーストビューヒーロー ＋ アンケート結果情報 ----------
 function renderTopLandingPage(): HTMLElement {
   const wrap = document.createElement("div");
 
-  // メインヒーロービジュアル（モックアップ画像に100%忠実なデザイン）
+  // メインヒーロービジュアル（モックアップ画像に100%忠実な全画面デザイン）
   const hero = document.createElement("div");
   hero.className = "main-hero-container";
 
@@ -3900,10 +3900,94 @@ function renderTopLandingPage(): HTMLElement {
 
   const scrollIndicator = document.createElement("div");
   scrollIndicator.className = "scroll-indicator";
-  scrollIndicator.innerHTML = `<span>上の「日程」「公約」「投票診断」「投票所」タブを選んでスタート！</span>`;
+  scrollIndicator.innerHTML = `<span>▼ 下へスクロールしてアンケート調査結果を見る</span>`;
   hero.appendChild(scrollIndicator);
 
   wrap.appendChild(hero);
+
+  // アンケート調査結果セクション (結果.png / 期日前投票.png)
+  const surveySection = document.createElement("section");
+  surveySection.className = "survey-section";
+  surveySection.style.marginTop = "40px";
+
+  const surveyTitle = document.createElement("h2");
+  surveyTitle.className = "disp section-title";
+  surveyTitle.textContent = "📊 新潟県 若者の投票意識アンケート調査結果";
+  surveySection.appendChild(surveyTitle);
+
+  const surveySub = document.createElement("p");
+  surveySub.className = "section-sub";
+  surveySub.textContent = "県内の若者世代（74名回答）を対象に実施した投票参加状況および期日前投票の調査データです。";
+  surveySection.appendChild(surveySub);
+
+  const surveyGrid = document.createElement("div");
+  surveyGrid.className = "survey-grid";
+
+  // Card 1: 県知事選挙 参加率 (結果.png)
+  const card1 = document.createElement("div");
+  card1.className = "card survey-card";
+  card1.innerHTML = `
+    <div class="survey-card-header">
+      <span class="survey-tag">アンケート調査結果 ①</span>
+      <h3 class="survey-question-title">令和8年5月31日 新潟県知事選挙に行きましたか？</h3>
+      <span class="survey-count-badge">回答数: 74件</span>
+    </div>
+    <div class="survey-img-container">
+      <img src="結果.png" alt="新潟県知事選挙 投票率アンケート結果" class="survey-chart-img">
+    </div>
+    <div class="survey-stats-row">
+      <div class="stat-pill stat-blue">
+        <span class="stat-label">行った</span>
+        <span class="stat-value">50.0%</span>
+        <span class="stat-sub">37名</span>
+      </div>
+      <div class="stat-pill stat-red">
+        <span class="stat-label">行ってない</span>
+        <span class="stat-value">50.0%</span>
+        <span class="stat-sub">37名</span>
+      </div>
+    </div>
+    <div class="survey-mascot-comment">
+      <img src="選挙君.png" alt="選挙君" class="comment-mascot-img">
+      <p>「半数の若者が投票に参加！残りの50%の若者も、自分たちの声や願いを社会に届けるために一歩を踏み出そう！」</p>
+    </div>
+  `;
+  surveyGrid.appendChild(card1);
+
+  // Card 2: 投票方法 (当日 vs 期日前投票) (期日前投票.png)
+  const card2 = document.createElement("div");
+  card2.className = "card survey-card";
+  card2.innerHTML = `
+    <div class="survey-card-header">
+      <span class="survey-tag">アンケート調査結果 ②</span>
+      <h3 class="survey-question-title">選挙に行った人に質問です。（当日の投票 vs 期日前投票）</h3>
+      <span class="survey-count-badge">回答数: 37件</span>
+    </div>
+    <div class="survey-img-container">
+      <img src="期日前投票.png" alt="期日前投票 利用割合アンケート結果" class="survey-chart-img">
+    </div>
+    <div class="survey-stats-row">
+      <div class="stat-pill stat-blue">
+        <span class="stat-label">選挙日当日にいった</span>
+        <span class="stat-value">54.1%</span>
+        <span class="stat-sub">20名</span>
+      </div>
+      <div class="stat-pill stat-red">
+        <span class="stat-label">期日前投票にいった</span>
+        <span class="stat-value">45.9%</span>
+        <span class="stat-sub">17名</span>
+      </div>
+    </div>
+    <div class="survey-mascot-comment">
+      <img src="こめ.png" alt="こめちゃん" class="comment-mascot-img">
+      <p>「投票に行った人のうち約46%が『期日前投票』を活用！当日仕事や学校があっても手ぶらで事前に投票できます！」</p>
+    </div>
+  `;
+  surveyGrid.appendChild(card2);
+
+  surveySection.appendChild(surveyGrid);
+  wrap.appendChild(surveySection);
+
   return wrap;
 }
 

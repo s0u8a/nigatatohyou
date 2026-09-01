@@ -996,11 +996,4 @@ html, body {
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
-    padding: 10px 0;
-  }
-  .election-btn span:last-child {
-    font-size: 12px;
-  }
-}
-
 

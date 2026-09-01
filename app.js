@@ -3604,7 +3604,7 @@ function freshScores() {
 }
 const state = {
   tab: "top",
-  // 最初に開いたときは必ずこのトップ画面のみ
+  // 最初に開いた時は必ずこのトップ画面
   electionDate: "2026-10-25",
   quizStep: 0,
   scores: freshScores(),
@@ -3782,9 +3782,82 @@ function renderTopLandingPage() {
   hero.appendChild(heroOverlay);
   const scrollIndicator = document.createElement("div");
   scrollIndicator.className = "scroll-indicator";
-  scrollIndicator.innerHTML = `<span>\u4E0A\u306E\u300C\u65E5\u7A0B\u300D\u300C\u516C\u7D04\u300D\u300C\u6295\u7968\u8A3A\u65AD\u300D\u300C\u6295\u7968\u6240\u300D\u30BF\u30D6\u3092\u9078\u3093\u3067\u30B9\u30BF\u30FC\u30C8\uFF01</span>`;
+  scrollIndicator.innerHTML = `<span>\u25BC \u4E0B\u3078\u30B9\u30AF\u30ED\u30FC\u30EB\u3057\u3066\u30A2\u30F3\u30B1\u30FC\u30C8\u8ABF\u67FB\u7D50\u679C\u3092\u898B\u308B</span>`;
   hero.appendChild(scrollIndicator);
   wrap.appendChild(hero);
+  const surveySection = document.createElement("section");
+  surveySection.className = "survey-section";
+  surveySection.style.marginTop = "40px";
+  const surveyTitle = document.createElement("h2");
+  surveyTitle.className = "disp section-title";
+  surveyTitle.textContent = "\u{1F4CA} \u65B0\u6F5F\u770C \u82E5\u8005\u306E\u6295\u7968\u610F\u8B58\u30A2\u30F3\u30B1\u30FC\u30C8\u8ABF\u67FB\u7D50\u679C";
+  surveySection.appendChild(surveyTitle);
+  const surveySub = document.createElement("p");
+  surveySub.className = "section-sub";
+  surveySub.textContent = "\u770C\u5185\u306E\u82E5\u8005\u4E16\u4EE3\uFF0874\u540D\u56DE\u7B54\uFF09\u3092\u5BFE\u8C61\u306B\u5B9F\u65BD\u3057\u305F\u6295\u7968\u53C2\u52A0\u72B6\u6CC1\u304A\u3088\u3073\u671F\u65E5\u524D\u6295\u7968\u306E\u8ABF\u67FB\u30C7\u30FC\u30BF\u3067\u3059\u3002";
+  surveySection.appendChild(surveySub);
+  const surveyGrid = document.createElement("div");
+  surveyGrid.className = "survey-grid";
+  const card1 = document.createElement("div");
+  card1.className = "card survey-card";
+  card1.innerHTML = `
+    <div class="survey-card-header">
+      <span class="survey-tag">\u30A2\u30F3\u30B1\u30FC\u30C8\u8ABF\u67FB\u7D50\u679C \u2460</span>
+      <h3 class="survey-question-title">\u4EE4\u548C8\u5E745\u670831\u65E5 \u65B0\u6F5F\u770C\u77E5\u4E8B\u9078\u6319\u306B\u884C\u304D\u307E\u3057\u305F\u304B\uFF1F</h3>
+      <span class="survey-count-badge">\u56DE\u7B54\u6570: 74\u4EF6</span>
+    </div>
+    <div class="survey-img-container">
+      <img src="\u7D50\u679C.png" alt="\u65B0\u6F5F\u770C\u77E5\u4E8B\u9078\u6319 \u6295\u7968\u7387\u30A2\u30F3\u30B1\u30FC\u30C8\u7D50\u679C" class="survey-chart-img">
+    </div>
+    <div class="survey-stats-row">
+      <div class="stat-pill stat-blue">
+        <span class="stat-label">\u884C\u3063\u305F</span>
+        <span class="stat-value">50.0%</span>
+        <span class="stat-sub">37\u540D</span>
+      </div>
+      <div class="stat-pill stat-red">
+        <span class="stat-label">\u884C\u3063\u3066\u306A\u3044</span>
+        <span class="stat-value">50.0%</span>
+        <span class="stat-sub">37\u540D</span>
+      </div>
+    </div>
+    <div class="survey-mascot-comment">
+      <img src="\u9078\u6319\u541B.png" alt="\u9078\u6319\u541B" class="comment-mascot-img">
+      <p>\u300C\u534A\u6570\u306E\u82E5\u8005\u304C\u6295\u7968\u306B\u53C2\u52A0\uFF01\u6B8B\u308A\u306E50%\u306E\u82E5\u8005\u3082\u3001\u81EA\u5206\u305F\u3061\u306E\u58F0\u3084\u9858\u3044\u3092\u793E\u4F1A\u306B\u5C4A\u3051\u308B\u305F\u3081\u306B\u4E00\u6B69\u3092\u8E0F\u307F\u51FA\u305D\u3046\uFF01\u300D</p>
+    </div>
+  `;
+  surveyGrid.appendChild(card1);
+  const card2 = document.createElement("div");
+  card2.className = "card survey-card";
+  card2.innerHTML = `
+    <div class="survey-card-header">
+      <span class="survey-tag">\u30A2\u30F3\u30B1\u30FC\u30C8\u8ABF\u67FB\u7D50\u679C \u2461</span>
+      <h3 class="survey-question-title">\u9078\u6319\u306B\u884C\u3063\u305F\u4EBA\u306B\u8CEA\u554F\u3067\u3059\u3002\uFF08\u5F53\u65E5\u306E\u6295\u7968 vs \u671F\u65E5\u524D\u6295\u7968\uFF09</h3>
+      <span class="survey-count-badge">\u56DE\u7B54\u6570: 37\u4EF6</span>
+    </div>
+    <div class="survey-img-container">
+      <img src="\u671F\u65E5\u524D\u6295\u7968.png" alt="\u671F\u65E5\u524D\u6295\u7968 \u5229\u7528\u5272\u5408\u30A2\u30F3\u30B1\u30FC\u30C8\u7D50\u679C" class="survey-chart-img">
+    </div>
+    <div class="survey-stats-row">
+      <div class="stat-pill stat-blue">
+        <span class="stat-label">\u9078\u6319\u65E5\u5F53\u65E5\u306B\u3044\u3063\u305F</span>
+        <span class="stat-value">54.1%</span>
+        <span class="stat-sub">20\u540D</span>
+      </div>
+      <div class="stat-pill stat-red">
+        <span class="stat-label">\u671F\u65E5\u524D\u6295\u7968\u306B\u3044\u3063\u305F</span>
+        <span class="stat-value">45.9%</span>
+        <span class="stat-sub">17\u540D</span>
+      </div>
+    </div>
+    <div class="survey-mascot-comment">
+      <img src="\u3053\u3081.png" alt="\u3053\u3081\u3061\u3083\u3093" class="comment-mascot-img">
+      <p>\u300C\u6295\u7968\u306B\u884C\u3063\u305F\u4EBA\u306E\u3046\u3061\u7D0446%\u304C\u300E\u671F\u65E5\u524D\u6295\u7968\u300F\u3092\u6D3B\u7528\uFF01\u5F53\u65E5\u4ED5\u4E8B\u3084\u5B66\u6821\u304C\u3042\u3063\u3066\u3082\u624B\u3076\u3089\u3067\u4E8B\u524D\u306B\u6295\u7968\u3067\u304D\u307E\u3059\uFF01\u300D</p>
+    </div>
+  `;
+  surveyGrid.appendChild(card2);
+  surveySection.appendChild(surveyGrid);
+  wrap.appendChild(surveySection);
   return wrap;
 }
 function renderSchedulePage() {
