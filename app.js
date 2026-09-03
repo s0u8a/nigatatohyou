@@ -1,634 +1,662 @@
 (() => {
+  var __defProp = Object.defineProperty;
+  var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __esm = (fn, res, err) => function __init() {
+    if (err) throw err[0];
+    try {
+      return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
+    } catch (e) {
+      throw err = [e], e;
+    }
+  };
+  var __export = (target, all) => {
+    for (var name in all)
+      __defProp(target, name, { get: all[name], enumerable: true });
+  };
+
   // src/data/candidates.ts
-  var TAGS = ["\u7D4C\u6E08", "\u6559\u80B2", "\u74B0\u5883", "\u30C7\u30B8\u30BF\u30EB", "\u798F\u7949", "\u5730\u57DF"];
-  var TAG_META = {
-    \u7D4C\u6E08: { color: "#8C3B4B", label: "\u7523\u696D\u30FB\u96C7\u7528\u30FB\u8CC3\u4E0A\u3052" },
-    \u6559\u80B2: { color: "#3E6B8A", label: "\u5B50\u80B2\u3066\u30FB\u5968\u5B66\u91D1\u652F\u63F4" },
-    \u74B0\u5883: { color: "#4C7A54", label: "\u8FB2\u696D\u30FB\u74B0\u5883\u30FB\u30A8\u30CD\u30EB\u30AE\u30FC" },
-    \u30C7\u30B8\u30BF\u30EB: { color: "#6B5B95", label: "\u884C\u653FDX\u30FB\u30B9\u30DE\u30FC\u30C8\u751F\u6D3B" },
-    \u798F\u7949: { color: "#B5762B", label: "\u533B\u7642\u30FB\u798F\u7949\u30FB\u79FB\u52D5\u4EA4\u901A" },
-    \u5730\u57DF: { color: "#D6A24C", label: "\u307E\u3061\u3065\u304F\u308A\u30FB\u9632\u707D\u30FB\u7A7A\u304D\u5BB6" }
-  };
-  var CANDIDATES = [
-    {
-      id: "a",
-      name: "\u65B0\u6F5F\u672A\u6765\u30FB\u5B50\u80B2\u3066IT\u9023\u5408",
-      tagline: "\u82E5\u8005\u306E\u5B9A\u4F4F\u30FB\u5968\u5B66\u91D1\u652F\u63F4\u3068\u884C\u653F\u30C7\u30B8\u30BF\u30EB\u5316\u3067\u9078\u3070\u308C\u308B\u65B0\u6F5F\u3078",
-      weights: { \u6559\u80B2: 3, \u30C7\u30B8\u30BF\u30EB: 2, \u7D4C\u6E08: 1, \u74B0\u5883: 0, \u798F\u7949: 0, \u5730\u57DF: 0 },
-      pledges: [
-        "\u770C\u5185\u4F01\u696D\u306B\u5C31\u8077\u30FB\u5B9A\u4F4F\u3059\u308B\u82E5\u8005\u306E\u300C\u5968\u5B66\u91D1\u8FD4\u6E08\u652F\u63F4\u5236\u5EA6\u300D\u3092\u5168\u770C\u3067\u5927\u5E45\u62E1\u5145",
-        "\u9AD8\u6821\u751F\uFF0818\u6B73\uFF09\u307E\u3067\u306E\u533B\u7642\u8CBB\u7121\u511F\u5316\u3092\u63A8\u9032\u3057\u3001\u5B50\u80B2\u3066\u4E16\u5E2F\u306E\u7D4C\u6E08\u8CA0\u62C5\u3092\u8EFD\u6E1B",
-        "\u884C\u653F\u624B\u7D9A\u304D\u30FB\u8A3C\u660E\u66F8\u767A\u884C\u30FB\u6295\u7968\u6240\u6848\u5185\u3092\u30B9\u30DE\u30DB\u3067\u5373\u5B8C\u7D50\u3059\u308B\u300C\u30B9\u30DE\u30FC\u30C8\u65B0\u6F5F\u300D\u306E\u5B9F\u73FE"
-      ]
-    },
-    {
-      id: "b",
-      name: "\u65B0\u6F5F\u8FB2\u696D\u30FB\u5730\u5834\u7523\u696D\u518D\u751F\u306E\u4F1A",
-      tagline: "\u30D6\u30E9\u30F3\u30C9\u7C73\u30FB\u30E2\u30CE\u3065\u304F\u308A\u7523\u696D\u306E\u5F37\u5316\u3067\u82E5\u8005\u306E\u96C7\u7528\u3068\u8CC3\u4E0A\u3052\u3092\u5B9F\u73FE",
-      weights: { \u7D4C\u6E08: 3, \u74B0\u5883: 2, \u5730\u57DF: 1, \u6559\u80B2: 0, \u30C7\u30B8\u30BF\u30EB: 0, \u798F\u7949: 0 },
-      pledges: [
-        "\u65B0\u6F5F\u7C73\u30FB\u6C34\u7523\u7269\u306E\u30D6\u30E9\u30F3\u30C9\u8F38\u51FA\u5F37\u5316\u3068\u30B9\u30DE\u30FC\u30C8\u8FB2\u696D\u30FB\u65B0\u898F\u5C31\u8FB2\u8005\u3078\u306E\u624B\u539A\u3044\u88DC\u52A9",
-        "\u71D5\u4E09\u6761\u306F\u3058\u3081\u5730\u5834\u7523\u696D\u30FB\u5730\u5143\u4E2D\u5C0F\u4F01\u696D\u3078\u306E\u6295\u8CC7\u652F\u63F4\u3067\u3001\u82E5\u8005\u306E\u521D\u4EFB\u7D66\u30FB\u8CC3\u4E0A\u3052\u306E\u5E95\u4E0A\u3052",
-        "\u518D\u751F\u53EF\u80FD\u30A8\u30CD\u30EB\u30AE\u30FC\u5C0E\u5165\u3068\u7701\u30A8\u30CD\u652F\u63F4\u3067\u3001\u770C\u6C11\u306E\u96FB\u6C17\u4EE3\u8CA0\u62C5\u3068\u4F01\u696D\u30B3\u30B9\u30C8\u3092\u4F4E\u6E1B"
-      ]
-    },
-    {
-      id: "c",
-      name: "\u304F\u3089\u3057\u5B89\u5FC3\u30FB\u5730\u57DF\u533B\u7642\u30CD\u30C3\u30C8",
-      tagline: "\u3069\u3053\u306B\u4F4F\u3093\u3067\u3044\u3066\u3082\u533B\u7642\u3068\u798F\u7949\u304C\u884C\u304D\u5C4A\u304F\u3001\u5B89\u5FC3\u306E\u65B0\u6F5F\u3065\u304F\u308A",
-      weights: { \u798F\u7949: 3, \u5730\u57DF: 2, \u6559\u80B2: 1, \u7D4C\u6E08: 0, \u74B0\u5883: 0, \u30C7\u30B8\u30BF\u30EB: 0 },
-      pledges: [
-        "\u533B\u5E2B\u30FB\u770B\u8B77\u5E2B\u4E0D\u8DB3\u3092\u89E3\u6D88\u3057\u3001\u770C\u5185\u5168\u5730\u57DF\u306E\u5C0F\u5150\u79D1\u30FB\u7523\u5A66\u4EBA\u79D1\u30FB\u6551\u6025\u533B\u7642\u4F53\u5236\u3092\u7DAD\u6301\u30FB\u5F37\u5316",
-        "\u9AD8\u9F62\u8005\u3084\u5B66\u751F\u306E\u901A\u5B66\u30FB\u901A\u9662\u3092\u652F\u3048\u308B\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30D0\u30B9\u30FB\u30C7\u30DE\u30F3\u30C9\u30BF\u30AF\u30B7\u30FC\u306E\u5168\u770C\u30CD\u30C3\u30C8\u30EF\u30FC\u30AF\u7DAD\u6301",
-        "\u8C6A\u96EA\u5730\u5E2F\u306E\u9664\u96EA\u652F\u63F4\u4F53\u5236\u3092\u5F37\u5316\u3057\u3001\u51AC\u5834\u3067\u3082\u8AB0\u3082\u304C\u5B89\u5FC3\u3057\u3066\u66AE\u3089\u305B\u308B\u5730\u57DF\u3065\u304F\u308A"
-      ]
-    },
-    {
-      id: "d",
-      name: "\u65B0\u6F5F\u5730\u57DF\u6D3B\u6027\u30FB\u307E\u3061\u3065\u304F\u308A\u6539\u9769",
-      tagline: "\u65B0\u6F5F\u99C5\u5468\u8FBA\u30FB\u4E2D\u5FC3\u8857\u306E\u518D\u958B\u767A\u3068\u7A7A\u304D\u5BB6\u518D\u751F\u3067\u8CD1\u308F\u3044\u3092\u5275\u51FA",
-      weights: { \u5730\u57DF: 3, \u7D4C\u6E08: 2, \u30C7\u30B8\u30BF\u30EB: 1, \u6559\u80B2: 0, \u74B0\u5883: 0, \u798F\u7949: 0 },
-      pledges: [
-        "\u65B0\u6F5F\u99C5\u5468\u8FBA\u30FB\u770C\u5185\u4E3B\u8981\u90FD\u5E02\u306E\u4EA4\u901A\u30CF\u30D6\u518D\u958B\u767A\u3092\u9032\u3081\u3001\u901A\u52E4\u30FB\u901A\u5B66\u30FB\u89B3\u5149\u306E\u5229\u4FBF\u6027\u3092\u98DB\u8E8D\u5411\u4E0A",
-        "\u5897\u3048\u7D9A\u3051\u308B\u7A7A\u304D\u5BB6\u3092\u30EA\u30CE\u30D9\u30FC\u30B7\u30E7\u30F3\u3057\u3001\u82E5\u8005\u3084\u79FB\u4F4F\u8005\u306E\u4F4F\u307E\u3044\u30FB\u8D77\u696D\u62E0\u70B9\u3068\u3057\u3066\u5229\u6D3B\u7528",
-        "\u516C\u5171\u65BD\u8A2D\u306E\u8001\u673D\u5316\u5BFE\u7B56\u3068\u8CA1\u653F\u306E\u52B9\u7387\u5316\u3092\u9032\u3081\u3001\u5C06\u6765\u4E16\u4EE3\u306B\u30C4\u30B1\u3092\u6B8B\u3055\u306A\u3044\u6301\u7D9A\u53EF\u80FD\u306A\u307E\u3061\u3065\u304F\u308A"
-      ]
+  var TAGS, TAG_META, CANDIDATES, QUESTIONS, TYPE_NAMES, MUNICIPAL_PLEDGES;
+  var init_candidates = __esm({
+    "src/data/candidates.ts"() {
+      TAGS = ["\u7D4C\u6E08", "\u6559\u80B2", "\u74B0\u5883", "\u30C7\u30B8\u30BF\u30EB", "\u798F\u7949", "\u5730\u57DF"];
+      TAG_META = {
+        \u7D4C\u6E08: { color: "#8C3B4B", label: "\u7523\u696D\u30FB\u96C7\u7528\u30FB\u8CC3\u4E0A\u3052" },
+        \u6559\u80B2: { color: "#3E6B8A", label: "\u5B50\u80B2\u3066\u30FB\u5968\u5B66\u91D1\u652F\u63F4" },
+        \u74B0\u5883: { color: "#4C7A54", label: "\u8FB2\u696D\u30FB\u74B0\u5883\u30FB\u30A8\u30CD\u30EB\u30AE\u30FC" },
+        \u30C7\u30B8\u30BF\u30EB: { color: "#6B5B95", label: "\u884C\u653FDX\u30FB\u30B9\u30DE\u30FC\u30C8\u751F\u6D3B" },
+        \u798F\u7949: { color: "#B5762B", label: "\u533B\u7642\u30FB\u798F\u7949\u30FB\u79FB\u52D5\u4EA4\u901A" },
+        \u5730\u57DF: { color: "#D6A24C", label: "\u307E\u3061\u3065\u304F\u308A\u30FB\u9632\u707D\u30FB\u7A7A\u304D\u5BB6" }
+      };
+      CANDIDATES = [
+        {
+          id: "a",
+          name: "\u65B0\u6F5F\u672A\u6765\u30FB\u5B50\u80B2\u3066IT\u9023\u5408",
+          tagline: "\u82E5\u8005\u306E\u5B9A\u4F4F\u30FB\u5968\u5B66\u91D1\u652F\u63F4\u3068\u884C\u653F\u30C7\u30B8\u30BF\u30EB\u5316\u3067\u9078\u3070\u308C\u308B\u65B0\u6F5F\u3078",
+          weights: { \u6559\u80B2: 3, \u30C7\u30B8\u30BF\u30EB: 2, \u7D4C\u6E08: 1, \u74B0\u5883: 0, \u798F\u7949: 0, \u5730\u57DF: 0 },
+          pledges: [
+            "\u770C\u5185\u4F01\u696D\u306B\u5C31\u8077\u30FB\u5B9A\u4F4F\u3059\u308B\u82E5\u8005\u306E\u300C\u5968\u5B66\u91D1\u8FD4\u6E08\u652F\u63F4\u5236\u5EA6\u300D\u3092\u5168\u770C\u3067\u5927\u5E45\u62E1\u5145",
+            "\u9AD8\u6821\u751F\uFF0818\u6B73\uFF09\u307E\u3067\u306E\u533B\u7642\u8CBB\u7121\u511F\u5316\u3092\u63A8\u9032\u3057\u3001\u5B50\u80B2\u3066\u4E16\u5E2F\u306E\u7D4C\u6E08\u8CA0\u62C5\u3092\u8EFD\u6E1B",
+            "\u884C\u653F\u624B\u7D9A\u304D\u30FB\u8A3C\u660E\u66F8\u767A\u884C\u30FB\u6295\u7968\u6240\u6848\u5185\u3092\u30B9\u30DE\u30DB\u3067\u5373\u5B8C\u7D50\u3059\u308B\u300C\u30B9\u30DE\u30FC\u30C8\u65B0\u6F5F\u300D\u306E\u5B9F\u73FE"
+          ]
+        },
+        {
+          id: "b",
+          name: "\u65B0\u6F5F\u8FB2\u696D\u30FB\u5730\u5834\u7523\u696D\u518D\u751F\u306E\u4F1A",
+          tagline: "\u30D6\u30E9\u30F3\u30C9\u7C73\u30FB\u30E2\u30CE\u3065\u304F\u308A\u7523\u696D\u306E\u5F37\u5316\u3067\u82E5\u8005\u306E\u96C7\u7528\u3068\u8CC3\u4E0A\u3052\u3092\u5B9F\u73FE",
+          weights: { \u7D4C\u6E08: 3, \u74B0\u5883: 2, \u5730\u57DF: 1, \u6559\u80B2: 0, \u30C7\u30B8\u30BF\u30EB: 0, \u798F\u7949: 0 },
+          pledges: [
+            "\u65B0\u6F5F\u7C73\u30FB\u6C34\u7523\u7269\u306E\u30D6\u30E9\u30F3\u30C9\u8F38\u51FA\u5F37\u5316\u3068\u30B9\u30DE\u30FC\u30C8\u8FB2\u696D\u30FB\u65B0\u898F\u5C31\u8FB2\u8005\u3078\u306E\u624B\u539A\u3044\u88DC\u52A9",
+            "\u71D5\u4E09\u6761\u306F\u3058\u3081\u5730\u5834\u7523\u696D\u30FB\u5730\u5143\u4E2D\u5C0F\u4F01\u696D\u3078\u306E\u6295\u8CC7\u652F\u63F4\u3067\u3001\u82E5\u8005\u306E\u521D\u4EFB\u7D66\u30FB\u8CC3\u4E0A\u3052\u306E\u5E95\u4E0A\u3052",
+            "\u518D\u751F\u53EF\u80FD\u30A8\u30CD\u30EB\u30AE\u30FC\u5C0E\u5165\u3068\u7701\u30A8\u30CD\u652F\u63F4\u3067\u3001\u770C\u6C11\u306E\u96FB\u6C17\u4EE3\u8CA0\u62C5\u3068\u4F01\u696D\u30B3\u30B9\u30C8\u3092\u4F4E\u6E1B"
+          ]
+        },
+        {
+          id: "c",
+          name: "\u304F\u3089\u3057\u5B89\u5FC3\u30FB\u5730\u57DF\u533B\u7642\u30CD\u30C3\u30C8",
+          tagline: "\u3069\u3053\u306B\u4F4F\u3093\u3067\u3044\u3066\u3082\u533B\u7642\u3068\u798F\u7949\u304C\u884C\u304D\u5C4A\u304F\u3001\u5B89\u5FC3\u306E\u65B0\u6F5F\u3065\u304F\u308A",
+          weights: { \u798F\u7949: 3, \u5730\u57DF: 2, \u6559\u80B2: 1, \u7D4C\u6E08: 0, \u74B0\u5883: 0, \u30C7\u30B8\u30BF\u30EB: 0 },
+          pledges: [
+            "\u533B\u5E2B\u30FB\u770B\u8B77\u5E2B\u4E0D\u8DB3\u3092\u89E3\u6D88\u3057\u3001\u770C\u5185\u5168\u5730\u57DF\u306E\u5C0F\u5150\u79D1\u30FB\u7523\u5A66\u4EBA\u79D1\u30FB\u6551\u6025\u533B\u7642\u4F53\u5236\u3092\u7DAD\u6301\u30FB\u5F37\u5316",
+            "\u9AD8\u9F62\u8005\u3084\u5B66\u751F\u306E\u901A\u5B66\u30FB\u901A\u9662\u3092\u652F\u3048\u308B\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30D0\u30B9\u30FB\u30C7\u30DE\u30F3\u30C9\u30BF\u30AF\u30B7\u30FC\u306E\u5168\u770C\u30CD\u30C3\u30C8\u30EF\u30FC\u30AF\u7DAD\u6301",
+            "\u8C6A\u96EA\u5730\u5E2F\u306E\u9664\u96EA\u652F\u63F4\u4F53\u5236\u3092\u5F37\u5316\u3057\u3001\u51AC\u5834\u3067\u3082\u8AB0\u3082\u304C\u5B89\u5FC3\u3057\u3066\u66AE\u3089\u305B\u308B\u5730\u57DF\u3065\u304F\u308A"
+          ]
+        },
+        {
+          id: "d",
+          name: "\u65B0\u6F5F\u5730\u57DF\u6D3B\u6027\u30FB\u307E\u3061\u3065\u304F\u308A\u6539\u9769",
+          tagline: "\u65B0\u6F5F\u99C5\u5468\u8FBA\u30FB\u4E2D\u5FC3\u8857\u306E\u518D\u958B\u767A\u3068\u7A7A\u304D\u5BB6\u518D\u751F\u3067\u8CD1\u308F\u3044\u3092\u5275\u51FA",
+          weights: { \u5730\u57DF: 3, \u7D4C\u6E08: 2, \u30C7\u30B8\u30BF\u30EB: 1, \u6559\u80B2: 0, \u74B0\u5883: 0, \u798F\u7949: 0 },
+          pledges: [
+            "\u65B0\u6F5F\u99C5\u5468\u8FBA\u30FB\u770C\u5185\u4E3B\u8981\u90FD\u5E02\u306E\u4EA4\u901A\u30CF\u30D6\u518D\u958B\u767A\u3092\u9032\u3081\u3001\u901A\u52E4\u30FB\u901A\u5B66\u30FB\u89B3\u5149\u306E\u5229\u4FBF\u6027\u3092\u98DB\u8E8D\u5411\u4E0A",
+            "\u5897\u3048\u7D9A\u3051\u308B\u7A7A\u304D\u5BB6\u3092\u30EA\u30CE\u30D9\u30FC\u30B7\u30E7\u30F3\u3057\u3001\u82E5\u8005\u3084\u79FB\u4F4F\u8005\u306E\u4F4F\u307E\u3044\u30FB\u8D77\u696D\u62E0\u70B9\u3068\u3057\u3066\u5229\u6D3B\u7528",
+            "\u516C\u5171\u65BD\u8A2D\u306E\u8001\u673D\u5316\u5BFE\u7B56\u3068\u8CA1\u653F\u306E\u52B9\u7387\u5316\u3092\u9032\u3081\u3001\u5C06\u6765\u4E16\u4EE3\u306B\u30C4\u30B1\u3092\u6B8B\u3055\u306A\u3044\u6301\u7D9A\u53EF\u80FD\u306A\u307E\u3061\u3065\u304F\u308A"
+          ]
+        }
+      ];
+      QUESTIONS = [
+        {
+          q: "\u65B0\u6F5F\u3067\u66AE\u3089\u3059\u3046\u3048\u3067\u3001\u5B50\u80B2\u3066\u3084\u5B66\u3073\u306E\u74B0\u5883\u3067\u6700\u3082\u91CD\u8996\u3057\u305F\u3044\u653F\u7B56\u306F\uFF1F",
+          options: [
+            { text: "\u5968\u5B66\u91D1\u8FD4\u6E08\u306E\u7D66\u4ED8\u652F\u63F4\u3084\u3001\u9AD8\u6821\u751F\u307E\u3067\u306E\u533B\u7642\u8CBB\u7121\u511F\u5316\u3092\u9032\u3081\u3066\u307B\u3057\u3044", weights: { \u6559\u80B2: 2 } },
+            { text: "\u884C\u653F\u624B\u7D9A\u304D\u3084\u8A3C\u660E\u66F8\u767A\u884C\u304C\u30B9\u30DE\u30DB\u3067\u7C21\u5358\u306B\u5B8C\u7D50\u3067\u304D\u308B\u3088\u3046\u306B\u306A\u3063\u3066\u307B\u3057\u3044", weights: { \u30C7\u30B8\u30BF\u30EB: 2 } }
+          ]
+        },
+        {
+          q: "\u5C31\u8077\u3084\u5730\u5143\u306E\u4ED5\u4E8B\u306B\u3064\u3044\u3066\u3001\u3069\u306E\u3088\u3046\u306A\u53D6\u308A\u7D44\u307F\u3092\u671F\u5F85\u3059\u308B\uFF1F",
+          options: [
+            { text: "\u5730\u5143\u4F01\u696D\u3084\u5730\u5834\u7523\u696D\uFF08\u30E2\u30CE\u3065\u304F\u308A\u30FB\u8FB2\u696D\uFF09\u3078\u306E\u652F\u63F4\u3067\u8CC3\u4E0A\u3052\u3084\u96C7\u7528\u3092\u5897\u3084\u3057\u3066\u307B\u3057\u3044", weights: { \u7D4C\u6E08: 2 } },
+            { text: "IT\u4F01\u696D\u306E\u8A98\u81F4\u3084\u30EA\u30E2\u30FC\u30C8\u30EF\u30FC\u30AF\u74B0\u5883\u3092\u6574\u3048\u3001\u770C\u5916\u306B\u51FA\u305A\u306B\u50CD\u3051\u308B\u9078\u629E\u80A2\u304C\u307B\u3057\u3044", weights: { \u30C7\u30B8\u30BF\u30EB: 1, \u7D4C\u6E08: 1 } }
+          ]
+        },
+        {
+          q: "\u3053\u308C\u304B\u3089\u306E\u65B0\u6F5F\u306E\u8FB2\u696D\u3084\u81EA\u7136\u30FB\u30A8\u30CD\u30EB\u30AE\u30FC\u306B\u3064\u3044\u3066\u671B\u3080\u306E\u306F\uFF1F",
+          options: [
+            { text: "\u65B0\u6F5F\u7C73\u30FB\u8FB2\u7523\u7269\u306E\u30D6\u30E9\u30F3\u30C9\u5F37\u5316\u3068\u30B9\u30DE\u30FC\u30C8\u8FB2\u696D\u3067\u300E\u7A3C\u3052\u308B\u8FB2\u696D\u300F\u306B\u3057\u3066\u307B\u3057\u3044", weights: { \u74B0\u5883: 2, \u7D4C\u6E08: 1 } },
+            { text: "\u518D\u751F\u53EF\u80FD\u30A8\u30CD\u30EB\u30AE\u30FC\u306E\u666E\u53CA\u3067\u96FB\u6C17\u4EE3\u3092\u6291\u3048\u3001\u74B0\u5883\u3068\u81EA\u7136\u3092\u5B88\u3063\u3066\u307B\u3057\u3044", weights: { \u74B0\u5883: 2, \u5730\u57DF: 1 } }
+          ]
+        },
+        {
+          q: "\u533B\u7642\u3084\u65E5\u5E38\u306E\u66AE\u3089\u3057\u3067\u3001\u6700\u3082\u5B89\u5FC3\u3067\u304D\u308B\u653F\u7B56\u306F\uFF1F",
+          options: [
+            { text: "\u5730\u57DF\u3054\u3068\u306E\u5C0F\u5150\u79D1\u30FB\u7523\u5A66\u4EBA\u79D1\u30FB\u6551\u6025\u533B\u7642\u4F53\u5236\u3092\u7DAD\u6301\u30FB\u5F37\u5316\u3057\u3066\u307B\u3057\u3044", weights: { \u798F\u7949: 2 } },
+            { text: "\u30D0\u30B9\u8DEF\u7DDA\u3084\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u4EA4\u901A\u3092\u7DAD\u6301\u3057\u3001\u901A\u5B66\u3084\u9AD8\u9F62\u8005\u306E\u79FB\u52D5\u624B\u6BB5\u3092\u5B88\u3063\u3066\u307B\u3057\u3044", weights: { \u798F\u7949: 1, \u5730\u57DF: 1 } }
+          ]
+        },
+        {
+          q: "\u51AC\u306E\u66AE\u3089\u3057\u3084\u9632\u72AF\u30FB\u9632\u707D\u5BFE\u7B56\u3067\u529B\u3092\u5165\u308C\u3066\u307B\u3057\u3044\u3053\u3068\u306F\uFF1F",
+          options: [
+            { text: "\u8C6A\u96EA\u5730\u5E2F\u306E\u9664\u96EA\u652F\u63F4\u3084\u8001\u673D\u5316\u30A4\u30F3\u30D5\u30E9\u306E\u6574\u5099\u3067\u51AC\u5834\u306E\u5B89\u5FC3\u30FB\u5B89\u5168\u3092\u5B88\u3063\u3066\u307B\u3057\u3044", weights: { \u5730\u57DF: 2 } },
+            { text: "\u5897\u3048\u308B\u7A7A\u304D\u5BB6\u3092\u30EA\u30CE\u30D9\u30FC\u30B7\u30E7\u30F3\u3057\u3066\u3001\u82E5\u8005\u306E\u4F4F\u307E\u3044\u3084\u4EA4\u6D41\u62E0\u70B9\u306B\u518D\u751F\u3057\u3066\u307B\u3057\u3044", weights: { \u5730\u57DF: 1, \u7D4C\u6E08: 1 } }
+          ]
+        },
+        {
+          q: "\u65B0\u6F5F\u306E\u90FD\u5E02\u3065\u304F\u308A\u3084\u884C\u653F\u30FB\u8CA1\u653F\u306B\u3064\u3044\u3066\u6C42\u3081\u308B\u306E\u306F\uFF1F",
+          options: [
+            { text: "\u65B0\u6F5F\u99C5\u5468\u8FBA\u3084\u4E2D\u5FC3\u90FD\u5E02\u306E\u518D\u958B\u767A\u3092\u9032\u3081\u3001\u4EA4\u901A\u3068\u8857\u306E\u8CD1\u308F\u3044\u3092\u5411\u4E0A\u3055\u305B\u3066\u307B\u3057\u3044", weights: { \u5730\u57DF: 2, \u7D4C\u6E08: 1 } },
+            { text: "\u516C\u5171\u65BD\u8A2D\u306E\u30E0\u30C0\u3092\u6291\u3048\u3001\u5B50\u80B2\u3066\u4E16\u5E2F\u3084\u82E5\u8005\u3078\u306E\u76F4\u63A5\u652F\u63F4\u306B\u8CA1\u653F\u3092\u4F7F\u3063\u3066\u307B\u3057\u3044", weights: { \u6559\u80B2: 1, \u30C7\u30B8\u30BF\u30EB: 1 } }
+          ]
+        }
+      ];
+      TYPE_NAMES = {
+        \u6559\u80B2: "\u5B50\u80B2\u3066\u30FB\u5B66\u3073\u672A\u6765\u91CD\u8996\u30BF\u30A4\u30D7",
+        \u7D4C\u6E08: "\u7523\u696D\u30FB\u96C7\u7528\u30FB\u8CC3\u4E0A\u3052\u91CD\u8996\u30BF\u30A4\u30D7",
+        \u74B0\u5883: "\u8FB2\u696D\u30FB\u74B0\u5883\u5171\u751F\u30BF\u30A4\u30D7",
+        \u30C7\u30B8\u30BF\u30EB: "\u884C\u653FDX\u30FB\u30B9\u30DE\u30FC\u30C8\u751F\u6D3B\u91CD\u8996\u30BF\u30A4\u30D7",
+        \u798F\u7949: "\u533B\u7642\u30FB\u798F\u7949\u30FB\u5B89\u5FC3\u751F\u6D3B\u91CD\u8996\u30BF\u30A4\u30D7",
+        \u5730\u57DF: "\u307E\u3061\u3065\u304F\u308A\u30FB\u9632\u707D\u91CD\u8996\u30BF\u30A4\u30D7"
+      };
+      MUNICIPAL_PLEDGES = [
+        {
+          id: "gov",
+          region: "\u770C\u5168\u57DF",
+          name: "\u65B0\u6F5F\u770C\u77E5\u4E8B (\u82B1\u89D2\u82F1\u4E16)",
+          mayorTitle: "\u65B0\u6F5F\u770C\u77E5\u4E8B",
+          scaleType: "\u770C\u5168\u57DF",
+          headline: "\u4EBA\u53E3\u6E1B\u5C11\u3068\u707D\u5BB3\u30EA\u30B9\u30AF\u306B\u7ACB\u3061\u5411\u304B\u3046\u3001\u7523\u696D\u30FB\u66AE\u3089\u3057\u306E\u57FA\u76E4\u7D44\u307F\u66FF\u3048",
+          tags: ["\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066", "\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u7523\u696D\u30FB\u96C7\u7528"],
+          details: [
+            "\u2460 \u5C31\u8FB2\u30FB\u5B9A\u4F4F\u652F\u63F4\u3068\u4EBA\u53E3\u5897\u52A0\u57FA\u76E4\u306E\u78BA\u7ACB",
+            "\u2461 \u5B89\u5FC3\u30FB\u5B89\u5168\u306A\u770C\u571F\u3065\u304F\u308A\u3068\u8C6A\u96EA\u30FB\u707D\u5BB3\u5BFE\u7B56\u306E\u63A8\u9032",
+            "\u2462 \u5730\u5834\u7523\u696D\u30FB\u65B0\u6F5F\u7C73\u306E\u6D77\u5916\u30D6\u30E9\u30F3\u30C9\u5C55\u958B\u3068\u770C\u5185\u8CC3\u4E0A\u3052\u63A8\u9032"
+          ],
+          officialUrl: "https://koyaku.47story.jp/gov/niigata"
+        },
+        {
+          id: "15100",
+          region: "\u4E0B\u8D8A",
+          name: "\u65B0\u6F5F\u5E02",
+          mayorTitle: "\u4E2D\u539F\u516B\u4E00 \u5E02\u9577",
+          scaleType: "\u653F\u4EE4\u6307\u5B9A\u90FD\u5E02",
+          headline: "\u90FD\u5FC3\u306E\u8CD1\u308F\u3044\u5275\u51FA\u3068\u62E0\u70B9\u30BD\u30D5\u30A3\u30A2\u578B\u90FD\u5E02\u306E\u69CB\u7BC9",
+          tags: ["\u7523\u696D\u30FB\u96C7\u7528", "\u66AE\u3089\u3057\u30FB\u533B\u7642"],
+          details: [
+            "\u2460 \u65B0\u6F5F\u99C5\u5468\u8FBA\u518D\u958B\u767A\u3068\u4EA4\u901A\u30CF\u30D6\u6A5F\u80FD\u306E\u5F37\u5316",
+            "\u2461 \u5B50\u80B2\u3066\u4E16\u5E2F\u306E\u533B\u7642\u8CBB\u8CA0\u62C5\u8EFD\u6E1B\u3068\u6559\u80B2\u74B0\u5883\u306E\u5411\u4E0A",
+            "\u2462 \u62E0\u70B9\u30BD\u30D5\u30A3\u30A2\u578B\u90FD\u5E02\u3068\u3057\u3066\u306E\u9632\u707D\u30FB\u30C7\u30B8\u30BF\u30EB\u884C\u653F\u63A8\u9032"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15100/"
+        },
+        {
+          id: "15202",
+          region: "\u4E2D\u8D8A",
+          name: "\u9577\u5CA1\u5E02",
+          mayorTitle: "\u78EF\u7530\u9054\u4F38 \u5E02\u9577",
+          scaleType: "\u5730\u65B9\u4E2D\u6838\u5E02",
+          headline: "\u30A4\u30CE\u30D9\u30FC\u30B7\u30E7\u30F3\u63A8\u9032\u3068\u5730\u57DF\u9632\u707D\u30FB\u5B50\u80B2\u3066\u306E\u5145\u5B9F",
+          tags: ["\u9632\u707D\u30FB\u5B89\u5168", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
+          details: [
+            "\u2460 \u8C6A\u96EA\u5BFE\u7B56\u3068\u30C7\u30B8\u30BF\u30EB\u9632\u707D\u30A4\u30F3\u30D5\u30E9\u306E\u63A8\u9032",
+            "\u2461 \u7C73\u767E\u4FF5\u306E\u7CBE\u795E\u306B\u57FA\u3065\u304F\u6B21\u4E16\u4EE3\u4EBA\u6750\u80B2\u6210\u3068\u5B50\u80B2\u3066\u5B9A\u4F4F\u652F\u63F4",
+            "\u2462 \u9577\u5CA1\u82B1\u706B\u3068\u6280\u8853\u9769\u65B0\u3092\u751F\u304B\u3057\u305F\u5730\u65B9\u5275\u751F"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15202/"
+        },
+        {
+          id: "15222",
+          region: "\u4E0A\u8D8A",
+          name: "\u4E0A\u8D8A\u5E02",
+          mayorTitle: "\u4E2D\u5DDD\u5E79\u592A \u5E02\u9577",
+          scaleType: "\u5730\u65B9\u4E2D\u6838\u5E02",
+          headline: "\u901A\u5E74\u89B3\u5149\u30FB\u7523\u696D\u632F\u8208\u3068\u884C\u653FDX\u63A8\u9032",
+          tags: ["\u884C\u653F\u30FBDX", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
+          details: [
+            "\u2460 \u884C\u653F\u624B\u7D9A\u304D\u306E\u30AA\u30F3\u30E9\u30A4\u30F3\u5316\u3068\u30B9\u30DE\u30FC\u30C8\u5E02\u5F79\u6240",
+            "\u2461 \u901A\u5E74\u89B3\u5149\u306E\u5F37\u5316\u3068\u8FB2\u6797\u6C34\u7523\u696D\u306E\u6240\u5F97\u5411\u4E0A\u652F\u63F4",
+            "\u2462 \u5730\u57DF\u4EA4\u901A\u30CD\u30C3\u30C8\u30EF\u30FC\u30AF\u306E\u7DAD\u6301\u3068\u5B50\u80B2\u3066\u74B0\u5883\u6574\u5099"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15222/"
+        },
+        {
+          id: "15204",
+          region: "\u4E2D\u8D8A",
+          name: "\u4E09\u6761\u5E02",
+          mayorTitle: "\u6EDD\u6CA2\u4EAE \u5E02\u9577",
+          scaleType: "\u5E02\u30FB\u5C0F\u4E2D\u898F\u6A21",
+          headline: "\u71D5\u4E09\u6761\u306E\u935B\u51B6\u30FB\u3082\u306E\u3065\u304F\u308A\u7523\u696D\u3068\u5B50\u80B2\u3066\u652F\u63F4",
+          tags: ["\u7523\u696D\u30FB\u96C7\u7528", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
+          details: [
+            "\u2460 \u30AA\u30FC\u30D7\u30F3\u30D5\u30A1\u30AF\u30C8\u30EA\u30FC\u3068\u5730\u5834\u88FD\u9020\u696D\u306E\u6D77\u5916\u5C55\u958B\u652F\u63F4",
+            "\u2461 \u7D66\u98DF\u8CBB\u8EFD\u6E1B\u3068\u82E5\u3044\u4E16\u4EE3\u306E\u4F4F\u5B85\u53D6\u5F97\u52A9\u6210",
+            "\u2462 \u30C7\u30B8\u30BF\u30EB\u30A4\u30CE\u30D9\u30FC\u30B7\u30E7\u30F3\u62E0\u70B9\u306E\u5F62\u6210"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15204/"
+        },
+        {
+          id: "15205",
+          region: "\u4E2D\u8D8A",
+          name: "\u67CF\u5D0E\u5E02",
+          mayorTitle: "\u685C\u4E95\u96C5\u6D69 \u5E02\u9577",
+          scaleType: "\u5E02\u30FB\u5C0F\u4E2D\u898F\u6A21",
+          headline: "\u30A8\u30CD\u30EB\u30AE\u30FC\u30B9\u30DE\u30FC\u30C8\u30B7\u30C6\u30A3\u3068\u533B\u7642\u30FB\u798F\u7949\u306E\u5145\u5B9F",
+          tags: ["\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u7523\u696D\u30FB\u96C7\u7528"],
+          details: [
+            "\u2460 \u5730\u57DF\u533B\u7642\u4F53\u5236\u306E\u78BA\u4FDD\u3068\u9AD8\u9F62\u8005\u79FB\u52D5\u4EA4\u901A\u306E\u652F\u63F4",
+            "\u2461 \u6B21\u4E16\u4EE3\u30A8\u30CD\u30EB\u30AE\u30FC\u7523\u696D\u3068\u5730\u5143\u96C7\u7528\u306E\u5275\u51FA",
+            "\u2462 \u5E02\u6C11\u751F\u6D3B\u3092\u652F\u3048\u308B\u9632\u707D\u30FB\u9632\u72AF\u30CD\u30C3\u30C8\u30EF\u30FC\u30AF\u5F37\u5316"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15205/"
+        },
+        {
+          id: "15206",
+          region: "\u4E0B\u8D8A",
+          name: "\u65B0\u767A\u7530\u5E02",
+          mayorTitle: "\u4E8C\u968E\u5802\u99A8 \u5E02\u9577",
+          scaleType: "\u5E02\u30FB\u5C0F\u4E2D\u898F\u6A21",
+          headline: "\u98DF\u306E\u5FAA\u74B0\u3068\u5B50\u80B2\u3066\u30FB\u9AD8\u9F62\u8005\u798F\u7949\u306E\u5145\u5B9F",
+          tags: ["\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066", "\u66AE\u3089\u3057\u30FB\u533B\u7642"],
+          details: [
+            "\u2460 \u30AA\u30FC\u30AC\u30CB\u30C3\u30AF\u8FB2\u696D\u3068\u5730\u7523\u5730\u6D88\u306E\u63A8\u9032",
+            "\u2461 \u9AD8\u6821\u751F\u307E\u3067\u306E\u533B\u7642\u8CBB\u52A9\u6210\u3068\u798F\u7949\u30D1\u30B9\u306E\u62E1\u5145",
+            "\u2462 \u6B74\u53F2\u30FB\u57CE\u4E0B\u753A\u3092\u751F\u304B\u3057\u305F\u89B3\u5149\u307E\u3061\u3065\u304F\u308A"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15206/"
+        },
+        {
+          id: "15208",
+          region: "\u4E2D\u8D8A",
+          name: "\u5C0F\u5343\u8C37\u5E02",
+          mayorTitle: "\u5BAE\u5D0E\u60A6\u7537 \u5E02\u9577",
+          scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u9326\u9BC9\u30FB\u9326\u7E54\u7523\u696D\u306E\u632F\u8208\u3068\u884C\u653FDX",
+          tags: ["\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u884C\u653F\u30FBDX"],
+          details: [
+            "\u2460 \u9326\u9BC9\u30FB\u4F1D\u7D71\u5DE5\u82B8\u306E\u30B0\u30ED\u30FC\u30D0\u30EB\u5C55\u958B\u3068\u89B3\u5149\u5F37\u5316",
+            "\u2461 \u6551\u6025\u533B\u7642\u4F53\u5236\u306E\u7DAD\u6301\u3068\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u4EA4\u901A\u6574\u5099",
+            "\u2462 \u96EA\u56FD\u306B\u304A\u3051\u308B\u5B89\u5168\u306A\u9664\u96EA\u652F\u63F4\u306E\u5B9F\u65BD"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15208/"
+        },
+        {
+          id: "15209",
+          region: "\u4E0B\u8D8A",
+          name: "\u52A0\u8302\u5E02",
+          mayorTitle: "\u85E4\u7530\u660E\u7F8E \u5E02\u9577",
+          scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u6850\u7BAA\u7B25\u30FB\u4F1D\u7D71\u5DE5\u82B8\u3068\u5B50\u80B2\u3066\u74B0\u5883\u306E\u6539\u5584",
+          tags: ["\u884C\u653F\u30FBDX", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
+          details: [
+            "\u2460 \u82E5\u8005\u306E\u5B9A\u4F4F\u30FB\u5B50\u80B2\u3066\u652F\u63F4\u91D1\u306E\u7D66\u4ED8",
+            "\u2461 \u900F\u660E\u6027\u306E\u9AD8\u3044\u884C\u653F\u904B\u55B6\u3068\u30AA\u30F3\u30E9\u30A4\u30F3\u7A93\u53E3\u306E\u62E1\u5145",
+            "\u2462 \u52A0\u8302\u5C71\u516C\u5712\u30FB\u5546\u5E97\u8857\u306E\u8CD1\u308F\u3044\u518D\u751F"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15209/"
+        },
+        {
+          id: "15210",
+          region: "\u4E2D\u8D8A",
+          name: "\u5341\u65E5\u753A\u5E02",
+          mayorTitle: "\u95A2\u53E3\u82B3\u53F2 \u5E02\u9577",
+          scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u5927\u5730\u306E\u82B8\u8853\u796D\u30FB\u96EA\u56FD\u6587\u5316\u3068\u5B50\u80B2\u3066\u652F\u63F4",
+          tags: ["\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066", "\u7523\u696D\u30FB\u96C7\u7528"],
+          details: [
+            "\u2460 \u5927\u5730\u306E\u82B8\u8853\u796D\u3092\u6D3B\u7528\u3057\u305F\u901A\u5E74\u89B3\u5149\u30FB\u5730\u57DF\u6D3B\u6027\u5316",
+            "\u2461 \u96EA\u56FD\u306E\u5B89\u5168\u306A\u901A\u5B66\u8DEF\u78BA\u4FDD\u3068\u5B50\u80B2\u3066\u52A9\u6210",
+            "\u2462 \u7E54\u7269\u30FB\u8FB2\u696D\u306E\u632F\u8208\u3068\u65B0\u898F\u5C31\u8FB2\u8005\u652F\u63F4"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15210/"
+        },
+        {
+          id: "15211",
+          region: "\u4E2D\u8D8A",
+          name: "\u898B\u9644\u5E02",
+          mayorTitle: "\u7A32\u7530\u654F\u6075 \u5E02\u9577",
+          scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u30B9\u30DE\u30FC\u30C8\u30A6\u30A8\u30EB\u30CD\u30B9\u307F\u3064\u3051\u3068\u5065\u5E78\u90FD\u5E02\u306E\u9032\u5316",
+          tags: ["\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066", "\u66AE\u3089\u3057\u30FB\u533B\u7642"],
+          details: [
+            "\u2460 \u5065\u5EB7\u5BFF\u547D\u5EF6\u4F38\u30D7\u30ED\u30B0\u30E9\u30E0\u3068\u6B69\u3044\u3066\u66AE\u3089\u305B\u308B\u307E\u3061\u3065\u304F\u308A",
+            "\u2461 \u5B50\u80B2\u3066\u652F\u63F4\u65BD\u8A2D\u30FB\u4FDD\u80B2\u74B0\u5883\u306E\u5145\u5B9F",
+            "\u2462 \u5730\u57DF\u9632\u707D\u30FB\u30A4\u30F3\u30D5\u30E9\u8010\u9707\u5316\u306E\u63A8\u9032"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15211/"
+        },
+        {
+          id: "15212",
+          region: "\u4E0B\u8D8A",
+          name: "\u6751\u4E0A\u5E02",
+          mayorTitle: "\u9AD8\u6A4B\u90A6\u82B3 \u5E02\u9577",
+          scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u4E09\u9762\u5DDD\u306E\u9BAD\u30FB\u6751\u4E0A\u6728\u5F6B\u5806\u6731\u3068\u5730\u57DF\u533B\u7642\u78BA\u4FDD",
+          tags: ["\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
+          details: [
+            "\u2460 \u5317\u8D8A\u5F8C\u5730\u57DF\u306E\u533B\u7642\u30CD\u30C3\u30C8\u30EF\u30FC\u30AF\u78BA\u4FDD\u3068\u6551\u6025\u4F53\u5236",
+            "\u2461 \u6C34\u7523\u696D\u30FB\u6797\u696D\u306E\u632F\u8208\u3068\u5B9A\u4F4F\u5968\u52B1\u91D1\u5236\u5EA6",
+            "\u2462 \u6751\u4E0A\u753A\u5C4B\u30FB\u6B74\u53F2\u6587\u5316\u3092\u751F\u304B\u3057\u305F\u89B3\u5149\u5275\u51FA"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15212/"
+        },
+        {
+          id: "15213",
+          region: "\u4E2D\u8D8A",
+          name: "\u71D5\u5E02",
+          mayorTitle: "\u9234\u6728\u529B \u5E02\u9577",
+          scaleType: "\u5E02\u30FB\u5C0F\u4E2D\u898F\u6A21",
+          headline: "\u6D0B\u98DF\u5668\u30FB\u30AB\u30C8\u30E9\u30EA\u30FC\u7523\u696D\u3068\u5B50\u80B2\u3066\u5FDC\u63F4",
+          tags: ["\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u7523\u696D\u30FB\u96C7\u7528"],
+          details: [
+            "\u2460 \u71D5\u30D6\u30E9\u30F3\u30C9\u306E\u30B0\u30ED\u30FC\u30D0\u30EB\u5C55\u958B\u3068\u8077\u4EBA\u80B2\u6210",
+            "\u2461 \u5168\u5929\u5019\u578B\u3053\u3069\u3082\u904A\u622F\u65BD\u8A2D\u306E\u8A2D\u7F6E\u3068\u624B\u539A\u3044\u5B50\u80B2\u3066\u652F\u63F4",
+            "\u2462 \u6C34\u5BB3\u5BFE\u7B56\u3068\u5B89\u5168\u306A\u5730\u57DF\u793E\u4F1A\u306E\u69CB\u7BC9"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15213/"
+        },
+        {
+          id: "15216",
+          region: "\u4E0A\u8D8A",
+          name: "\u7CF8\u9B5A\u5DDD\u5E02",
+          mayorTitle: "\u7C73\u7530\u5FB9 \u5E02\u9577",
+          scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u30E6\u30CD\u30B9\u30B3\u4E16\u754C\u30B8\u30AA\u30D1\u30FC\u30AF\u3068\u5730\u57DF\u533B\u7642\u4F53\u5236\u7DAD\u6301",
+          tags: ["\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u7523\u696D\u30FB\u96C7\u7528"],
+          details: [
+            "\u2460 \u30B8\u30AA\u30D1\u30FC\u30AF\u89B3\u5149\u63A8\u9032\u3068\u5730\u5834\u4F01\u696D\u30FB\u5546\u696D\u306E\u6D3B\u6027\u5316",
+            "\u2461 \u5357\u533B\u7642\u570F\u306E\u75C5\u9662\u9023\u643A\u3068\u6551\u6025\u533B\u7642\u4F53\u5236\u306E\u7DAD\u6301",
+            "\u2462 \u79FB\u4F4F\u5B9A\u4F4F\u8005\u3078\u306E\u4F4F\u5B85\u53D6\u5F97\u652F\u63F4"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15216/"
+        },
+        {
+          id: "15217",
+          region: "\u4E0A\u8D8A",
+          name: "\u5999\u9AD8\u5E02",
+          mayorTitle: "\u57CE\u6238\u82F1\u660E \u5E02\u9577",
+          scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u56FD\u969B\u30EA\u30BE\u30FC\u30C8\u30FB\u30B9\u30AD\u30FC\u89B3\u5149\u3068\u5B50\u80B2\u3066\u5B9A\u4F4F",
+          tags: ["\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066", "\u66AE\u3089\u3057\u30FB\u533B\u7642"],
+          details: [
+            "\u2460 \u56FD\u969B\u30DE\u30A6\u30F3\u30C6\u30F3\u30EA\u30BE\u30FC\u30C8\u306E\u5F62\u6210\u3068\u901A\u5E74\u89B3\u5149",
+            "\u2461 \u82E5\u8005\u4F4F\u5B85\u53D6\u5F97\u30FB\u5B50\u80B2\u3066\u652F\u63F4\u91D1\u306E\u62E1\u5145",
+            "\u2462 \u9AD8\u9F62\u8005\u306E\u79FB\u52D5\u624B\u6BB5\u3068\u533B\u7642\u30A2\u30AF\u30BB\u30B9\u306E\u78BA\u4FDD"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15217/"
+        },
+        {
+          id: "15218",
+          region: "\u4E0B\u8D8A",
+          name: "\u4E94\u6CC9\u5E02",
+          mayorTitle: "\u7530\u908A\u6B63\u5E78 \u5E02\u9577",
+          scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u30CB\u30C3\u30C8\u30FB\u30C1\u30E5\u30FC\u30EA\u30C3\u30D7\u7523\u696D\u3068\u5B50\u80B2\u3066\u74B0\u5883\u5411\u4E0A",
+          tags: ["\u7523\u696D\u30FB\u96C7\u7528", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
+          details: [
+            "\u2460 \u65E5\u672C\u4E00\u306E\u30CB\u30C3\u30C8\u7523\u5730\u30D6\u30E9\u30F3\u30C9\u5316\u3068\u8CA9\u8DEF\u62E1\u5927",
+            "\u2461 \u5B50\u80B2\u3066\u30FB\u6559\u80B2\u8CBB\u8CA0\u62C5\u306E\u8EFD\u6E1B\u3068\u82E5\u8005\u5B9A\u4F4F\u63A8\u9032",
+            "\u2462 \u6E05\u6D41\u3068\u81EA\u7136\u3092\u751F\u304B\u3057\u305F\u74B0\u5883\u3065\u304F\u308A"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15218/"
+        },
+        {
+          id: "15223",
+          region: "\u4E0B\u8D8A",
+          name: "\u963F\u8CC0\u91CE\u5E02",
+          mayorTitle: "\u52A0\u85E4\u535A\u5E78 \u5E02\u9577",
+          scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u767D\u9CE5\u306E\u74E2\u6E56\u30FB\u6709\u6A5F\u8FB2\u696D\u3068\u5B50\u80B2\u3066\u533B\u7642\u652F\u63F4",
+          tags: ["\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066", "\u66AE\u3089\u3057\u30FB\u533B\u7642"],
+          details: [
+            "\u2460 \u6709\u6A5F\u8FB2\u696D\u306E\u63A8\u9032\u3068\u5B89\u5FC3\u306A\u5B66\u6821\u7D66\u98DF\u306E\u63D0\u4F9B",
+            "\u2461 \u5730\u57DF\u533B\u7642\u30FB\u9AD8\u9F62\u8005\u30C7\u30DE\u30F3\u30C9\u30D0\u30B9\u306E\u904B\u884C\u7DAD\u6301",
+            "\u2462 \u89B3\u5149\u62E0\u70B9\u3068\u3057\u3066\u306E\u74E2\u6E56\u30FB\u4E94\u982D\u6E29\u6CC9\u90F7\u306E\u5F37\u5316"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15223/"
+        },
+        {
+          id: "15224",
+          region: "\u4F50\u6E21",
+          name: "\u4F50\u6E21\u5E02",
+          mayorTitle: "\u6E21\u8FBA\u7ADC\u4E94 \u5E02\u9577",
+          scaleType: "\u5E02\u30FB\u5C0F\u4E2D\u898F\u6A21",
+          headline: "\u4F50\u6E21\u91D1\u5C71\u4E16\u754C\u907A\u7523\u30FB\u30C8\u30AD\u306E\u5CF6\u3068\u5CF6\u5185\u533B\u7642\u30FB\u4EA4\u901A\u78BA\u4FDD",
+          tags: ["\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u7523\u696D\u30FB\u96C7\u7528"],
+          details: [
+            "\u2460 \u4F50\u6E21\u91D1\u5C71\u4E16\u754C\u907A\u7523\u3092\u751F\u304B\u3057\u305F\u89B3\u5149\u5275\u51FA\u3068\u822A\u8DEF\u652F\u63F4",
+            "\u2461 \u5CF6\u5185\u533B\u7642\u4F53\u5236\u306E\u7DAD\u6301\u3068\u30C9\u30AF\u30BF\u30FC\u30D8\u30EA\u9023\u643A",
+            "\u2462 \u82E5\u8005\u306E\u5CF6\u5185\u5C31\u8077\u52A9\u6210\u3068\u5B9A\u4F4F\u4FC3\u9032"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15224/"
+        },
+        {
+          id: "15225",
+          region: "\u4E2D\u8D8A",
+          name: "\u9B5A\u6CBC\u5E02",
+          mayorTitle: "\u5185\u7530\u5E79\u592B \u5E02\u9577",
+          scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u9B5A\u6CBC\u7523\u30B3\u30B7\u30D2\u30AB\u30EA\u3068\u96EA\u56FD\u533B\u7642\u30FB\u89B3\u5149\u632F\u8208",
+          tags: ["\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u7523\u696D\u30FB\u96C7\u7528"],
+          details: [
+            "\u2460 \u30B3\u30B7\u30D2\u30AB\u30EA\u306E\u30D6\u30E9\u30F3\u30C9\u4FDD\u8B77\u3068\u30B9\u30DE\u30FC\u30C8\u8FB2\u696D\u63A8\u9032",
+            "\u2461 \u9B5A\u6CBC\u57FA\u5E79\u75C5\u9662\u3068\u306E\u9023\u643A\u3068\u5730\u57DF\u533B\u7642\u306E\u5145\u5B9F",
+            "\u2462 \u8C6A\u96EA\u5730\u5E2F\u306E\u9053\u8DEF\u9664\u96EA\u3068\u751F\u6D3B\u57FA\u76E4\u7DAD\u6301"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15225/"
+        },
+        {
+          id: "15226",
+          region: "\u4E2D\u8D8A",
+          name: "\u5357\u9B5A\u6CBC\u5E02",
+          mayorTitle: "\u6797\u8302\u7537 \u5E02\u9577",
+          scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u96EA\u56FD\u30EA\u30BE\u30FC\u30C8\u30FB\u516B\u6D77\u5C71\u3068\u533B\u7642\u30FB\u5B50\u80B2\u3066\u5F37\u5316",
+          tags: ["\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u7523\u696D\u30FB\u96C7\u7528"],
+          details: [
+            "\u2460 \u30B9\u30AD\u30FC\u30EA\u30BE\u30FC\u30C8\u3068\u56FD\u969B\u5927\u5B66\u9023\u643A\u306B\u3088\u308B\u56FD\u969B\u89B3\u5149",
+            "\u2461 \u5730\u57DF\u533B\u7642\u30FB\u5C0F\u5150\u79D1\u4F53\u5236\u306E\u7DAD\u6301\u5F37\u5316",
+            "\u2462 \u82E5\u8005\u306E\u5730\u5143\u5C31\u696D\u30FB\u8D77\u696D\u652F\u63F4"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15226/"
+        },
+        {
+          id: "15227",
+          region: "\u4E0B\u8D8A",
+          name: "\u80CE\u5185\u5E02",
+          mayorTitle: "\u4E95\u7551\u660E\u5F66 \u5E02\u9577",
+          scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u6D0B\u529B\u767A\u96FB\u30FB\u30C1\u30E5\u30FC\u30EA\u30C3\u30D7\u3068\u9632\u707D\u30FB\u5B50\u80B2\u3066\u306E\u5145\u5B9F",
+          tags: ["\u9632\u707D\u30FB\u5B89\u5168", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
+          details: [
+            "\u2460 \u6D0B\u4E0A\u98A8\u529B\u767A\u96FB\u3068\u30AF\u30EA\u30FC\u30F3\u30A8\u30CD\u30EB\u30AE\u30FC\u306E\u6D3B\u7528\u63A8\u9032",
+            "\u2461 \u6C34\u5BB3\u30FB\u5730\u9707\u5BFE\u7B56\u3068\u907F\u96E3\u4F53\u5236\u306E\u5F37\u5316",
+            "\u2462 \u5B50\u80B2\u3066\u4E16\u4EE3\u3078\u306E\u624B\u5F53\u3068\u6559\u80B2\u74B0\u5883\u306E\u6574\u5099"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15227/"
+        },
+        {
+          id: "15307",
+          region: "\u4E0B\u8D8A",
+          name: "\u8056\u7C60\u753A",
+          mayorTitle: "\u4E00\u898B\u4E00\u592B \u753A\u9577",
+          scaleType: "\u753A\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u65B0\u6F5F\u6771\u6E2F\u30FB\u5DE5\u696D\u56E3\u5730\u3068\u884C\u8CA1\u653F\u30FB\u5B50\u80B2\u3066\u74B0\u5883",
+          tags: ["\u884C\u653F\u30FBDX", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
+          details: [
+            "\u2460 \u6E2F\u6E7E\u30FB\u5DE5\u696D\u56E3\u5730\u306E\u7A0E\u6E90\u6D3B\u7528\u306B\u3088\u308B\u624B\u539A\u3044\u798F\u7949",
+            "\u2461 \u5C0F\u4E2D\u5B66\u6821\u306EICT\u6559\u80B2\u63A8\u9032\u3068\u7D66\u98DF\u8CBB\u652F\u63F4",
+            "\u2462 \u5B89\u5168\u3067\u5FEB\u9069\u306A\u4F4F\u74B0\u5883\u306E\u6574\u5099"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15307/"
+        },
+        {
+          id: "15342",
+          region: "\u4E2D\u8D8A",
+          name: "\u5F25\u5F66\u6751",
+          mayorTitle: "\u672C\u9593\u82B3\u4E4B \u6751\u9577",
+          scaleType: "\u6751\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u5F25\u5F66\u795E\u793E\u30FB\u89B3\u5149\u3068\u5B50\u80B2\u3066\u30FB\u9AD8\u9F62\u8005\u798F\u7949\u306E\u5145\u5B9F",
+          tags: ["\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066", "\u7523\u696D\u30FB\u96C7\u7528"],
+          details: [
+            "\u2460 \u5F25\u5F66\u6E29\u6CC9\u30FB\u9580\u524D\u753A\u306E\u89B3\u5149DX\u3068\u6D3B\u6027\u5316",
+            "\u2461 \u6751\u72EC\u81EA\u306E\u7D66\u4ED8\u578B\u5968\u5B66\u91D1\u3068\u80B2\u5150\u652F\u63F4\u5236\u5EA6",
+            "\u2462 \u9AD8\u9F62\u8005\u306E\u5B89\u5FC3\u306A\u66AE\u3089\u3057\u3068\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30D0\u30B9"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15342/"
+        },
+        {
+          id: "15361",
+          region: "\u4E2D\u8D8A",
+          name: "\u7530\u4E0A\u753A",
+          mayorTitle: "\u4F50\u91CE\u6052\u96C4 \u753A\u9577",
+          scaleType: "\u753A\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u6E6F\u7530\u4E0A\u6E29\u6CC9\u30FB\u7AF9\u6797\u3068\u5730\u57DF\u533B\u7642\u30FB\u798F\u7949\u306E\u78BA\u4FDD",
+          tags: ["\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u7523\u696D\u30FB\u96C7\u7528"],
+          details: [
+            "\u2460 \u6E29\u6CC9\u30FB\u89B3\u5149\u8CC7\u6E90\u306E\u518D\u751F\u3068\u79FB\u4F4F\u30FB\u5B9A\u4F4F\u4FC3\u9032",
+            "\u2461 \u9AD8\u9F62\u8005\u30FB\u969C\u5BB3\u8005\u798F\u7949\u3068\u5730\u57DF\u4EA4\u901A\u306E\u78BA\u4FDD",
+            "\u2462 \u8FB2\u696D\u30FB\u7279\u7523\u54C1\u30CF\u30C1\u30DF\u30C4\u7B49\u306E\u632F\u8208"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15361/"
+        },
+        {
+          id: "15385",
+          region: "\u4E0B\u8D8A",
+          name: "\u963F\u8CC0\u753A",
+          mayorTitle: "\u795E\u7530\u4E00\u592B \u753A\u9577",
+          scaleType: "\u753A\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u963F\u8CC0\u91CE\u5DDD\u306E\u81EA\u7136\u3068\u904E\u758E\u30FB\u533B\u7642\u5BFE\u7B56\u306E\u63A8\u9032",
+          tags: ["\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066", "\u66AE\u3089\u3057\u30FB\u533B\u7642"],
+          details: [
+            "\u2460 \u753A\u7ACB\u75C5\u9662\u30FB\u8A3A\u7642\u6240\u306E\u4F53\u5236\u7DAD\u6301\u3068\u5F80\u8A3A\u652F\u63F4",
+            "\u2461 \u82E5\u8005\u79FB\u4F4F\u8005\u3078\u306E\u4F4F\u5B85\u53D6\u5F97\u652F\u63F4\u3068\u5B50\u80B2\u3066\u5FDC\u63F4",
+            "\u2462 \u6797\u696D\u30FB\u89B3\u5149\u8CC7\u6E90\u3092\u751F\u304B\u3057\u305F\u5730\u57DF\u518D\u751F"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15385/"
+        },
+        {
+          id: "15405",
+          region: "\u4E2D\u8D8A",
+          name: "\u51FA\u96F2\u5D0E\u753A",
+          mayorTitle: "\u4ED9\u6D77\u76F4\u6A39 \u753A\u9577",
+          scaleType: "\u753A\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u826F\u5BDB\u306E\u91CC\u30FB\u7D19\u98A8\u8239\u3068\u8CA1\u653F\u5065\u5168\u5316\u30FB\u6559\u80B2\u6295\u8CC7",
+          tags: ["\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066", "\u8CA1\u653F\u30FB\u65BD\u8A2D"],
+          details: [
+            "\u2460 \u30B3\u30F3\u30D1\u30AF\u30C8\u306A\u884C\u653F\u904B\u55B6\u3068\u8CA1\u653F\u5065\u5168\u5316",
+            "\u2461 \u5C0F\u4E2D\u4E00\u8CAB\u6559\u80B2\u306E\u63A8\u9032\u3068\u5B50\u80B2\u3066\u533B\u7642\u8CBB\u7121\u511F\u5316",
+            "\u2462 \u59BB\u5165\u308A\u8857\u4E26\u307F\u306E\u4FDD\u5B58\u3068\u89B3\u5149\u5275\u51FA"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15405/"
+        },
+        {
+          id: "15461",
+          region: "\u4E2D\u8D8A",
+          name: "\u6E6F\u6CA2\u753A",
+          mayorTitle: "\u7530\u6751\u6B63\u5E78 \u753A\u9577",
+          scaleType: "\u753A\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u82D7\u5834\u30FB\u30EA\u30BE\u30FC\u30C8\u90FD\u5E02\u632F\u8208\u3068\u753A\u6C11\u5B50\u80B2\u3066\u652F\u63F4",
+          tags: ["\u7523\u696D\u30FB\u96C7\u7528", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
+          details: [
+            "\u2460 \u30EA\u30BE\u30FC\u30C8\u30DE\u30F3\u30B7\u30E7\u30F3\u306E\u9069\u6B63\u7BA1\u7406\u3068\u901A\u5E74\u89B3\u5149\u632F\u8208",
+            "\u2461 \u753A\u5185\u5150\u7AE5\u3078\u306E\u624B\u539A\u3044\u6559\u80B2\u30FB\u5B50\u80B2\u3066\u88DC\u52A9\u91D1",
+            "\u2462 \u56FD\u969B\u7684\u30B9\u30AD\u30FC\u30EA\u30BE\u30FC\u30C8\u3068\u3057\u3066\u306E\u30A4\u30F3\u30D5\u30E9\u6574\u5099"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15461/"
+        },
+        {
+          id: "15482",
+          region: "\u4E2D\u8D8A",
+          name: "\u6D25\u5357\u753A",
+          mayorTitle: "\u6851\u539F\u60A0 \u753A\u9577",
+          scaleType: "\u753A\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u6CB3\u5CB8\u6BB5\u4E18\u30FB\u96EA\u56FD\u533B\u7642\u3068\u82E5\u3044\u4E16\u4EE3\u306E\u307E\u3061\u3065\u304F\u308A",
+          tags: ["\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
+          details: [
+            "\u2460 \u82E5\u3044\u4E16\u4EE3\u306E\u753A\u653F\u53C2\u52A0\u3068\u5B50\u80B2\u3066\u30FB\u6559\u80B2\u6295\u8CC7",
+            "\u2461 \u56FD\u4FDD\u75C5\u9662\u306E\u7DAD\u6301\u3068\u8C6A\u96EA\u9664\u96EA\u5BFE\u7B56\u306E\u5F37\u5316",
+            "\u2462 \u6D25\u5357\u3072\u307E\u308F\u308A\u5E83\u5834\u7B49\u306E\u89B3\u5149\u30D6\u30E9\u30F3\u30C7\u30A3\u30F3\u30B0"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15482/"
+        },
+        {
+          id: "15504",
+          region: "\u4E2D\u8D8A",
+          name: "\u5208\u7FBD\u6751",
+          mayorTitle: "\u54C1\u7530\u5B8F\u4E00 \u6751\u9577",
+          scaleType: "\u6751\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u30A8\u30CD\u30EB\u30AE\u30FC\u7523\u696D\u6D3B\u7528\u3068\u6751\u72EC\u81EA\u798F\u7949\u30FB\u884C\u653FDX",
+          tags: ["\u7523\u696D\u30FB\u96C7\u7528", "\u884C\u653F\u30FBDX"],
+          details: [
+            "\u2460 \u6751\u72EC\u81EA\u306E\u7D66\u4ED8\u91D1\u30FB\u624B\u539A\u3044\u798F\u7949\u30B5\u30FC\u30D3\u30B9\u306E\u7DAD\u6301",
+            "\u2461 \u30B9\u30DE\u30FC\u30C8\u8FB2\u696D\u3068\u30C7\u30B8\u30BF\u30EB\u6751\u5F79\u5834\u306E\u63A8\u9032",
+            "\u2462 \u9632\u707D\u4F53\u5236\u306E\u5F37\u5316\u3068\u6751\u5185\u30A4\u30F3\u30D5\u30E9\u6574\u5099"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15504/"
+        },
+        {
+          id: "15581",
+          region: "\u4E0B\u8D8A",
+          name: "\u95A2\u5DDD\u6751",
+          mayorTitle: "\u52A0\u85E4\u5F18 \u6751\u9577",
+          scaleType: "\u6751\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u9632\u707D\u30A4\u30F3\u30D5\u30E9\u518D\u5EFA\u3068\u5B89\u5168\u5B89\u5FC3\u306A\u6751\u3065\u304F\u308A",
+          tags: ["\u9632\u707D\u30FB\u5B89\u5168", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
+          details: [
+            "\u2460 \u6CB3\u5DDD\u6539\u4FEE\u30FB\u9632\u707D\u30A4\u30F3\u30D5\u30E9\u306E\u65E9\u671F\u5B8C\u6210",
+            "\u2461 \u5168\u5150\u7AE5\u3078\u306E\u5B66\u7FD2\u652F\u63F4\u3068\u6751\u5185\u96C7\u7528\u5275\u51FA",
+            "\u2462 \u9AD8\u9F62\u8005\u898B\u5B88\u308A\u30CD\u30C3\u30C8\u30EF\u30FC\u30AF\u306E\u5F37\u5316"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15581/"
+        },
+        {
+          id: "15586",
+          region: "\u4E0B\u8D8A",
+          name: "\u7C9F\u5CF6\u6D66\u6751",
+          mayorTitle: "\u8107\u5DDD\u5584\u4EAE \u6751\u9577",
+          scaleType: "\u6751\u30FB\u5C0F\u898F\u6A21",
+          headline: "\u96E2\u5CF6\u632F\u8208\u30FB\u5929\u7136\u6F01\u696D\u3068\u30AA\u30F3\u30E9\u30A4\u30F3\u533B\u7642\u30FB\u6559\u80B2",
+          tags: ["\u884C\u653F\u30FBDX", "\u66AE\u3089\u3057\u30FB\u533B\u7642"],
+          details: [
+            "\u2460 \u96E2\u5CF6\u306E\u30AA\u30F3\u30E9\u30A4\u30F3\u8A3A\u7642\u30FB\u9060\u9694\u6559\u80B2\u306E\u63A8\u9032",
+            "\u2461 \u5CF6\u5185\u5B9A\u671F\u822A\u8DEF\u306E\u7DAD\u6301\u3068\u6C34\u7523\u696D\u30FB\u89B3\u5149\u6D3B\u6027\u5316",
+            "\u2462 \u79FB\u4F4F\u5B9A\u4F4F\u652F\u63F4\u3068\u5CF6\u5185\u5B50\u80B2\u3066\u5FDC\u63F4"
+          ],
+          officialUrl: "https://koyaku.47story.jp/city/15586/"
+        }
+      ];
     }
-  ];
-  var QUESTIONS = [
-    {
-      q: "\u65B0\u6F5F\u3067\u66AE\u3089\u3059\u3046\u3048\u3067\u3001\u5B50\u80B2\u3066\u3084\u5B66\u3073\u306E\u74B0\u5883\u3067\u6700\u3082\u91CD\u8996\u3057\u305F\u3044\u653F\u7B56\u306F\uFF1F",
-      options: [
-        { text: "\u5968\u5B66\u91D1\u8FD4\u6E08\u306E\u7D66\u4ED8\u652F\u63F4\u3084\u3001\u9AD8\u6821\u751F\u307E\u3067\u306E\u533B\u7642\u8CBB\u7121\u511F\u5316\u3092\u9032\u3081\u3066\u307B\u3057\u3044", weights: { \u6559\u80B2: 2 } },
-        { text: "\u884C\u653F\u624B\u7D9A\u304D\u3084\u8A3C\u660E\u66F8\u767A\u884C\u304C\u30B9\u30DE\u30DB\u3067\u7C21\u5358\u306B\u5B8C\u7D50\u3067\u304D\u308B\u3088\u3046\u306B\u306A\u3063\u3066\u307B\u3057\u3044", weights: { \u30C7\u30B8\u30BF\u30EB: 2 } }
-      ]
-    },
-    {
-      q: "\u5C31\u8077\u3084\u5730\u5143\u306E\u4ED5\u4E8B\u306B\u3064\u3044\u3066\u3001\u3069\u306E\u3088\u3046\u306A\u53D6\u308A\u7D44\u307F\u3092\u671F\u5F85\u3059\u308B\uFF1F",
-      options: [
-        { text: "\u5730\u5143\u4F01\u696D\u3084\u5730\u5834\u7523\u696D\uFF08\u30E2\u30CE\u3065\u304F\u308A\u30FB\u8FB2\u696D\uFF09\u3078\u306E\u652F\u63F4\u3067\u8CC3\u4E0A\u3052\u3084\u96C7\u7528\u3092\u5897\u3084\u3057\u3066\u307B\u3057\u3044", weights: { \u7D4C\u6E08: 2 } },
-        { text: "IT\u4F01\u696D\u306E\u8A98\u81F4\u3084\u30EA\u30E2\u30FC\u30C8\u30EF\u30FC\u30AF\u74B0\u5883\u3092\u6574\u3048\u3001\u770C\u5916\u306B\u51FA\u305A\u306B\u50CD\u3051\u308B\u9078\u629E\u80A2\u304C\u307B\u3057\u3044", weights: { \u30C7\u30B8\u30BF\u30EB: 1, \u7D4C\u6E08: 1 } }
-      ]
-    },
-    {
-      q: "\u3053\u308C\u304B\u3089\u306E\u65B0\u6F5F\u306E\u8FB2\u696D\u3084\u81EA\u7136\u30FB\u30A8\u30CD\u30EB\u30AE\u30FC\u306B\u3064\u3044\u3066\u671B\u3080\u306E\u306F\uFF1F",
-      options: [
-        { text: "\u65B0\u6F5F\u7C73\u30FB\u8FB2\u7523\u7269\u306E\u30D6\u30E9\u30F3\u30C9\u5F37\u5316\u3068\u30B9\u30DE\u30FC\u30C8\u8FB2\u696D\u3067\u300E\u7A3C\u3052\u308B\u8FB2\u696D\u300F\u306B\u3057\u3066\u307B\u3057\u3044", weights: { \u74B0\u5883: 2, \u7D4C\u6E08: 1 } },
-        { text: "\u518D\u751F\u53EF\u80FD\u30A8\u30CD\u30EB\u30AE\u30FC\u306E\u666E\u53CA\u3067\u96FB\u6C17\u4EE3\u3092\u6291\u3048\u3001\u74B0\u5883\u3068\u81EA\u7136\u3092\u5B88\u3063\u3066\u307B\u3057\u3044", weights: { \u74B0\u5883: 2, \u5730\u57DF: 1 } }
-      ]
-    },
-    {
-      q: "\u533B\u7642\u3084\u65E5\u5E38\u306E\u66AE\u3089\u3057\u3067\u3001\u6700\u3082\u5B89\u5FC3\u3067\u304D\u308B\u653F\u7B56\u306F\uFF1F",
-      options: [
-        { text: "\u5730\u57DF\u3054\u3068\u306E\u5C0F\u5150\u79D1\u30FB\u7523\u5A66\u4EBA\u79D1\u30FB\u6551\u6025\u533B\u7642\u4F53\u5236\u3092\u7DAD\u6301\u30FB\u5F37\u5316\u3057\u3066\u307B\u3057\u3044", weights: { \u798F\u7949: 2 } },
-        { text: "\u30D0\u30B9\u8DEF\u7DDA\u3084\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u4EA4\u901A\u3092\u7DAD\u6301\u3057\u3001\u901A\u5B66\u3084\u9AD8\u9F62\u8005\u306E\u79FB\u52D5\u624B\u6BB5\u3092\u5B88\u3063\u3066\u307B\u3057\u3044", weights: { \u798F\u7949: 1, \u5730\u57DF: 1 } }
-      ]
-    },
-    {
-      q: "\u51AC\u306E\u66AE\u3089\u3057\u3084\u9632\u72AF\u30FB\u9632\u707D\u5BFE\u7B56\u3067\u529B\u3092\u5165\u308C\u3066\u307B\u3057\u3044\u3053\u3068\u306F\uFF1F",
-      options: [
-        { text: "\u8C6A\u96EA\u5730\u5E2F\u306E\u9664\u96EA\u652F\u63F4\u3084\u8001\u673D\u5316\u30A4\u30F3\u30D5\u30E9\u306E\u6574\u5099\u3067\u51AC\u5834\u306E\u5B89\u5FC3\u30FB\u5B89\u5168\u3092\u5B88\u3063\u3066\u307B\u3057\u3044", weights: { \u5730\u57DF: 2 } },
-        { text: "\u5897\u3048\u308B\u7A7A\u304D\u5BB6\u3092\u30EA\u30CE\u30D9\u30FC\u30B7\u30E7\u30F3\u3057\u3066\u3001\u82E5\u8005\u306E\u4F4F\u307E\u3044\u3084\u4EA4\u6D41\u62E0\u70B9\u306B\u518D\u751F\u3057\u3066\u307B\u3057\u3044", weights: { \u5730\u57DF: 1, \u7D4C\u6E08: 1 } }
-      ]
-    },
-    {
-      q: "\u65B0\u6F5F\u306E\u90FD\u5E02\u3065\u304F\u308A\u3084\u884C\u653F\u30FB\u8CA1\u653F\u306B\u3064\u3044\u3066\u6C42\u3081\u308B\u306E\u306F\uFF1F",
-      options: [
-        { text: "\u65B0\u6F5F\u99C5\u5468\u8FBA\u3084\u4E2D\u5FC3\u90FD\u5E02\u306E\u518D\u958B\u767A\u3092\u9032\u3081\u3001\u4EA4\u901A\u3068\u8857\u306E\u8CD1\u308F\u3044\u3092\u5411\u4E0A\u3055\u305B\u3066\u307B\u3057\u3044", weights: { \u5730\u57DF: 2, \u7D4C\u6E08: 1 } },
-        { text: "\u516C\u5171\u65BD\u8A2D\u306E\u30E0\u30C0\u3092\u6291\u3048\u3001\u5B50\u80B2\u3066\u4E16\u5E2F\u3084\u82E5\u8005\u3078\u306E\u76F4\u63A5\u652F\u63F4\u306B\u8CA1\u653F\u3092\u4F7F\u3063\u3066\u307B\u3057\u3044", weights: { \u6559\u80B2: 1, \u30C7\u30B8\u30BF\u30EB: 1 } }
-      ]
+  });
+
+  // src/data/elections.ts
+  var elections_exports = {};
+  __export(elections_exports, {
+    ELECTION_YEAR_FILTERS: () => ELECTION_YEAR_FILTERS,
+    OFFICIAL_SCHEDULE_URL: () => OFFICIAL_SCHEDULE_URL,
+    UPCOMING_ELECTIONS: () => UPCOMING_ELECTIONS
+  });
+  var OFFICIAL_SCHEDULE_URL, UPCOMING_ELECTIONS, ELECTION_YEAR_FILTERS;
+  var init_elections = __esm({
+    "src/data/elections.ts"() {
+      OFFICIAL_SCHEDULE_URL = "https://www.pref.niigata.lg.jp/site/senkyo/list803.html";
+      UPCOMING_ELECTIONS = [
+        { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u80CE\u5185\u5E02\u9577\u9078\u6319", notice: "9\u67086\u65E5", day: "9\u670813\u65E5", isoDate: "2026-09-13" },
+        { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u65B0\u6F5F\u5E02\u9577\u9078\u6319", notice: "10\u670811\u65E5", day: "10\u670825\u65E5", isoDate: "2026-10-25" },
+        { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u71D5\u5E02\u8B70\u4F1A\u8B70\u54E1\u9078\u6319", notice: "10\u670811\u65E5", day: "10\u670818\u65E5", isoDate: "2026-10-18" },
+        { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u898B\u9644\u5E02\u8B70\u4F1A\u8B70\u54E1\u9078\u6319", notice: "10\u670818\u65E5", day: "10\u670825\u65E5", isoDate: "2026-10-25" },
+        { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u5999\u9AD8\u5E02\u9577\u9078\u6319", notice: "11\u67088\u65E5", day: "11\u670815\u65E5", isoDate: "2026-11-15" },
+        { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u5C0F\u5343\u8C37\u5E02\u9577\u9078\u6319", notice: "11\u67088\u65E5", day: "11\u670815\u65E5", isoDate: "2026-11-15" },
+        { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u65B0\u767A\u7530\u5E02\u9577\u9078\u6319", notice: "11\u670815\u65E5", day: "11\u670822\u65E5", isoDate: "2026-11-22" },
+        { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u963F\u8CC0\u753A\u9577\u9078\u6319", notice: "11\u670817\u65E5", day: "11\u670822\u65E5", isoDate: "2026-11-22" },
+        { year: "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D", yearLabel: "\u4EE4\u548C9\u5E74", name: "\u7B2C21\u56DE \u7D71\u4E00\u5730\u65B9\u9078\u6319 (\u65B0\u6F5F\u770C\u8B70\u4F1A\u8B70\u54E1\u9078\u6319)", notice: "3\u6708\u4E0B\u65EC", day: "4\u670811\u65E5(\u4E88\u5B9A)", isoDate: "2027-04-11" },
+        { year: "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D", yearLabel: "\u4EE4\u548C9\u5E74", name: "\u65B0\u6F5F\u5E02\u8B70\u4F1A\u8B70\u54E1\u4E00\u822C\u9078\u6319", notice: "3\u6708\u4E0B\u65EC", day: "4\u670811\u65E5(\u4E88\u5B9A)", isoDate: "2027-04-11" },
+        { year: "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D", yearLabel: "\u4EE4\u548C9\u5E74", name: "\u9577\u5CA1\u5E02\u9577\u9078\u6319 (\u4EFB\u671F\u6E80\u4E86 10\u6708)", notice: "10\u6708", day: "10\u6708\u4E0B\u65EC(\u4E88\u5B9A)", isoDate: "2027-10-24" },
+        { year: "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D", yearLabel: "\u4EE4\u548C9\u5E74", name: "\u4E0A\u8D8A\u5E02\u9577\u9078\u6319 (\u4EFB\u671F\u6E80\u4E86 11\u6708)", notice: "11\u6708", day: "11\u6708\u4E0B\u65EC(\u4E88\u5B9A)", isoDate: "2027-11-21" }
+      ];
+      ELECTION_YEAR_FILTERS = ["\u3059\u3079\u3066", "\u4EE4\u548C8\u5E74\u5EA6", "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D"];
     }
-  ];
-  var TYPE_NAMES = {
-    \u6559\u80B2: "\u5B50\u80B2\u3066\u30FB\u5B66\u3073\u672A\u6765\u91CD\u8996\u30BF\u30A4\u30D7",
-    \u7D4C\u6E08: "\u7523\u696D\u30FB\u96C7\u7528\u30FB\u8CC3\u4E0A\u3052\u91CD\u8996\u30BF\u30A4\u30D7",
-    \u74B0\u5883: "\u8FB2\u696D\u30FB\u74B0\u5883\u5171\u751F\u30BF\u30A4\u30D7",
-    \u30C7\u30B8\u30BF\u30EB: "\u884C\u653FDX\u30FB\u30B9\u30DE\u30FC\u30C8\u751F\u6D3B\u91CD\u8996\u30BF\u30A4\u30D7",
-    \u798F\u7949: "\u533B\u7642\u30FB\u798F\u7949\u30FB\u5B89\u5FC3\u751F\u6D3B\u91CD\u8996\u30BF\u30A4\u30D7",
-    \u5730\u57DF: "\u307E\u3061\u3065\u304F\u308A\u30FB\u9632\u707D\u91CD\u8996\u30BF\u30A4\u30D7"
-  };
-  var MUNICIPAL_PLEDGES = [
-    {
-      id: "gov",
-      region: "\u770C\u5168\u57DF",
-      name: "\u65B0\u6F5F\u770C\u77E5\u4E8B (\u82B1\u89D2\u82F1\u4E16)",
-      mayorTitle: "\u65B0\u6F5F\u770C\u77E5\u4E8B",
-      scaleType: "\u770C\u5168\u57DF",
-      headline: "\u4EBA\u53E3\u6E1B\u5C11\u3068\u707D\u5BB3\u30EA\u30B9\u30AF\u306B\u7ACB\u3061\u5411\u304B\u3046\u3001\u7523\u696D\u30FB\u66AE\u3089\u3057\u306E\u57FA\u76E4\u7D44\u307F\u66FF\u3048",
-      tags: ["\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066", "\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u7523\u696D\u30FB\u96C7\u7528"],
-      details: [
-        "\u2460 \u5C31\u8FB2\u30FB\u5B9A\u4F4F\u652F\u63F4\u3068\u4EBA\u53E3\u5897\u52A0\u57FA\u76E4\u306E\u78BA\u7ACB",
-        "\u2461 \u5B89\u5FC3\u30FB\u5B89\u5168\u306A\u770C\u571F\u3065\u304F\u308A\u3068\u8C6A\u96EA\u30FB\u707D\u5BB3\u5BFE\u7B56\u306E\u63A8\u9032",
-        "\u2462 \u5730\u5834\u7523\u696D\u30FB\u65B0\u6F5F\u7C73\u306E\u6D77\u5916\u30D6\u30E9\u30F3\u30C9\u5C55\u958B\u3068\u770C\u5185\u8CC3\u4E0A\u3052\u63A8\u9032"
-      ],
-      officialUrl: "https://koyaku.47story.jp/gov/niigata"
-    },
-    {
-      id: "15100",
-      region: "\u4E0B\u8D8A",
-      name: "\u65B0\u6F5F\u5E02",
-      mayorTitle: "\u4E2D\u539F\u516B\u4E00 \u5E02\u9577",
-      scaleType: "\u653F\u4EE4\u6307\u5B9A\u90FD\u5E02",
-      headline: "\u90FD\u5FC3\u306E\u8CD1\u308F\u3044\u5275\u51FA\u3068\u62E0\u70B9\u30BD\u30D5\u30A3\u30A2\u578B\u90FD\u5E02\u306E\u69CB\u7BC9",
-      tags: ["\u7523\u696D\u30FB\u96C7\u7528", "\u66AE\u3089\u3057\u30FB\u533B\u7642"],
-      details: [
-        "\u2460 \u65B0\u6F5F\u99C5\u5468\u8FBA\u518D\u958B\u767A\u3068\u4EA4\u901A\u30CF\u30D6\u6A5F\u80FD\u306E\u5F37\u5316",
-        "\u2461 \u5B50\u80B2\u3066\u4E16\u5E2F\u306E\u533B\u7642\u8CBB\u8CA0\u62C5\u8EFD\u6E1B\u3068\u6559\u80B2\u74B0\u5883\u306E\u5411\u4E0A",
-        "\u2462 \u62E0\u70B9\u30BD\u30D5\u30A3\u30A2\u578B\u90FD\u5E02\u3068\u3057\u3066\u306E\u9632\u707D\u30FB\u30C7\u30B8\u30BF\u30EB\u884C\u653F\u63A8\u9032"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15100/"
-    },
-    {
-      id: "15202",
-      region: "\u4E2D\u8D8A",
-      name: "\u9577\u5CA1\u5E02",
-      mayorTitle: "\u78EF\u7530\u9054\u4F38 \u5E02\u9577",
-      scaleType: "\u5730\u65B9\u4E2D\u6838\u5E02",
-      headline: "\u30A4\u30CE\u30D9\u30FC\u30B7\u30E7\u30F3\u63A8\u9032\u3068\u5730\u57DF\u9632\u707D\u30FB\u5B50\u80B2\u3066\u306E\u5145\u5B9F",
-      tags: ["\u9632\u707D\u30FB\u5B89\u5168", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
-      details: [
-        "\u2460 \u8C6A\u96EA\u5BFE\u7B56\u3068\u30C7\u30B8\u30BF\u30EB\u9632\u707D\u30A4\u30F3\u30D5\u30E9\u306E\u63A8\u9032",
-        "\u2461 \u7C73\u767E\u4FF5\u306E\u7CBE\u795E\u306B\u57FA\u3065\u304F\u6B21\u4E16\u4EE3\u4EBA\u6750\u80B2\u6210\u3068\u5B50\u80B2\u3066\u5B9A\u4F4F\u652F\u63F4",
-        "\u2462 \u9577\u5CA1\u82B1\u706B\u3068\u6280\u8853\u9769\u65B0\u3092\u751F\u304B\u3057\u305F\u5730\u65B9\u5275\u751F"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15202/"
-    },
-    {
-      id: "15222",
-      region: "\u4E0A\u8D8A",
-      name: "\u4E0A\u8D8A\u5E02",
-      mayorTitle: "\u4E2D\u5DDD\u5E79\u592A \u5E02\u9577",
-      scaleType: "\u5730\u65B9\u4E2D\u6838\u5E02",
-      headline: "\u901A\u5E74\u89B3\u5149\u30FB\u7523\u696D\u632F\u8208\u3068\u884C\u653FDX\u63A8\u9032",
-      tags: ["\u884C\u653F\u30FBDX", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
-      details: [
-        "\u2460 \u884C\u653F\u624B\u7D9A\u304D\u306E\u30AA\u30F3\u30E9\u30A4\u30F3\u5316\u3068\u30B9\u30DE\u30FC\u30C8\u5E02\u5F79\u6240",
-        "\u2461 \u901A\u5E74\u89B3\u5149\u306E\u5F37\u5316\u3068\u8FB2\u6797\u6C34\u7523\u696D\u306E\u6240\u5F97\u5411\u4E0A\u652F\u63F4",
-        "\u2462 \u5730\u57DF\u4EA4\u901A\u30CD\u30C3\u30C8\u30EF\u30FC\u30AF\u306E\u7DAD\u6301\u3068\u5B50\u80B2\u3066\u74B0\u5883\u6574\u5099"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15222/"
-    },
-    {
-      id: "15204",
-      region: "\u4E2D\u8D8A",
-      name: "\u4E09\u6761\u5E02",
-      mayorTitle: "\u6EDD\u6CA2\u4EAE \u5E02\u9577",
-      scaleType: "\u5E02\u30FB\u5C0F\u4E2D\u898F\u6A21",
-      headline: "\u71D5\u4E09\u6761\u306E\u935B\u51B6\u30FB\u3082\u306E\u3065\u304F\u308A\u7523\u696D\u3068\u5B50\u80B2\u3066\u652F\u63F4",
-      tags: ["\u7523\u696D\u30FB\u96C7\u7528", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
-      details: [
-        "\u2460 \u30AA\u30FC\u30D7\u30F3\u30D5\u30A1\u30AF\u30C8\u30EA\u30FC\u3068\u5730\u5834\u88FD\u9020\u696D\u306E\u6D77\u5916\u5C55\u958B\u652F\u63F4",
-        "\u2461 \u7D66\u98DF\u8CBB\u8EFD\u6E1B\u3068\u82E5\u3044\u4E16\u4EE3\u306E\u4F4F\u5B85\u53D6\u5F97\u52A9\u6210",
-        "\u2462 \u30C7\u30B8\u30BF\u30EB\u30A4\u30CE\u30D9\u30FC\u30B7\u30E7\u30F3\u62E0\u70B9\u306E\u5F62\u6210"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15204/"
-    },
-    {
-      id: "15205",
-      region: "\u4E2D\u8D8A",
-      name: "\u67CF\u5D0E\u5E02",
-      mayorTitle: "\u685C\u4E95\u96C5\u6D69 \u5E02\u9577",
-      scaleType: "\u5E02\u30FB\u5C0F\u4E2D\u898F\u6A21",
-      headline: "\u30A8\u30CD\u30EB\u30AE\u30FC\u30B9\u30DE\u30FC\u30C8\u30B7\u30C6\u30A3\u3068\u533B\u7642\u30FB\u798F\u7949\u306E\u5145\u5B9F",
-      tags: ["\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u7523\u696D\u30FB\u96C7\u7528"],
-      details: [
-        "\u2460 \u5730\u57DF\u533B\u7642\u4F53\u5236\u306E\u78BA\u4FDD\u3068\u9AD8\u9F62\u8005\u79FB\u52D5\u4EA4\u901A\u306E\u652F\u63F4",
-        "\u2461 \u6B21\u4E16\u4EE3\u30A8\u30CD\u30EB\u30AE\u30FC\u7523\u696D\u3068\u5730\u5143\u96C7\u7528\u306E\u5275\u51FA",
-        "\u2462 \u5E02\u6C11\u751F\u6D3B\u3092\u652F\u3048\u308B\u9632\u707D\u30FB\u9632\u72AF\u30CD\u30C3\u30C8\u30EF\u30FC\u30AF\u5F37\u5316"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15205/"
-    },
-    {
-      id: "15206",
-      region: "\u4E0B\u8D8A",
-      name: "\u65B0\u767A\u7530\u5E02",
-      mayorTitle: "\u4E8C\u968E\u5802\u99A8 \u5E02\u9577",
-      scaleType: "\u5E02\u30FB\u5C0F\u4E2D\u898F\u6A21",
-      headline: "\u98DF\u306E\u5FAA\u74B0\u3068\u5B50\u80B2\u3066\u30FB\u9AD8\u9F62\u8005\u798F\u7949\u306E\u5145\u5B9F",
-      tags: ["\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066", "\u66AE\u3089\u3057\u30FB\u533B\u7642"],
-      details: [
-        "\u2460 \u30AA\u30FC\u30AC\u30CB\u30C3\u30AF\u8FB2\u696D\u3068\u5730\u7523\u5730\u6D88\u306E\u63A8\u9032",
-        "\u2461 \u9AD8\u6821\u751F\u307E\u3067\u306E\u533B\u7642\u8CBB\u52A9\u6210\u3068\u798F\u7949\u30D1\u30B9\u306E\u62E1\u5145",
-        "\u2462 \u6B74\u53F2\u30FB\u57CE\u4E0B\u753A\u3092\u751F\u304B\u3057\u305F\u89B3\u5149\u307E\u3061\u3065\u304F\u308A"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15206/"
-    },
-    {
-      id: "15208",
-      region: "\u4E2D\u8D8A",
-      name: "\u5C0F\u5343\u8C37\u5E02",
-      mayorTitle: "\u5BAE\u5D0E\u60A6\u7537 \u5E02\u9577",
-      scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u9326\u9BC9\u30FB\u9326\u7E54\u7523\u696D\u306E\u632F\u8208\u3068\u884C\u653FDX",
-      tags: ["\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u884C\u653F\u30FBDX"],
-      details: [
-        "\u2460 \u9326\u9BC9\u30FB\u4F1D\u7D71\u5DE5\u82B8\u306E\u30B0\u30ED\u30FC\u30D0\u30EB\u5C55\u958B\u3068\u89B3\u5149\u5F37\u5316",
-        "\u2461 \u6551\u6025\u533B\u7642\u4F53\u5236\u306E\u7DAD\u6301\u3068\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u4EA4\u901A\u6574\u5099",
-        "\u2462 \u96EA\u56FD\u306B\u304A\u3051\u308B\u5B89\u5168\u306A\u9664\u96EA\u652F\u63F4\u306E\u5B9F\u65BD"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15208/"
-    },
-    {
-      id: "15209",
-      region: "\u4E0B\u8D8A",
-      name: "\u52A0\u8302\u5E02",
-      mayorTitle: "\u85E4\u7530\u660E\u7F8E \u5E02\u9577",
-      scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u6850\u7BAA\u7B25\u30FB\u4F1D\u7D71\u5DE5\u82B8\u3068\u5B50\u80B2\u3066\u74B0\u5883\u306E\u6539\u5584",
-      tags: ["\u884C\u653F\u30FBDX", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
-      details: [
-        "\u2460 \u82E5\u8005\u306E\u5B9A\u4F4F\u30FB\u5B50\u80B2\u3066\u652F\u63F4\u91D1\u306E\u7D66\u4ED8",
-        "\u2461 \u900F\u660E\u6027\u306E\u9AD8\u3044\u884C\u653F\u904B\u55B6\u3068\u30AA\u30F3\u30E9\u30A4\u30F3\u7A93\u53E3\u306E\u62E1\u5145",
-        "\u2462 \u52A0\u8302\u5C71\u516C\u5712\u30FB\u5546\u5E97\u8857\u306E\u8CD1\u308F\u3044\u518D\u751F"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15209/"
-    },
-    {
-      id: "15210",
-      region: "\u4E2D\u8D8A",
-      name: "\u5341\u65E5\u753A\u5E02",
-      mayorTitle: "\u95A2\u53E3\u82B3\u53F2 \u5E02\u9577",
-      scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u5927\u5730\u306E\u82B8\u8853\u796D\u30FB\u96EA\u56FD\u6587\u5316\u3068\u5B50\u80B2\u3066\u652F\u63F4",
-      tags: ["\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066", "\u7523\u696D\u30FB\u96C7\u7528"],
-      details: [
-        "\u2460 \u5927\u5730\u306E\u82B8\u8853\u796D\u3092\u6D3B\u7528\u3057\u305F\u901A\u5E74\u89B3\u5149\u30FB\u5730\u57DF\u6D3B\u6027\u5316",
-        "\u2461 \u96EA\u56FD\u306E\u5B89\u5168\u306A\u901A\u5B66\u8DEF\u78BA\u4FDD\u3068\u5B50\u80B2\u3066\u52A9\u6210",
-        "\u2462 \u7E54\u7269\u30FB\u8FB2\u696D\u306E\u632F\u8208\u3068\u65B0\u898F\u5C31\u8FB2\u8005\u652F\u63F4"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15210/"
-    },
-    {
-      id: "15211",
-      region: "\u4E2D\u8D8A",
-      name: "\u898B\u9644\u5E02",
-      mayorTitle: "\u7A32\u7530\u654F\u6075 \u5E02\u9577",
-      scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u30B9\u30DE\u30FC\u30C8\u30A6\u30A8\u30EB\u30CD\u30B9\u307F\u3064\u3051\u3068\u5065\u5E78\u90FD\u5E02\u306E\u9032\u5316",
-      tags: ["\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066", "\u66AE\u3089\u3057\u30FB\u533B\u7642"],
-      details: [
-        "\u2460 \u5065\u5EB7\u5BFF\u547D\u5EF6\u4F38\u30D7\u30ED\u30B0\u30E9\u30E0\u3068\u6B69\u3044\u3066\u66AE\u3089\u305B\u308B\u307E\u3061\u3065\u304F\u308A",
-        "\u2461 \u5B50\u80B2\u3066\u652F\u63F4\u65BD\u8A2D\u30FB\u4FDD\u80B2\u74B0\u5883\u306E\u5145\u5B9F",
-        "\u2462 \u5730\u57DF\u9632\u707D\u30FB\u30A4\u30F3\u30D5\u30E9\u8010\u9707\u5316\u306E\u63A8\u9032"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15211/"
-    },
-    {
-      id: "15212",
-      region: "\u4E0B\u8D8A",
-      name: "\u6751\u4E0A\u5E02",
-      mayorTitle: "\u9AD8\u6A4B\u90A6\u82B3 \u5E02\u9577",
-      scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u4E09\u9762\u5DDD\u306E\u9BAD\u30FB\u6751\u4E0A\u6728\u5F6B\u5806\u6731\u3068\u5730\u57DF\u533B\u7642\u78BA\u4FDD",
-      tags: ["\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
-      details: [
-        "\u2460 \u5317\u8D8A\u5F8C\u5730\u57DF\u306E\u533B\u7642\u30CD\u30C3\u30C8\u30EF\u30FC\u30AF\u78BA\u4FDD\u3068\u6551\u6025\u4F53\u5236",
-        "\u2461 \u6C34\u7523\u696D\u30FB\u6797\u696D\u306E\u632F\u8208\u3068\u5B9A\u4F4F\u5968\u52B1\u91D1\u5236\u5EA6",
-        "\u2462 \u6751\u4E0A\u753A\u5C4B\u30FB\u6B74\u53F2\u6587\u5316\u3092\u751F\u304B\u3057\u305F\u89B3\u5149\u5275\u51FA"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15212/"
-    },
-    {
-      id: "15213",
-      region: "\u4E2D\u8D8A",
-      name: "\u71D5\u5E02",
-      mayorTitle: "\u9234\u6728\u529B \u5E02\u9577",
-      scaleType: "\u5E02\u30FB\u5C0F\u4E2D\u898F\u6A21",
-      headline: "\u6D0B\u98DF\u5668\u30FB\u30AB\u30C8\u30E9\u30EA\u30FC\u7523\u696D\u3068\u5B50\u80B2\u3066\u5FDC\u63F4",
-      tags: ["\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u7523\u696D\u30FB\u96C7\u7528"],
-      details: [
-        "\u2460 \u71D5\u30D6\u30E9\u30F3\u30C9\u306E\u30B0\u30ED\u30FC\u30D0\u30EB\u5C55\u958B\u3068\u8077\u4EBA\u80B2\u6210",
-        "\u2461 \u5168\u5929\u5019\u578B\u3053\u3069\u3082\u904A\u622F\u65BD\u8A2D\u306E\u8A2D\u7F6E\u3068\u624B\u539A\u3044\u5B50\u80B2\u3066\u652F\u63F4",
-        "\u2462 \u6C34\u5BB3\u5BFE\u7B56\u3068\u5B89\u5168\u306A\u5730\u57DF\u793E\u4F1A\u306E\u69CB\u7BC9"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15213/"
-    },
-    {
-      id: "15216",
-      region: "\u4E0A\u8D8A",
-      name: "\u7CF8\u9B5A\u5DDD\u5E02",
-      mayorTitle: "\u7C73\u7530\u5FB9 \u5E02\u9577",
-      scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u30E6\u30CD\u30B9\u30B3\u4E16\u754C\u30B8\u30AA\u30D1\u30FC\u30AF\u3068\u5730\u57DF\u533B\u7642\u4F53\u5236\u7DAD\u6301",
-      tags: ["\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u7523\u696D\u30FB\u96C7\u7528"],
-      details: [
-        "\u2460 \u30B8\u30AA\u30D1\u30FC\u30AF\u89B3\u5149\u63A8\u9032\u3068\u5730\u5834\u4F01\u696D\u30FB\u5546\u696D\u306E\u6D3B\u6027\u5316",
-        "\u2461 \u5357\u533B\u7642\u570F\u306E\u75C5\u9662\u9023\u643A\u3068\u6551\u6025\u533B\u7642\u4F53\u5236\u306E\u7DAD\u6301",
-        "\u2462 \u79FB\u4F4F\u5B9A\u4F4F\u8005\u3078\u306E\u4F4F\u5B85\u53D6\u5F97\u652F\u63F4"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15216/"
-    },
-    {
-      id: "15217",
-      region: "\u4E0A\u8D8A",
-      name: "\u5999\u9AD8\u5E02",
-      mayorTitle: "\u57CE\u6238\u82F1\u660E \u5E02\u9577",
-      scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u56FD\u969B\u30EA\u30BE\u30FC\u30C8\u30FB\u30B9\u30AD\u30FC\u89B3\u5149\u3068\u5B50\u80B2\u3066\u5B9A\u4F4F",
-      tags: ["\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066", "\u66AE\u3089\u3057\u30FB\u533B\u7642"],
-      details: [
-        "\u2460 \u56FD\u969B\u30DE\u30A6\u30F3\u30C6\u30F3\u30EA\u30BE\u30FC\u30C8\u306E\u5F62\u6210\u3068\u901A\u5E74\u89B3\u5149",
-        "\u2461 \u82E5\u8005\u4F4F\u5B85\u53D6\u5F97\u30FB\u5B50\u80B2\u3066\u652F\u63F4\u91D1\u306E\u62E1\u5145",
-        "\u2462 \u9AD8\u9F62\u8005\u306E\u79FB\u52D5\u624B\u6BB5\u3068\u533B\u7642\u30A2\u30AF\u30BB\u30B9\u306E\u78BA\u4FDD"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15217/"
-    },
-    {
-      id: "15218",
-      region: "\u4E0B\u8D8A",
-      name: "\u4E94\u6CC9\u5E02",
-      mayorTitle: "\u7530\u908A\u6B63\u5E78 \u5E02\u9577",
-      scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u30CB\u30C3\u30C8\u30FB\u30C1\u30E5\u30FC\u30EA\u30C3\u30D7\u7523\u696D\u3068\u5B50\u80B2\u3066\u74B0\u5883\u5411\u4E0A",
-      tags: ["\u7523\u696D\u30FB\u96C7\u7528", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
-      details: [
-        "\u2460 \u65E5\u672C\u4E00\u306E\u30CB\u30C3\u30C8\u7523\u5730\u30D6\u30E9\u30F3\u30C9\u5316\u3068\u8CA9\u8DEF\u62E1\u5927",
-        "\u2461 \u5B50\u80B2\u3066\u30FB\u6559\u80B2\u8CBB\u8CA0\u62C5\u306E\u8EFD\u6E1B\u3068\u82E5\u8005\u5B9A\u4F4F\u63A8\u9032",
-        "\u2462 \u6E05\u6D41\u3068\u81EA\u7136\u3092\u751F\u304B\u3057\u305F\u74B0\u5883\u3065\u304F\u308A"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15218/"
-    },
-    {
-      id: "15223",
-      region: "\u4E0B\u8D8A",
-      name: "\u963F\u8CC0\u91CE\u5E02",
-      mayorTitle: "\u52A0\u85E4\u535A\u5E78 \u5E02\u9577",
-      scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u767D\u9CE5\u306E\u74E2\u6E56\u30FB\u6709\u6A5F\u8FB2\u696D\u3068\u5B50\u80B2\u3066\u533B\u7642\u652F\u63F4",
-      tags: ["\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066", "\u66AE\u3089\u3057\u30FB\u533B\u7642"],
-      details: [
-        "\u2460 \u6709\u6A5F\u8FB2\u696D\u306E\u63A8\u9032\u3068\u5B89\u5FC3\u306A\u5B66\u6821\u7D66\u98DF\u306E\u63D0\u4F9B",
-        "\u2461 \u5730\u57DF\u533B\u7642\u30FB\u9AD8\u9F62\u8005\u30C7\u30DE\u30F3\u30C9\u30D0\u30B9\u306E\u904B\u884C\u7DAD\u6301",
-        "\u2462 \u89B3\u5149\u62E0\u70B9\u3068\u3057\u3066\u306E\u74E2\u6E56\u30FB\u4E94\u982D\u6E29\u6CC9\u90F7\u306E\u5F37\u5316"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15223/"
-    },
-    {
-      id: "15224",
-      region: "\u4F50\u6E21",
-      name: "\u4F50\u6E21\u5E02",
-      mayorTitle: "\u6E21\u8FBA\u7ADC\u4E94 \u5E02\u9577",
-      scaleType: "\u5E02\u30FB\u5C0F\u4E2D\u898F\u6A21",
-      headline: "\u4F50\u6E21\u91D1\u5C71\u4E16\u754C\u907A\u7523\u30FB\u30C8\u30AD\u306E\u5CF6\u3068\u5CF6\u5185\u533B\u7642\u30FB\u4EA4\u901A\u78BA\u4FDD",
-      tags: ["\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u7523\u696D\u30FB\u96C7\u7528"],
-      details: [
-        "\u2460 \u4F50\u6E21\u91D1\u5C71\u4E16\u754C\u907A\u7523\u3092\u751F\u304B\u3057\u305F\u89B3\u5149\u5275\u51FA\u3068\u822A\u8DEF\u652F\u63F4",
-        "\u2461 \u5CF6\u5185\u533B\u7642\u4F53\u5236\u306E\u7DAD\u6301\u3068\u30C9\u30AF\u30BF\u30FC\u30D8\u30EA\u9023\u643A",
-        "\u2462 \u82E5\u8005\u306E\u5CF6\u5185\u5C31\u8077\u52A9\u6210\u3068\u5B9A\u4F4F\u4FC3\u9032"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15224/"
-    },
-    {
-      id: "15225",
-      region: "\u4E2D\u8D8A",
-      name: "\u9B5A\u6CBC\u5E02",
-      mayorTitle: "\u5185\u7530\u5E79\u592B \u5E02\u9577",
-      scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u9B5A\u6CBC\u7523\u30B3\u30B7\u30D2\u30AB\u30EA\u3068\u96EA\u56FD\u533B\u7642\u30FB\u89B3\u5149\u632F\u8208",
-      tags: ["\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u7523\u696D\u30FB\u96C7\u7528"],
-      details: [
-        "\u2460 \u30B3\u30B7\u30D2\u30AB\u30EA\u306E\u30D6\u30E9\u30F3\u30C9\u4FDD\u8B77\u3068\u30B9\u30DE\u30FC\u30C8\u8FB2\u696D\u63A8\u9032",
-        "\u2461 \u9B5A\u6CBC\u57FA\u5E79\u75C5\u9662\u3068\u306E\u9023\u643A\u3068\u5730\u57DF\u533B\u7642\u306E\u5145\u5B9F",
-        "\u2462 \u8C6A\u96EA\u5730\u5E2F\u306E\u9053\u8DEF\u9664\u96EA\u3068\u751F\u6D3B\u57FA\u76E4\u7DAD\u6301"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15225/"
-    },
-    {
-      id: "15226",
-      region: "\u4E2D\u8D8A",
-      name: "\u5357\u9B5A\u6CBC\u5E02",
-      mayorTitle: "\u6797\u8302\u7537 \u5E02\u9577",
-      scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u96EA\u56FD\u30EA\u30BE\u30FC\u30C8\u30FB\u516B\u6D77\u5C71\u3068\u533B\u7642\u30FB\u5B50\u80B2\u3066\u5F37\u5316",
-      tags: ["\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u7523\u696D\u30FB\u96C7\u7528"],
-      details: [
-        "\u2460 \u30B9\u30AD\u30FC\u30EA\u30BE\u30FC\u30C8\u3068\u56FD\u969B\u5927\u5B66\u9023\u643A\u306B\u3088\u308B\u56FD\u969B\u89B3\u5149",
-        "\u2461 \u5730\u57DF\u533B\u7642\u30FB\u5C0F\u5150\u79D1\u4F53\u5236\u306E\u7DAD\u6301\u5F37\u5316",
-        "\u2462 \u82E5\u8005\u306E\u5730\u5143\u5C31\u696D\u30FB\u8D77\u696D\u652F\u63F4"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15226/"
-    },
-    {
-      id: "15227",
-      region: "\u4E0B\u8D8A",
-      name: "\u80CE\u5185\u5E02",
-      mayorTitle: "\u4E95\u7551\u660E\u5F66 \u5E02\u9577",
-      scaleType: "\u5E02\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u6D0B\u529B\u767A\u96FB\u30FB\u30C1\u30E5\u30FC\u30EA\u30C3\u30D7\u3068\u9632\u707D\u30FB\u5B50\u80B2\u3066\u306E\u5145\u5B9F",
-      tags: ["\u9632\u707D\u30FB\u5B89\u5168", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
-      details: [
-        "\u2460 \u6D0B\u4E0A\u98A8\u529B\u767A\u96FB\u3068\u30AF\u30EA\u30FC\u30F3\u30A8\u30CD\u30EB\u30AE\u30FC\u306E\u6D3B\u7528\u63A8\u9032",
-        "\u2461 \u6C34\u5BB3\u30FB\u5730\u9707\u5BFE\u7B56\u3068\u907F\u96E3\u4F53\u5236\u306E\u5F37\u5316",
-        "\u2462 \u5B50\u80B2\u3066\u4E16\u4EE3\u3078\u306E\u624B\u5F53\u3068\u6559\u80B2\u74B0\u5883\u306E\u6574\u5099"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15227/"
-    },
-    {
-      id: "15307",
-      region: "\u4E0B\u8D8A",
-      name: "\u8056\u7C60\u753A",
-      mayorTitle: "\u4E00\u898B\u4E00\u592B \u753A\u9577",
-      scaleType: "\u753A\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u65B0\u6F5F\u6771\u6E2F\u30FB\u5DE5\u696D\u56E3\u5730\u3068\u884C\u8CA1\u653F\u30FB\u5B50\u80B2\u3066\u74B0\u5883",
-      tags: ["\u884C\u653F\u30FBDX", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
-      details: [
-        "\u2460 \u6E2F\u6E7E\u30FB\u5DE5\u696D\u56E3\u5730\u306E\u7A0E\u6E90\u6D3B\u7528\u306B\u3088\u308B\u624B\u539A\u3044\u798F\u7949",
-        "\u2461 \u5C0F\u4E2D\u5B66\u6821\u306EICT\u6559\u80B2\u63A8\u9032\u3068\u7D66\u98DF\u8CBB\u652F\u63F4",
-        "\u2462 \u5B89\u5168\u3067\u5FEB\u9069\u306A\u4F4F\u74B0\u5883\u306E\u6574\u5099"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15307/"
-    },
-    {
-      id: "15342",
-      region: "\u4E2D\u8D8A",
-      name: "\u5F25\u5F66\u6751",
-      mayorTitle: "\u672C\u9593\u82B3\u4E4B \u6751\u9577",
-      scaleType: "\u6751\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u5F25\u5F66\u795E\u793E\u30FB\u89B3\u5149\u3068\u5B50\u80B2\u3066\u30FB\u9AD8\u9F62\u8005\u798F\u7949\u306E\u5145\u5B9F",
-      tags: ["\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066", "\u7523\u696D\u30FB\u96C7\u7528"],
-      details: [
-        "\u2460 \u5F25\u5F66\u6E29\u6CC9\u30FB\u9580\u524D\u753A\u306E\u89B3\u5149DX\u3068\u6D3B\u6027\u5316",
-        "\u2461 \u6751\u72EC\u81EA\u306E\u7D66\u4ED8\u578B\u5968\u5B66\u91D1\u3068\u80B2\u5150\u652F\u63F4\u5236\u5EA6",
-        "\u2462 \u9AD8\u9F62\u8005\u306E\u5B89\u5FC3\u306A\u66AE\u3089\u3057\u3068\u30B3\u30DF\u30E5\u30CB\u30C6\u30A3\u30D0\u30B9"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15342/"
-    },
-    {
-      id: "15361",
-      region: "\u4E2D\u8D8A",
-      name: "\u7530\u4E0A\u753A",
-      mayorTitle: "\u4F50\u91CE\u6052\u96C4 \u753A\u9577",
-      scaleType: "\u753A\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u6E6F\u7530\u4E0A\u6E29\u6CC9\u30FB\u7AF9\u6797\u3068\u5730\u57DF\u533B\u7642\u30FB\u798F\u7949\u306E\u78BA\u4FDD",
-      tags: ["\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u7523\u696D\u30FB\u96C7\u7528"],
-      details: [
-        "\u2460 \u6E29\u6CC9\u30FB\u89B3\u5149\u8CC7\u6E90\u306E\u518D\u751F\u3068\u79FB\u4F4F\u30FB\u5B9A\u4F4F\u4FC3\u9032",
-        "\u2461 \u9AD8\u9F62\u8005\u30FB\u969C\u5BB3\u8005\u798F\u7949\u3068\u5730\u57DF\u4EA4\u901A\u306E\u78BA\u4FDD",
-        "\u2462 \u8FB2\u696D\u30FB\u7279\u7523\u54C1\u30CF\u30C1\u30DF\u30C4\u7B49\u306E\u632F\u8208"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15361/"
-    },
-    {
-      id: "15385",
-      region: "\u4E0B\u8D8A",
-      name: "\u963F\u8CC0\u753A",
-      mayorTitle: "\u795E\u7530\u4E00\u592B \u753A\u9577",
-      scaleType: "\u753A\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u963F\u8CC0\u91CE\u5DDD\u306E\u81EA\u7136\u3068\u904E\u758E\u30FB\u533B\u7642\u5BFE\u7B56\u306E\u63A8\u9032",
-      tags: ["\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066", "\u66AE\u3089\u3057\u30FB\u533B\u7642"],
-      details: [
-        "\u2460 \u753A\u7ACB\u75C5\u9662\u30FB\u8A3A\u7642\u6240\u306E\u4F53\u5236\u7DAD\u6301\u3068\u5F80\u8A3A\u652F\u63F4",
-        "\u2461 \u82E5\u8005\u79FB\u4F4F\u8005\u3078\u306E\u4F4F\u5B85\u53D6\u5F97\u652F\u63F4\u3068\u5B50\u80B2\u3066\u5FDC\u63F4",
-        "\u2462 \u6797\u696D\u30FB\u89B3\u5149\u8CC7\u6E90\u3092\u751F\u304B\u3057\u305F\u5730\u57DF\u518D\u751F"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15385/"
-    },
-    {
-      id: "15405",
-      region: "\u4E2D\u8D8A",
-      name: "\u51FA\u96F2\u5D0E\u753A",
-      mayorTitle: "\u4ED9\u6D77\u76F4\u6A39 \u753A\u9577",
-      scaleType: "\u753A\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u826F\u5BDB\u306E\u91CC\u30FB\u7D19\u98A8\u8239\u3068\u8CA1\u653F\u5065\u5168\u5316\u30FB\u6559\u80B2\u6295\u8CC7",
-      tags: ["\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066", "\u8CA1\u653F\u30FB\u65BD\u8A2D"],
-      details: [
-        "\u2460 \u30B3\u30F3\u30D1\u30AF\u30C8\u306A\u884C\u653F\u904B\u55B6\u3068\u8CA1\u653F\u5065\u5168\u5316",
-        "\u2461 \u5C0F\u4E2D\u4E00\u8CAB\u6559\u80B2\u306E\u63A8\u9032\u3068\u5B50\u80B2\u3066\u533B\u7642\u8CBB\u7121\u511F\u5316",
-        "\u2462 \u59BB\u5165\u308A\u8857\u4E26\u307F\u306E\u4FDD\u5B58\u3068\u89B3\u5149\u5275\u51FA"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15405/"
-    },
-    {
-      id: "15461",
-      region: "\u4E2D\u8D8A",
-      name: "\u6E6F\u6CA2\u753A",
-      mayorTitle: "\u7530\u6751\u6B63\u5E78 \u753A\u9577",
-      scaleType: "\u753A\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u82D7\u5834\u30FB\u30EA\u30BE\u30FC\u30C8\u90FD\u5E02\u632F\u8208\u3068\u753A\u6C11\u5B50\u80B2\u3066\u652F\u63F4",
-      tags: ["\u7523\u696D\u30FB\u96C7\u7528", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
-      details: [
-        "\u2460 \u30EA\u30BE\u30FC\u30C8\u30DE\u30F3\u30B7\u30E7\u30F3\u306E\u9069\u6B63\u7BA1\u7406\u3068\u901A\u5E74\u89B3\u5149\u632F\u8208",
-        "\u2461 \u753A\u5185\u5150\u7AE5\u3078\u306E\u624B\u539A\u3044\u6559\u80B2\u30FB\u5B50\u80B2\u3066\u88DC\u52A9\u91D1",
-        "\u2462 \u56FD\u969B\u7684\u30B9\u30AD\u30FC\u30EA\u30BE\u30FC\u30C8\u3068\u3057\u3066\u306E\u30A4\u30F3\u30D5\u30E9\u6574\u5099"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15461/"
-    },
-    {
-      id: "15482",
-      region: "\u4E2D\u8D8A",
-      name: "\u6D25\u5357\u753A",
-      mayorTitle: "\u6851\u539F\u60A0 \u753A\u9577",
-      scaleType: "\u753A\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u6CB3\u5CB8\u6BB5\u4E18\u30FB\u96EA\u56FD\u533B\u7642\u3068\u82E5\u3044\u4E16\u4EE3\u306E\u307E\u3061\u3065\u304F\u308A",
-      tags: ["\u66AE\u3089\u3057\u30FB\u533B\u7642", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
-      details: [
-        "\u2460 \u82E5\u3044\u4E16\u4EE3\u306E\u753A\u653F\u53C2\u52A0\u3068\u5B50\u80B2\u3066\u30FB\u6559\u80B2\u6295\u8CC7",
-        "\u2461 \u56FD\u4FDD\u75C5\u9662\u306E\u7DAD\u6301\u3068\u8C6A\u96EA\u9664\u96EA\u5BFE\u7B56\u306E\u5F37\u5316",
-        "\u2462 \u6D25\u5357\u3072\u307E\u308F\u308A\u5E83\u5834\u7B49\u306E\u89B3\u5149\u30D6\u30E9\u30F3\u30C7\u30A3\u30F3\u30B0"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15482/"
-    },
-    {
-      id: "15504",
-      region: "\u4E2D\u8D8A",
-      name: "\u5208\u7FBD\u6751",
-      mayorTitle: "\u54C1\u7530\u5B8F\u4E00 \u6751\u9577",
-      scaleType: "\u6751\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u30A8\u30CD\u30EB\u30AE\u30FC\u7523\u696D\u6D3B\u7528\u3068\u6751\u72EC\u81EA\u798F\u7949\u30FB\u884C\u653FDX",
-      tags: ["\u7523\u696D\u30FB\u96C7\u7528", "\u884C\u653F\u30FBDX"],
-      details: [
-        "\u2460 \u6751\u72EC\u81EA\u306E\u7D66\u4ED8\u91D1\u30FB\u624B\u539A\u3044\u798F\u7949\u30B5\u30FC\u30D3\u30B9\u306E\u7DAD\u6301",
-        "\u2461 \u30B9\u30DE\u30FC\u30C8\u8FB2\u696D\u3068\u30C7\u30B8\u30BF\u30EB\u6751\u5F79\u5834\u306E\u63A8\u9032",
-        "\u2462 \u9632\u707D\u4F53\u5236\u306E\u5F37\u5316\u3068\u6751\u5185\u30A4\u30F3\u30D5\u30E9\u6574\u5099"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15504/"
-    },
-    {
-      id: "15581",
-      region: "\u4E0B\u8D8A",
-      name: "\u95A2\u5DDD\u6751",
-      mayorTitle: "\u52A0\u85E4\u5F18 \u6751\u9577",
-      scaleType: "\u6751\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u9632\u707D\u30A4\u30F3\u30D5\u30E9\u518D\u5EFA\u3068\u5B89\u5168\u5B89\u5FC3\u306A\u6751\u3065\u304F\u308A",
-      tags: ["\u9632\u707D\u30FB\u5B89\u5168", "\u4EBA\u53E3\u30FB\u5B50\u80B2\u3066"],
-      details: [
-        "\u2460 \u6CB3\u5DDD\u6539\u4FEE\u30FB\u9632\u707D\u30A4\u30F3\u30D5\u30E9\u306E\u65E9\u671F\u5B8C\u6210",
-        "\u2461 \u5168\u5150\u7AE5\u3078\u306E\u5B66\u7FD2\u652F\u63F4\u3068\u6751\u5185\u96C7\u7528\u5275\u51FA",
-        "\u2462 \u9AD8\u9F62\u8005\u898B\u5B88\u308A\u30CD\u30C3\u30C8\u30EF\u30FC\u30AF\u306E\u5F37\u5316"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15581/"
-    },
-    {
-      id: "15586",
-      region: "\u4E0B\u8D8A",
-      name: "\u7C9F\u5CF6\u6D66\u6751",
-      mayorTitle: "\u8107\u5DDD\u5584\u4EAE \u6751\u9577",
-      scaleType: "\u6751\u30FB\u5C0F\u898F\u6A21",
-      headline: "\u96E2\u5CF6\u632F\u8208\u30FB\u5929\u7136\u6F01\u696D\u3068\u30AA\u30F3\u30E9\u30A4\u30F3\u533B\u7642\u30FB\u6559\u80B2",
-      tags: ["\u884C\u653F\u30FBDX", "\u66AE\u3089\u3057\u30FB\u533B\u7642"],
-      details: [
-        "\u2460 \u96E2\u5CF6\u306E\u30AA\u30F3\u30E9\u30A4\u30F3\u8A3A\u7642\u30FB\u9060\u9694\u6559\u80B2\u306E\u63A8\u9032",
-        "\u2461 \u5CF6\u5185\u5B9A\u671F\u822A\u8DEF\u306E\u7DAD\u6301\u3068\u6C34\u7523\u696D\u30FB\u89B3\u5149\u6D3B\u6027\u5316",
-        "\u2462 \u79FB\u4F4F\u5B9A\u4F4F\u652F\u63F4\u3068\u5CF6\u5185\u5B50\u80B2\u3066\u5FDC\u63F4"
-      ],
-      officialUrl: "https://koyaku.47story.jp/city/15586/"
-    }
-  ];
+  });
 
   // src/state.ts
+  var state_exports = {};
+  __export(state_exports, {
+    authenticateUser: () => authenticateUser,
+    checkAndFireReminders: () => checkAndFireReminders,
+    dateLabel: () => dateLabel,
+    daysUntil: () => daysUntil,
+    defaultDemoUser: () => defaultDemoUser,
+    defaultGuestUser: () => defaultGuestUser,
+    defaultInitialNotifications: () => defaultInitialNotifications,
+    downloadElectionICS: () => downloadElectionICS,
+    elJpDateToIso: () => elJpDateToIso,
+    freshScores: () => freshScores,
+    icon: () => icon,
+    isElectionSubscribed: () => isElectionSubscribed,
+    loadUserDB: () => loadUserDB,
+    loginUser: () => loginUser,
+    logoutUser: () => logoutUser,
+    markNotificationsAsRead: () => markNotificationsAsRead,
+    matchedCandidate: () => matchedCandidate,
+    registerNewUser: () => registerNewUser,
+    saveState: () => saveState,
+    showToast: () => showToast,
+    state: () => state,
+    syncSubscriptionsToUserDB: () => syncSubscriptionsToUserDB,
+    toggleElectionSubscription: () => toggleElectionSubscription,
+    topTag: () => topTag
+  });
   function freshScores() {
     const s = {};
     TAGS.forEach((t) => s[t] = 0);
     return s;
   }
-  var defaultGuestUser = {
-    id: "guest",
-    name: "\u30B2\u30B9\u30C8\u30E6\u30FC\u30B6\u30FC",
-    email: "",
-    municipality: "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
-    isLoggedIn: false,
-    notificationPrefs: {
-      days7Before: true,
-      days3Before: true,
-      day1Before: true,
-      onElectionDay: true
-    },
-    subscribedElectionNames: ["\u4EE4\u548C8\u5E745\u670831\u65E5 \u65B0\u6F5F\u770C\u77E5\u4E8B\u9078\u6319", "\u65B0\u6F5F\u5E02\u9577\u9078\u6319"]
-  };
-  var defaultDemoUser = {
-    id: "demo-voter-01",
-    name: "\u65B0\u6F5F \u305F\u308D\u3046",
-    email: "niigata.taro@example.com",
-    municipality: "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
-    isLoggedIn: true,
-    isDemo: true,
-    notificationPrefs: {
-      days7Before: true,
-      days3Before: true,
-      day1Before: true,
-      onElectionDay: true
-    },
-    subscribedElectionNames: ["\u4EE4\u548C8\u5E745\u670831\u65E5 \u65B0\u6F5F\u770C\u77E5\u4E8B\u9078\u6319", "\u65B0\u6F5F\u5E02\u9577\u9078\u6319", "\u65B0\u6F5F\u5E02\u8B70\u4F1A\u8B70\u54E1\u88DC\u6B20\u9078\u6319"]
-  };
-  var defaultInitialNotifications = [
-    {
-      id: "notif-1",
-      title: "\u{1F514} \u9078\u6319\u65E5\u7A0B\u30EA\u30DE\u30A4\u30F3\u30C9\u901A\u77E5",
-      message: "\u300C\u4EE4\u548C8\u5E745\u670831\u65E5 \u65B0\u6F5F\u770C\u77E5\u4E8B\u9078\u6319\u300D\u306E\u544A\u793A\u65E5\u304C\u8FD1\u3065\u3044\u3066\u3044\u307E\u3059\u3002\u671F\u65E5\u524D\u6295\u7968\u6240\uFF08\u65B0\u6F5F\u5E02\u5F79\u6240\u306A\u3069\uFF09\u306E\u6848\u5185\u3092\u3054\u78BA\u8A8D\u304F\u3060\u3055\u3044\u3002",
-      date: "2026-09-01 10:00",
-      read: false,
-      electionName: "\u4EE4\u548C8\u5E745\u670831\u65E5 \u65B0\u6F5F\u770C\u77E5\u4E8B\u9078\u6319",
-      type: "reminder"
-    },
-    {
-      id: "notif-2",
-      title: "\u{1F4CD} \u5730\u57DF\u306E\u6295\u7968\u6240\u30A2\u30C3\u30D7\u30C7\u30FC\u30C8",
-      message: "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A\u306E\u671F\u65E5\u524D\u6295\u7968\u6240\u60C5\u5831\u304C\u66F4\u65B0\u3055\u308C\u307E\u3057\u305F\u3002\u6700\u5BC4\u308A\u306E\u65BD\u8A2D\u306F\u300C\u6295\u7968\u6240\u300D\u30BF\u30D6\u304B\u3089\u691C\u7D22\u3067\u304D\u307E\u3059\u3002",
-      date: "2026-08-28 14:30",
-      read: true,
-      type: "info"
-    }
-  ];
   function simpleHash(str) {
     let hash = 5381;
     for (let i = 0; i < str.length; i++) {
@@ -744,22 +772,6 @@
     }
     return defaultInitialNotifications;
   }
-  var state = {
-    tab: "top",
-    // 最初に開いた時は必ずこのトップ画面
-    electionDate: "2026-10-25",
-    quizStep: 0,
-    scores: freshScores(),
-    quizFinished: false,
-    selectedRegion: "\u3059\u3079\u3066",
-    selectedMunicipality: "\u3059\u3079\u3066",
-    placeSearchQuery: "",
-    selectedElectionYear: "\u3059\u3079\u3066",
-    currentUser: loadStoredUser(),
-    notifications: loadStoredNotifications(),
-    isNotificationDropdownOpen: false,
-    toastMessage: null
-  };
   function saveState() {
     try {
       localStorage.setItem("niigata_election_user", JSON.stringify(state.currentUser));
@@ -768,10 +780,18 @@
       console.error("Failed to save state", e);
     }
   }
-  function loginDemoUser() {
-    state.currentUser = { ...defaultDemoUser };
+  function loginUser(name, email, municipality) {
+    state.currentUser = {
+      ...state.currentUser,
+      id: "user-" + Date.now(),
+      name: name || "\u65B0\u6F5F \u5E02\u6C11",
+      email: email || "user@example.com",
+      municipality: municipality || "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+      isLoggedIn: true,
+      isDemo: false
+    };
     saveState();
-    showToast("\u26A1 \u30C7\u30E2\u30E6\u30FC\u30B6\u30FC\uFF08\u65B0\u6F5F \u305F\u308D\u3046 \u3055\u3093\uFF09\u3067\u30ED\u30B0\u30A4\u30F3\u3057\u307E\u3057\u305F");
+    showToast(`Welcome! ${state.currentUser.name} \u3055\u3093\u3067\u30ED\u30B0\u30A4\u30F3\u3057\u307E\u3057\u305F`);
   }
   function logoutUser() {
     state.currentUser = {
@@ -782,9 +802,6 @@
     showToast("\u30ED\u30B0\u30A2\u30A6\u30C8\u3057\u307E\u3057\u305F");
   }
   function toggleElectionSubscription(electionName) {
-    if (!state.currentUser.isLoggedIn) {
-      loginDemoUser();
-    }
     const index = state.currentUser.subscribedElectionNames.indexOf(electionName);
     let isSubscribed = false;
     if (index >= 0) {
@@ -801,37 +818,118 @@
   function isElectionSubscribed(electionName) {
     return state.currentUser.subscribedElectionNames.includes(electionName);
   }
-  function triggerSimulatedNotification(electionName, renderFn) {
-    const targetName = electionName || "\u4EE4\u548C8\u5E745\u670831\u65E5 \u65B0\u6F5F\u770C\u77E5\u4E8B\u9078\u6319";
-    const newNotif = {
-      id: "notif-" + Date.now(),
-      title: `\u{1F514} \u3010\u30EA\u30DE\u30A4\u30F3\u30C9\u3011${targetName}`,
-      message: `\u6295\u7968\u65E5\uFF08${targetName}\uFF09\u304C\u8FD1\u3065\u3044\u3066\u3044\u307E\u3059\uFF01\u671F\u65E5\u524D\u6295\u7968\u6240\uFF08${state.currentUser.municipality}\u5185\uFF09\u3067\u306E\u4E8B\u524D\u6295\u7968\u3082\u53EF\u80FD\u3067\u3059\u3002\u6E96\u5099\u3092\u304A\u5FD8\u308C\u306A\u304F\uFF01`,
-      date: (/* @__PURE__ */ new Date()).toLocaleString("ja-JP", { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }),
-      read: false,
-      electionName: targetName,
-      type: "urgent"
-    };
-    state.notifications.unshift(newNotif);
-    saveState();
-    if ("Notification" in window && Notification.permission === "granted") {
-      try {
-        new Notification(newNotif.title, {
-          body: newNotif.message,
-          icon: "rogo.png"
-        });
-      } catch (e) {
-        console.log("Web Notification output error", e);
+  function checkAndFireReminders(renderFn) {
+    if (!state.currentUser.isLoggedIn) return;
+    if (state.currentUser.subscribedElectionNames.length === 0) return;
+    const today = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+    const lastCheck = localStorage.getItem("niigata_last_reminder_check");
+    if (lastCheck === today) return;
+    localStorage.setItem("niigata_last_reminder_check", today);
+    Promise.resolve().then(() => (init_elections(), elections_exports)).then(({ UPCOMING_ELECTIONS: UPCOMING_ELECTIONS2 }) => {
+      const thresholds = [
+        { days: 0, label: "\u4ECA\u65E5\u304C\u6295\u7968\u65E5\u3067\u3059\uFF01" },
+        { days: 1, label: "\u660E\u65E5\u304C\u6295\u7968\u65E5\u3067\u3059\uFF01" },
+        { days: 3, label: "\u3042\u30683\u65E5\u3067\u6295\u7968\u65E5\u3067\u3059" },
+        { days: 7, label: "\u3042\u30687\u65E5\u3067\u6295\u7968\u65E5\u3067\u3059\uFF08\u671F\u65E5\u524D\u6295\u7968\u3082\u53EF\u80FD\uFF09" }
+      ];
+      let hasNewNotif = false;
+      state.currentUser.subscribedElectionNames.forEach((name) => {
+        const election = UPCOMING_ELECTIONS2.find((e) => e.name === name);
+        if (!election) return;
+        const days = daysUntil(election.isoDate);
+        if (days < 0) return;
+        const match = thresholds.find((t) => t.days === days);
+        if (!match) return;
+        const pref = state.currentUser.notificationPrefs;
+        if (days === 0 && !pref.onElectionDay) return;
+        if (days === 1 && !pref.day1Before) return;
+        if (days === 3 && !pref.days3Before) return;
+        if (days === 7 && !pref.days7Before) return;
+        const notif = {
+          id: "auto-" + Date.now() + "-" + name,
+          title: `\u{1F5F3}\uFE0F ${match.label}`,
+          message: `\u300C${name}\u300D\u306E\u6295\u7968\u65E5\u304C\u8FD1\u3065\u3044\u3066\u3044\u307E\u3059\u3002${state.currentUser.municipality}\u306E\u6295\u7968\u6240\u3067\u5FD8\u308C\u305A\u306B\u6295\u7968\u3057\u307E\u3057\u3087\u3046\uFF01`,
+          date: (/* @__PURE__ */ new Date()).toLocaleString("ja-JP", { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }),
+          read: false,
+          electionName: name,
+          type: days <= 1 ? "urgent" : "reminder"
+        };
+        const alreadyExists = state.notifications.some(
+          (n) => n.electionName === name && n.title === notif.title
+        );
+        if (!alreadyExists) {
+          state.notifications.unshift(notif);
+          hasNewNotif = true;
+          if ("Notification" in window && Notification.permission === "granted") {
+            try {
+              new Notification(notif.title, {
+                body: notif.message,
+                icon: "rogo.png",
+                badge: "rogo.png"
+              });
+            } catch (e) {
+              console.log("Web Notification failed", e);
+            }
+          }
+        }
+      });
+      if (hasNewNotif) {
+        saveState();
+        if (renderFn) renderFn();
       }
-    }
-    showToast(`\u{1F514} \u3010\u901A\u77E5\u9001\u4FE1\u3011${newNotif.title} \u306E\u6A21\u64EC\u901A\u77E5\u3092\u767A\u706B\u3057\u307E\u3057\u305F\uFF01`);
-    if (renderFn) renderFn();
+    }).catch(() => {
+    });
+  }
+  function downloadElectionICS(electionName, isoDate, notice) {
+    const dateStr = isoDate.replace(/-/g, "");
+    const noticeDateStr = isoDate.replace(/-/g, "");
+    const ics = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//\u306B\u3044\u304C\u305F\u6295\u7968\u307E\u3067\u306E\u9053//JP",
+      "CALSCALE:GREGORIAN",
+      "METHOD:PUBLISH",
+      "BEGIN:VEVENT",
+      `UID:${Date.now()}@niigata-vote.jp`,
+      `DTSTAMP:${(/* @__PURE__ */ new Date()).toISOString().replace(/[-:.]/g, "").slice(0, 15)}Z`,
+      `DTSTART;VALUE=DATE:${dateStr}`,
+      `DTEND;VALUE=DATE:${dateStr}`,
+      `SUMMARY:\u{1F5F3}\uFE0F ${electionName}\uFF08\u6295\u7968\u65E5\uFF09`,
+      `DESCRIPTION:\u65B0\u6F5F\u770C ${electionName} \u306E\u6295\u7968\u65E5\u3067\u3059\u3002
+\u5FD8\u308C\u305A\u306B\u6295\u7968\u306B\u884C\u304D\u307E\u3057\u3087\u3046\uFF01
+
+\u671F\u65E5\u524D\u6295\u7968: \u544A\u793A\u65E5(${notice})\u301C\u524D\u65E5\u307E\u3067\u53EF\u80FD\u3067\u3059\u3002
+
+\u8A73\u7D30: https://www.pref.niigata.lg.jp/site/senkyo/`,
+      `LOCATION:\u65B0\u6F5F\u770C\u5185 \u5404\u6295\u7968\u6240`,
+      "BEGIN:VALARM",
+      "TRIGGER:-P7D",
+      "ACTION:DISPLAY",
+      `DESCRIPTION:\u30107\u65E5\u524D\u30EA\u30DE\u30A4\u30F3\u30C9\u3011${electionName} \u306E\u6295\u7968\u65E5\u304C1\u9031\u9593\u5F8C\u3067\u3059`,
+      "END:VALARM",
+      "BEGIN:VALARM",
+      "TRIGGER:-P1D",
+      "ACTION:DISPLAY",
+      `DESCRIPTION:\u3010\u524D\u65E5\u30EA\u30DE\u30A4\u30F3\u30C9\u3011\u660E\u65E5\u306F ${electionName} \u306E\u6295\u7968\u65E5\u3067\u3059\uFF01`,
+      "END:VALARM",
+      "END:VEVENT",
+      "END:VCALENDAR"
+    ].join("\r\n");
+    const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${electionName}.ics`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast("\u{1F4C5} \u30AB\u30EC\u30F3\u30C0\u30FC\u306B\u8FFD\u52A0\u3057\u307E\u3057\u305F\uFF01\u6295\u7968\u65E5\u306E7\u65E5\u524D\u30FB\u524D\u65E5\u306B\u30EA\u30DE\u30A4\u30F3\u30C9\u3055\u308C\u307E\u3059");
   }
   function markNotificationsAsRead() {
     state.notifications.forEach((n) => n.read = true);
     saveState();
   }
-  var toastTimer = null;
   function showToast(message) {
     state.toastMessage = message;
     const existing = document.getElementById("app-toast-container");
@@ -930,8 +1028,83 @@
         return "";
     }
   }
+  var defaultGuestUser, defaultDemoUser, defaultInitialNotifications, state, toastTimer;
+  var init_state = __esm({
+    "src/state.ts"() {
+      init_candidates();
+      defaultGuestUser = {
+        id: "guest",
+        name: "\u30B2\u30B9\u30C8\u30E6\u30FC\u30B6\u30FC",
+        email: "",
+        municipality: "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+        isLoggedIn: false,
+        notificationPrefs: {
+          days7Before: true,
+          days3Before: true,
+          day1Before: true,
+          onElectionDay: true
+        },
+        subscribedElectionNames: ["\u4EE4\u548C8\u5E745\u670831\u65E5 \u65B0\u6F5F\u770C\u77E5\u4E8B\u9078\u6319", "\u65B0\u6F5F\u5E02\u9577\u9078\u6319"]
+      };
+      defaultDemoUser = {
+        id: "demo-voter-01",
+        name: "\u65B0\u6F5F \u305F\u308D\u3046",
+        email: "niigata.taro@example.com",
+        municipality: "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+        isLoggedIn: true,
+        isDemo: true,
+        notificationPrefs: {
+          days7Before: true,
+          days3Before: true,
+          day1Before: true,
+          onElectionDay: true
+        },
+        subscribedElectionNames: ["\u4EE4\u548C8\u5E745\u670831\u65E5 \u65B0\u6F5F\u770C\u77E5\u4E8B\u9078\u6319", "\u65B0\u6F5F\u5E02\u9577\u9078\u6319", "\u65B0\u6F5F\u5E02\u8B70\u4F1A\u8B70\u54E1\u88DC\u6B20\u9078\u6319"]
+      };
+      defaultInitialNotifications = [
+        {
+          id: "notif-1",
+          title: "\u{1F514} \u9078\u6319\u65E5\u7A0B\u30EA\u30DE\u30A4\u30F3\u30C9\u901A\u77E5",
+          message: "\u300C\u4EE4\u548C8\u5E745\u670831\u65E5 \u65B0\u6F5F\u770C\u77E5\u4E8B\u9078\u6319\u300D\u306E\u544A\u793A\u65E5\u304C\u8FD1\u3065\u3044\u3066\u3044\u307E\u3059\u3002\u671F\u65E5\u524D\u6295\u7968\u6240\uFF08\u65B0\u6F5F\u5E02\u5F79\u6240\u306A\u3069\uFF09\u306E\u6848\u5185\u3092\u3054\u78BA\u8A8D\u304F\u3060\u3055\u3044\u3002",
+          date: "2026-09-01 10:00",
+          read: false,
+          electionName: "\u4EE4\u548C8\u5E745\u670831\u65E5 \u65B0\u6F5F\u770C\u77E5\u4E8B\u9078\u6319",
+          type: "reminder"
+        },
+        {
+          id: "notif-2",
+          title: "\u{1F4CD} \u5730\u57DF\u306E\u6295\u7968\u6240\u30A2\u30C3\u30D7\u30C7\u30FC\u30C8",
+          message: "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A\u306E\u671F\u65E5\u524D\u6295\u7968\u6240\u60C5\u5831\u304C\u66F4\u65B0\u3055\u308C\u307E\u3057\u305F\u3002\u6700\u5BC4\u308A\u306E\u65BD\u8A2D\u306F\u300C\u6295\u7968\u6240\u300D\u30BF\u30D6\u304B\u3089\u691C\u7D22\u3067\u304D\u307E\u3059\u3002",
+          date: "2026-08-28 14:30",
+          read: true,
+          type: "info"
+        }
+      ];
+      state = {
+        tab: "top",
+        // 最初に開いた時は必ずこのトップ画面
+        electionDate: "2026-10-25",
+        quizStep: 0,
+        scores: freshScores(),
+        quizFinished: false,
+        selectedRegion: "\u3059\u3079\u3066",
+        selectedMunicipality: "\u3059\u3079\u3066",
+        placeSearchQuery: "",
+        selectedElectionYear: "\u3059\u3079\u3066",
+        currentUser: loadStoredUser(),
+        notifications: loadStoredNotifications(),
+        isNotificationDropdownOpen: false,
+        toastMessage: null
+      };
+      toastTimer = null;
+    }
+  });
+
+  // app.ts
+  init_state();
 
   // src/views/Header.ts
+  init_state();
   function renderHeader(renderFn) {
     const header = document.createElement("header");
     header.className = "site-header";
@@ -1049,13 +1222,14 @@
       notifPanel.appendChild(notifList);
       const panelFooter = document.createElement("div");
       panelFooter.className = "notif-panel-footer";
-      const testBtn = document.createElement("button");
-      testBtn.className = "btn-test-notif-small";
-      testBtn.innerHTML = `\u26A1 \u6A21\u64EC\u901A\u77E5\u3092\u9001\u4FE1\uFF08\u30D7\u30EC\u30BC\u30F3\u78BA\u8A8D\u7528\uFF09`;
-      testBtn.addEventListener("click", () => {
-        triggerSimulatedNotification(void 0, renderFn);
+      const readAllBtn = document.createElement("button");
+      readAllBtn.className = "btn-read-all-notif";
+      readAllBtn.textContent = "\u3059\u3079\u3066\u65E2\u8AAD\u306B\u3059\u308B";
+      readAllBtn.addEventListener("click", () => {
+        markNotificationsAsRead();
+        renderFn();
       });
-      panelFooter.appendChild(testBtn);
+      panelFooter.appendChild(readAllBtn);
       notifPanel.appendChild(panelFooter);
       header.appendChild(notifPanel);
     }
@@ -1178,25 +1352,9 @@
     return wrap;
   }
 
-  // src/data/elections.ts
-  var OFFICIAL_SCHEDULE_URL = "https://www.pref.niigata.lg.jp/site/senkyo/list803.html";
-  var UPCOMING_ELECTIONS = [
-    { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u80CE\u5185\u5E02\u9577\u9078\u6319", notice: "9\u67086\u65E5", day: "9\u670813\u65E5", isoDate: "2026-09-13" },
-    { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u65B0\u6F5F\u5E02\u9577\u9078\u6319", notice: "10\u670811\u65E5", day: "10\u670825\u65E5", isoDate: "2026-10-25" },
-    { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u71D5\u5E02\u8B70\u4F1A\u8B70\u54E1\u9078\u6319", notice: "10\u670811\u65E5", day: "10\u670818\u65E5", isoDate: "2026-10-18" },
-    { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u898B\u9644\u5E02\u8B70\u4F1A\u8B70\u54E1\u9078\u6319", notice: "10\u670818\u65E5", day: "10\u670825\u65E5", isoDate: "2026-10-25" },
-    { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u5999\u9AD8\u5E02\u9577\u9078\u6319", notice: "11\u67088\u65E5", day: "11\u670815\u65E5", isoDate: "2026-11-15" },
-    { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u5C0F\u5343\u8C37\u5E02\u9577\u9078\u6319", notice: "11\u67088\u65E5", day: "11\u670815\u65E5", isoDate: "2026-11-15" },
-    { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u65B0\u767A\u7530\u5E02\u9577\u9078\u6319", notice: "11\u670815\u65E5", day: "11\u670822\u65E5", isoDate: "2026-11-22" },
-    { year: "\u4EE4\u548C8\u5E74\u5EA6", yearLabel: "\u4EE4\u548C8\u5E74", name: "\u963F\u8CC0\u753A\u9577\u9078\u6319", notice: "11\u670817\u65E5", day: "11\u670822\u65E5", isoDate: "2026-11-22" },
-    { year: "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D", yearLabel: "\u4EE4\u548C9\u5E74", name: "\u7B2C21\u56DE \u7D71\u4E00\u5730\u65B9\u9078\u6319 (\u65B0\u6F5F\u770C\u8B70\u4F1A\u8B70\u54E1\u9078\u6319)", notice: "3\u6708\u4E0B\u65EC", day: "4\u670811\u65E5(\u4E88\u5B9A)", isoDate: "2027-04-11" },
-    { year: "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D", yearLabel: "\u4EE4\u548C9\u5E74", name: "\u65B0\u6F5F\u5E02\u8B70\u4F1A\u8B70\u54E1\u4E00\u822C\u9078\u6319", notice: "3\u6708\u4E0B\u65EC", day: "4\u670811\u65E5(\u4E88\u5B9A)", isoDate: "2027-04-11" },
-    { year: "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D", yearLabel: "\u4EE4\u548C9\u5E74", name: "\u9577\u5CA1\u5E02\u9577\u9078\u6319 (\u4EFB\u671F\u6E80\u4E86 10\u6708)", notice: "10\u6708", day: "10\u6708\u4E0B\u65EC(\u4E88\u5B9A)", isoDate: "2027-10-24" },
-    { year: "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D", yearLabel: "\u4EE4\u548C9\u5E74", name: "\u4E0A\u8D8A\u5E02\u9577\u9078\u6319 (\u4EFB\u671F\u6E80\u4E86 11\u6708)", notice: "11\u6708", day: "11\u6708\u4E0B\u65EC(\u4E88\u5B9A)", isoDate: "2027-11-21" }
-  ];
-  var ELECTION_YEAR_FILTERS = ["\u3059\u3079\u3066", "\u4EE4\u548C8\u5E74\u5EA6", "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D"];
-
   // src/views/ScheduleView.ts
+  init_state();
+  init_elections();
   function renderSchedulePage(renderFn) {
     const wrap = document.createElement("div");
     const title = document.createElement("h2");
@@ -1205,26 +1363,17 @@
     wrap.appendChild(title);
     const remindBannerCard = document.createElement("div");
     remindBannerCard.className = "card remind-banner-card";
-    remindBannerCard.style.borderLeft = "4px solid #7C3AED";
-    remindBannerCard.style.background = "linear-gradient(135deg, rgba(124, 58, 237, 0.06), rgba(99, 102, 241, 0.04))";
     remindBannerCard.innerHTML = `
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+    <div style="display:flex;align-items:flex-start;gap:10px;">
+      <div style="background:#F3E8FF;color:#7C3AED;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${icon("bell", 18)}</div>
       <div>
-        <h3 style="margin:0 0 4px 0;font-size:15px;color:#7C3AED;display:flex;align-items:center;gap:6px;">
-          ${icon("bell", 18)} \u9078\u6319\u65E5\u5FD8\u308C\u3092\u9632\u6B62\uFF01\u30EA\u30DE\u30A4\u30F3\u30C9\u901A\u77E5\u6A5F\u80FD
-        </h3>
+        <h3 style="margin:0 0 4px 0;font-size:15px;color:#7C3AED;">\u6295\u7968\u65E5\u30EA\u30DE\u30A4\u30F3\u30C9\u901A\u77E5 \uFF06 \u30AB\u30EC\u30F3\u30C0\u30FC\u9023\u643A</h3>
         <p style="margin:0;font-size:13px;color:var(--muted);line-height:1.5;">
-          \u6C17\u306B\u306A\u308B\u9078\u6319\u306E\u300C\u{1F514} \u30EA\u30DE\u30A4\u30F3\u30C9\u901A\u77E5\u300D\u3092ON\u306B\u3059\u308B\u3068\u3001\u544A\u793A\u65E5\u3084\u671F\u65E5\u524D\u6295\u7968\u306E\u671F\u9593\u4E2D\u306B\u4E8B\u524D\u306B\u901A\u77E5\u304C\u5C4A\u304D\u307E\u3059\u3002
+          \u5404\u9078\u6319\u306E\u300C\u{1F514} \u901A\u77E5ON\u300D\u3067\u30EA\u30DE\u30A4\u30F3\u30C9\u767B\u9332\u3002\u300C\u{1F4C5} \u30AB\u30EC\u30F3\u30C0\u30FC\u300D\u3067\u7AEF\u672B\u306E\u30AB\u30EC\u30F3\u30C0\u30FC\u30A2\u30D7\u30EA\u306B\u8FFD\u52A0\u3067\u304D\u307E\u3059\u3002\u30ED\u30B0\u30A4\u30F3\u5F8C\u306B\u6709\u52B9\u306B\u306A\u308A\u307E\u3059\u3002
         </p>
       </div>
-      <button class="btn-test-notif-schedule" title="\u6A21\u64EC\u901A\u77E5\u3092\u8A66\u3059">
-        \u26A1 \u6A21\u64EC\u901A\u77E5\u30C6\u30B9\u30C8
-      </button>
     </div>
   `;
-    remindBannerCard.querySelector(".btn-test-notif-schedule")?.addEventListener("click", () => {
-      triggerSimulatedNotification(void 0, renderFn);
-    });
     wrap.appendChild(remindBannerCard);
     const days = daysUntil(state.electionDate);
     const heroRow = document.createElement("div");
@@ -1289,31 +1438,56 @@
     });
     filteredElections.forEach((e) => {
       const isSub = isElectionSubscribed(e.name);
+      const daysLeft = daysUntil(e.isoDate);
       const electionRow = document.createElement("div");
       electionRow.className = "election-row-card" + (isSub ? " is-subscribed" : "");
       const electionInfo = document.createElement("div");
       electionInfo.className = "election-info-box";
+      let urgencyBadge = "";
+      if (daysLeft === 0) urgencyBadge = `<span class="urgency-badge today">\u672C\u65E5\uFF01</span>`;
+      else if (daysLeft === 1) urgencyBadge = `<span class="urgency-badge urgent">\u660E\u65E5\uFF01</span>`;
+      else if (daysLeft <= 7 && daysLeft > 0) urgencyBadge = `<span class="urgency-badge soon">\u3042\u3068${daysLeft}\u65E5</span>`;
       electionInfo.innerHTML = `
-      <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
         <span class="year-badge">${e.yearLabel}</span>
-        <span style="font-weight:600;font-size:15px;color:var(--heading);">${e.name}</span>
+        <span style="font-weight:600;font-size:14px;color:var(--ink);">${e.name}</span>
+        ${urgencyBadge}
       </div>
-      <span style="font-size:13px;color:var(--muted);">\u6295\u7968\u65E5 ${e.day} (\u544A\u793A ${e.notice})</span>
+      <span style="font-size:12.5px;color:var(--muted);">\u{1F5F3}\uFE0F \u6295\u7968\u65E5 ${e.day}\u3000\u3000\u{1F4CB} \u544A\u793A ${e.notice}</span>
     `;
       electionInfo.addEventListener("click", () => {
         state.electionDate = e.isoDate || elJpDateToIso(e.day);
         renderFn();
       });
+      const btnGroup = document.createElement("div");
+      btnGroup.className = "election-btn-group";
       const subBtn = document.createElement("button");
       subBtn.className = "btn-sub-toggle" + (isSub ? " active" : "");
-      subBtn.innerHTML = isSub ? `${icon("bell", 14)} <span>\u901A\u77E5ON</span>` : `${icon("bell-off", 14)} <span>\u901A\u77E5OFF</span>`;
+      subBtn.title = isSub ? "\u901A\u77E5\u3092\u89E3\u9664\u3059\u308B" : "\u6295\u7968\u65E5\u3092\u30EA\u30DE\u30A4\u30F3\u30C9\u3059\u308B";
+      subBtn.innerHTML = isSub ? `${icon("bell", 14)} <span>\u901A\u77E5ON</span>` : `${icon("bell-off", 14)} <span>\u901A\u77E5</span>`;
       subBtn.addEventListener("click", (evt) => {
         evt.stopPropagation();
+        if (!state.currentUser.isLoggedIn) {
+          Promise.resolve().then(() => (init_state(), state_exports)).then(({ showToast: showToast2 }) => {
+            showToast2("\u26A0\uFE0F \u901A\u77E5\u306E\u767B\u9332\u306B\u306F\u30ED\u30B0\u30A4\u30F3\u304C\u5FC5\u8981\u3067\u3059\u3002\u30DE\u30A4\u30DA\u30FC\u30B8\u304B\u3089\u30A2\u30AB\u30A6\u30F3\u30C8\u3092\u4F5C\u6210\u3057\u3066\u304F\u3060\u3055\u3044\u3002");
+          });
+          return;
+        }
         toggleElectionSubscription(e.name);
         renderFn();
       });
+      const calBtn = document.createElement("button");
+      calBtn.className = "btn-cal-add";
+      calBtn.title = "\u7AEF\u672B\u306E\u30AB\u30EC\u30F3\u30C0\u30FC\u306B\u8FFD\u52A0\uFF08iOS/Android/PC\u5BFE\u5FDC\uFF09";
+      calBtn.innerHTML = `\u{1F4C5} <span>\u30AB\u30EC\u30F3\u30C0\u30FC</span>`;
+      calBtn.addEventListener("click", (evt) => {
+        evt.stopPropagation();
+        downloadElectionICS(e.name, e.isoDate, e.notice);
+      });
+      btnGroup.appendChild(subBtn);
+      btnGroup.appendChild(calBtn);
       electionRow.appendChild(electionInfo);
-      electionRow.appendChild(subBtn);
+      electionRow.appendChild(btnGroup);
       scheduleCard.appendChild(electionRow);
     });
     const officialLink = document.createElement("a");
@@ -1368,6 +1542,8 @@
   }
 
   // src/views/PledgesView.ts
+  init_candidates();
+  init_state();
   var pledgeViewMode = "theme";
   var pledgeSearchQuery = "";
   var selectedPledgeRegion = "\u3059\u3079\u3066";
@@ -1564,6 +1740,8 @@
   }
 
   // src/views/QuizView.ts
+  init_state();
+  init_candidates();
   function renderQuizQuestion(renderFn) {
     const wrap = document.createElement("div");
     const q = QUESTIONS[state.quizStep];
@@ -1678,6 +1856,9 @@
     wrap.appendChild(footnote);
     return wrap;
   }
+
+  // src/views/PlaceView.ts
+  init_state();
 
   // src/data/places.ts
   var POLLING_PLACES = [
@@ -5374,6 +5555,7 @@
   }
 
   // src/views/LoginView.ts
+  init_state();
   function renderMyPage(renderFn) {
     const wrap = document.createElement("div");
     wrap.className = "mypage-root";
@@ -5699,10 +5881,6 @@
     root2.appendChild(prefCard);
     const actionBar = document.createElement("div");
     actionBar.className = "mypage-action-bar";
-    const testBtn = document.createElement("button");
-    testBtn.className = "btn-test-notif-large";
-    testBtn.innerHTML = `\u26A1 \u6A21\u64EC\u901A\u77E5\u3092\u30C6\u30B9\u30C8\u9001\u4FE1\u3059\u308B`;
-    testBtn.addEventListener("click", () => triggerSimulatedNotification(void 0, renderFn));
     const logoutBtn = document.createElement("button");
     logoutBtn.className = "btn-logout";
     logoutBtn.innerHTML = `${icon("log-out", 16)} \u30ED\u30B0\u30A2\u30A6\u30C8`;
@@ -5710,7 +5888,6 @@
       logoutUser();
       renderFn();
     });
-    actionBar.appendChild(testBtn);
     actionBar.appendChild(logoutBtn);
     root2.appendChild(actionBar);
     return root2;
@@ -5749,5 +5926,11 @@
   }
   document.addEventListener("DOMContentLoaded", () => {
     render();
+    if (state.currentUser.isLoggedIn && "Notification" in window && Notification.permission === "default") {
+      Notification.requestPermission();
+    }
+    setTimeout(() => {
+      checkAndFireReminders(render);
+    }, 1e3);
   });
 })();

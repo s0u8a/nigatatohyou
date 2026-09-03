@@ -3,7 +3,7 @@
 // モジュール構造化リファクタリング済み
 // ============================================================
 
-import { state } from './src/state';
+import { state, checkAndFireReminders } from './src/state';
 import { renderHeader } from './src/views/Header';
 import { renderTopLandingPage } from './src/views/HomeView';
 import { renderSchedulePage } from './src/views/ScheduleView';
@@ -47,7 +47,20 @@ function render() {
   root.appendChild(content);
 }
 
+// ============================================================
 // アプリ初期化
+// ============================================================
 document.addEventListener("DOMContentLoaded", () => {
   render();
+
+  // ① Web通知の許可をリクエスト（ログイン済みユーザーのみ）
+  if (state.currentUser.isLoggedIn && "Notification" in window && Notification.permission === "default") {
+    Notification.requestPermission();
+  }
+
+  // ② 選挙リマインド自動チェック（当日・1日前・3日前・7日前に通知発火）
+  setTimeout(() => {
+    checkAndFireReminders(render);
+  }, 1000); // 1秒後に実行（UIが描画されてから）
 });
+

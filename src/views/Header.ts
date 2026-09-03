@@ -3,7 +3,7 @@
 // ============================================================
 
 import { TabKey } from '../types';
-import { state, icon, markNotificationsAsRead, triggerSimulatedNotification } from '../state';
+import { state, icon, markNotificationsAsRead } from '../state';
 
 export function renderHeader(renderFn: () => void): HTMLElement {
   const header = document.createElement("header");
@@ -142,15 +142,17 @@ export function renderHeader(renderFn: () => void): HTMLElement {
     }
     notifPanel.appendChild(notifList);
 
+    // フッター（通知をすべて既読）
     const panelFooter = document.createElement("div");
     panelFooter.className = "notif-panel-footer";
-    const testBtn = document.createElement("button");
-    testBtn.className = "btn-test-notif-small";
-    testBtn.innerHTML = `⚡ 模擬通知を送信（プレゼン確認用）`;
-    testBtn.addEventListener("click", () => {
-      triggerSimulatedNotification(undefined, renderFn);
+    const readAllBtn = document.createElement("button");
+    readAllBtn.className = "btn-read-all-notif";
+    readAllBtn.textContent = "すべて既読にする";
+    readAllBtn.addEventListener("click", () => {
+      markNotificationsAsRead();
+      renderFn();
     });
-    panelFooter.appendChild(testBtn);
+    panelFooter.appendChild(readAllBtn);
     notifPanel.appendChild(panelFooter);
 
     header.appendChild(notifPanel);

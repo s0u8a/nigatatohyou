@@ -1399,24 +1399,22 @@ html, body {
   gap: 12px;
   margin-top: 16px;
 }
-.btn-test-notif-large {
-  flex: 1;
-  background: linear-gradient(135deg, #7C3AED, #6366F1);
-  color: #FFFFFF;
+.btn-read-all-notif {
+  background: none;
   border: none;
-  border-radius: 8px;
-  padding: 12px 16px;
-  font-size: 14px;
+  color: #7C3AED;
+  font-size: 13px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
-  transition: all 0.15s ease;
+  padding: 6px 0;
+  font-family: var(--font-body);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
-.btn-test-notif-large:hover {
-  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.35);
-  transform: translateY(-1px);
-}
+.btn-read-all-notif:hover { color: #5B21B6; }
+
 .btn-logout {
+  flex: 1;
   background: #F1F5F9;
   border: 1px solid #CBD5E1;
   color: #475569;
@@ -1427,12 +1425,14 @@ html, body {
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
 }
 .btn-logout:hover {
   background: #E2E8F0;
   color: #0F172A;
 }
+
 
 /* Demo Quick Card & Auth Form */
 .demo-quick-card {
@@ -1709,3 +1709,277 @@ html, body {
   box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
 }
 
+/* ── カレンダー追加ボタン ───────────────────────── */
+.election-btn-group {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.btn-cal-add {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #ECFDF5;
+  border: 1px solid #6EE7B7;
+  color: #059669;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.btn-cal-add:hover {
+  background: #059669;
+  color: #FFFFFF;
+  border-color: #047857;
+}
+
+/* ── 緊急バッジ（残り日数）──────────────────────── */
+.urgency-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 99px;
+  line-height: 1.4;
+}
+.urgency-badge.today {
+  background: #FEF2F2;
+  color: #DC2626;
+  border: 1px solid #FECACA;
+  animation: pulse-red 1.5s ease infinite;
+}
+.urgency-badge.urgent {
+  background: #FFF7ED;
+  color: #EA580C;
+  border: 1px solid #FED7AA;
+}
+.urgency-badge.soon {
+  background: #F0FDF4;
+  color: #16A34A;
+  border: 1px solid #BBF7D0;
+}
+@keyframes pulse-red {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* ================================================================
+   📱 スマートフォン完全対応レスポンシブ
+   対象: iPhoneSE(375px) ～ iPhone Pro Max(430px) ～ Android全機種
+   ================================================================ */
+
+/* --- タブレット・小さめデスクトップ -------------------------------- */
+@media (max-width: 768px) {
+  .wrap {
+    padding: 0 14px;
+  }
+  .header-container {
+    padding: 0 12px;
+    gap: 8px;
+  }
+  .logo-box {
+    padding: 4px 10px;
+  }
+  .site-logo-img {
+    height: 28px;
+  }
+  .nav-tab-item {
+    padding: 6px 9px;
+    font-size: 12.5px;
+  }
+  .card {
+    padding: 14px;
+  }
+  .hero-num {
+    font-size: clamp(64px, 20vw, 120px);
+  }
+  .election-row-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .election-btn-group {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .btn-sub-toggle, .btn-cal-add {
+    flex: 1;
+    justify-content: center;
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .profile-info-grid {
+    grid-template-columns: 1fr;
+  }
+  .mypage-action-bar {
+    flex-direction: column;
+  }
+  .mypage-action-bar button {
+    width: 100%;
+  }
+  .auth-hero-title {
+    font-size: 18px;
+  }
+  .auth-card {
+    padding: 8px 16px 20px;
+  }
+}
+
+/* --- スマートフォン (480px以下) ------------------------------------ */
+@media (max-width: 480px) {
+  .wrap {
+    padding: 0 10px;
+  }
+  .site-header {
+    padding: 4px 0;
+  }
+  .header-container {
+    padding: 0 10px;
+    min-height: 48px;
+    gap: 6px;
+  }
+  .logo-box {
+    padding: 3px 8px;
+  }
+  .site-logo-img {
+    height: 24px;
+  }
+  .nav-tab-item {
+    padding: 5px 8px;
+    font-size: 12px;
+    gap: 3px;
+  }
+  /* SVGアイコンを小さめに */
+  .nav-tab-item svg {
+    width: 14px;
+    height: 14px;
+  }
+  /* ヘッダー右側のアイコンを縮小 */
+  .notif-btn {
+    width: 34px;
+    height: 34px;
+  }
+  .user-pill {
+    padding: 5px 8px;
+    font-size: 12px;
+    gap: 4px;
+  }
+  .hero-section {
+    padding: 20px 0;
+  }
+  .hero-num {
+    font-size: clamp(56px, 22vw, 100px);
+  }
+  .card {
+    padding: 12px;
+    border-radius: 10px;
+  }
+  .section-title {
+    font-size: 16px;
+  }
+  .election-row-card {
+    padding: 10px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .election-btn-group {
+    width: 100%;
+    gap: 8px;
+  }
+  .btn-sub-toggle, .btn-cal-add {
+    flex: 1;
+    justify-content: center;
+    min-height: 40px;
+    font-size: 13px;
+    padding: 8px;
+  }
+  .year-chip {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+  /* 通知ドロップダウン */
+  .notif-dropdown {
+    width: min(320px, calc(100vw - 20px));
+    right: -4px;
+  }
+  /* マイページ */
+  .auth-screen {
+    padding: 8px 0 32px;
+  }
+  .auth-hero {
+    padding: 20px 12px 18px;
+  }
+  .auth-hero-title {
+    font-size: 17px;
+  }
+  .auth-hero-sub {
+    font-size: 13px;
+  }
+  .auth-hero-icon {
+    width: 52px;
+    height: 52px;
+  }
+  .auth-card {
+    padding: 8px 14px 18px;
+  }
+  .timing-checkbox-row {
+    font-size: 13px;
+  }
+  /* フォームUI */
+  .form-input, .form-select {
+    font-size: 16px; /* iOS でズームしないように16px以上必須 */
+  }
+  .btn-auth-submit {
+    font-size: 15px;
+    padding: 14px;
+    min-height: 48px;
+  }
+  /* info-row を縦積みに */
+  .info-row {
+    flex-direction: column !important;
+    gap: 4px !important;
+  }
+}
+
+/* --- iPhone SE (375px以下) ---------------------------------------- */
+@media (max-width: 375px) {
+  .nav-tab-item {
+    padding: 5px 6px;
+    font-size: 11.5px;
+  }
+  .header-container {
+    gap: 4px;
+  }
+  .user-pill span {
+    display: none; /* 超狭い時は名前を隠してアイコンのみ */
+  }
+}
+
+/* タッチデバイス向け：ボタンのタッチターゲットを確保 */
+@media (hover: none) and (pointer: coarse) {
+  .nav-tab-item,
+  .btn-sub-toggle,
+  .btn-cal-add,
+  .btn-auth-submit,
+  .btn-logout {
+    min-height: 44px;
+  }
+  .notif-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}

@@ -256,11 +256,7 @@ export function loginUser(name: string, email: string, municipality: string) {
   showToast(`Welcome! ${state.currentUser.name} さんでログインしました`);
 }
 
-export function loginDemoUser() {
-  state.currentUser = { ...defaultDemoUser };
-  saveState();
-  showToast("⚡ デモユーザー（新潟 たろう さん）でログインしました");
-}
+// loginDemoUser は削除（本物の認証に移行済み）
 
 export function logoutUser() {
   state.currentUser = {
@@ -272,9 +268,6 @@ export function logoutUser() {
 }
 
 export function toggleElectionSubscription(electionName: string): boolean {
-  if (!state.currentUser.isLoggedIn) {
-    loginDemoUser();
-  }
   const index = state.currentUser.subscribedElectionNames.indexOf(electionName);
   let isSubscribed = false;
   if (index >= 0) {
@@ -293,35 +286,132 @@ export function isElectionSubscribed(electionName: string): boolean {
   return state.currentUser.subscribedElectionNames.includes(electionName);
 }
 
-export function triggerSimulatedNotification(electionName?: string, renderFn?: () => void) {
-  const targetName = electionName || "令和8年5月31日 新潟県知事選挙";
-  const newNotif: NotificationItem = {
-    id: "notif-" + Date.now(),
-    title: `🔔 【リマインド】${targetName}`,
-    message: `投票日（${targetName}）が近づいています！期日前投票所（${state.currentUser.municipality}内）での事前投票も可能です。準備をお忘れなく！`,
-    date: new Date().toLocaleString("ja-JP", { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }),
-    read: false,
-    electionName: targetName,
-    type: "urgent",
-  };
+// ============================================================
+// 自動選挙リマインド通知チェック（アプリ起動時に実行）
+// ============================================================
+export function checkAndFireReminders(renderFn?: () => void) {
+  if (!state.currentUser.isLoggedIn) return;
+  if (state.currentUser.subscribedElectionNames.length === 0) return;
 
-  state.notifications.unshift(newNotif);
-  saveState();
+  const today = new Date().toISOString().split("T")[0];
+  const lastCheck = localStorage.getItem("niigata_last_reminder_check");
+  // 同じ日に複数回チェックしない（1日1回のみ）
+  if (lastCheck === today) return;
+  localStorage.setItem("niigata_last_reminder_check", today);
 
-  // Web Notification API (ブラウザ標準プッシュ通知試行)
-  if ("Notification" in window && Notification.permission === "granted") {
-    try {
-      new Notification(newNotif.title, {
-        body: newNotif.message,
-        icon: "rogo.png",
-      });
-    } catch (e) {
-      console.log("Web Notification output error", e);
+  // elections データを動的インポート
+  import("./data/elections").then(({ UPCOMING_ELECTIONS }) => {
+    const thresholds = [
+      { days: 0, label: "今日が投票日です！" },
+      { days: 1, label: "明日が投票日です！" },
+      { days: 3, label: "あと3日で投票日です" },
+      { days: 7, label: "あと7日で投票日です（期日前投票も可能）" },
+    ];
+
+    let hasNewNotif = false;
+
+    state.currentUser.subscribedElectionNames.forEach((name) => {
+      const election = UPCOMING_ELECTIONS.find((e) => e.name === name);
+      if (!election) return;
+
+      const days = daysUntil(election.isoDate);
+      if (days < 0) return; // 過去の選挙はスキップ
+
+      const match = thresholds.find((t) => t.days === days);
+      if (!match) return;
+
+      const pref = state.currentUser.notificationPrefs;
+      if (days === 0 && !pref.onElectionDay) return;
+      if (days === 1 && !pref.day1Before) return;
+      if (days === 3 && !pref.days3Before) return;
+      if (days === 7 && !pref.days7Before) return;
+
+      const notif: NotificationItem = {
+        id: "auto-" + Date.now() + "-" + name,
+        title: `🗳️ ${match.label}`,
+        message: `「${name}」の投票日が近づいています。${state.currentUser.municipality}の投票所で忘れずに投票しましょう！`,
+        date: new Date().toLocaleString("ja-JP", { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }),
+        read: false,
+        electionName: name,
+        type: days <= 1 ? "urgent" : "reminder",
+      };
+
+      // 同じ選挙・同じタイミングの通知が既にあれば追加しない
+      const alreadyExists = state.notifications.some(
+        (n) => n.electionName === name && n.title === notif.title
+      );
+      if (!alreadyExists) {
+        state.notifications.unshift(notif);
+        hasNewNotif = true;
+
+        // Web Notification API
+        if ("Notification" in window && Notification.permission === "granted") {
+          try {
+            new Notification(notif.title, {
+              body: notif.message,
+              icon: "rogo.png",
+              badge: "rogo.png",
+            });
+          } catch (e) {
+            console.log("Web Notification failed", e);
+          }
+        }
+      }
+    });
+
+    if (hasNewNotif) {
+      saveState();
+      if (renderFn) renderFn();
     }
-  }
+  }).catch(() => {});
+}
 
-  showToast(`🔔 【通知送信】${newNotif.title} の模擬通知を発火しました！`);
-  if (renderFn) renderFn();
+// ============================================================
+// カレンダー連携 (.ics 生成)
+// すべての端末（iOS/Android/PC）の標準カレンダーアプリに対応
+// ============================================================
+export function downloadElectionICS(electionName: string, isoDate: string, notice: string) {
+  const dateStr = isoDate.replace(/-/g, "");
+  const noticeDateStr = isoDate.replace(/-/g, ""); // 告示日の近似値として投票日を使用
+
+  const ics = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//にいがた投票までの道//JP",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+    "BEGIN:VEVENT",
+    `UID:${Date.now()}@niigata-vote.jp`,
+    `DTSTAMP:${new Date().toISOString().replace(/[-:.]/g, "").slice(0, 15)}Z`,
+    `DTSTART;VALUE=DATE:${dateStr}`,
+    `DTEND;VALUE=DATE:${dateStr}`,
+    `SUMMARY:🗳️ ${electionName}（投票日）`,
+    `DESCRIPTION:新潟県 ${electionName} の投票日です。\n忘れずに投票に行きましょう！\n\n期日前投票: 告示日(${notice})〜前日まで可能です。\n\n詳細: https://www.pref.niigata.lg.jp/site/senkyo/`,
+    `LOCATION:新潟県内 各投票所`,
+    "BEGIN:VALARM",
+    "TRIGGER:-P7D",
+    "ACTION:DISPLAY",
+    `DESCRIPTION:【7日前リマインド】${electionName} の投票日が1週間後です`,
+    "END:VALARM",
+    "BEGIN:VALARM",
+    "TRIGGER:-P1D",
+    "ACTION:DISPLAY",
+    `DESCRIPTION:【前日リマインド】明日は ${electionName} の投票日です！`,
+    "END:VALARM",
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ].join("\r\n");
+
+  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${electionName}.ics`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast("📅 カレンダーに追加しました！投票日の7日前・前日にリマインドされます");
 }
 
 export function markNotificationsAsRead() {

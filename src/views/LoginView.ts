@@ -7,12 +7,12 @@ import {
   icon,
   logoutUser,
   saveState,
-  triggerSimulatedNotification,
   showToast,
   toggleElectionSubscription,
   registerNewUser,
   authenticateUser,
   syncSubscriptionsToUserDB,
+  checkAndFireReminders,
 } from '../state';
 
 // ============================================================
@@ -415,14 +415,9 @@ function renderDashboard(renderFn: () => void): HTMLElement {
   prefCard.appendChild(webNotifBox);
   root.appendChild(prefCard);
 
-  // アクションバー（テスト通知 ＆ ログアウト）
+  // アクションバー（ログアウトのみ）
   const actionBar = document.createElement("div");
   actionBar.className = "mypage-action-bar";
-
-  const testBtn = document.createElement("button");
-  testBtn.className = "btn-test-notif-large";
-  testBtn.innerHTML = `⚡ 模擬通知をテスト送信する`;
-  testBtn.addEventListener("click", () => triggerSimulatedNotification(undefined, renderFn));
 
   const logoutBtn = document.createElement("button");
   logoutBtn.className = "btn-logout";
@@ -432,7 +427,6 @@ function renderDashboard(renderFn: () => void): HTMLElement {
     renderFn();
   });
 
-  actionBar.appendChild(testBtn);
   actionBar.appendChild(logoutBtn);
   root.appendChild(actionBar);
 
