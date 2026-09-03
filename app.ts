@@ -10,6 +10,7 @@ import { renderSchedulePage } from './src/views/ScheduleView';
 import { renderPledges } from './src/views/PledgesView';
 import { renderQuizQuestion, renderQuizResult } from './src/views/QuizView';
 import { renderPlace } from './src/views/PlaceView';
+import { renderMyPage } from './src/views/LoginView';
 
 const root = document.getElementById("app")!;
 
@@ -37,6 +38,9 @@ function render() {
       break;
     case "place":
       content.appendChild(renderPlace(render));
+      break;
+    case "mypage":
+      content.appendChild(renderMyPage(render));
       break;
   }
 

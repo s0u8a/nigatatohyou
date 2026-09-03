@@ -2,7 +2,7 @@
 // 選挙日程 ＆ カウントダウン画面 (views/ScheduleView.ts)
 // ============================================================
 
-import { state, daysUntil, dateLabel, elJpDateToIso, icon } from '../state';
+import { state, daysUntil, dateLabel, elJpDateToIso, icon, toggleElectionSubscription, isElectionSubscribed, triggerSimulatedNotification } from '../state';
 import { UPCOMING_ELECTIONS, ELECTION_YEAR_FILTERS, OFFICIAL_SCHEDULE_URL } from '../data/elections';
 
 export function renderSchedulePage(renderFn: () => void): HTMLElement {
@@ -10,8 +10,34 @@ export function renderSchedulePage(renderFn: () => void): HTMLElement {
 
   const title = document.createElement("h2");
   title.className = "disp section-title";
-  title.textContent = "選挙日程 ＆ カウントダウン";
+  title.textContent = "選挙日程 ＆ リマインド通知";
   wrap.appendChild(title);
+
+  // 選挙日忘れ防止・リマインド通知機能案内カード
+  const remindBannerCard = document.createElement("div");
+  remindBannerCard.className = "card remind-banner-card";
+  remindBannerCard.style.borderLeft = "4px solid #7C3AED";
+  remindBannerCard.style.background = "linear-gradient(135deg, rgba(124, 58, 237, 0.06), rgba(99, 102, 241, 0.04))";
+  remindBannerCard.innerHTML = `
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+      <div>
+        <h3 style="margin:0 0 4px 0;font-size:15px;color:#7C3AED;display:flex;align-items:center;gap:6px;">
+          ${icon("bell", 18)} 選挙日忘れを防止！リマインド通知機能
+        </h3>
+        <p style="margin:0;font-size:13px;color:var(--muted);line-height:1.5;">
+          気になる選挙の「🔔 リマインド通知」をONにすると、告示日や期日前投票の期間中に事前に通知が届きます。
+        </p>
+      </div>
+      <button class="btn-test-notif-schedule" title="模擬通知を試す">
+        ⚡ 模擬通知テスト
+      </button>
+    </div>
+  `;
+
+  remindBannerCard.querySelector(".btn-test-notif-schedule")?.addEventListener("click", () => {
+    triggerSimulatedNotification(undefined, renderFn);
+  });
+  wrap.appendChild(remindBannerCard);
 
   const days = daysUntil(state.electionDate);
   const heroRow = document.createElement("div");
@@ -24,7 +50,7 @@ export function renderSchedulePage(renderFn: () => void): HTMLElement {
 
   const sub = document.createElement("p");
   sub.className = "subtext";
-  sub.textContent = `${dateLabel(state.electionDate)} 投票日 (リストをタップで日付変更)`;
+  sub.textContent = `${dateLabel(state.electionDate)} 投票日 (リストをタップで日付選択)`;
   wrap.appendChild(sub);
 
   const dateCard = document.createElement("div");
@@ -86,20 +112,43 @@ export function renderSchedulePage(renderFn: () => void): HTMLElement {
   });
 
   filteredElections.forEach((e) => {
-    const btn = document.createElement("button");
-    btn.className = "election-btn";
-    btn.innerHTML = `
-      <div style="display:flex;align-items:center;gap:6px;">
+    const isSub = isElectionSubscribed(e.name);
+
+    const electionRow = document.createElement("div");
+    electionRow.className = "election-row-card" + (isSub ? " is-subscribed" : "");
+
+    const electionInfo = document.createElement("div");
+    electionInfo.className = "election-info-box";
+    electionInfo.innerHTML = `
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
         <span class="year-badge">${e.yearLabel}</span>
-        <span style="font-weight:500;">${e.name}</span>
+        <span style="font-weight:600;font-size:15px;color:var(--heading);">${e.name}</span>
       </div>
       <span style="font-size:13px;color:var(--muted);">投票日 ${e.day} (告示 ${e.notice})</span>
     `;
-    btn.addEventListener("click", () => {
+
+    // タップでカウントダウン日数を設定
+    electionInfo.addEventListener("click", () => {
       state.electionDate = e.isoDate || elJpDateToIso(e.day);
       renderFn();
     });
-    scheduleCard.appendChild(btn);
+
+    // 🔔 リマインド登録トグルボタン
+    const subBtn = document.createElement("button");
+    subBtn.className = "btn-sub-toggle" + (isSub ? " active" : "");
+    subBtn.innerHTML = isSub
+      ? `${icon("bell", 14)} <span>通知ON</span>`
+      : `${icon("bell-off", 14)} <span>通知OFF</span>`;
+
+    subBtn.addEventListener("click", (evt) => {
+      evt.stopPropagation();
+      toggleElectionSubscription(e.name);
+      renderFn();
+    });
+
+    electionRow.appendChild(electionInfo);
+    electionRow.appendChild(subBtn);
+    scheduleCard.appendChild(electionRow);
   });
 
   const officialLink = document.createElement("a");

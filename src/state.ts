@@ -2,13 +2,84 @@
 // アプリ状態管理 ＆ ヘルパー関数 (state.ts)
 // ============================================================
 
-import { Tag, Candidate, AppState } from './types';
+import { Tag, Candidate, AppState, UserProfile, NotificationItem } from './types';
 import { TAGS, CANDIDATES } from './data/candidates';
 
 export function freshScores(): Record<Tag, number> {
   const s = {} as Record<Tag, number>;
   TAGS.forEach((t) => (s[t] = 0));
   return s;
+}
+
+export const defaultGuestUser: UserProfile = {
+  id: "guest",
+  name: "ゲストユーザー",
+  email: "",
+  municipality: "新潟市中央区",
+  isLoggedIn: false,
+  notificationPrefs: {
+    days7Before: true,
+    days3Before: true,
+    day1Before: true,
+    onElectionDay: true,
+  },
+  subscribedElectionNames: ["令和8年5月31日 新潟県知事選挙", "新潟市長選挙"],
+};
+
+export const defaultDemoUser: UserProfile = {
+  id: "demo-voter-01",
+  name: "新潟 たろう",
+  email: "niigata.taro@example.com",
+  municipality: "新潟市中央区",
+  isLoggedIn: true,
+  isDemo: true,
+  notificationPrefs: {
+    days7Before: true,
+    days3Before: true,
+    day1Before: true,
+    onElectionDay: true,
+  },
+  subscribedElectionNames: ["令和8年5月31日 新潟県知事選挙", "新潟市長選挙", "新潟市議会議員補欠選挙"],
+};
+
+export const defaultInitialNotifications: NotificationItem[] = [
+  {
+    id: "notif-1",
+    title: "🔔 選挙日程リマインド通知",
+    message: "「令和8年5月31日 新潟県知事選挙」の告示日が近づいています。期日前投票所（新潟市役所など）の案内をご確認ください。",
+    date: "2026-09-01 10:00",
+    read: false,
+    electionName: "令和8年5月31日 新潟県知事選挙",
+    type: "reminder",
+  },
+  {
+    id: "notif-2",
+    title: "📍 地域の投票所アップデート",
+    message: "新潟市中央区の期日前投票所情報が更新されました。最寄りの施設は「投票所」タブから検索できます。",
+    date: "2026-08-28 14:30",
+    read: true,
+    type: "info",
+  },
+];
+
+function loadStoredUser(): UserProfile {
+  try {
+    const saved = localStorage.getItem("niigata_election_user");
+    if (saved) return JSON.parse(saved);
+  } catch (e) {
+    console.error("Failed to load user state", e);
+  }
+  return defaultDemoUser; // 初回デモ体験向上のためデモユーザーを初期設定
+}
+
+function loadStoredNotifications(): NotificationItem[] {
+  try {
+    const saved = localStorage.getItem("niigata_election_notifs");
+    if (saved) return JSON.parse(saved);
+  } catch (e) {
+    console.error("Failed to load notification state", e);
+  }
+  return defaultInitialNotifications;
 }
 
 export const state: AppState = {
@@ -21,7 +92,126 @@ export const state: AppState = {
   selectedMunicipality: "すべて",
   placeSearchQuery: "",
   selectedElectionYear: "すべて",
+  currentUser: loadStoredUser(),
+  notifications: loadStoredNotifications(),
+  isNotificationDropdownOpen: false,
+  toastMessage: null,
 };
+
+export function saveState() {
+  try {
+    localStorage.setItem("niigata_election_user", JSON.stringify(state.currentUser));
+    localStorage.setItem("niigata_election_notifs", JSON.stringify(state.notifications));
+  } catch (e) {
+    console.error("Failed to save state", e);
+  }
+}
+
+export function loginUser(name: string, email: string, municipality: string) {
+  state.currentUser = {
+    ...state.currentUser,
+    id: "user-" + Date.now(),
+    name: name || "新潟 市民",
+    email: email || "user@example.com",
+    municipality: municipality || "新潟市中央区",
+    isLoggedIn: true,
+    isDemo: false,
+  };
+  saveState();
+  showToast(`Welcome! ${state.currentUser.name} さんでログインしました`);
+}
+
+export function loginDemoUser() {
+  state.currentUser = { ...defaultDemoUser };
+  saveState();
+  showToast("⚡ デモユーザー（新潟 たろう さん）でログインしました");
+}
+
+export function logoutUser() {
+  state.currentUser = {
+    ...defaultGuestUser,
+    isLoggedIn: false,
+  };
+  saveState();
+  showToast("ログアウトしました");
+}
+
+export function toggleElectionSubscription(electionName: string): boolean {
+  if (!state.currentUser.isLoggedIn) {
+    loginDemoUser();
+  }
+  const index = state.currentUser.subscribedElectionNames.indexOf(electionName);
+  let isSubscribed = false;
+  if (index >= 0) {
+    state.currentUser.subscribedElectionNames.splice(index, 1);
+    showToast(`「${electionName}」のリマインド通知を解除しました`);
+  } else {
+    state.currentUser.subscribedElectionNames.push(electionName);
+    isSubscribed = true;
+    showToast(`🔔 「${electionName}」のリマインド通知を登録しました！`);
+  }
+  saveState();
+  return isSubscribed;
+}
+
+export function isElectionSubscribed(electionName: string): boolean {
+  return state.currentUser.subscribedElectionNames.includes(electionName);
+}
+
+export function triggerSimulatedNotification(electionName?: string, renderFn?: () => void) {
+  const targetName = electionName || "令和8年5月31日 新潟県知事選挙";
+  const newNotif: NotificationItem = {
+    id: "notif-" + Date.now(),
+    title: `🔔 【リマインド】${targetName}`,
+    message: `投票日（${targetName}）が近づいています！期日前投票所（${state.currentUser.municipality}内）での事前投票も可能です。準備をお忘れなく！`,
+    date: new Date().toLocaleString("ja-JP", { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }),
+    read: false,
+    electionName: targetName,
+    type: "urgent",
+  };
+
+  state.notifications.unshift(newNotif);
+  saveState();
+
+  // Web Notification API (ブラウザ標準プッシュ通知試行)
+  if ("Notification" in window && Notification.permission === "granted") {
+    try {
+      new Notification(newNotif.title, {
+        body: newNotif.message,
+        icon: "rogo.png",
+      });
+    } catch (e) {
+      console.log("Web Notification output error", e);
+    }
+  }
+
+  showToast(`🔔 【通知送信】${newNotif.title} の模擬通知を発火しました！`);
+  if (renderFn) renderFn();
+}
+
+export function markNotificationsAsRead() {
+  state.notifications.forEach((n) => (n.read = true));
+  saveState();
+}
+
+let toastTimer: any = null;
+export function showToast(message: string) {
+  state.toastMessage = message;
+  const existing = document.getElementById("app-toast-container");
+  if (existing) existing.remove();
+
+  const toast = document.createElement("div");
+  toast.id = "app-toast-container";
+  toast.className = "toast-banner";
+  toast.innerHTML = `<span class="toast-text">${message}</span>`;
+  document.body.appendChild(toast);
+
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    if (toast.parentNode) toast.parentNode.removeChild(toast);
+    state.toastMessage = null;
+  }, 4000);
+}
 
 export function daysUntil(dateStr: string): number {
   const target = new Date(dateStr + "T00:00:00");
@@ -88,7 +278,28 @@ export function icon(name: string, size = 16): string {
       return `<svg ${common}><path d="M18 6 6 18M6 6l12 12"/></svg>`;
     case "info":
       return `<svg ${common}><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>`;
+    case "bell":
+      return `<svg ${common}><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>`;
+    case "bell-off":
+      return `<svg ${common}><path d="M8.66 8.66A6 6 0 0 1 18 8c0 7-3 9-3 9H3s3-2 3-9a6 6 0 0 1 .66-2.66"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`;
+    case "user":
+      return `<svg ${common}><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+    case "log-in":
+      return `<svg ${common}><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>`;
+    case "log-out":
+      return `<svg ${common}><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>`;
+    case "check":
+      return `<svg ${common}><polyline points="20 6 9 17 4 12"/></svg>`;
+    case "alert-circle":
+      return `<svg ${common}><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
+    case "settings":
+      return `<svg ${common}><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`;
+    case "shield-check":
+      return `<svg ${common}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`;
+    case "mail":
+      return `<svg ${common}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>`;
     default:
       return "";
   }
 }
+

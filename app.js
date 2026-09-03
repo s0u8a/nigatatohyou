@@ -581,6 +581,72 @@
     TAGS.forEach((t) => s[t] = 0);
     return s;
   }
+  var defaultGuestUser = {
+    id: "guest",
+    name: "\u30B2\u30B9\u30C8\u30E6\u30FC\u30B6\u30FC",
+    email: "",
+    municipality: "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    isLoggedIn: false,
+    notificationPrefs: {
+      days7Before: true,
+      days3Before: true,
+      day1Before: true,
+      onElectionDay: true
+    },
+    subscribedElectionNames: ["\u4EE4\u548C8\u5E745\u670831\u65E5 \u65B0\u6F5F\u770C\u77E5\u4E8B\u9078\u6319", "\u65B0\u6F5F\u5E02\u9577\u9078\u6319"]
+  };
+  var defaultDemoUser = {
+    id: "demo-voter-01",
+    name: "\u65B0\u6F5F \u305F\u308D\u3046",
+    email: "niigata.taro@example.com",
+    municipality: "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+    isLoggedIn: true,
+    isDemo: true,
+    notificationPrefs: {
+      days7Before: true,
+      days3Before: true,
+      day1Before: true,
+      onElectionDay: true
+    },
+    subscribedElectionNames: ["\u4EE4\u548C8\u5E745\u670831\u65E5 \u65B0\u6F5F\u770C\u77E5\u4E8B\u9078\u6319", "\u65B0\u6F5F\u5E02\u9577\u9078\u6319", "\u65B0\u6F5F\u5E02\u8B70\u4F1A\u8B70\u54E1\u88DC\u6B20\u9078\u6319"]
+  };
+  var defaultInitialNotifications = [
+    {
+      id: "notif-1",
+      title: "\u{1F514} \u9078\u6319\u65E5\u7A0B\u30EA\u30DE\u30A4\u30F3\u30C9\u901A\u77E5",
+      message: "\u300C\u4EE4\u548C8\u5E745\u670831\u65E5 \u65B0\u6F5F\u770C\u77E5\u4E8B\u9078\u6319\u300D\u306E\u544A\u793A\u65E5\u304C\u8FD1\u3065\u3044\u3066\u3044\u307E\u3059\u3002\u671F\u65E5\u524D\u6295\u7968\u6240\uFF08\u65B0\u6F5F\u5E02\u5F79\u6240\u306A\u3069\uFF09\u306E\u6848\u5185\u3092\u3054\u78BA\u8A8D\u304F\u3060\u3055\u3044\u3002",
+      date: "2026-09-01 10:00",
+      read: false,
+      electionName: "\u4EE4\u548C8\u5E745\u670831\u65E5 \u65B0\u6F5F\u770C\u77E5\u4E8B\u9078\u6319",
+      type: "reminder"
+    },
+    {
+      id: "notif-2",
+      title: "\u{1F4CD} \u5730\u57DF\u306E\u6295\u7968\u6240\u30A2\u30C3\u30D7\u30C7\u30FC\u30C8",
+      message: "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A\u306E\u671F\u65E5\u524D\u6295\u7968\u6240\u60C5\u5831\u304C\u66F4\u65B0\u3055\u308C\u307E\u3057\u305F\u3002\u6700\u5BC4\u308A\u306E\u65BD\u8A2D\u306F\u300C\u6295\u7968\u6240\u300D\u30BF\u30D6\u304B\u3089\u691C\u7D22\u3067\u304D\u307E\u3059\u3002",
+      date: "2026-08-28 14:30",
+      read: true,
+      type: "info"
+    }
+  ];
+  function loadStoredUser() {
+    try {
+      const saved = localStorage.getItem("niigata_election_user");
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.error("Failed to load user state", e);
+    }
+    return defaultDemoUser;
+  }
+  function loadStoredNotifications() {
+    try {
+      const saved = localStorage.getItem("niigata_election_notifs");
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.error("Failed to load notification state", e);
+    }
+    return defaultInitialNotifications;
+  }
   var state = {
     tab: "top",
     // 最初に開いた時は必ずこのトップ画面
@@ -591,8 +657,112 @@
     selectedRegion: "\u3059\u3079\u3066",
     selectedMunicipality: "\u3059\u3079\u3066",
     placeSearchQuery: "",
-    selectedElectionYear: "\u3059\u3079\u3066"
+    selectedElectionYear: "\u3059\u3079\u3066",
+    currentUser: loadStoredUser(),
+    notifications: loadStoredNotifications(),
+    isNotificationDropdownOpen: false,
+    toastMessage: null
   };
+  function saveState() {
+    try {
+      localStorage.setItem("niigata_election_user", JSON.stringify(state.currentUser));
+      localStorage.setItem("niigata_election_notifs", JSON.stringify(state.notifications));
+    } catch (e) {
+      console.error("Failed to save state", e);
+    }
+  }
+  function loginUser(name, email, municipality) {
+    state.currentUser = {
+      ...state.currentUser,
+      id: "user-" + Date.now(),
+      name: name || "\u65B0\u6F5F \u5E02\u6C11",
+      email: email || "user@example.com",
+      municipality: municipality || "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+      isLoggedIn: true,
+      isDemo: false
+    };
+    saveState();
+    showToast(`Welcome! ${state.currentUser.name} \u3055\u3093\u3067\u30ED\u30B0\u30A4\u30F3\u3057\u307E\u3057\u305F`);
+  }
+  function loginDemoUser() {
+    state.currentUser = { ...defaultDemoUser };
+    saveState();
+    showToast("\u26A1 \u30C7\u30E2\u30E6\u30FC\u30B6\u30FC\uFF08\u65B0\u6F5F \u305F\u308D\u3046 \u3055\u3093\uFF09\u3067\u30ED\u30B0\u30A4\u30F3\u3057\u307E\u3057\u305F");
+  }
+  function logoutUser() {
+    state.currentUser = {
+      ...defaultGuestUser,
+      isLoggedIn: false
+    };
+    saveState();
+    showToast("\u30ED\u30B0\u30A2\u30A6\u30C8\u3057\u307E\u3057\u305F");
+  }
+  function toggleElectionSubscription(electionName) {
+    if (!state.currentUser.isLoggedIn) {
+      loginDemoUser();
+    }
+    const index = state.currentUser.subscribedElectionNames.indexOf(electionName);
+    let isSubscribed = false;
+    if (index >= 0) {
+      state.currentUser.subscribedElectionNames.splice(index, 1);
+      showToast(`\u300C${electionName}\u300D\u306E\u30EA\u30DE\u30A4\u30F3\u30C9\u901A\u77E5\u3092\u89E3\u9664\u3057\u307E\u3057\u305F`);
+    } else {
+      state.currentUser.subscribedElectionNames.push(electionName);
+      isSubscribed = true;
+      showToast(`\u{1F514} \u300C${electionName}\u300D\u306E\u30EA\u30DE\u30A4\u30F3\u30C9\u901A\u77E5\u3092\u767B\u9332\u3057\u307E\u3057\u305F\uFF01`);
+    }
+    saveState();
+    return isSubscribed;
+  }
+  function isElectionSubscribed(electionName) {
+    return state.currentUser.subscribedElectionNames.includes(electionName);
+  }
+  function triggerSimulatedNotification(electionName, renderFn) {
+    const targetName = electionName || "\u4EE4\u548C8\u5E745\u670831\u65E5 \u65B0\u6F5F\u770C\u77E5\u4E8B\u9078\u6319";
+    const newNotif = {
+      id: "notif-" + Date.now(),
+      title: `\u{1F514} \u3010\u30EA\u30DE\u30A4\u30F3\u30C9\u3011${targetName}`,
+      message: `\u6295\u7968\u65E5\uFF08${targetName}\uFF09\u304C\u8FD1\u3065\u3044\u3066\u3044\u307E\u3059\uFF01\u671F\u65E5\u524D\u6295\u7968\u6240\uFF08${state.currentUser.municipality}\u5185\uFF09\u3067\u306E\u4E8B\u524D\u6295\u7968\u3082\u53EF\u80FD\u3067\u3059\u3002\u6E96\u5099\u3092\u304A\u5FD8\u308C\u306A\u304F\uFF01`,
+      date: (/* @__PURE__ */ new Date()).toLocaleString("ja-JP", { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }),
+      read: false,
+      electionName: targetName,
+      type: "urgent"
+    };
+    state.notifications.unshift(newNotif);
+    saveState();
+    if ("Notification" in window && Notification.permission === "granted") {
+      try {
+        new Notification(newNotif.title, {
+          body: newNotif.message,
+          icon: "rogo.png"
+        });
+      } catch (e) {
+        console.log("Web Notification output error", e);
+      }
+    }
+    showToast(`\u{1F514} \u3010\u901A\u77E5\u9001\u4FE1\u3011${newNotif.title} \u306E\u6A21\u64EC\u901A\u77E5\u3092\u767A\u706B\u3057\u307E\u3057\u305F\uFF01`);
+    if (renderFn) renderFn();
+  }
+  function markNotificationsAsRead() {
+    state.notifications.forEach((n) => n.read = true);
+    saveState();
+  }
+  var toastTimer = null;
+  function showToast(message) {
+    state.toastMessage = message;
+    const existing = document.getElementById("app-toast-container");
+    if (existing) existing.remove();
+    const toast = document.createElement("div");
+    toast.id = "app-toast-container";
+    toast.className = "toast-banner";
+    toast.innerHTML = `<span class="toast-text">${message}</span>`;
+    document.body.appendChild(toast);
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      if (toast.parentNode) toast.parentNode.removeChild(toast);
+      state.toastMessage = null;
+    }, 4e3);
+  }
   function daysUntil(dateStr) {
     const target = /* @__PURE__ */ new Date(dateStr + "T00:00:00");
     const now = /* @__PURE__ */ new Date();
@@ -652,6 +822,26 @@
         return `<svg ${common}><path d="M18 6 6 18M6 6l12 12"/></svg>`;
       case "info":
         return `<svg ${common}><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>`;
+      case "bell":
+        return `<svg ${common}><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>`;
+      case "bell-off":
+        return `<svg ${common}><path d="M8.66 8.66A6 6 0 0 1 18 8c0 7-3 9-3 9H3s3-2 3-9a6 6 0 0 1 .66-2.66"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`;
+      case "user":
+        return `<svg ${common}><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+      case "log-in":
+        return `<svg ${common}><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>`;
+      case "log-out":
+        return `<svg ${common}><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>`;
+      case "check":
+        return `<svg ${common}><polyline points="20 6 9 17 4 12"/></svg>`;
+      case "alert-circle":
+        return `<svg ${common}><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
+      case "settings":
+        return `<svg ${common}><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`;
+      case "shield-check":
+        return `<svg ${common}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`;
+      case "mail":
+        return `<svg ${common}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>`;
       default:
         return "";
     }
@@ -682,7 +872,8 @@
       ["schedule", "\u65E5\u7A0B", "calendar"],
       ["pledges", "\u516C\u7D04", "clipboard"],
       ["quiz", "\u6295\u7968\u8A3A\u65AD", "vote"],
-      ["place", "\u6295\u7968\u6240", "map-pin"]
+      ["place", "\u6295\u7968\u6240", "map-pin"],
+      ["mypage", "\u30DE\u30A4\u30DA\u30FC\u30B8", "user"]
     ];
     tabDefs.forEach(([key, label, iconName]) => {
       const btn = document.createElement("button");
@@ -690,12 +881,100 @@
       btn.innerHTML = `${icon(iconName, 16)}<span>${label}</span>`;
       btn.addEventListener("click", () => {
         state.tab = key;
+        state.isNotificationDropdownOpen = false;
         renderFn();
       });
       navTabs.appendChild(btn);
     });
     container.appendChild(navTabs);
+    const userControls = document.createElement("div");
+    userControls.className = "header-user-controls";
+    const unreadCount = state.notifications.filter((n) => !n.read).length;
+    const bellBtn = document.createElement("button");
+    bellBtn.className = "header-icon-btn" + (unreadCount > 0 ? " has-unread" : "");
+    bellBtn.title = "\u9078\u6319\u30EA\u30DE\u30A4\u30F3\u30C9\u901A\u77E5";
+    bellBtn.innerHTML = `
+    ${icon("bell", 18)}
+    ${unreadCount > 0 ? `<span class="notif-badge">${unreadCount}</span>` : ""}
+  `;
+    bellBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      state.isNotificationDropdownOpen = !state.isNotificationDropdownOpen;
+      if (state.isNotificationDropdownOpen) {
+        markNotificationsAsRead();
+      }
+      renderFn();
+    });
+    userControls.appendChild(bellBtn);
+    const userPill = document.createElement("button");
+    userPill.className = "header-user-pill" + (state.currentUser.isLoggedIn ? " logged-in" : "");
+    if (state.currentUser.isLoggedIn) {
+      userPill.innerHTML = `
+      <span class="user-avatar">${icon("user", 14)}</span>
+      <span class="user-name">${state.currentUser.name}</span>
+      <span class="user-tag">${state.currentUser.municipality}</span>
+    `;
+    } else {
+      userPill.innerHTML = `
+      ${icon("log-in", 14)}
+      <span>\u30ED\u30B0\u30A4\u30F3</span>
+    `;
+    }
+    userPill.addEventListener("click", () => {
+      state.tab = "mypage";
+      state.isNotificationDropdownOpen = false;
+      renderFn();
+    });
+    userControls.appendChild(userPill);
+    container.appendChild(userControls);
     header.appendChild(container);
+    if (state.isNotificationDropdownOpen) {
+      const notifPanel = document.createElement("div");
+      notifPanel.className = "notif-dropdown-panel";
+      const panelHeader = document.createElement("div");
+      panelHeader.className = "notif-panel-header";
+      panelHeader.innerHTML = `
+      <div style="display:flex;align-items:center;gap:6px;font-weight:700;">
+        ${icon("bell", 16)} <span>\u9078\u6319\u30EA\u30DE\u30A4\u30F3\u30C9\u30FB\u901A\u77E5\u4E00\u89A7</span>
+      </div>
+      <button class="notif-close-btn">${icon("x", 14)}</button>
+    `;
+      panelHeader.querySelector(".notif-close-btn")?.addEventListener("click", () => {
+        state.isNotificationDropdownOpen = false;
+        renderFn();
+      });
+      notifPanel.appendChild(panelHeader);
+      const notifList = document.createElement("div");
+      notifList.className = "notif-panel-list";
+      if (state.notifications.length === 0) {
+        notifList.innerHTML = `<p class="notif-empty">\u73FE\u5728\u901A\u77E5\u306F\u3042\u308A\u307E\u305B\u3093\u3002</p>`;
+      } else {
+        state.notifications.forEach((n) => {
+          const item = document.createElement("div");
+          item.className = `notif-item type-${n.type}`;
+          item.innerHTML = `
+          <div class="notif-item-head">
+            <span class="notif-item-title">${n.title}</span>
+            <span class="notif-item-date">${n.date}</span>
+          </div>
+          <p class="notif-item-msg">${n.message}</p>
+        `;
+          notifList.appendChild(item);
+        });
+      }
+      notifPanel.appendChild(notifList);
+      const panelFooter = document.createElement("div");
+      panelFooter.className = "notif-panel-footer";
+      const testBtn = document.createElement("button");
+      testBtn.className = "btn-test-notif-small";
+      testBtn.innerHTML = `\u26A1 \u6A21\u64EC\u901A\u77E5\u3092\u9001\u4FE1\uFF08\u30D7\u30EC\u30BC\u30F3\u78BA\u8A8D\u7528\uFF09`;
+      testBtn.addEventListener("click", () => {
+        triggerSimulatedNotification(void 0, renderFn);
+      });
+      panelFooter.appendChild(testBtn);
+      notifPanel.appendChild(panelFooter);
+      header.appendChild(notifPanel);
+    }
     return header;
   }
 
@@ -838,8 +1117,31 @@
     const wrap = document.createElement("div");
     const title = document.createElement("h2");
     title.className = "disp section-title";
-    title.textContent = "\u9078\u6319\u65E5\u7A0B \uFF06 \u30AB\u30A6\u30F3\u30C8\u30C0\u30A6\u30F3";
+    title.textContent = "\u9078\u6319\u65E5\u7A0B \uFF06 \u30EA\u30DE\u30A4\u30F3\u30C9\u901A\u77E5";
     wrap.appendChild(title);
+    const remindBannerCard = document.createElement("div");
+    remindBannerCard.className = "card remind-banner-card";
+    remindBannerCard.style.borderLeft = "4px solid #7C3AED";
+    remindBannerCard.style.background = "linear-gradient(135deg, rgba(124, 58, 237, 0.06), rgba(99, 102, 241, 0.04))";
+    remindBannerCard.innerHTML = `
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+      <div>
+        <h3 style="margin:0 0 4px 0;font-size:15px;color:#7C3AED;display:flex;align-items:center;gap:6px;">
+          ${icon("bell", 18)} \u9078\u6319\u65E5\u5FD8\u308C\u3092\u9632\u6B62\uFF01\u30EA\u30DE\u30A4\u30F3\u30C9\u901A\u77E5\u6A5F\u80FD
+        </h3>
+        <p style="margin:0;font-size:13px;color:var(--muted);line-height:1.5;">
+          \u6C17\u306B\u306A\u308B\u9078\u6319\u306E\u300C\u{1F514} \u30EA\u30DE\u30A4\u30F3\u30C9\u901A\u77E5\u300D\u3092ON\u306B\u3059\u308B\u3068\u3001\u544A\u793A\u65E5\u3084\u671F\u65E5\u524D\u6295\u7968\u306E\u671F\u9593\u4E2D\u306B\u4E8B\u524D\u306B\u901A\u77E5\u304C\u5C4A\u304D\u307E\u3059\u3002
+        </p>
+      </div>
+      <button class="btn-test-notif-schedule" title="\u6A21\u64EC\u901A\u77E5\u3092\u8A66\u3059">
+        \u26A1 \u6A21\u64EC\u901A\u77E5\u30C6\u30B9\u30C8
+      </button>
+    </div>
+  `;
+    remindBannerCard.querySelector(".btn-test-notif-schedule")?.addEventListener("click", () => {
+      triggerSimulatedNotification(void 0, renderFn);
+    });
+    wrap.appendChild(remindBannerCard);
     const days = daysUntil(state.electionDate);
     const heroRow = document.createElement("div");
     heroRow.className = "hero-row";
@@ -850,7 +1152,7 @@
     wrap.appendChild(heroRow);
     const sub = document.createElement("p");
     sub.className = "subtext";
-    sub.textContent = `${dateLabel(state.electionDate)} \u6295\u7968\u65E5 (\u30EA\u30B9\u30C8\u3092\u30BF\u30C3\u30D7\u3067\u65E5\u4ED8\u5909\u66F4)`;
+    sub.textContent = `${dateLabel(state.electionDate)} \u6295\u7968\u65E5 (\u30EA\u30B9\u30C8\u3092\u30BF\u30C3\u30D7\u3067\u65E5\u4ED8\u9078\u629E)`;
     wrap.appendChild(sub);
     const dateCard = document.createElement("div");
     dateCard.className = "card";
@@ -902,20 +1204,33 @@
       return e.year === state.selectedElectionYear;
     });
     filteredElections.forEach((e) => {
-      const btn = document.createElement("button");
-      btn.className = "election-btn";
-      btn.innerHTML = `
-      <div style="display:flex;align-items:center;gap:6px;">
+      const isSub = isElectionSubscribed(e.name);
+      const electionRow = document.createElement("div");
+      electionRow.className = "election-row-card" + (isSub ? " is-subscribed" : "");
+      const electionInfo = document.createElement("div");
+      electionInfo.className = "election-info-box";
+      electionInfo.innerHTML = `
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
         <span class="year-badge">${e.yearLabel}</span>
-        <span style="font-weight:500;">${e.name}</span>
+        <span style="font-weight:600;font-size:15px;color:var(--heading);">${e.name}</span>
       </div>
       <span style="font-size:13px;color:var(--muted);">\u6295\u7968\u65E5 ${e.day} (\u544A\u793A ${e.notice})</span>
     `;
-      btn.addEventListener("click", () => {
+      electionInfo.addEventListener("click", () => {
         state.electionDate = e.isoDate || elJpDateToIso(e.day);
         renderFn();
       });
-      scheduleCard.appendChild(btn);
+      const subBtn = document.createElement("button");
+      subBtn.className = "btn-sub-toggle" + (isSub ? " active" : "");
+      subBtn.innerHTML = isSub ? `${icon("bell", 14)} <span>\u901A\u77E5ON</span>` : `${icon("bell-off", 14)} <span>\u901A\u77E5OFF</span>`;
+      subBtn.addEventListener("click", (evt) => {
+        evt.stopPropagation();
+        toggleElectionSubscription(e.name);
+        renderFn();
+      });
+      electionRow.appendChild(electionInfo);
+      electionRow.appendChild(subBtn);
+      scheduleCard.appendChild(electionRow);
     });
     const officialLink = document.createElement("a");
     officialLink.className = "official-link";
@@ -4974,6 +5289,293 @@
     return wrap;
   }
 
+  // src/views/LoginView.ts
+  function renderMyPage(renderFn) {
+    const wrap = document.createElement("div");
+    const heroCard = document.createElement("div");
+    heroCard.className = "card mypage-hero-card";
+    heroCard.innerHTML = `
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+      <div class="hero-icon-badge">${icon("shield-check", 24)}</div>
+      <div>
+        <h2 class="disp" style="margin:0;font-size:20px;color:var(--heading);">\u82E5\u8005\u306E\u300C\u6295\u7968\u65E5\u5FD8\u308C\u300D\u3092\u7121\u304F\u3059\u9078\u6319\u30EA\u30DE\u30A4\u30F3\u30C9</h2>
+        <p style="margin:4px 0 0 0;font-size:13px;color:var(--muted);">\u304A\u4F4F\u307E\u3044\u306E\u5730\u57DF\u3092\u767B\u9332\u3059\u308B\u3068\u3001\u9078\u6319\u544A\u793A\u65E5\u3084\u671F\u65E5\u524D\u6295\u7968\u306E\u76F4\u524D\u306B\u901A\u77E5\u304C\u5C4A\u304D\u307E\u3059\u3002</p>
+      </div>
+    </div>
+  `;
+    wrap.appendChild(heroCard);
+    if (state.currentUser.isLoggedIn) {
+      const profileCard = document.createElement("div");
+      profileCard.className = "card profile-card";
+      profileCard.innerHTML = `
+      <div class="profile-header">
+        <div class="user-big-avatar">${icon("user", 28)}</div>
+        <div class="profile-meta">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <h3 style="margin:0;font-size:18px;">${state.currentUser.name} \u3055\u3093</h3>
+            ${state.currentUser.isDemo ? `<span class="demo-tag">\u30C7\u30E2\u30A2\u30AB\u30A6\u30F3\u30C8</span>` : `<span class="verified-tag">\u672C\u767B\u9332</span>`}
+          </div>
+          <p style="margin:2px 0 0 0;font-size:13px;color:var(--muted);">${state.currentUser.email || "\u767B\u9332\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u306A\u3057"}</p>
+        </div>
+      </div>
+      <div class="profile-info-grid">
+        <div class="info-item">
+          <span class="info-label">\u767B\u9332\u5730\u57DF\uFF08\u5E02\u533A\u753A\u6751\uFF09</span>
+          <span class="info-val">\u{1F4CD} ${state.currentUser.municipality}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">\u30EA\u30DE\u30A4\u30F3\u30C9\u767B\u9332\u4E2D\u306E\u9078\u6319</span>
+          <span class="info-val">\u{1F514} ${state.currentUser.subscribedElectionNames.length} \u4EF6</span>
+        </div>
+      </div>
+    `;
+      wrap.appendChild(profileCard);
+      const remindCard = document.createElement("div");
+      remindCard.className = "card";
+      remindCard.innerHTML = `
+      <h3 style="margin:0 0 12px 0;font-size:16px;display:flex;align-items:center;gap:6px;">
+        ${icon("bell", 18)} <span>\u30EA\u30DE\u30A4\u30F3\u30C9\u767B\u9332\u3057\u3066\u3044\u308B\u9078\u6319\u4E00\u89A7</span>
+      </h3>
+    `;
+      const subList = document.createElement("div");
+      subList.className = "subscribed-elections-list";
+      if (state.currentUser.subscribedElectionNames.length === 0) {
+        subList.innerHTML = `
+        <div class="empty-sub-box">
+          <p style="margin:0 0 8px 0;color:var(--muted);font-size:14px;">\u73FE\u5728\u30EA\u30DE\u30A4\u30F3\u30C9\u767B\u9332\u3057\u3066\u3044\u308B\u9078\u6319\u306F\u3042\u308A\u307E\u305B\u3093\u3002</p>
+          <p style="margin:0;font-size:13px;">\u300C\u65E5\u7A0B\u300D\u30BF\u30D6\u304B\u3089\u6C17\u306B\u306A\u308B\u9078\u6319\u306E\u300C\u{1F514} \u901A\u77E5\u3092\u53D7\u3051\u53D6\u308B\u300D\u30DC\u30BF\u30F3\u3092\u62BC\u3057\u3066\u767B\u9332\u3057\u307E\u3057\u3087\u3046\uFF01</p>
+        </div>
+      `;
+      } else {
+        state.currentUser.subscribedElectionNames.forEach((name) => {
+          const item = document.createElement("div");
+          item.className = "sub-election-item";
+          item.innerHTML = `
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="sub-icon">${icon("check", 14)}</span>
+            <span style="font-weight:600;font-size:14px;">${name}</span>
+          </div>
+        `;
+          const removeBtn = document.createElement("button");
+          removeBtn.className = "btn-remove-sub";
+          removeBtn.innerHTML = `${icon("x", 12)} \u89E3\u9664`;
+          removeBtn.addEventListener("click", () => {
+            toggleElectionSubscription(name);
+            renderFn();
+          });
+          item.appendChild(removeBtn);
+          subList.appendChild(item);
+        });
+      }
+      remindCard.appendChild(subList);
+      wrap.appendChild(remindCard);
+      const prefCard = document.createElement("div");
+      prefCard.className = "card";
+      prefCard.innerHTML = `
+      <h3 style="margin:0 0 12px 0;font-size:16px;display:flex;align-items:center;gap:6px;">
+        ${icon("settings", 18)} <span>\u901A\u77E5\u53D7\u3051\u53D6\u308A\u30BF\u30A4\u30DF\u30F3\u30B0\u306E\u8A2D\u5B9A</span>
+      </h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">\u6295\u7968\u65E5\u304A\u3088\u3073\u671F\u65E5\u524D\u6295\u7968\u3092\u9003\u3055\u306A\u3044\u305F\u3081\u3001\u6307\u5B9A\u3057\u305F\u30BF\u30A4\u30DF\u30F3\u30B0\u3067\u30EA\u30DE\u30A4\u30F3\u30C9\u901A\u77E5\u3092\u767A\u884C\u3057\u307E\u3059\u3002</p>
+    `;
+      const timingOptions = [
+        { key: "days7Before", label: "7\u65E5\u524D\uFF08\u671F\u65E5\u524D\u6295\u7968\u306E\u6848\u5185\uFF09" },
+        { key: "days3Before", label: "3\u65E5\u524D\uFF08\u4ECA\u9031\u672B\u306E\u6295\u7968\u6E96\u5099\uFF09" },
+        { key: "day1Before", label: "\u524D\u65E5\uFF08\u6700\u7D42\u30EA\u30DE\u30A4\u30F3\u30C9\uFF09" },
+        { key: "onElectionDay", label: "\u6295\u7968\u65E5\u5F53\u65E5 \u671D7:00\uFF08\u6295\u7968\u6240\u958B\u5834\uFF09" }
+      ];
+      const timingForm = document.createElement("div");
+      timingForm.className = "timing-form";
+      timingOptions.forEach((opt) => {
+        const row = document.createElement("label");
+        row.className = "timing-checkbox-row";
+        const isChecked = state.currentUser.notificationPrefs[opt.key];
+        row.innerHTML = `
+        <input type="checkbox" ${isChecked ? "checked" : ""} data-key="${opt.key}">
+        <span>${opt.label}</span>
+      `;
+        row.querySelector("input")?.addEventListener("change", (e) => {
+          const checked = e.target.checked;
+          state.currentUser.notificationPrefs[opt.key] = checked;
+          saveState();
+          showToast("\u901A\u77E5\u30BF\u30A4\u30DF\u30F3\u30B0\u8A2D\u5B9A\u3092\u66F4\u65B0\u3057\u307E\u3057\u305F");
+        });
+        timingForm.appendChild(row);
+      });
+      prefCard.appendChild(timingForm);
+      const webNotifBox = document.createElement("div");
+      webNotifBox.className = "web-notif-box";
+      webNotifBox.style.marginTop = "16px";
+      webNotifBox.style.padding = "12px";
+      webNotifBox.style.background = "rgba(124, 58, 237, 0.05)";
+      webNotifBox.style.borderRadius = "8px";
+      webNotifBox.style.display = "flex";
+      webNotifBox.style.justifyContent = "space-between";
+      webNotifBox.style.alignItems = "center";
+      webNotifBox.innerHTML = `
+      <div>
+        <p style="margin:0;font-weight:700;font-size:13px;">\u30D6\u30E9\u30A6\u30B6\u6A19\u6E96\u30D7\u30C3\u30B7\u30E5\u901A\u77E5</p>
+        <p style="margin:2px 0 0 0;font-size:12px;color:var(--muted);">PC\u30FB\u30B9\u30DE\u30DB\u306E\u30C7\u30B9\u30AF\u30C8\u30C3\u30D7\u901A\u77E5\u3092\u8A31\u53EF\u3057\u307E\u3059</p>
+      </div>
+    `;
+      const webNotifBtn = document.createElement("button");
+      webNotifBtn.className = "btn-web-notif-perm";
+      webNotifBtn.textContent = "\u901A\u77E5\u3092\u8A31\u53EF\u3059\u308B";
+      webNotifBtn.addEventListener("click", async () => {
+        if ("Notification" in window) {
+          const perm = await Notification.requestPermission();
+          if (perm === "granted") {
+            showToast("\u2705 \u30D6\u30E9\u30A6\u30B6\u901A\u77E5\u304C\u8A31\u53EF\u3055\u308C\u307E\u3057\u305F\uFF01");
+          } else {
+            showToast("\u26A0\uFE0F \u30D6\u30E9\u30A6\u30B6\u901A\u77E5\u304C\u62D2\u5426\u3055\u308C\u307E\u3057\u305F");
+          }
+        } else {
+          showToast("\u304A\u4F7F\u3044\u306E\u30D6\u30E9\u30A6\u30B6\u306FWeb Notification\u306B\u5BFE\u5FDC\u3057\u3066\u3044\u307E\u305B\u3093");
+        }
+      });
+      webNotifBox.appendChild(webNotifBtn);
+      prefCard.appendChild(webNotifBox);
+      wrap.appendChild(prefCard);
+      const actionBar = document.createElement("div");
+      actionBar.className = "mypage-action-bar";
+      const testBtn = document.createElement("button");
+      testBtn.className = "btn-test-notif-large";
+      testBtn.innerHTML = `\u26A1 \u6A21\u64EC\u901A\u77E5\u3092\u30C6\u30B9\u30C8\u9001\u4FE1\u3059\u308B`;
+      testBtn.addEventListener("click", () => {
+        triggerSimulatedNotification(void 0, renderFn);
+      });
+      const logoutBtn = document.createElement("button");
+      logoutBtn.className = "btn-logout";
+      logoutBtn.innerHTML = `${icon("log-out", 16)} \u30ED\u30B0\u30A2\u30A6\u30C8`;
+      logoutBtn.addEventListener("click", () => {
+        logoutUser();
+        renderFn();
+      });
+      actionBar.appendChild(testBtn);
+      actionBar.appendChild(logoutBtn);
+      wrap.appendChild(actionBar);
+    } else {
+      const demoCard = document.createElement("div");
+      demoCard.className = "card demo-quick-card";
+      demoCard.innerHTML = `
+      <div class="demo-quick-content">
+        <span class="demo-badge">\u304A\u3059\u3059\u3081</span>
+        <h3 style="margin:6px 0;font-size:16px;">\u5148\u751F\u30FB\u8A55\u4FA1\u8005\u5411\u3051 \u30EF\u30F3\u30BF\u30C3\u30D7\u30C7\u30E2\u4F53\u9A13</h3>
+        <p style="margin:0 0 12px 0;font-size:13px;color:var(--muted);">\u9762\u5012\u306A\u5165\u529B\u306A\u3057\u3067\u3001\u3059\u3050\u306B\u300C\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A\u5728\u4F4F\u30FB\u6295\u7968\u6A29\u6240\u6709\u8005\u300D\u306E\u30DE\u30A4\u30DA\u30FC\u30B8\u3068\u901A\u77E5\u6A5F\u80FD\u3092\u30C6\u30B9\u30C8\u3067\u304D\u307E\u3059\u3002</p>
+      </div>
+    `;
+      const quickDemoBtn = document.createElement("button");
+      quickDemoBtn.className = "btn-quick-demo";
+      quickDemoBtn.innerHTML = `\u26A1 1\u79D2\u3067\u4F53\u9A13\uFF01\u30C7\u30E2\u30E6\u30FC\u30B6\u30FC\u3067\u30ED\u30B0\u30A4\u30F3`;
+      quickDemoBtn.addEventListener("click", () => {
+        loginDemoUser();
+        renderFn();
+      });
+      demoCard.appendChild(quickDemoBtn);
+      wrap.appendChild(demoCard);
+      const formCard = document.createElement("div");
+      formCard.className = "card auth-form-card";
+      let activeTab = "signup";
+      const formTabs = document.createElement("div");
+      formTabs.className = "auth-tab-bar";
+      formTabs.innerHTML = `
+      <button class="auth-tab ${activeTab === "signup" ? "active" : ""}" id="tab-signup">\u65B0\u898F\u4F1A\u54E1\u767B\u9332</button>
+      <button class="auth-tab ${activeTab === "login" ? "active" : ""}" id="tab-login">\u30ED\u30B0\u30A4\u30F3</button>
+    `;
+      const formBody = document.createElement("div");
+      formBody.className = "auth-form-body";
+      const renderFormBody = () => {
+        formBody.innerHTML = "";
+        if (activeTab === "signup") {
+          formBody.innerHTML = `
+          <div class="form-group">
+            <label class="form-label">\u304A\u540D\u524D\uFF08\u30CB\u30C3\u30AF\u30CD\u30FC\u30E0\u53EF\uFF09</label>
+            <input type="text" id="reg-name" class="form-input" placeholder="\u4F8B: \u65B0\u6F5F \u82B1\u5B50">
+          </div>
+          <div class="form-group">
+            <label class="form-label">\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9</label>
+            <input type="email" id="reg-email" class="form-input" placeholder="example@niigata.lg.jp">
+          </div>
+          <div class="form-group">
+            <label class="form-label">\u304A\u4F4F\u307E\u3044\u306E\u5730\u57DF\uFF08\u65B0\u6F5F\u770C\u5185\u5E02\u533A\u753A\u6751\uFF09</label>
+            <select id="reg-muni" class="form-select">
+              <optgroup label="\u4E0B\u8D8A\u30A8\u30EA\u30A2">
+                <option value="\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A">\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A</option>
+                <option value="\u65B0\u6F5F\u5E02\u5317\u533A">\u65B0\u6F5F\u5E02\u5317\u533A</option>
+                <option value="\u65B0\u6F5F\u5E02\u6771\u533A">\u65B0\u6F5F\u5E02\u6771\u533A</option>
+                <option value="\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A">\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A</option>
+                <option value="\u65B0\u6F5F\u5E02\u79CB\u8449\u533A">\u65B0\u6F5F\u5E02\u79CB\u8449\u533A</option>
+                <option value="\u65B0\u6F5F\u5E02\u5357\u533A">\u65B0\u6F5F\u5E02\u5357\u533A</option>
+                <option value="\u65B0\u6F5F\u5E02\u897F\u533A">\u65B0\u6F5F\u5E02\u897F\u533A</option>
+                <option value="\u65B0\u6F5F\u5E02\u897F\u84B2\u533A">\u65B0\u6F5F\u5E02\u897F\u84B2\u533A</option>
+                <option value="\u65B0\u767A\u7530\u5E02">\u65B0\u767A\u7530\u5E02</option>
+                <option value="\u6751\u4E0A\u5E02">\u6751\u4E0A\u5E02</option>
+              </optgroup>
+              <optgroup label="\u4E2D\u8D8A\u30A8\u30EA\u30A2">
+                <option value="\u9577\u5CA1\u5E02">\u9577\u5CA1\u5E02</option>
+                <option value="\u4E09\u6761\u5E02">\u4E09\u6761\u5E02</option>
+                <option value="\u67CF\u5D0E\u5E02">\u67CF\u5D0E\u5E02</option>
+              </optgroup>
+              <optgroup label="\u4E0A\u8D8A\u30FB\u4F50\u6E21\u30A8\u30EA\u30A2">
+                <option value="\u4E0A\u8D8A\u5E02">\u4E0A\u8D8A\u5E02</option>
+                <option value="\u4F50\u6E21\u5E02">\u4F50\u6E21\u5E02</option>
+              </optgroup>
+            </select>
+            <span class="form-hint">\u304A\u4F4F\u307E\u3044\u306E\u5730\u57DF\u306E\u9078\u6319\u3084\u6295\u7968\u6240\u60C5\u5831\u306B\u5408\u308F\u305B\u305F\u901A\u77E5\u304C\u5C4A\u304D\u307E\u3059\u3002</span>
+          </div>
+        `;
+          const submitBtn = document.createElement("button");
+          submitBtn.className = "btn-auth-submit";
+          submitBtn.textContent = "\u767B\u9332\u3057\u3066\u901A\u77E5\u3092\u53D7\u3051\u53D6\u308B";
+          submitBtn.addEventListener("click", () => {
+            const name = formBody.querySelector("#reg-name")?.value;
+            const email = formBody.querySelector("#reg-email")?.value;
+            const muni = formBody.querySelector("#reg-muni")?.value;
+            loginUser(name, email, muni);
+            renderFn();
+          });
+          formBody.appendChild(submitBtn);
+        } else {
+          formBody.innerHTML = `
+          <div class="form-group">
+            <label class="form-label">\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9</label>
+            <input type="email" id="login-email" class="form-input" placeholder="example@niigata.lg.jp" value="niigata.taro@example.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">\u30D1\u30B9\u30EF\u30FC\u30C9</label>
+            <input type="password" class="form-input" value="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022">
+          </div>
+        `;
+          const submitBtn = document.createElement("button");
+          submitBtn.className = "btn-auth-submit";
+          submitBtn.textContent = "\u30ED\u30B0\u30A4\u30F3";
+          submitBtn.addEventListener("click", () => {
+            const email = formBody.querySelector("#login-email")?.value;
+            loginUser("\u65B0\u6F5F \u30BF\u30ED\u30A6", email, "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A");
+            renderFn();
+          });
+          formBody.appendChild(submitBtn);
+        }
+      };
+      formTabs.querySelector("#tab-signup")?.addEventListener("click", () => {
+        activeTab = "signup";
+        formTabs.querySelector("#tab-signup")?.classList.add("active");
+        formTabs.querySelector("#tab-login")?.classList.remove("active");
+        renderFormBody();
+      });
+      formTabs.querySelector("#tab-login")?.addEventListener("click", () => {
+        activeTab = "login";
+        formTabs.querySelector("#tab-login")?.classList.add("active");
+        formTabs.querySelector("#tab-signup")?.classList.remove("active");
+        renderFormBody();
+      });
+      renderFormBody();
+      formCard.appendChild(formTabs);
+      formCard.appendChild(formBody);
+      wrap.appendChild(formCard);
+    }
+    return wrap;
+  }
+
   // app.ts
   var root = document.getElementById("app");
   function render() {
@@ -4998,6 +5600,9 @@
         break;
       case "place":
         content.appendChild(renderPlace(render));
+        break;
+      case "mypage":
+        content.appendChild(renderMyPage(render));
         break;
     }
     root.appendChild(content);

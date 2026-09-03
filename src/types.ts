@@ -49,7 +49,35 @@ export interface PollingPlace {
   updateInfo?: string;
 }
 
-export type TabKey = "top" | "schedule" | "pledges" | "quiz" | "place";
+export interface NotificationPreference {
+  days7Before: boolean;
+  days3Before: boolean;
+  day1Before: boolean;
+  onElectionDay: boolean;
+}
+
+export interface UserProfile {
+  id: string;
+  name: string;
+  email: string;
+  municipality: string;
+  isLoggedIn: boolean;
+  isDemo?: boolean;
+  notificationPrefs: NotificationPreference;
+  subscribedElectionNames: string[];
+}
+
+export interface NotificationItem {
+  id: string;
+  title: string;
+  message: string;
+  date: string;
+  read: boolean;
+  electionName?: string;
+  type: "info" | "reminder" | "urgent";
+}
+
+export type TabKey = "top" | "schedule" | "pledges" | "quiz" | "place" | "mypage";
 
 export interface AppState {
   tab: TabKey;
@@ -61,4 +89,9 @@ export interface AppState {
   selectedMunicipality: string;
   placeSearchQuery: string;
   selectedElectionYear: string;
+  currentUser: UserProfile;
+  notifications: NotificationItem[];
+  isNotificationDropdownOpen: boolean;
+  toastMessage: string | null;
 }
+
