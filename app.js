@@ -629,6 +629,90 @@
       type: "info"
     }
   ];
+  function simpleHash(str) {
+    let hash = 5381;
+    for (let i = 0; i < str.length; i++) {
+      hash = hash * 33 ^ str.charCodeAt(i);
+    }
+    return (hash >>> 0).toString(16);
+  }
+  function loadUserDB() {
+    try {
+      const saved = localStorage.getItem("niigata_user_db");
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.error("Failed to load user DB", e);
+    }
+    return [];
+  }
+  function saveUserDB(db) {
+    try {
+      localStorage.setItem("niigata_user_db", JSON.stringify(db));
+    } catch (e) {
+      console.error("Failed to save user DB", e);
+    }
+  }
+  function registerNewUser(name, email, password, municipality) {
+    if (!name.trim()) return { success: false, error: "\u304A\u540D\u524D\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044" };
+    if (!email.trim() || !email.includes("@")) return { success: false, error: "\u6709\u52B9\u306A\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044" };
+    if (password.length < 6) return { success: false, error: "\u30D1\u30B9\u30EF\u30FC\u30C9\u306F6\u6587\u5B57\u4EE5\u4E0A\u306B\u3057\u3066\u304F\u3060\u3055\u3044" };
+    const db = loadUserDB();
+    if (db.find((u) => u.email === email.toLowerCase())) {
+      return { success: false, error: "\u3053\u306E\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u306F\u3059\u3067\u306B\u767B\u9332\u3055\u308C\u3066\u3044\u307E\u3059" };
+    }
+    const newRecord = {
+      id: "user-" + Date.now(),
+      name: name.trim(),
+      email: email.toLowerCase().trim(),
+      passwordHash: simpleHash(password),
+      municipality: municipality || "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+      subscribedElectionNames: [],
+      notificationPrefs: { days7Before: true, days3Before: true, day1Before: true, onElectionDay: true }
+    };
+    db.push(newRecord);
+    saveUserDB(db);
+    state.currentUser = {
+      id: newRecord.id,
+      name: newRecord.name,
+      email: newRecord.email,
+      municipality: newRecord.municipality,
+      isLoggedIn: true,
+      isDemo: false,
+      notificationPrefs: newRecord.notificationPrefs,
+      subscribedElectionNames: newRecord.subscribedElectionNames
+    };
+    saveState();
+    showToast(`\u2705 \u767B\u9332\u5B8C\u4E86\uFF01${newRecord.name} \u3055\u3093\u3001\u3088\u3046\u3053\u305D\uFF01`);
+    return { success: true };
+  }
+  function authenticateUser(email, password) {
+    if (!email.trim() || !password) return { success: false, error: "\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u3068\u30D1\u30B9\u30EF\u30FC\u30C9\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044" };
+    const db = loadUserDB();
+    const record = db.find((u) => u.email === email.toLowerCase().trim());
+    if (!record) return { success: false, error: "\u3053\u306E\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u306F\u767B\u9332\u3055\u308C\u3066\u3044\u307E\u305B\u3093" };
+    if (record.passwordHash !== simpleHash(password)) return { success: false, error: "\u30D1\u30B9\u30EF\u30FC\u30C9\u304C\u6B63\u3057\u304F\u3042\u308A\u307E\u305B\u3093" };
+    state.currentUser = {
+      id: record.id,
+      name: record.name,
+      email: record.email,
+      municipality: record.municipality,
+      isLoggedIn: true,
+      isDemo: false,
+      notificationPrefs: record.notificationPrefs,
+      subscribedElectionNames: record.subscribedElectionNames
+    };
+    saveState();
+    showToast(`\u304A\u304B\u3048\u308A\u306A\u3055\u3044\uFF01${record.name} \u3055\u3093`);
+    return { success: true };
+  }
+  function syncSubscriptionsToUserDB() {
+    const db = loadUserDB();
+    const idx = db.findIndex((u) => u.email === state.currentUser.email);
+    if (idx >= 0) {
+      db[idx].subscribedElectionNames = [...state.currentUser.subscribedElectionNames];
+      saveUserDB(db);
+    }
+  }
   function loadStoredUser() {
     try {
       const saved = localStorage.getItem("niigata_election_user");
@@ -636,7 +720,7 @@
     } catch (e) {
       console.error("Failed to load user state", e);
     }
-    return defaultDemoUser;
+    return defaultGuestUser;
   }
   function loadStoredNotifications() {
     try {
@@ -670,19 +754,6 @@
     } catch (e) {
       console.error("Failed to save state", e);
     }
-  }
-  function loginUser(name, email, municipality) {
-    state.currentUser = {
-      ...state.currentUser,
-      id: "user-" + Date.now(),
-      name: name || "\u65B0\u6F5F \u5E02\u6C11",
-      email: email || "user@example.com",
-      municipality: municipality || "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
-      isLoggedIn: true,
-      isDemo: false
-    };
-    saveState();
-    showToast(`Welcome! ${state.currentUser.name} \u3055\u3093\u3067\u30ED\u30B0\u30A4\u30F3\u3057\u307E\u3057\u305F`);
   }
   function loginDemoUser() {
     state.currentUser = { ...defaultDemoUser };
@@ -5292,288 +5363,344 @@
   // src/views/LoginView.ts
   function renderMyPage(renderFn) {
     const wrap = document.createElement("div");
-    const heroCard = document.createElement("div");
-    heroCard.className = "card mypage-hero-card";
-    heroCard.innerHTML = `
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
-      <div class="hero-icon-badge">${icon("shield-check", 24)}</div>
-      <div>
-        <h2 class="disp" style="margin:0;font-size:20px;color:var(--heading);">\u82E5\u8005\u306E\u300C\u6295\u7968\u65E5\u5FD8\u308C\u300D\u3092\u7121\u304F\u3059\u9078\u6319\u30EA\u30DE\u30A4\u30F3\u30C9</h2>
-        <p style="margin:4px 0 0 0;font-size:13px;color:var(--muted);">\u304A\u4F4F\u307E\u3044\u306E\u5730\u57DF\u3092\u767B\u9332\u3059\u308B\u3068\u3001\u9078\u6319\u544A\u793A\u65E5\u3084\u671F\u65E5\u524D\u6295\u7968\u306E\u76F4\u524D\u306B\u901A\u77E5\u304C\u5C4A\u304D\u307E\u3059\u3002</p>
+    wrap.className = "mypage-root";
+    if (state.currentUser.isLoggedIn) {
+      wrap.appendChild(renderDashboard(renderFn));
+    } else {
+      wrap.appendChild(renderAuthScreen(renderFn));
+    }
+    return wrap;
+  }
+  function renderAuthScreen(renderFn) {
+    const root2 = document.createElement("div");
+    root2.className = "auth-screen";
+    const hero = document.createElement("div");
+    hero.className = "auth-hero";
+    hero.innerHTML = `
+    <div class="auth-hero-icon">${icon("shield-check", 32)}</div>
+    <h1 class="auth-hero-title">\u306B\u3044\u304C\u305F\u3001\u6295\u7968\u307E\u3067\u306E\u9053</h1>
+    <p class="auth-hero-sub">\u30A2\u30AB\u30A6\u30F3\u30C8\u3092\u4F5C\u3063\u3066\u3001\u9078\u6319\u65E5\u7A0B\u30EA\u30DE\u30A4\u30F3\u30C9\u901A\u77E5\u3092\u53D7\u3051\u53D6\u308D\u3046</p>
+  `;
+    root2.appendChild(hero);
+    const card = document.createElement("div");
+    card.className = "auth-card";
+    let activeTab = "signup";
+    const tabBar = document.createElement("div");
+    tabBar.className = "auth-tab-bar";
+    const signupTab = document.createElement("button");
+    signupTab.className = "auth-tab active";
+    signupTab.id = "tab-signup";
+    signupTab.textContent = "\u65B0\u898F\u30A2\u30AB\u30A6\u30F3\u30C8\u767B\u9332";
+    const loginTab = document.createElement("button");
+    loginTab.className = "auth-tab";
+    loginTab.id = "tab-login";
+    loginTab.textContent = "\u30ED\u30B0\u30A4\u30F3";
+    tabBar.appendChild(signupTab);
+    tabBar.appendChild(loginTab);
+    card.appendChild(tabBar);
+    const formBody = document.createElement("div");
+    formBody.className = "auth-form-body";
+    card.appendChild(formBody);
+    const renderSignup = () => {
+      formBody.innerHTML = "";
+      const errBox = document.createElement("div");
+      errBox.className = "auth-error-box";
+      errBox.style.display = "none";
+      formBody.appendChild(errBox);
+      const showError = (msg) => {
+        errBox.textContent = "\u26A0\uFE0F " + msg;
+        errBox.style.display = "block";
+      };
+      formBody.innerHTML += `
+      <div class="form-group">
+        <label class="form-label">\u304A\u540D\u524D <span class="form-required">\u5FC5\u9808</span></label>
+        <input type="text" id="reg-name" class="form-input" placeholder="\u4F8B: \u5C71\u7530 \u82B1\u5B50\uFF08\u30CB\u30C3\u30AF\u30CD\u30FC\u30E0\u53EF\uFF09" autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9 <span class="form-required">\u5FC5\u9808</span></label>
+        <input type="email" id="reg-email" class="form-input" placeholder="hanako@example.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label class="form-label">\u30D1\u30B9\u30EF\u30FC\u30C9 <span class="form-required">\u5FC5\u9808\uFF086\u6587\u5B57\u4EE5\u4E0A\uFF09</span></label>
+        <div class="pw-wrap">
+          <input type="password" id="reg-password" class="form-input" placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022" autocomplete="new-password">
+          <button type="button" class="pw-toggle-btn" title="\u8868\u793A\u5207\u308A\u66FF\u3048">${icon("info", 14)}</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">\u304A\u4F4F\u307E\u3044\u306E\u5E02\u533A\u753A\u6751 <span class="form-required">\u5FC5\u9808</span></label>
+        <select id="reg-muni" class="form-select">
+          <optgroup label="\u65B0\u6F5F\u5E02">
+            <option value="\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A">\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A</option>
+            <option value="\u65B0\u6F5F\u5E02\u5317\u533A">\u65B0\u6F5F\u5E02\u5317\u533A</option>
+            <option value="\u65B0\u6F5F\u5E02\u6771\u533A">\u65B0\u6F5F\u5E02\u6771\u533A</option>
+            <option value="\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A">\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A</option>
+            <option value="\u65B0\u6F5F\u5E02\u79CB\u8449\u533A">\u65B0\u6F5F\u5E02\u79CB\u8449\u533A</option>
+            <option value="\u65B0\u6F5F\u5E02\u5357\u533A">\u65B0\u6F5F\u5E02\u5357\u533A</option>
+            <option value="\u65B0\u6F5F\u5E02\u897F\u533A">\u65B0\u6F5F\u5E02\u897F\u533A</option>
+            <option value="\u65B0\u6F5F\u5E02\u897F\u84B2\u533A">\u65B0\u6F5F\u5E02\u897F\u84B2\u533A</option>
+          </optgroup>
+          <optgroup label="\u4E0B\u8D8A\u30A8\u30EA\u30A2">
+            <option value="\u65B0\u767A\u7530\u5E02">\u65B0\u767A\u7530\u5E02</option>
+            <option value="\u6751\u4E0A\u5E02">\u6751\u4E0A\u5E02</option>
+            <option value="\u963F\u8CC0\u91CE\u5E02">\u963F\u8CC0\u91CE\u5E02</option>
+            <option value="\u4E94\u6CC9\u5E02">\u4E94\u6CC9\u5E02</option>
+          </optgroup>
+          <optgroup label="\u4E2D\u8D8A\u30A8\u30EA\u30A2">
+            <option value="\u9577\u5CA1\u5E02">\u9577\u5CA1\u5E02</option>
+            <option value="\u4E09\u6761\u5E02">\u4E09\u6761\u5E02</option>
+            <option value="\u67CF\u5D0E\u5E02">\u67CF\u5D0E\u5E02</option>
+            <option value="\u5C0F\u5343\u8C37\u5E02">\u5C0F\u5343\u8C37\u5E02</option>
+            <option value="\u898B\u9644\u5E02">\u898B\u9644\u5E02</option>
+            <option value="\u9B5A\u6CBC\u5E02">\u9B5A\u6CBC\u5E02</option>
+          </optgroup>
+          <optgroup label="\u4E0A\u8D8A\u30A8\u30EA\u30A2">
+            <option value="\u4E0A\u8D8A\u5E02">\u4E0A\u8D8A\u5E02</option>
+            <option value="\u5999\u9AD8\u5E02">\u5999\u9AD8\u5E02</option>
+            <option value="\u7CF8\u9B5A\u5DDD\u5E02">\u7CF8\u9B5A\u5DDD\u5E02</option>
+          </optgroup>
+          <optgroup label="\u4F50\u6E21\u30FB\u305D\u306E\u4ED6">
+            <option value="\u4F50\u6E21\u5E02">\u4F50\u6E21\u5E02</option>
+            <option value="\u80CE\u5185\u5E02">\u80CE\u5185\u5E02</option>
+          </optgroup>
+        </select>
+        <span class="form-hint">\u{1F4CD} \u304A\u4F4F\u307E\u3044\u306E\u5730\u57DF\u306E\u9078\u6319\u60C5\u5831\u306B\u5408\u308F\u305B\u305F\u901A\u77E5\u304C\u5C4A\u304D\u307E\u3059</span>
+      </div>
+    `;
+      formBody.prepend(errBox);
+      const submitBtn = document.createElement("button");
+      submitBtn.className = "btn-auth-submit";
+      submitBtn.innerHTML = `${icon("user", 16)} \u30A2\u30AB\u30A6\u30F3\u30C8\u3092\u4F5C\u6210\u3059\u308B`;
+      formBody.appendChild(submitBtn);
+      const pwInput = formBody.querySelector("#reg-password");
+      formBody.querySelector(".pw-toggle-btn")?.addEventListener("click", () => {
+        pwInput.type = pwInput.type === "password" ? "text" : "password";
+      });
+      submitBtn.addEventListener("click", () => {
+        const name = formBody.querySelector("#reg-name")?.value.trim();
+        const email = formBody.querySelector("#reg-email")?.value.trim();
+        const password = formBody.querySelector("#reg-password")?.value;
+        const muni = formBody.querySelector("#reg-muni")?.value;
+        const result = registerNewUser(name, email, password, muni);
+        if (!result.success) {
+          showError(result.error);
+        } else {
+          renderFn();
+        }
+      });
+      formBody.querySelectorAll(".form-input, .form-select").forEach((el) => {
+        el.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") submitBtn.click();
+        });
+      });
+    };
+    const renderLogin = () => {
+      formBody.innerHTML = "";
+      const errBox = document.createElement("div");
+      errBox.className = "auth-error-box";
+      errBox.style.display = "none";
+      formBody.appendChild(errBox);
+      const showError = (msg) => {
+        errBox.textContent = "\u26A0\uFE0F " + msg;
+        errBox.style.display = "block";
+      };
+      formBody.innerHTML += `
+      <div class="form-group">
+        <label class="form-label">\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9</label>
+        <input type="email" id="login-email" class="form-input" placeholder="hanako@example.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label class="form-label">\u30D1\u30B9\u30EF\u30FC\u30C9</label>
+        <div class="pw-wrap">
+          <input type="password" id="login-password" class="form-input" placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022" autocomplete="current-password">
+          <button type="button" class="pw-toggle-btn" title="\u8868\u793A\u5207\u308A\u66FF\u3048">${icon("info", 14)}</button>
+        </div>
+      </div>
+    `;
+      formBody.prepend(errBox);
+      const submitBtn = document.createElement("button");
+      submitBtn.className = "btn-auth-submit";
+      submitBtn.innerHTML = `${icon("log-in", 16)} \u30ED\u30B0\u30A4\u30F3`;
+      formBody.appendChild(submitBtn);
+      const pwInput = formBody.querySelector("#login-password");
+      formBody.querySelector(".pw-toggle-btn")?.addEventListener("click", () => {
+        pwInput.type = pwInput.type === "password" ? "text" : "password";
+      });
+      submitBtn.addEventListener("click", () => {
+        const email = formBody.querySelector("#login-email")?.value.trim();
+        const password = formBody.querySelector("#login-password")?.value;
+        const result = authenticateUser(email, password);
+        if (!result.success) {
+          showError(result.error);
+        } else {
+          renderFn();
+        }
+      });
+      formBody.querySelectorAll(".form-input").forEach((el) => {
+        el.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") submitBtn.click();
+        });
+      });
+    };
+    signupTab.addEventListener("click", () => {
+      activeTab = "signup";
+      signupTab.classList.add("active");
+      loginTab.classList.remove("active");
+      renderSignup();
+    });
+    loginTab.addEventListener("click", () => {
+      activeTab = "login";
+      loginTab.classList.add("active");
+      signupTab.classList.remove("active");
+      renderLogin();
+    });
+    renderSignup();
+    root2.appendChild(card);
+    const notice = document.createElement("p");
+    notice.className = "auth-notice";
+    notice.innerHTML = `\u{1F512} \u5165\u529B\u60C5\u5831\u306F\u3053\u306E\u30D6\u30E9\u30A6\u30B6\u306E\u307F\u306B\u4FDD\u5B58\u3055\u308C\u307E\u3059\u3002\u30B5\u30FC\u30D0\u30FC\u306B\u306F\u9001\u4FE1\u3055\u308C\u307E\u305B\u3093\u3002`;
+    root2.appendChild(notice);
+    return root2;
+  }
+  function renderDashboard(renderFn) {
+    const root2 = document.createElement("div");
+    const profileCard = document.createElement("div");
+    profileCard.className = "card profile-card";
+    profileCard.innerHTML = `
+    <div class="profile-header">
+      <div class="user-big-avatar">${icon("user", 28)}</div>
+      <div class="profile-meta">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <h2 style="margin:0;font-size:18px;font-weight:800;">${state.currentUser.name} \u3055\u3093</h2>
+          <span class="verified-tag">\u2705 \u767B\u9332\u30E6\u30FC\u30B6\u30FC</span>
+        </div>
+        <p style="margin:4px 0 0 0;font-size:13px;color:var(--muted);">${state.currentUser.email}</p>
+      </div>
+    </div>
+    <div class="profile-info-grid">
+      <div class="info-item">
+        <span class="info-label">\u767B\u9332\u5730\u57DF</span>
+        <span class="info-val">\u{1F4CD} ${state.currentUser.municipality}</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">\u30EA\u30DE\u30A4\u30F3\u30C9\u767B\u9332\u4E2D</span>
+        <span class="info-val">\u{1F514} ${state.currentUser.subscribedElectionNames.length} \u4EF6</span>
       </div>
     </div>
   `;
-    wrap.appendChild(heroCard);
-    if (state.currentUser.isLoggedIn) {
-      const profileCard = document.createElement("div");
-      profileCard.className = "card profile-card";
-      profileCard.innerHTML = `
-      <div class="profile-header">
-        <div class="user-big-avatar">${icon("user", 28)}</div>
-        <div class="profile-meta">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <h3 style="margin:0;font-size:18px;">${state.currentUser.name} \u3055\u3093</h3>
-            ${state.currentUser.isDemo ? `<span class="demo-tag">\u30C7\u30E2\u30A2\u30AB\u30A6\u30F3\u30C8</span>` : `<span class="verified-tag">\u672C\u767B\u9332</span>`}
-          </div>
-          <p style="margin:2px 0 0 0;font-size:13px;color:var(--muted);">${state.currentUser.email || "\u767B\u9332\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9\u306A\u3057"}</p>
-        </div>
-      </div>
-      <div class="profile-info-grid">
-        <div class="info-item">
-          <span class="info-label">\u767B\u9332\u5730\u57DF\uFF08\u5E02\u533A\u753A\u6751\uFF09</span>
-          <span class="info-val">\u{1F4CD} ${state.currentUser.municipality}</span>
-        </div>
-        <div class="info-item">
-          <span class="info-label">\u30EA\u30DE\u30A4\u30F3\u30C9\u767B\u9332\u4E2D\u306E\u9078\u6319</span>
-          <span class="info-val">\u{1F514} ${state.currentUser.subscribedElectionNames.length} \u4EF6</span>
-        </div>
+    root2.appendChild(profileCard);
+    const remindCard = document.createElement("div");
+    remindCard.className = "card";
+    remindCard.innerHTML = `
+    <h3 style="margin:0 0 12px 0;font-size:16px;display:flex;align-items:center;gap:6px;">
+      ${icon("bell", 18)} <span>\u30EA\u30DE\u30A4\u30F3\u30C9\u767B\u9332\u3057\u3066\u3044\u308B\u9078\u6319</span>
+    </h3>
+  `;
+    const subList = document.createElement("div");
+    subList.className = "subscribed-elections-list";
+    if (state.currentUser.subscribedElectionNames.length === 0) {
+      subList.innerHTML = `
+      <div class="empty-sub-box">
+        <p style="margin:0 0 6px 0;color:var(--muted);font-size:14px;">\u30EA\u30DE\u30A4\u30F3\u30C9\u767B\u9332\u3057\u3066\u3044\u308B\u9078\u6319\u304C\u3042\u308A\u307E\u305B\u3093</p>
+        <p style="margin:0;font-size:13px;">\u300C\u65E5\u7A0B\u300D\u30BF\u30D6\u304B\u3089\u9078\u6319\u3054\u3068\u306B\u300C\u{1F514} \u901A\u77E5ON\u300D\u3092\u62BC\u3057\u3066\u767B\u9332\u3067\u304D\u307E\u3059\u3002</p>
       </div>
     `;
-      wrap.appendChild(profileCard);
-      const remindCard = document.createElement("div");
-      remindCard.className = "card";
-      remindCard.innerHTML = `
-      <h3 style="margin:0 0 12px 0;font-size:16px;display:flex;align-items:center;gap:6px;">
-        ${icon("bell", 18)} <span>\u30EA\u30DE\u30A4\u30F3\u30C9\u767B\u9332\u3057\u3066\u3044\u308B\u9078\u6319\u4E00\u89A7</span>
-      </h3>
-    `;
-      const subList = document.createElement("div");
-      subList.className = "subscribed-elections-list";
-      if (state.currentUser.subscribedElectionNames.length === 0) {
-        subList.innerHTML = `
-        <div class="empty-sub-box">
-          <p style="margin:0 0 8px 0;color:var(--muted);font-size:14px;">\u73FE\u5728\u30EA\u30DE\u30A4\u30F3\u30C9\u767B\u9332\u3057\u3066\u3044\u308B\u9078\u6319\u306F\u3042\u308A\u307E\u305B\u3093\u3002</p>
-          <p style="margin:0;font-size:13px;">\u300C\u65E5\u7A0B\u300D\u30BF\u30D6\u304B\u3089\u6C17\u306B\u306A\u308B\u9078\u6319\u306E\u300C\u{1F514} \u901A\u77E5\u3092\u53D7\u3051\u53D6\u308B\u300D\u30DC\u30BF\u30F3\u3092\u62BC\u3057\u3066\u767B\u9332\u3057\u307E\u3057\u3087\u3046\uFF01</p>
-        </div>
-      `;
-      } else {
-        state.currentUser.subscribedElectionNames.forEach((name) => {
-          const item = document.createElement("div");
-          item.className = "sub-election-item";
-          item.innerHTML = `
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="sub-icon">${icon("check", 14)}</span>
-            <span style="font-weight:600;font-size:14px;">${name}</span>
-          </div>
-        `;
-          const removeBtn = document.createElement("button");
-          removeBtn.className = "btn-remove-sub";
-          removeBtn.innerHTML = `${icon("x", 12)} \u89E3\u9664`;
-          removeBtn.addEventListener("click", () => {
-            toggleElectionSubscription(name);
-            renderFn();
-          });
-          item.appendChild(removeBtn);
-          subList.appendChild(item);
-        });
-      }
-      remindCard.appendChild(subList);
-      wrap.appendChild(remindCard);
-      const prefCard = document.createElement("div");
-      prefCard.className = "card";
-      prefCard.innerHTML = `
-      <h3 style="margin:0 0 12px 0;font-size:16px;display:flex;align-items:center;gap:6px;">
-        ${icon("settings", 18)} <span>\u901A\u77E5\u53D7\u3051\u53D6\u308A\u30BF\u30A4\u30DF\u30F3\u30B0\u306E\u8A2D\u5B9A</span>
-      </h3>
-      <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">\u6295\u7968\u65E5\u304A\u3088\u3073\u671F\u65E5\u524D\u6295\u7968\u3092\u9003\u3055\u306A\u3044\u305F\u3081\u3001\u6307\u5B9A\u3057\u305F\u30BF\u30A4\u30DF\u30F3\u30B0\u3067\u30EA\u30DE\u30A4\u30F3\u30C9\u901A\u77E5\u3092\u767A\u884C\u3057\u307E\u3059\u3002</p>
-    `;
-      const timingOptions = [
-        { key: "days7Before", label: "7\u65E5\u524D\uFF08\u671F\u65E5\u524D\u6295\u7968\u306E\u6848\u5185\uFF09" },
-        { key: "days3Before", label: "3\u65E5\u524D\uFF08\u4ECA\u9031\u672B\u306E\u6295\u7968\u6E96\u5099\uFF09" },
-        { key: "day1Before", label: "\u524D\u65E5\uFF08\u6700\u7D42\u30EA\u30DE\u30A4\u30F3\u30C9\uFF09" },
-        { key: "onElectionDay", label: "\u6295\u7968\u65E5\u5F53\u65E5 \u671D7:00\uFF08\u6295\u7968\u6240\u958B\u5834\uFF09" }
-      ];
-      const timingForm = document.createElement("div");
-      timingForm.className = "timing-form";
-      timingOptions.forEach((opt) => {
-        const row = document.createElement("label");
-        row.className = "timing-checkbox-row";
-        const isChecked = state.currentUser.notificationPrefs[opt.key];
-        row.innerHTML = `
-        <input type="checkbox" ${isChecked ? "checked" : ""} data-key="${opt.key}">
-        <span>${opt.label}</span>
-      `;
-        row.querySelector("input")?.addEventListener("change", (e) => {
-          const checked = e.target.checked;
-          state.currentUser.notificationPrefs[opt.key] = checked;
-          saveState();
-          showToast("\u901A\u77E5\u30BF\u30A4\u30DF\u30F3\u30B0\u8A2D\u5B9A\u3092\u66F4\u65B0\u3057\u307E\u3057\u305F");
-        });
-        timingForm.appendChild(row);
-      });
-      prefCard.appendChild(timingForm);
-      const webNotifBox = document.createElement("div");
-      webNotifBox.className = "web-notif-box";
-      webNotifBox.style.marginTop = "16px";
-      webNotifBox.style.padding = "12px";
-      webNotifBox.style.background = "rgba(124, 58, 237, 0.05)";
-      webNotifBox.style.borderRadius = "8px";
-      webNotifBox.style.display = "flex";
-      webNotifBox.style.justifyContent = "space-between";
-      webNotifBox.style.alignItems = "center";
-      webNotifBox.innerHTML = `
-      <div>
-        <p style="margin:0;font-weight:700;font-size:13px;">\u30D6\u30E9\u30A6\u30B6\u6A19\u6E96\u30D7\u30C3\u30B7\u30E5\u901A\u77E5</p>
-        <p style="margin:2px 0 0 0;font-size:12px;color:var(--muted);">PC\u30FB\u30B9\u30DE\u30DB\u306E\u30C7\u30B9\u30AF\u30C8\u30C3\u30D7\u901A\u77E5\u3092\u8A31\u53EF\u3057\u307E\u3059</p>
-      </div>
-    `;
-      const webNotifBtn = document.createElement("button");
-      webNotifBtn.className = "btn-web-notif-perm";
-      webNotifBtn.textContent = "\u901A\u77E5\u3092\u8A31\u53EF\u3059\u308B";
-      webNotifBtn.addEventListener("click", async () => {
-        if ("Notification" in window) {
-          const perm = await Notification.requestPermission();
-          if (perm === "granted") {
-            showToast("\u2705 \u30D6\u30E9\u30A6\u30B6\u901A\u77E5\u304C\u8A31\u53EF\u3055\u308C\u307E\u3057\u305F\uFF01");
-          } else {
-            showToast("\u26A0\uFE0F \u30D6\u30E9\u30A6\u30B6\u901A\u77E5\u304C\u62D2\u5426\u3055\u308C\u307E\u3057\u305F");
-          }
-        } else {
-          showToast("\u304A\u4F7F\u3044\u306E\u30D6\u30E9\u30A6\u30B6\u306FWeb Notification\u306B\u5BFE\u5FDC\u3057\u3066\u3044\u307E\u305B\u3093");
-        }
-      });
-      webNotifBox.appendChild(webNotifBtn);
-      prefCard.appendChild(webNotifBox);
-      wrap.appendChild(prefCard);
-      const actionBar = document.createElement("div");
-      actionBar.className = "mypage-action-bar";
-      const testBtn = document.createElement("button");
-      testBtn.className = "btn-test-notif-large";
-      testBtn.innerHTML = `\u26A1 \u6A21\u64EC\u901A\u77E5\u3092\u30C6\u30B9\u30C8\u9001\u4FE1\u3059\u308B`;
-      testBtn.addEventListener("click", () => {
-        triggerSimulatedNotification(void 0, renderFn);
-      });
-      const logoutBtn = document.createElement("button");
-      logoutBtn.className = "btn-logout";
-      logoutBtn.innerHTML = `${icon("log-out", 16)} \u30ED\u30B0\u30A2\u30A6\u30C8`;
-      logoutBtn.addEventListener("click", () => {
-        logoutUser();
-        renderFn();
-      });
-      actionBar.appendChild(testBtn);
-      actionBar.appendChild(logoutBtn);
-      wrap.appendChild(actionBar);
     } else {
-      const demoCard = document.createElement("div");
-      demoCard.className = "card demo-quick-card";
-      demoCard.innerHTML = `
-      <div class="demo-quick-content">
-        <span class="demo-badge">\u304A\u3059\u3059\u3081</span>
-        <h3 style="margin:6px 0;font-size:16px;">\u5148\u751F\u30FB\u8A55\u4FA1\u8005\u5411\u3051 \u30EF\u30F3\u30BF\u30C3\u30D7\u30C7\u30E2\u4F53\u9A13</h3>
-        <p style="margin:0 0 12px 0;font-size:13px;color:var(--muted);">\u9762\u5012\u306A\u5165\u529B\u306A\u3057\u3067\u3001\u3059\u3050\u306B\u300C\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A\u5728\u4F4F\u30FB\u6295\u7968\u6A29\u6240\u6709\u8005\u300D\u306E\u30DE\u30A4\u30DA\u30FC\u30B8\u3068\u901A\u77E5\u6A5F\u80FD\u3092\u30C6\u30B9\u30C8\u3067\u304D\u307E\u3059\u3002</p>
-      </div>
-    `;
-      const quickDemoBtn = document.createElement("button");
-      quickDemoBtn.className = "btn-quick-demo";
-      quickDemoBtn.innerHTML = `\u26A1 1\u79D2\u3067\u4F53\u9A13\uFF01\u30C7\u30E2\u30E6\u30FC\u30B6\u30FC\u3067\u30ED\u30B0\u30A4\u30F3`;
-      quickDemoBtn.addEventListener("click", () => {
-        loginDemoUser();
-        renderFn();
+      state.currentUser.subscribedElectionNames.forEach((name) => {
+        const item = document.createElement("div");
+        item.className = "sub-election-item";
+        item.innerHTML = `
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="sub-icon">${icon("check", 14)}</span>
+          <span style="font-weight:600;font-size:14px;">${name}</span>
+        </div>
+      `;
+        const removeBtn = document.createElement("button");
+        removeBtn.className = "btn-remove-sub";
+        removeBtn.innerHTML = `${icon("x", 12)} \u89E3\u9664`;
+        removeBtn.addEventListener("click", () => {
+          toggleElectionSubscription(name);
+          syncSubscriptionsToUserDB();
+          renderFn();
+        });
+        item.appendChild(removeBtn);
+        subList.appendChild(item);
       });
-      demoCard.appendChild(quickDemoBtn);
-      wrap.appendChild(demoCard);
-      const formCard = document.createElement("div");
-      formCard.className = "card auth-form-card";
-      let activeTab = "signup";
-      const formTabs = document.createElement("div");
-      formTabs.className = "auth-tab-bar";
-      formTabs.innerHTML = `
-      <button class="auth-tab ${activeTab === "signup" ? "active" : ""}" id="tab-signup">\u65B0\u898F\u4F1A\u54E1\u767B\u9332</button>
-      <button class="auth-tab ${activeTab === "login" ? "active" : ""}" id="tab-login">\u30ED\u30B0\u30A4\u30F3</button>
-    `;
-      const formBody = document.createElement("div");
-      formBody.className = "auth-form-body";
-      const renderFormBody = () => {
-        formBody.innerHTML = "";
-        if (activeTab === "signup") {
-          formBody.innerHTML = `
-          <div class="form-group">
-            <label class="form-label">\u304A\u540D\u524D\uFF08\u30CB\u30C3\u30AF\u30CD\u30FC\u30E0\u53EF\uFF09</label>
-            <input type="text" id="reg-name" class="form-input" placeholder="\u4F8B: \u65B0\u6F5F \u82B1\u5B50">
-          </div>
-          <div class="form-group">
-            <label class="form-label">\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9</label>
-            <input type="email" id="reg-email" class="form-input" placeholder="example@niigata.lg.jp">
-          </div>
-          <div class="form-group">
-            <label class="form-label">\u304A\u4F4F\u307E\u3044\u306E\u5730\u57DF\uFF08\u65B0\u6F5F\u770C\u5185\u5E02\u533A\u753A\u6751\uFF09</label>
-            <select id="reg-muni" class="form-select">
-              <optgroup label="\u4E0B\u8D8A\u30A8\u30EA\u30A2">
-                <option value="\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A">\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A</option>
-                <option value="\u65B0\u6F5F\u5E02\u5317\u533A">\u65B0\u6F5F\u5E02\u5317\u533A</option>
-                <option value="\u65B0\u6F5F\u5E02\u6771\u533A">\u65B0\u6F5F\u5E02\u6771\u533A</option>
-                <option value="\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A">\u65B0\u6F5F\u5E02\u6C5F\u5357\u533A</option>
-                <option value="\u65B0\u6F5F\u5E02\u79CB\u8449\u533A">\u65B0\u6F5F\u5E02\u79CB\u8449\u533A</option>
-                <option value="\u65B0\u6F5F\u5E02\u5357\u533A">\u65B0\u6F5F\u5E02\u5357\u533A</option>
-                <option value="\u65B0\u6F5F\u5E02\u897F\u533A">\u65B0\u6F5F\u5E02\u897F\u533A</option>
-                <option value="\u65B0\u6F5F\u5E02\u897F\u84B2\u533A">\u65B0\u6F5F\u5E02\u897F\u84B2\u533A</option>
-                <option value="\u65B0\u767A\u7530\u5E02">\u65B0\u767A\u7530\u5E02</option>
-                <option value="\u6751\u4E0A\u5E02">\u6751\u4E0A\u5E02</option>
-              </optgroup>
-              <optgroup label="\u4E2D\u8D8A\u30A8\u30EA\u30A2">
-                <option value="\u9577\u5CA1\u5E02">\u9577\u5CA1\u5E02</option>
-                <option value="\u4E09\u6761\u5E02">\u4E09\u6761\u5E02</option>
-                <option value="\u67CF\u5D0E\u5E02">\u67CF\u5D0E\u5E02</option>
-              </optgroup>
-              <optgroup label="\u4E0A\u8D8A\u30FB\u4F50\u6E21\u30A8\u30EA\u30A2">
-                <option value="\u4E0A\u8D8A\u5E02">\u4E0A\u8D8A\u5E02</option>
-                <option value="\u4F50\u6E21\u5E02">\u4F50\u6E21\u5E02</option>
-              </optgroup>
-            </select>
-            <span class="form-hint">\u304A\u4F4F\u307E\u3044\u306E\u5730\u57DF\u306E\u9078\u6319\u3084\u6295\u7968\u6240\u60C5\u5831\u306B\u5408\u308F\u305B\u305F\u901A\u77E5\u304C\u5C4A\u304D\u307E\u3059\u3002</span>
-          </div>
-        `;
-          const submitBtn = document.createElement("button");
-          submitBtn.className = "btn-auth-submit";
-          submitBtn.textContent = "\u767B\u9332\u3057\u3066\u901A\u77E5\u3092\u53D7\u3051\u53D6\u308B";
-          submitBtn.addEventListener("click", () => {
-            const name = formBody.querySelector("#reg-name")?.value;
-            const email = formBody.querySelector("#reg-email")?.value;
-            const muni = formBody.querySelector("#reg-muni")?.value;
-            loginUser(name, email, muni);
-            renderFn();
-          });
-          formBody.appendChild(submitBtn);
-        } else {
-          formBody.innerHTML = `
-          <div class="form-group">
-            <label class="form-label">\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9</label>
-            <input type="email" id="login-email" class="form-input" placeholder="example@niigata.lg.jp" value="niigata.taro@example.com">
-          </div>
-          <div class="form-group">
-            <label class="form-label">\u30D1\u30B9\u30EF\u30FC\u30C9</label>
-            <input type="password" class="form-input" value="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022">
-          </div>
-        `;
-          const submitBtn = document.createElement("button");
-          submitBtn.className = "btn-auth-submit";
-          submitBtn.textContent = "\u30ED\u30B0\u30A4\u30F3";
-          submitBtn.addEventListener("click", () => {
-            const email = formBody.querySelector("#login-email")?.value;
-            loginUser("\u65B0\u6F5F \u30BF\u30ED\u30A6", email, "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A");
-            renderFn();
-          });
-          formBody.appendChild(submitBtn);
-        }
-      };
-      formTabs.querySelector("#tab-signup")?.addEventListener("click", () => {
-        activeTab = "signup";
-        formTabs.querySelector("#tab-signup")?.classList.add("active");
-        formTabs.querySelector("#tab-login")?.classList.remove("active");
-        renderFormBody();
-      });
-      formTabs.querySelector("#tab-login")?.addEventListener("click", () => {
-        activeTab = "login";
-        formTabs.querySelector("#tab-login")?.classList.add("active");
-        formTabs.querySelector("#tab-signup")?.classList.remove("active");
-        renderFormBody();
-      });
-      renderFormBody();
-      formCard.appendChild(formTabs);
-      formCard.appendChild(formBody);
-      wrap.appendChild(formCard);
     }
-    return wrap;
+    remindCard.appendChild(subList);
+    root2.appendChild(remindCard);
+    const prefCard = document.createElement("div");
+    prefCard.className = "card";
+    prefCard.innerHTML = `
+    <h3 style="margin:0 0 12px 0;font-size:16px;display:flex;align-items:center;gap:6px;">
+      ${icon("settings", 18)} <span>\u901A\u77E5\u30BF\u30A4\u30DF\u30F3\u30B0\u306E\u8A2D\u5B9A</span>
+    </h3>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">\u6295\u7968\u65E5\u3092\u5FD8\u308C\u306A\u3044\u3088\u3046\u3001\u5E0C\u671B\u3059\u308B\u30BF\u30A4\u30DF\u30F3\u30B0\u3067\u30EA\u30DE\u30A4\u30F3\u30C9\u3092\u5C4A\u3051\u307E\u3059\u3002</p>
+  `;
+    const timingOptions = [
+      { key: "days7Before", label: "\u{1F4C5} 7\u65E5\u524D\uFF08\u671F\u65E5\u524D\u6295\u7968\u306E\u6848\u5185\uFF09" },
+      { key: "days3Before", label: "\u{1F4C5} 3\u65E5\u524D\uFF08\u6295\u7968\u6E96\u5099\u306E\u78BA\u8A8D\uFF09" },
+      { key: "day1Before", label: "\u{1F514} \u524D\u65E5\uFF08\u6700\u7D42\u30EA\u30DE\u30A4\u30F3\u30C9\uFF09" },
+      { key: "onElectionDay", label: "\u{1F5F3}\uFE0F \u6295\u7968\u65E5\u5F53\u65E5 \u671D7:00" }
+    ];
+    const timingForm = document.createElement("div");
+    timingForm.className = "timing-form";
+    timingOptions.forEach((opt) => {
+      const row = document.createElement("label");
+      row.className = "timing-checkbox-row";
+      const isChecked = state.currentUser.notificationPrefs[opt.key];
+      row.innerHTML = `
+      <input type="checkbox" ${isChecked ? "checked" : ""} data-key="${opt.key}">
+      <span>${opt.label}</span>
+    `;
+      row.querySelector("input")?.addEventListener("change", (e) => {
+        const checked = e.target.checked;
+        state.currentUser.notificationPrefs[opt.key] = checked;
+        saveState();
+        showToast("\u2705 \u901A\u77E5\u30BF\u30A4\u30DF\u30F3\u30B0\u3092\u66F4\u65B0\u3057\u307E\u3057\u305F");
+      });
+      timingForm.appendChild(row);
+    });
+    prefCard.appendChild(timingForm);
+    const webNotifBox = document.createElement("div");
+    webNotifBox.className = "web-notif-box";
+    webNotifBox.innerHTML = `
+    <div>
+      <p style="margin:0;font-weight:700;font-size:13px;">\u30D6\u30E9\u30A6\u30B6\u30D7\u30C3\u30B7\u30E5\u901A\u77E5</p>
+      <p style="margin:2px 0 0 0;font-size:12px;color:var(--muted);">\u30D6\u30E9\u30A6\u30B6\u306E\u901A\u77E5\u30DD\u30C3\u30D7\u30A2\u30C3\u30D7\u3092\u6709\u52B9\u306B\u3057\u307E\u3059</p>
+    </div>
+  `;
+    const webNotifBtn = document.createElement("button");
+    webNotifBtn.className = "btn-web-notif-perm";
+    webNotifBtn.textContent = "\u901A\u77E5\u3092\u8A31\u53EF\u3059\u308B";
+    webNotifBtn.addEventListener("click", async () => {
+      if ("Notification" in window) {
+        const perm = await Notification.requestPermission();
+        showToast(perm === "granted" ? "\u2705 \u30D6\u30E9\u30A6\u30B6\u901A\u77E5\u304C\u8A31\u53EF\u3055\u308C\u307E\u3057\u305F\uFF01" : "\u26A0\uFE0F \u30D6\u30E9\u30A6\u30B6\u901A\u77E5\u304C\u62D2\u5426\u3055\u308C\u307E\u3057\u305F");
+      } else {
+        showToast("\u3053\u306E\u30D6\u30E9\u30A6\u30B6\u306FWeb Notification\u306B\u5BFE\u5FDC\u3057\u3066\u3044\u307E\u305B\u3093");
+      }
+    });
+    webNotifBox.appendChild(webNotifBtn);
+    prefCard.appendChild(webNotifBox);
+    root2.appendChild(prefCard);
+    const actionBar = document.createElement("div");
+    actionBar.className = "mypage-action-bar";
+    const testBtn = document.createElement("button");
+    testBtn.className = "btn-test-notif-large";
+    testBtn.innerHTML = `\u26A1 \u6A21\u64EC\u901A\u77E5\u3092\u30C6\u30B9\u30C8\u9001\u4FE1\u3059\u308B`;
+    testBtn.addEventListener("click", () => triggerSimulatedNotification(void 0, renderFn));
+    const logoutBtn = document.createElement("button");
+    logoutBtn.className = "btn-logout";
+    logoutBtn.innerHTML = `${icon("log-out", 16)} \u30ED\u30B0\u30A2\u30A6\u30C8`;
+    logoutBtn.addEventListener("click", () => {
+      logoutUser();
+      renderFn();
+    });
+    actionBar.appendChild(testBtn);
+    actionBar.appendChild(logoutBtn);
+    root2.appendChild(actionBar);
+    return root2;
   }
 
   // app.ts

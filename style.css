@@ -1465,28 +1465,86 @@ html, body {
   box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
 }
 
+/* ── Auth Screen (ログイン・新規登録) ─────────── */
+.auth-screen {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px 0 40px;
+}
+
+.auth-hero {
+  text-align: center;
+  padding: 32px 16px 24px;
+}
+.auth-hero-icon {
+  background: linear-gradient(135deg, #7C3AED, #6366F1);
+  color: #FFFFFF;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.35);
+}
+.auth-hero-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0 0 8px 0;
+}
+.auth-hero-sub {
+  font-size: 14px;
+  color: #64748B;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.auth-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 8px 24px 24px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
+
 .auth-tab-bar {
   display: flex;
   border-bottom: 2px solid #E2E8F0;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 .auth-tab {
   flex: 1;
-  padding: 12px;
+  padding: 14px 8px;
   background: none;
   border: none;
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 700;
-  color: #64748B;
+  color: #94A3B8;
   cursor: pointer;
   border-bottom: 3px solid transparent;
   margin-bottom: -2px;
   font-family: var(--font-body);
+  transition: color 0.15s ease;
 }
+.auth-tab:hover { color: #475569; }
 .auth-tab.active {
   color: #7C3AED;
   border-bottom-color: #7C3AED;
 }
+
+.auth-error-box {
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  color: #DC2626;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
 .form-group {
   margin-bottom: 16px;
 }
@@ -1496,41 +1554,95 @@ html, body {
   font-weight: 700;
   color: #334155;
   margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
+.form-required {
+  font-size: 11px;
+  font-weight: 600;
+  color: #7C3AED;
+  background: #F3E8FF;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+.pw-wrap {
+  position: relative;
+}
+.pw-wrap .form-input {
+  padding-right: 42px;
+}
+.pw-toggle-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #94A3B8;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+}
+.pw-toggle-btn:hover { color: #475569; }
+
 .form-input, .form-select {
   width: 100%;
-  padding: 10px 14px;
+  padding: 11px 14px;
   font-size: 14px;
-  border: 1px solid #CBD5E1;
+  border: 1.5px solid #CBD5E1;
   border-radius: 8px;
   box-sizing: border-box;
   font-family: var(--font-body);
+  background: #FAFAFA;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .form-input:focus, .form-select:focus {
   outline: none;
   border-color: #7C3AED;
+  background: #FFFFFF;
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
 }
 .form-hint {
-  font-size: 11.5px;
+  font-size: 12px;
   color: #64748B;
   display: block;
-  margin-top: 4px;
+  margin-top: 5px;
 }
+
 .btn-auth-submit {
   width: 100%;
-  background: #7C3AED;
+  background: linear-gradient(135deg, #7C3AED, #6366F1);
   color: #FFFFFF;
   border: none;
-  border-radius: 8px;
-  padding: 12px;
+  border-radius: 10px;
+  padding: 13px;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
   margin-top: 8px;
-  transition: background 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3);
+  transition: all 0.15s ease;
 }
-.btn-auth-submit:hover { background: #6D28D9; }
+.btn-auth-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(124, 58, 237, 0.4);
+}
+
+.auth-notice {
+  text-align: center;
+  font-size: 12px;
+  color: #94A3B8;
+  margin-top: 16px;
+}
+
+.mypage-root { padding-bottom: 40px; }
+
 
 /* Schedule Remind Rows */
 .btn-test-notif-schedule {

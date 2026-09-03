@@ -62,6 +62,125 @@ export const defaultInitialNotifications: NotificationItem[] = [
   },
 ];
 
+// ============================================================
+// ローカルユーザーDB (localStorage ベースの簡易認証)
+// ============================================================
+interface StoredUserRecord {
+  id: string;
+  name: string;
+  email: string;
+  passwordHash: string;
+  municipality: string;
+  subscribedElectionNames: string[];
+  notificationPrefs: UserProfile['notificationPrefs'];
+}
+
+function simpleHash(str: string): string {
+  // シンプルなハッシュ（本番では bcrypt 等を使用すること）
+  let hash = 5381;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash * 33) ^ str.charCodeAt(i);
+  }
+  return (hash >>> 0).toString(16);
+}
+
+export function loadUserDB(): StoredUserRecord[] {
+  try {
+    const saved = localStorage.getItem("niigata_user_db");
+    if (saved) return JSON.parse(saved);
+  } catch (e) {
+    console.error("Failed to load user DB", e);
+  }
+  return [];
+}
+
+function saveUserDB(db: StoredUserRecord[]) {
+  try {
+    localStorage.setItem("niigata_user_db", JSON.stringify(db));
+  } catch (e) {
+    console.error("Failed to save user DB", e);
+  }
+}
+
+export function registerNewUser(
+  name: string,
+  email: string,
+  password: string,
+  municipality: string
+): { success: boolean; error?: string } {
+  if (!name.trim()) return { success: false, error: "お名前を入力してください" };
+  if (!email.trim() || !email.includes("@")) return { success: false, error: "有効なメールアドレスを入力してください" };
+  if (password.length < 6) return { success: false, error: "パスワードは6文字以上にしてください" };
+
+  const db = loadUserDB();
+  if (db.find((u) => u.email === email.toLowerCase())) {
+    return { success: false, error: "このメールアドレスはすでに登録されています" };
+  }
+
+  const newRecord: StoredUserRecord = {
+    id: "user-" + Date.now(),
+    name: name.trim(),
+    email: email.toLowerCase().trim(),
+    passwordHash: simpleHash(password),
+    municipality: municipality || "新潟市中央区",
+    subscribedElectionNames: [],
+    notificationPrefs: { days7Before: true, days3Before: true, day1Before: true, onElectionDay: true },
+  };
+  db.push(newRecord);
+  saveUserDB(db);
+
+  // 登録成功 → そのままログイン状態にする
+  state.currentUser = {
+    id: newRecord.id,
+    name: newRecord.name,
+    email: newRecord.email,
+    municipality: newRecord.municipality,
+    isLoggedIn: true,
+    isDemo: false,
+    notificationPrefs: newRecord.notificationPrefs,
+    subscribedElectionNames: newRecord.subscribedElectionNames,
+  };
+  saveState();
+  showToast(`✅ 登録完了！${newRecord.name} さん、ようこそ！`);
+  return { success: true };
+}
+
+export function authenticateUser(
+  email: string,
+  password: string
+): { success: boolean; error?: string } {
+  if (!email.trim() || !password) return { success: false, error: "メールアドレスとパスワードを入力してください" };
+
+  const db = loadUserDB();
+  const record = db.find((u) => u.email === email.toLowerCase().trim());
+  if (!record) return { success: false, error: "このメールアドレスは登録されていません" };
+  if (record.passwordHash !== simpleHash(password)) return { success: false, error: "パスワードが正しくありません" };
+
+  state.currentUser = {
+    id: record.id,
+    name: record.name,
+    email: record.email,
+    municipality: record.municipality,
+    isLoggedIn: true,
+    isDemo: false,
+    notificationPrefs: record.notificationPrefs,
+    subscribedElectionNames: record.subscribedElectionNames,
+  };
+  saveState();
+  showToast(`おかえりなさい！${record.name} さん`);
+  return { success: true };
+}
+
+// 選挙サブスクリプションの変更をDBにも反映する
+export function syncSubscriptionsToUserDB() {
+  const db = loadUserDB();
+  const idx = db.findIndex((u) => u.email === state.currentUser.email);
+  if (idx >= 0) {
+    db[idx].subscribedElectionNames = [...state.currentUser.subscribedElectionNames];
+    saveUserDB(db);
+  }
+}
+
 function loadStoredUser(): UserProfile {
   try {
     const saved = localStorage.getItem("niigata_election_user");
@@ -69,7 +188,7 @@ function loadStoredUser(): UserProfile {
   } catch (e) {
     console.error("Failed to load user state", e);
   }
-  return defaultDemoUser; // 初回デモ体験向上のためデモユーザーを初期設定
+  return defaultGuestUser; // 未ログイン状態でスタート
 }
 
 function loadStoredNotifications(): NotificationItem[] {
