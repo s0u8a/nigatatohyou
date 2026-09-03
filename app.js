@@ -716,7 +716,20 @@
   function loadStoredUser() {
     try {
       const saved = localStorage.getItem("niigata_election_user");
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.isDemo || parsed.id === "guest" || parsed.id === "demo-voter-01") {
+          localStorage.removeItem("niigata_election_user");
+          return defaultGuestUser;
+        }
+        const db = loadUserDB();
+        const exists = db.some((u) => u.id === parsed.id && u.email === parsed.email);
+        if (!exists) {
+          localStorage.removeItem("niigata_election_user");
+          return defaultGuestUser;
+        }
+        return parsed;
+      }
     } catch (e) {
       console.error("Failed to load user state", e);
     }
