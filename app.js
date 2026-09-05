@@ -600,9 +600,33 @@
   __export(elections_exports, {
     ELECTION_YEAR_FILTERS: () => ELECTION_YEAR_FILTERS,
     OFFICIAL_SCHEDULE_URL: () => OFFICIAL_SCHEDULE_URL,
-    UPCOMING_ELECTIONS: () => UPCOMING_ELECTIONS
+    UPCOMING_ELECTIONS: () => UPCOMING_ELECTIONS,
+    getElectionByName: () => getElectionByName
   });
-  var OFFICIAL_SCHEDULE_URL, UPCOMING_ELECTIONS, ELECTION_YEAR_FILTERS;
+  function getElectionByName(name) {
+    const found = UPCOMING_ELECTIONS.find((e) => e.name === name);
+    if (found) return found;
+    const fallback = FALLBACK_ELECTIONS[name];
+    if (fallback) {
+      return {
+        name,
+        year: fallback.year || "\u4EE4\u548C8\u5E74\u5EA6",
+        yearLabel: fallback.yearLabel || "\u4EE4\u548C8\u5E74",
+        notice: fallback.notice || "\u516C\u8868\u5F85\u3061",
+        day: fallback.day || "\u65E5\u7A0B\u78BA\u8A8D\u4E2D",
+        isoDate: fallback.isoDate || ""
+      };
+    }
+    return {
+      name,
+      year: "\u4E88\u5B9A\u9078\u6319",
+      yearLabel: "\u4E88\u5B9A",
+      notice: "\u516C\u8868\u5F85\u3061",
+      day: "\u65E5\u7A0B\u78BA\u8A8D\u4E2D",
+      isoDate: ""
+    };
+  }
+  var OFFICIAL_SCHEDULE_URL, UPCOMING_ELECTIONS, ELECTION_YEAR_FILTERS, FALLBACK_ELECTIONS;
   var init_elections = __esm({
     "src/data/elections.ts"() {
       OFFICIAL_SCHEDULE_URL = "https://www.pref.niigata.lg.jp/site/senkyo/list803.html";
@@ -621,6 +645,22 @@
         { year: "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D", yearLabel: "\u4EE4\u548C9\u5E74", name: "\u4E0A\u8D8A\u5E02\u9577\u9078\u6319 (\u4EFB\u671F\u6E80\u4E86 11\u6708)", notice: "11\u6708", day: "11\u6708\u4E0B\u65EC(\u4E88\u5B9A)", isoDate: "2027-11-21" }
       ];
       ELECTION_YEAR_FILTERS = ["\u3059\u3079\u3066", "\u4EE4\u548C8\u5E74\u5EA6", "\u4EE4\u548C9\u5E74\u5EA6\u4EE5\u964D"];
+      FALLBACK_ELECTIONS = {
+        "\u4EE4\u548C8\u5E745\u670831\u65E5 \u65B0\u6F5F\u770C\u77E5\u4E8B\u9078\u6319": {
+          year: "\u4EE4\u548C8\u5E74\u5EA6",
+          yearLabel: "\u4EE4\u548C8\u5E74",
+          notice: "5\u670814\u65E5",
+          day: "5\u670831\u65E5",
+          isoDate: "2026-05-31"
+        },
+        "\u65B0\u6F5F\u5E02\u8B70\u4F1A\u8B70\u54E1\u88DC\u6B20\u9078\u6319": {
+          year: "\u4EE4\u548C8\u5E74\u5EA6",
+          yearLabel: "\u4EE4\u548C8\u5E74",
+          notice: "10\u670816\u65E5",
+          day: "10\u670825\u65E5",
+          isoDate: "2026-10-25"
+        }
+      };
     }
   });
 
@@ -640,6 +680,7 @@
     icon: () => icon,
     isElectionSubscribed: () => isElectionSubscribed,
     loadUserDB: () => loadUserDB,
+    loginQuickDemo: () => loginQuickDemo,
     loginUser: () => loginUser,
     logoutUser: () => logoutUser,
     markNotificationsAsRead: () => markNotificationsAsRead,
@@ -740,6 +781,41 @@
       db[idx].subscribedElectionNames = [...state.currentUser.subscribedElectionNames];
       saveUserDB(db);
     }
+  }
+  function loginQuickDemo() {
+    const db = loadUserDB();
+    const demoEmail = "demo@niigata-vote.jp";
+    let demoUser = db.find((u) => u.email === demoEmail);
+    if (!demoUser) {
+      demoUser = {
+        id: "user-demo-01",
+        name: "\u65B0\u6F5F \u305F\u308D\u3046",
+        email: demoEmail,
+        passwordHash: simpleHash("demo123"),
+        municipality: "\u65B0\u6F5F\u5E02\u4E2D\u592E\u533A",
+        subscribedElectionNames: ["\u80CE\u5185\u5E02\u9577\u9078\u6319", "\u65B0\u6F5F\u5E02\u9577\u9078\u6319", "\u71D5\u5E02\u8B70\u4F1A\u8B70\u54E1\u9078\u6319"],
+        notificationPrefs: {
+          days7Before: true,
+          days3Before: true,
+          day1Before: true,
+          onElectionDay: true
+        }
+      };
+      db.push(demoUser);
+      saveUserDB(db);
+    }
+    state.currentUser = {
+      id: demoUser.id,
+      name: demoUser.name,
+      email: demoUser.email,
+      municipality: demoUser.municipality,
+      isLoggedIn: true,
+      isDemo: false,
+      notificationPrefs: demoUser.notificationPrefs,
+      subscribedElectionNames: [...demoUser.subscribedElectionNames]
+    };
+    saveState();
+    showToast("\u2728 \u30C7\u30E2\u30A2\u30AB\u30A6\u30F3\u30C8\u3067\u30ED\u30B0\u30A4\u30F3\u3057\u307E\u3057\u305F");
   }
   function loadStoredUser() {
     try {
@@ -5569,6 +5645,7 @@
 
   // src/views/LoginView.ts
   init_state();
+  init_elections();
   function renderMyPage(renderFn) {
     const wrap = document.createElement("div");
     wrap.className = "mypage-root";
@@ -5764,6 +5841,27 @@
     });
     renderSignup();
     root2.appendChild(card);
+    const demoCard = document.createElement("div");
+    demoCard.className = "card demo-quick-card";
+    demoCard.style.marginTop = "16px";
+    demoCard.style.textAlign = "center";
+    demoCard.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:6px;">
+      <span class="demo-badge">\u304A\u8A66\u3057</span>
+      <span style="font-weight:700;font-size:14px;color:#065F46;">\u767B\u9332\u306A\u3057\u3067\u3059\u3050\u306B\u30DE\u30A4\u30DA\u30FC\u30B8\u3092\u4F53\u9A13</span>
+    </div>
+    <p style="font-size:12.5px;color:#047857;margin:0 0 10px 0;">
+      \u767B\u9332\u6E08\u307F\u9078\u6319\u306E\u65E5\u7A0B\u8868\u793A\u3084\u30EA\u30DE\u30A4\u30F3\u30C9\u6A5F\u80FD\u3092\u3059\u3050\u306B\u304A\u8A66\u3057\u3044\u305F\u3060\u3051\u307E\u3059\u3002
+    </p>
+    <button type="button" class="btn-quick-demo" id="btn-quick-demo-login">
+      \u2728 \u304B\u3093\u305F\u3093\u30C7\u30E2\u3067\u4F53\u9A13\u3059\u308B
+    </button>
+  `;
+    demoCard.querySelector("#btn-quick-demo-login")?.addEventListener("click", () => {
+      loginQuickDemo();
+      renderFn();
+    });
+    root2.appendChild(demoCard);
     const notice = document.createElement("p");
     notice.className = "auth-notice";
     notice.innerHTML = `\u{1F512} \u5165\u529B\u60C5\u5831\u306F\u3053\u306E\u30D6\u30E9\u30A6\u30B6\u306E\u307F\u306B\u4FDD\u5B58\u3055\u308C\u307E\u3059\u3002\u30B5\u30FC\u30D0\u30FC\u306B\u306F\u9001\u4FE1\u3055\u308C\u307E\u305B\u3093\u3002`;
@@ -5798,40 +5896,128 @@
   `;
     root2.appendChild(profileCard);
     const remindCard = document.createElement("div");
-    remindCard.className = "card";
+    remindCard.className = "card mypage-remind-card";
     remindCard.innerHTML = `
-    <h3 style="margin:0 0 12px 0;font-size:16px;display:flex;align-items:center;gap:6px;">
-      ${icon("bell", 18)} <span>\u30EA\u30DE\u30A4\u30F3\u30C9\u767B\u9332\u3057\u3066\u3044\u308B\u9078\u6319</span>
-    </h3>
+    <div class="mypage-remind-header">
+      <div>
+        <h3 class="mypage-card-title">
+          ${icon("bell", 18)} <span>\u30EA\u30DE\u30A4\u30F3\u30C9\u767B\u9332\u3057\u305F\u9078\u6319\u306E\u65E5\u7A0B</span>
+        </h3>
+        <p class="mypage-card-sub">
+          \u767B\u9332\u4E2D\u306E\u9078\u6319\u306E\u6295\u7968\u65E5\u30FB\u544A\u793A\u65E5\u30FB\u6B8B\u308A\u65E5\u6570\u3092\u78BA\u8A8D\u3067\u304D\u307E\u3059\u3002
+        </p>
+      </div>
+      <button class="btn-add-election-shortcut" id="btn-goto-schedule-top">
+        <span>\uFF0B \u9078\u6319\u3092\u8FFD\u52A0</span>
+      </button>
+    </div>
   `;
+    remindCard.querySelector("#btn-goto-schedule-top")?.addEventListener("click", () => {
+      state.tab = "schedule";
+      renderFn();
+    });
     const subList = document.createElement("div");
     subList.className = "subscribed-elections-list";
     if (state.currentUser.subscribedElectionNames.length === 0) {
       subList.innerHTML = `
       <div class="empty-sub-box">
-        <p style="margin:0 0 6px 0;color:var(--muted);font-size:14px;">\u30EA\u30DE\u30A4\u30F3\u30C9\u767B\u9332\u3057\u3066\u3044\u308B\u9078\u6319\u304C\u3042\u308A\u307E\u305B\u3093</p>
-        <p style="margin:0;font-size:13px;">\u300C\u65E5\u7A0B\u300D\u30BF\u30D6\u304B\u3089\u9078\u6319\u3054\u3068\u306B\u300C\u{1F514} \u901A\u77E5ON\u300D\u3092\u62BC\u3057\u3066\u767B\u9332\u3067\u304D\u307E\u3059\u3002</p>
+        <div class="empty-sub-icon">\u{1F514}</div>
+        <p class="empty-sub-title">\u30EA\u30DE\u30A4\u30F3\u30C9\u767B\u9332\u3057\u3066\u3044\u308B\u9078\u6319\u304C\u3042\u308A\u307E\u305B\u3093</p>
+        <p class="empty-sub-desc">
+          \u300C\u65E5\u7A0B\u300D\u30BF\u30D6\u304B\u3089\u6C17\u306B\u306A\u308B\u9078\u6319\u306E\u300C\u{1F514} \u901A\u77E5ON\u300D\u3092\u62BC\u3059\u3068\u3001\u3053\u3053\u306B\u6295\u7968\u65E5\u7A0B\u304C\u4FDD\u5B58\u3055\u308C\u3001\u6295\u7968\u65E5\u304C\u8FD1\u3065\u3044\u305F\u969B\u306B\u304A\u77E5\u3089\u305B\u304C\u5C4A\u304D\u307E\u3059\u3002
+        </p>
+        <button class="btn-empty-goto-schedule" id="btn-empty-schedule">
+          \u{1F4C5} \u65E5\u7A0B\u30BF\u30D6\u3067\u9078\u6319\u3092\u63A2\u3059
+        </button>
       </div>
     `;
+      subList.querySelector("#btn-empty-schedule")?.addEventListener("click", () => {
+        state.tab = "schedule";
+        renderFn();
+      });
     } else {
       state.currentUser.subscribedElectionNames.forEach((name) => {
+        const info = getElectionByName(name);
+        const daysLeft = info.isoDate ? daysUntil(info.isoDate) : null;
+        let urgencyBadge = "";
+        if (daysLeft !== null) {
+          if (daysLeft === 0) {
+            urgencyBadge = `<span class="election-status-badge today">\u{1F5F3}\uFE0F \u672C\u65E5\u6295\u7968\u65E5\uFF01</span>`;
+          } else if (daysLeft === 1) {
+            urgencyBadge = `<span class="election-status-badge urgent">\u{1F525} \u660E\u65E5\u6295\u7968\u65E5\uFF01</span>`;
+          } else if (daysLeft > 0 && daysLeft <= 7) {
+            urgencyBadge = `<span class="election-status-badge soon">\u3042\u3068${daysLeft}\u65E5\uFF08\u76F4\u524D\uFF09</span>`;
+          } else if (daysLeft > 7) {
+            urgencyBadge = `<span class="election-status-badge upcoming">\u3042\u3068${daysLeft}\u65E5</span>`;
+          } else {
+            urgencyBadge = `<span class="election-status-badge past">\u6295\u7968\u7D42\u4E86</span>`;
+          }
+        }
         const item = document.createElement("div");
-        item.className = "sub-election-item";
+        item.className = "sub-election-item-card";
         item.innerHTML = `
-        <div style="display:flex;align-items:center;gap:8px;">
-          <span class="sub-icon">${icon("check", 14)}</span>
-          <span style="font-weight:600;font-size:14px;">${name}</span>
+        <div class="sub-election-card-header">
+          <div class="sub-election-title-col">
+            <div class="sub-election-meta-tags">
+              <span class="sub-election-year-tag">${info.yearLabel || "\u4E88\u5B9A"}</span>
+              ${urgencyBadge}
+            </div>
+            <h4 class="sub-election-title">${info.name}</h4>
+          </div>
+          <div class="sub-election-action-btns">
+            ${info.isoDate ? `<button class="btn-sub-card-action btn-ics" title="\u7AEF\u672B\u30AB\u30EC\u30F3\u30C0\u30FC\u306B\u8FFD\u52A0">
+                    \u{1F4C5} <span>\u30AB\u30EC\u30F3\u30C0\u30FC</span>
+                   </button>` : ""}
+            <button class="btn-sub-card-action btn-del" title="\u30EA\u30DE\u30A4\u30F3\u30C9\u89E3\u9664">
+              ${icon("x", 12)} <span>\u89E3\u9664</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="sub-election-schedule-grid">
+          <div class="schedule-pill pill-voting-day">
+            <span class="pill-label">\u{1F5F3}\uFE0F \u6295\u7968\u65E5</span>
+            <span class="pill-value main-date">${info.day}</span>
+          </div>
+          <div class="schedule-pill pill-notice-day">
+            <span class="pill-label">\u{1F4CB} \u544A\u793A\u65E5</span>
+            <span class="pill-value">${info.notice}</span>
+          </div>
+          <div class="schedule-pill pill-time">
+            <span class="pill-label">\u23F0 \u6295\u7968\u6642\u9593</span>
+            <span class="pill-value">7:00 \u301C 20:00</span>
+          </div>
+        </div>
+
+        <div class="sub-election-card-footer">
+          <div class="sub-early-vote-info">
+            <span class="early-icon">\u{1F3DB}\uFE0F</span>
+            <span class="early-text">\u671F\u65E5\u524D\u6295\u7968\uFF1A\u544A\u793A\u65E5\u306E\u7FCC\u65E5\u301C\u6295\u7968\u65E5\u524D\u65E5\u307E\u3067</span>
+          </div>
+          <button class="btn-view-schedule-detail">
+            <span>\u65E5\u7A0B\u30DA\u30FC\u30B8\u3067\u8A73\u7D30\u3092\u898B\u308B</span>
+            ${icon("chevron-right", 12)}
+          </button>
         </div>
       `;
-        const removeBtn = document.createElement("button");
-        removeBtn.className = "btn-remove-sub";
-        removeBtn.innerHTML = `${icon("x", 12)} \u89E3\u9664`;
-        removeBtn.addEventListener("click", () => {
+        item.querySelector(".btn-ics")?.addEventListener("click", (e) => {
+          e.stopPropagation();
+          downloadElectionICS(info.name, info.isoDate, info.notice);
+        });
+        item.querySelector(".btn-del")?.addEventListener("click", (e) => {
+          e.stopPropagation();
           toggleElectionSubscription(name);
           syncSubscriptionsToUserDB();
           renderFn();
         });
-        item.appendChild(removeBtn);
+        item.querySelector(".btn-view-schedule-detail")?.addEventListener("click", (e) => {
+          e.stopPropagation();
+          state.tab = "schedule";
+          if (info.isoDate) {
+            state.electionDate = info.isoDate;
+          }
+          renderFn();
+        });
         subList.appendChild(item);
       });
     }

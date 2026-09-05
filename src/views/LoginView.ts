@@ -13,7 +13,11 @@ import {
   authenticateUser,
   syncSubscriptionsToUserDB,
   checkAndFireReminders,
+  daysUntil,
+  downloadElectionICS,
+  loginQuickDemo,
 } from '../state';
+import { getElectionByName } from '../data/elections';
 
 // ============================================================
 // メイン描画：ログイン済みか未ログインかで分岐
@@ -267,6 +271,29 @@ function renderAuthScreen(renderFn: () => void): HTMLElement {
 
   root.appendChild(card);
 
+  // クイックデモ体験カード
+  const demoCard = document.createElement("div");
+  demoCard.className = "card demo-quick-card";
+  demoCard.style.marginTop = "16px";
+  demoCard.style.textAlign = "center";
+  demoCard.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:6px;">
+      <span class="demo-badge">お試し</span>
+      <span style="font-weight:700;font-size:14px;color:#065F46;">登録なしですぐにマイページを体験</span>
+    </div>
+    <p style="font-size:12.5px;color:#047857;margin:0 0 10px 0;">
+      登録済み選挙の日程表示やリマインド機能をすぐにお試しいただけます。
+    </p>
+    <button type="button" class="btn-quick-demo" id="btn-quick-demo-login">
+      ✨ かんたんデモで体験する
+    </button>
+  `;
+  demoCard.querySelector("#btn-quick-demo-login")?.addEventListener("click", () => {
+    loginQuickDemo();
+    renderFn();
+  });
+  root.appendChild(demoCard);
+
   // 注意書き
   const notice = document.createElement("p");
   notice.className = "auth-notice";
@@ -309,14 +336,29 @@ function renderDashboard(renderFn: () => void): HTMLElement {
   `;
   root.appendChild(profileCard);
 
-  // リマインド登録中の選挙一覧
+  // リマインド登録中の選挙一覧＆日程表示
   const remindCard = document.createElement("div");
-  remindCard.className = "card";
+  remindCard.className = "card mypage-remind-card";
   remindCard.innerHTML = `
-    <h3 style="margin:0 0 12px 0;font-size:16px;display:flex;align-items:center;gap:6px;">
-      ${icon("bell", 18)} <span>リマインド登録している選挙</span>
-    </h3>
+    <div class="mypage-remind-header">
+      <div>
+        <h3 class="mypage-card-title">
+          ${icon("bell", 18)} <span>リマインド登録した選挙の日程</span>
+        </h3>
+        <p class="mypage-card-sub">
+          登録中の選挙の投票日・告示日・残り日数を確認できます。
+        </p>
+      </div>
+      <button class="btn-add-election-shortcut" id="btn-goto-schedule-top">
+        <span>＋ 選挙を追加</span>
+      </button>
+    </div>
   `;
+
+  remindCard.querySelector("#btn-goto-schedule-top")?.addEventListener("click", () => {
+    state.tab = "schedule";
+    renderFn();
+  });
 
   const subList = document.createElement("div");
   subList.className = "subscribed-elections-list";
@@ -324,29 +366,116 @@ function renderDashboard(renderFn: () => void): HTMLElement {
   if (state.currentUser.subscribedElectionNames.length === 0) {
     subList.innerHTML = `
       <div class="empty-sub-box">
-        <p style="margin:0 0 6px 0;color:var(--muted);font-size:14px;">リマインド登録している選挙がありません</p>
-        <p style="margin:0;font-size:13px;">「日程」タブから選挙ごとに「🔔 通知ON」を押して登録できます。</p>
+        <div class="empty-sub-icon">🔔</div>
+        <p class="empty-sub-title">リマインド登録している選挙がありません</p>
+        <p class="empty-sub-desc">
+          「日程」タブから気になる選挙の「🔔 通知ON」を押すと、ここに投票日程が保存され、投票日が近づいた際にお知らせが届きます。
+        </p>
+        <button class="btn-empty-goto-schedule" id="btn-empty-schedule">
+          📅 日程タブで選挙を探す
+        </button>
       </div>
     `;
+    subList.querySelector("#btn-empty-schedule")?.addEventListener("click", () => {
+      state.tab = "schedule";
+      renderFn();
+    });
   } else {
     state.currentUser.subscribedElectionNames.forEach((name) => {
+      const info = getElectionByName(name);
+      const daysLeft = info.isoDate ? daysUntil(info.isoDate) : null;
+
+      let urgencyBadge = "";
+      if (daysLeft !== null) {
+        if (daysLeft === 0) {
+          urgencyBadge = `<span class="election-status-badge today">🗳️ 本日投票日！</span>`;
+        } else if (daysLeft === 1) {
+          urgencyBadge = `<span class="election-status-badge urgent">🔥 明日投票日！</span>`;
+        } else if (daysLeft > 0 && daysLeft <= 7) {
+          urgencyBadge = `<span class="election-status-badge soon">あと${daysLeft}日（直前）</span>`;
+        } else if (daysLeft > 7) {
+          urgencyBadge = `<span class="election-status-badge upcoming">あと${daysLeft}日</span>`;
+        } else {
+          urgencyBadge = `<span class="election-status-badge past">投票終了</span>`;
+        }
+      }
+
       const item = document.createElement("div");
-      item.className = "sub-election-item";
+      item.className = "sub-election-item-card";
       item.innerHTML = `
-        <div style="display:flex;align-items:center;gap:8px;">
-          <span class="sub-icon">${icon("check", 14)}</span>
-          <span style="font-weight:600;font-size:14px;">${name}</span>
+        <div class="sub-election-card-header">
+          <div class="sub-election-title-col">
+            <div class="sub-election-meta-tags">
+              <span class="sub-election-year-tag">${info.yearLabel || "予定"}</span>
+              ${urgencyBadge}
+            </div>
+            <h4 class="sub-election-title">${info.name}</h4>
+          </div>
+          <div class="sub-election-action-btns">
+            ${
+              info.isoDate
+                ? `<button class="btn-sub-card-action btn-ics" title="端末カレンダーに追加">
+                    📅 <span>カレンダー</span>
+                   </button>`
+                : ""
+            }
+            <button class="btn-sub-card-action btn-del" title="リマインド解除">
+              ${icon("x", 12)} <span>解除</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="sub-election-schedule-grid">
+          <div class="schedule-pill pill-voting-day">
+            <span class="pill-label">🗳️ 投票日</span>
+            <span class="pill-value main-date">${info.day}</span>
+          </div>
+          <div class="schedule-pill pill-notice-day">
+            <span class="pill-label">📋 告示日</span>
+            <span class="pill-value">${info.notice}</span>
+          </div>
+          <div class="schedule-pill pill-time">
+            <span class="pill-label">⏰ 投票時間</span>
+            <span class="pill-value">7:00 〜 20:00</span>
+          </div>
+        </div>
+
+        <div class="sub-election-card-footer">
+          <div class="sub-early-vote-info">
+            <span class="early-icon">🏛️</span>
+            <span class="early-text">期日前投票：告示日の翌日〜投票日前日まで</span>
+          </div>
+          <button class="btn-view-schedule-detail">
+            <span>日程ページで詳細を見る</span>
+            ${icon("chevron-right", 12)}
+          </button>
         </div>
       `;
-      const removeBtn = document.createElement("button");
-      removeBtn.className = "btn-remove-sub";
-      removeBtn.innerHTML = `${icon("x", 12)} 解除`;
-      removeBtn.addEventListener("click", () => {
+
+      // カレンダー連携
+      item.querySelector(".btn-ics")?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        downloadElectionICS(info.name, info.isoDate, info.notice);
+      });
+
+      // 解除
+      item.querySelector(".btn-del")?.addEventListener("click", (e) => {
+        e.stopPropagation();
         toggleElectionSubscription(name);
         syncSubscriptionsToUserDB();
         renderFn();
       });
-      item.appendChild(removeBtn);
+
+      // 日程タブへジャンプ
+      item.querySelector(".btn-view-schedule-detail")?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        state.tab = "schedule";
+        if (info.isoDate) {
+          state.electionDate = info.isoDate;
+        }
+        renderFn();
+      });
+
       subList.appendChild(item);
     });
   }

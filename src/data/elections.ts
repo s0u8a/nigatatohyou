@@ -23,3 +23,46 @@ export const UPCOMING_ELECTIONS: UpcomingElection[] = [
 ];
 
 export const ELECTION_YEAR_FILTERS = ["すべて", "令和8年度", "令和9年度以降"];
+
+const FALLBACK_ELECTIONS: Record<string, Partial<UpcomingElection>> = {
+  "令和8年5月31日 新潟県知事選挙": {
+    year: "令和8年度",
+    yearLabel: "令和8年",
+    notice: "5月14日",
+    day: "5月31日",
+    isoDate: "2026-05-31",
+  },
+  "新潟市議会議員補欠選挙": {
+    year: "令和8年度",
+    yearLabel: "令和8年",
+    notice: "10月16日",
+    day: "10月25日",
+    isoDate: "2026-10-25",
+  },
+};
+
+export function getElectionByName(name: string): UpcomingElection {
+  const found = UPCOMING_ELECTIONS.find((e) => e.name === name);
+  if (found) return found;
+
+  const fallback = FALLBACK_ELECTIONS[name];
+  if (fallback) {
+    return {
+      name,
+      year: fallback.year || "令和8年度",
+      yearLabel: fallback.yearLabel || "令和8年",
+      notice: fallback.notice || "公表待ち",
+      day: fallback.day || "日程確認中",
+      isoDate: fallback.isoDate || "",
+    };
+  }
+
+  return {
+    name,
+    year: "予定選挙",
+    yearLabel: "予定",
+    notice: "公表待ち",
+    day: "日程確認中",
+    isoDate: "",
+  };
+}

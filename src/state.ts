@@ -181,6 +181,42 @@ export function syncSubscriptionsToUserDB() {
   }
 }
 
+export function loginQuickDemo(): void {
+  const db = loadUserDB();
+  const demoEmail = "demo@niigata-vote.jp";
+  let demoUser = db.find((u) => u.email === demoEmail);
+  if (!demoUser) {
+    demoUser = {
+      id: "user-demo-01",
+      name: "新潟 たろう",
+      email: demoEmail,
+      passwordHash: simpleHash("demo123"),
+      municipality: "新潟市中央区",
+      subscribedElectionNames: ["胎内市長選挙", "新潟市長選挙", "燕市議会議員選挙"],
+      notificationPrefs: {
+        days7Before: true,
+        days3Before: true,
+        day1Before: true,
+        onElectionDay: true,
+      },
+    };
+    db.push(demoUser);
+    saveUserDB(db);
+  }
+  state.currentUser = {
+    id: demoUser.id,
+    name: demoUser.name,
+    email: demoUser.email,
+    municipality: demoUser.municipality,
+    isLoggedIn: true,
+    isDemo: false,
+    notificationPrefs: demoUser.notificationPrefs,
+    subscribedElectionNames: [...demoUser.subscribedElectionNames],
+  };
+  saveState();
+  showToast("✨ デモアカウントでログインしました");
+}
+
 function loadStoredUser(): UserProfile {
   try {
     const saved = localStorage.getItem("niigata_election_user");
