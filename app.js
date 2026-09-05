@@ -1105,6 +1105,14 @@
 
   // src/views/Header.ts
   init_state();
+  var tabDefs = [
+    ["top", "\u30DB\u30FC\u30E0", "home"],
+    ["schedule", "\u65E5\u7A0B", "calendar"],
+    ["pledges", "\u516C\u7D04", "clipboard"],
+    ["quiz", "\u8A3A\u65AD", "vote"],
+    ["place", "\u6295\u7968\u6240", "map-pin"],
+    ["mypage", "\u30DE\u30A4\u30DA\u30FC\u30B8", "user"]
+  ];
   function renderHeader(renderFn) {
     const header = document.createElement("header");
     header.className = "site-header";
@@ -1114,7 +1122,7 @@
     logoBox.className = "logo-box";
     const logoImg = document.createElement("img");
     logoImg.src = "rogo.png";
-    logoImg.alt = "\u65B0\u6F5F\u306E\u65B0\u6F5F\u9078\u6319";
+    logoImg.alt = "\u306B\u3044\u304C\u305F\u6295\u7968\u307E\u3067\u306E\u9053";
     logoImg.className = "site-logo-img";
     logoImg.addEventListener("click", () => {
       state.tab = "top";
@@ -1124,14 +1132,6 @@
     container.appendChild(logoBox);
     const navTabs = document.createElement("nav");
     navTabs.className = "nav-tabs-container";
-    const tabDefs = [
-      ["top", "\u30DB\u30FC\u30E0", "home"],
-      ["schedule", "\u65E5\u7A0B", "calendar"],
-      ["pledges", "\u516C\u7D04", "clipboard"],
-      ["quiz", "\u6295\u7968\u8A3A\u65AD", "vote"],
-      ["place", "\u6295\u7968\u6240", "map-pin"],
-      ["mypage", "\u30DE\u30A4\u30DA\u30FC\u30B8", "user"]
-    ];
     tabDefs.forEach(([key, label, iconName]) => {
       const btn = document.createElement("button");
       btn.className = "nav-tab-item" + (state.tab === key ? " active" : "");
@@ -1148,18 +1148,16 @@
     userControls.className = "header-user-controls";
     const unreadCount = state.notifications.filter((n) => !n.read).length;
     const bellBtn = document.createElement("button");
-    bellBtn.className = "header-icon-btn" + (unreadCount > 0 ? " has-unread" : "");
-    bellBtn.title = "\u9078\u6319\u30EA\u30DE\u30A4\u30F3\u30C9\u901A\u77E5";
+    bellBtn.className = "header-icon-btn notif-btn" + (unreadCount > 0 ? " has-unread" : "");
+    bellBtn.title = "\u901A\u77E5";
     bellBtn.innerHTML = `
-    ${icon("bell", 18)}
+    ${icon("bell", 20)}
     ${unreadCount > 0 ? `<span class="notif-badge">${unreadCount}</span>` : ""}
   `;
     bellBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       state.isNotificationDropdownOpen = !state.isNotificationDropdownOpen;
-      if (state.isNotificationDropdownOpen) {
-        markNotificationsAsRead();
-      }
+      if (state.isNotificationDropdownOpen) markNotificationsAsRead();
       renderFn();
     });
     userControls.appendChild(bellBtn);
@@ -1169,13 +1167,9 @@
       userPill.innerHTML = `
       <span class="user-avatar">${icon("user", 14)}</span>
       <span class="user-name">${state.currentUser.name}</span>
-      <span class="user-tag">${state.currentUser.municipality}</span>
     `;
     } else {
-      userPill.innerHTML = `
-      ${icon("log-in", 14)}
-      <span>\u30ED\u30B0\u30A4\u30F3</span>
-    `;
+      userPill.innerHTML = `${icon("log-in", 14)}<span>\u30ED\u30B0\u30A4\u30F3</span>`;
     }
     userPill.addEventListener("click", () => {
       state.tab = "mypage";
@@ -1192,7 +1186,7 @@
       panelHeader.className = "notif-panel-header";
       panelHeader.innerHTML = `
       <div style="display:flex;align-items:center;gap:6px;font-weight:700;">
-        ${icon("bell", 16)} <span>\u9078\u6319\u30EA\u30DE\u30A4\u30F3\u30C9\u30FB\u901A\u77E5\u4E00\u89A7</span>
+        ${icon("bell", 16)} <span>\u901A\u77E5\u4E00\u89A7</span>
       </div>
       <button class="notif-close-btn">${icon("x", 14)}</button>
     `;
@@ -1204,9 +1198,9 @@
       const notifList = document.createElement("div");
       notifList.className = "notif-panel-list";
       if (state.notifications.length === 0) {
-        notifList.innerHTML = `<p class="notif-empty">\u73FE\u5728\u901A\u77E5\u306F\u3042\u308A\u307E\u305B\u3093\u3002</p>`;
+        notifList.innerHTML = `<p class="notif-empty">\u73FE\u5728\u901A\u77E5\u306F\u3042\u308A\u307E\u305B\u3093</p>`;
       } else {
-        state.notifications.forEach((n) => {
+        state.notifications.slice(0, 8).forEach((n) => {
           const item = document.createElement("div");
           item.className = `notif-item type-${n.type}`;
           item.innerHTML = `
@@ -1233,6 +1227,31 @@
       notifPanel.appendChild(panelFooter);
       header.appendChild(notifPanel);
     }
+    const existing = document.getElementById("bottom-nav");
+    if (existing) existing.remove();
+    const bottomNav = document.createElement("nav");
+    bottomNav.id = "bottom-nav";
+    bottomNav.className = "bottom-nav";
+    tabDefs.forEach(([key, label, iconName]) => {
+      const item = document.createElement("button");
+      item.className = "bottom-nav-item" + (state.tab === key ? " active" : "");
+      const badge = key === "mypage" && unreadCount > 0 ? `<span class="bottom-nav-badge">${unreadCount}</span>` : "";
+      item.innerHTML = `
+      <span class="bottom-nav-icon-wrap">
+        ${icon(iconName, 22)}
+        ${badge}
+      </span>
+      <span class="bottom-nav-label">${label}</span>
+    `;
+      item.addEventListener("click", () => {
+        state.tab = key;
+        state.isNotificationDropdownOpen = false;
+        renderFn();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+      bottomNav.appendChild(item);
+    });
+    document.body.appendChild(bottomNav);
     return header;
   }
 

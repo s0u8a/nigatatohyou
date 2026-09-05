@@ -1,9 +1,19 @@
 // ============================================================
-// ヘッダー・ロゴ・タブコンポーネント (views/Header.ts)
+// ヘッダー・ボトムナビ (views/Header.ts)
+// PC: 上部ヘッダー, スマホ: 上部はロゴ+ベルのみ / 下部にボトムナビ
 // ============================================================
 
 import { TabKey } from '../types';
 import { state, icon, markNotificationsAsRead } from '../state';
+
+const tabDefs: [TabKey, string, string][] = [
+  ["top",      "ホーム",   "home"],
+  ["schedule", "日程",     "calendar"],
+  ["pledges",  "公約",     "clipboard"],
+  ["quiz",     "診断",     "vote"],
+  ["place",    "投票所",   "map-pin"],
+  ["mypage",   "マイページ","user"],
+];
 
 export function renderHeader(renderFn: () => void): HTMLElement {
   const header = document.createElement("header");
@@ -12,12 +22,12 @@ export function renderHeader(renderFn: () => void): HTMLElement {
   const container = document.createElement("div");
   container.className = "header-container";
 
-  // Logo (rogo.png)
+  // ── ロゴ ──────────────────────────────
   const logoBox = document.createElement("div");
   logoBox.className = "logo-box";
   const logoImg = document.createElement("img");
   logoImg.src = "rogo.png";
-  logoImg.alt = "新潟の新潟選挙";
+  logoImg.alt = "にいがた投票までの道";
   logoImg.className = "site-logo-img";
   logoImg.addEventListener("click", () => {
     state.tab = "top";
@@ -26,18 +36,9 @@ export function renderHeader(renderFn: () => void): HTMLElement {
   logoBox.appendChild(logoImg);
   container.appendChild(logoBox);
 
-  // Header Tabs (［ ホーム ］［ 日程 ］［ 公約 ］［ 投票診断 ］［ 投票所 ］［ マイページ ］)
+  // ── PC用ナビタブ（モバイルでは display:none） ─
   const navTabs = document.createElement("nav");
   navTabs.className = "nav-tabs-container";
-
-  const tabDefs: [TabKey, string, string][] = [
-    ["top", "ホーム", "home"],
-    ["schedule", "日程", "calendar"],
-    ["pledges", "公約", "clipboard"],
-    ["quiz", "投票診断", "vote"],
-    ["place", "投票所", "map-pin"],
-    ["mypage", "マイページ", "user"],
-  ];
 
   tabDefs.forEach(([key, label, iconName]) => {
     const btn = document.createElement("button");
@@ -53,44 +54,37 @@ export function renderHeader(renderFn: () => void): HTMLElement {
 
   container.appendChild(navTabs);
 
-  // 右上: ユーザー状態 ＆ 通知ベルアイコン
+  // ── 右上: 通知ベル + ユーザー ────────────
   const userControls = document.createElement("div");
   userControls.className = "header-user-controls";
 
-  // ① ベルアイコン（通知ドロップダウン）
+  // ベル
   const unreadCount = state.notifications.filter((n) => !n.read).length;
   const bellBtn = document.createElement("button");
-  bellBtn.className = "header-icon-btn" + (unreadCount > 0 ? " has-unread" : "");
-  bellBtn.title = "選挙リマインド通知";
+  bellBtn.className = "header-icon-btn notif-btn" + (unreadCount > 0 ? " has-unread" : "");
+  bellBtn.title = "通知";
   bellBtn.innerHTML = `
-    ${icon("bell", 18)}
+    ${icon("bell", 20)}
     ${unreadCount > 0 ? `<span class="notif-badge">${unreadCount}</span>` : ""}
   `;
-
   bellBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     state.isNotificationDropdownOpen = !state.isNotificationDropdownOpen;
-    if (state.isNotificationDropdownOpen) {
-      markNotificationsAsRead();
-    }
+    if (state.isNotificationDropdownOpen) markNotificationsAsRead();
     renderFn();
   });
   userControls.appendChild(bellBtn);
 
-  // ② ユーザーログインステータスボタン
+  // ユーザーピル（PC）
   const userPill = document.createElement("button");
   userPill.className = "header-user-pill" + (state.currentUser.isLoggedIn ? " logged-in" : "");
   if (state.currentUser.isLoggedIn) {
     userPill.innerHTML = `
       <span class="user-avatar">${icon("user", 14)}</span>
       <span class="user-name">${state.currentUser.name}</span>
-      <span class="user-tag">${state.currentUser.municipality}</span>
     `;
   } else {
-    userPill.innerHTML = `
-      ${icon("log-in", 14)}
-      <span>ログイン</span>
-    `;
+    userPill.innerHTML = `${icon("log-in", 14)}<span>ログイン</span>`;
   }
   userPill.addEventListener("click", () => {
     state.tab = "mypage";
@@ -102,7 +96,7 @@ export function renderHeader(renderFn: () => void): HTMLElement {
   container.appendChild(userControls);
   header.appendChild(container);
 
-  // ③ 通知ドロップダウンパネル（開いている場合）
+  // ── 通知ドロップダウン ─────────────────────
   if (state.isNotificationDropdownOpen) {
     const notifPanel = document.createElement("div");
     notifPanel.className = "notif-dropdown-panel";
@@ -111,7 +105,7 @@ export function renderHeader(renderFn: () => void): HTMLElement {
     panelHeader.className = "notif-panel-header";
     panelHeader.innerHTML = `
       <div style="display:flex;align-items:center;gap:6px;font-weight:700;">
-        ${icon("bell", 16)} <span>選挙リマインド・通知一覧</span>
+        ${icon("bell", 16)} <span>通知一覧</span>
       </div>
       <button class="notif-close-btn">${icon("x", 14)}</button>
     `;
@@ -125,9 +119,9 @@ export function renderHeader(renderFn: () => void): HTMLElement {
     notifList.className = "notif-panel-list";
 
     if (state.notifications.length === 0) {
-      notifList.innerHTML = `<p class="notif-empty">現在通知はありません。</p>`;
+      notifList.innerHTML = `<p class="notif-empty">現在通知はありません</p>`;
     } else {
-      state.notifications.forEach((n) => {
+      state.notifications.slice(0, 8).forEach((n) => {
         const item = document.createElement("div");
         item.className = `notif-item type-${n.type}`;
         item.innerHTML = `
@@ -142,22 +136,52 @@ export function renderHeader(renderFn: () => void): HTMLElement {
     }
     notifPanel.appendChild(notifList);
 
-    // フッター（通知をすべて既読）
     const panelFooter = document.createElement("div");
     panelFooter.className = "notif-panel-footer";
     const readAllBtn = document.createElement("button");
     readAllBtn.className = "btn-read-all-notif";
     readAllBtn.textContent = "すべて既読にする";
-    readAllBtn.addEventListener("click", () => {
-      markNotificationsAsRead();
-      renderFn();
-    });
+    readAllBtn.addEventListener("click", () => { markNotificationsAsRead(); renderFn(); });
     panelFooter.appendChild(readAllBtn);
     notifPanel.appendChild(panelFooter);
 
     header.appendChild(notifPanel);
   }
 
+  // ── スマホ用ボトムナビ ─────────────────────
+  // 既存のボトムナビを削除してから再描画
+  const existing = document.getElementById("bottom-nav");
+  if (existing) existing.remove();
+
+  const bottomNav = document.createElement("nav");
+  bottomNav.id = "bottom-nav";
+  bottomNav.className = "bottom-nav";
+
+  tabDefs.forEach(([key, label, iconName]) => {
+    const item = document.createElement("button");
+    item.className = "bottom-nav-item" + (state.tab === key ? " active" : "");
+
+    // 通知バッジをマイページに表示
+    const badge = (key === "mypage" && unreadCount > 0)
+      ? `<span class="bottom-nav-badge">${unreadCount}</span>` : "";
+
+    item.innerHTML = `
+      <span class="bottom-nav-icon-wrap">
+        ${icon(iconName, 22)}
+        ${badge}
+      </span>
+      <span class="bottom-nav-label">${label}</span>
+    `;
+    item.addEventListener("click", () => {
+      state.tab = key;
+      state.isNotificationDropdownOpen = false;
+      renderFn();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    bottomNav.appendChild(item);
+  });
+
+  document.body.appendChild(bottomNav);
+
   return header;
 }
-

@@ -86,7 +86,7 @@ html, body {
   transform: scale(1.03);
 }
 
-/* Nav Tabs */
+/* Nav Tabs (PC) */
 .nav-tabs-container {
   display: flex;
   align-items: center;
@@ -98,9 +98,7 @@ html, body {
   flex-shrink: 1;
   margin: 0 4px;
 }
-.nav-tabs-container::-webkit-scrollbar {
-  display: none;
-}
+.nav-tabs-container::-webkit-scrollbar { display: none; }
 .nav-tab-item {
   background-color: rgba(255, 255, 255, 0.14);
   color: #F3E8FF;
@@ -129,6 +127,123 @@ html, body {
   font-weight: 800;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
+
+/* ================================================================
+   📱 ボトムナビゲーション（スマホ専用）
+   ================================================================ */
+.bottom-nav {
+  display: none; /* デスクトップでは非表示 */
+}
+
+@media (max-width: 640px) {
+  /* ヘッダーのPCナビを隠す */
+  .nav-tabs-container {
+    display: none;
+  }
+
+  /* ヘッダーをスリムに */
+  .site-header {
+    padding: 4px 0;
+  }
+  .header-container {
+    min-height: 52px;
+    padding: 0 14px;
+  }
+  .logo-box {
+    padding: 4px 10px;
+  }
+  .site-logo-img {
+    height: 28px;
+  }
+
+  /* ユーザーピルをコンパクトに */
+  .header-user-pill .user-name {
+    display: none; /* 名前はボトムナビのマイページから確認 */
+  }
+
+  /* コンテンツ下部にボトムナビ分の余白 */
+  .content {
+    padding-bottom: 72px !important;
+  }
+
+  /* ボトムナビ表示 */
+  .bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    background: #FFFFFF;
+    border-top: 1px solid #E2E8F0;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.10);
+    /* iOS safe area 対応 */
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
+
+.bottom-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 8px 2px 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #94A3B8;
+  font-family: var(--font-body);
+  transition: color 0.15s ease;
+  min-height: 56px;
+  position: relative;
+}
+.bottom-nav-item:active {
+  background: rgba(124, 58, 237, 0.06);
+}
+.bottom-nav-item.active {
+  color: #7C3AED;
+}
+.bottom-nav-icon-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+}
+.bottom-nav-item.active .bottom-nav-icon-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  background: rgba(124, 58, 237, 0.12);
+  border-radius: 10px;
+}
+.bottom-nav-label {
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.3px;
+}
+.bottom-nav-badge {
+  position: absolute;
+  top: -3px;
+  right: -6px;
+  background: #DC2626;
+  color: #FFFFFF;
+  font-size: 9px;
+  font-weight: 800;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 99px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+  border: 1.5px solid #FFFFFF;
+}
+
 
 /* Hero Section (画面全体のトップ画面) */
 .main-hero-container {
@@ -919,53 +1034,51 @@ html, body {
    ============================================================ */
 @media screen and (max-width: 640px) {
   .wrap {
-    padding: 0 16px;
+    padding: 0 14px;
   }
   .content {
-    padding: 20px 0;
+    padding: 20px 0 80px; /* ボトムナビの高さ分 余白を確保 */
   }
-  .nav-inner {
-    padding-top: 12px;
+
+  /* ─ カード ─ */
+  .card {
+    padding: 14px;
+    border-radius: 10px;
   }
-  .nav-title {
-    font-size: 16px;
-    margin-bottom: 8px;
+
+  /* ─ 選挙リスト行 ─ */
+  .election-row-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
   }
-  .tabs {
-    gap: 12px;
-    overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding-bottom: 2px;
+  .election-btn-group {
+    width: 100%;
+    gap: 8px;
   }
-  .tabs::-webkit-scrollbar {
-    display: none;
+  .btn-sub-toggle, .btn-cal-add {
+    flex: 1;
+    justify-content: center;
+    min-height: 42px;
+    font-size: 13.5px;
   }
-  .tab-btn {
-    font-size: 13px;
-    padding: 8px 4px 10px 4px;
-    flex-shrink: 0;
-  }
+
+  /* ─ カウントダウン ─ */
   .hero-num {
-    font-size: clamp(48px, 15vw, 68px);
+    font-size: clamp(56px, 20vw, 96px);
   }
   .hero-suffix {
     font-size: 15px;
     padding-bottom: 6px;
   }
-  .section-title {
-    font-size: 22px;
-  }
-  .section-sub {
-    font-size: 13px;
-  }
-  
-  /* Filter chips on smartphone */
+
+  /* ─ チップ ─ */
   .region-chip, .muni-chip, .ward-chip, .year-chip {
     padding: 7px 12px;
     font-size: 12.5px;
     touch-action: manipulation;
+    min-height: 38px;
   }
   .region-chip:active, .muni-chip:active, .ward-chip:active, .year-chip:active {
     transform: scale(0.97);
@@ -974,14 +1087,78 @@ html, body {
     max-height: 140px;
   }
 
-  /* Polling card button layout on small smartphones */
+  /* ─ 投票所カード ─ */
   .polling-card {
     padding: 14px;
   }
   .polling-name {
     font-size: 15.5px;
   }
+
+  /* ─ セクションタイトル ─ */
+  .section-title {
+    font-size: 20px;
+  }
+
+  /* ─ 通知ドロップダウン ─ */
+  .notif-dropdown-panel {
+    left: 10px !important;
+    right: 10px !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  /* ─ マイページ認証フォーム ─ */
+  .auth-screen {
+    padding: 4px 0 24px;
+  }
+  .auth-hero {
+    padding: 20px 8px 16px;
+  }
+  .auth-hero-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+  }
+  .auth-hero-title {
+    font-size: 18px;
+  }
+  .auth-card {
+    padding: 8px 14px 20px;
+  }
+  .form-input, .form-select {
+    font-size: 16px; /* iOSズーム防止 */
+    padding: 12px 14px;
+  }
+  .btn-auth-submit {
+    min-height: 50px;
+    font-size: 16px;
+  }
+
+  /* ─ プロフィールカード ─ */
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .profile-info-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .mypage-action-bar {
+    flex-direction: column;
+  }
+  .mypage-action-bar button {
+    width: 100%;
+  }
+
+  /* ─ info行 ─ */
+  .info-row {
+    flex-direction: column !important;
+    gap: 4px !important;
+  }
 }
+
 
 @media screen and (max-width: 480px) {
   .polling-card div[style*="flex"] {
