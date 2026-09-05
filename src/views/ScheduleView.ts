@@ -207,21 +207,12 @@ export function renderSchedulePage(renderFn: () => void): HTMLElement {
   infoRows.forEach(({ label, value, note }, idx) => {
     const row = document.createElement("div");
     row.className = "info-row";
-    row.style.display = "flex";
-    row.style.justifyContent = "space-between";
-    row.style.alignItems = "flex-start";
-    row.style.gap = "16px";
-    row.style.padding = "14px 0";
-
-    const valueStyle = idx === 0
-      ? "font-size: 22px; font-weight: 800; color: #7C3AED; letter-spacing: 0.5px; line-height: 1.2;"
-      : "font-size: 14.5px; font-weight: 700; color: #7C3AED; line-height: 1.5;";
 
     row.innerHTML = `
-      <span class="label" style="flex-shrink:0;font-weight:700;padding-top:2px;">${label}</span>
-      <div style="text-align:right;">
-        <div style="${valueStyle}">${value}</div>
-        ${note ? `<div style="font-size:12px;color:var(--muted);margin-top:4px;">${note}</div>` : ""}
+      <span class="info-label">${label}</span>
+      <div class="info-value-wrap">
+        <div class="info-value ${idx === 0 ? "info-value-time" : ""}">${value}</div>
+        ${note ? `<div class="info-note">${note}</div>` : ""}
       </div>
     `;
     wrap.appendChild(row);
