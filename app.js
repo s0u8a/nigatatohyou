@@ -5918,7 +5918,7 @@
     root.innerHTML = "";
     root.appendChild(renderHeader(render));
     const content = document.createElement("div");
-    content.className = "wrap content";
+    content.className = state.tab === "top" ? "wrap content top-content" : "wrap content";
     switch (state.tab) {
       case "top":
         content.appendChild(renderTopLandingPage());

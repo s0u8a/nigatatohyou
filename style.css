@@ -27,12 +27,20 @@
 html, body {
   margin: 0;
   padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   background-color: var(--bg);
   color: var(--ink);
   font-family: var(--font-body);
 }
 
-#app { min-height: 100vh; }
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+#app { min-height: 100vh; overflow-x: hidden; width: 100%; }
 
 .disp { font-family: var(--font-display); }
 
@@ -245,26 +253,34 @@ html, body {
 }
 
 
-/* Hero Section (画面全体のトップ画面) */
+/* ============================================================
+   Hero Section (画面全体のトップ画面・全機種スマートフォン中央固定対応)
+   ============================================================ */
+.top-content {
+  padding-top: 0 !important;
+}
+
 .main-hero-container {
   position: relative;
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
   height: calc(100vh - 65px);
-  min-height: 520px;
+  height: calc(100dvh - 65px);
+  min-height: 500px;
+  max-height: 900px;
   border-radius: 0;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  margin-top: -24px;
-  margin-bottom: -24px;
+  margin-top: 0;
+  margin-bottom: 24px;
   background-color: #1E1B4B;
 }
 .hero-bg-photo {
   width: 100%;
   height: 100%;
   background-size: cover;
-  background-position: center center;
+  background-position: center center; /* 全機種で県庁ビルが中央に固定 */
   background-repeat: no-repeat;
   filter: brightness(0.95);
   transition: transform 0.5s ease;
@@ -275,29 +291,32 @@ html, body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.35) 100%);
+  background: linear-gradient(180deg, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.38) 100%);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 24px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 /* Center Oval Text Banner */
 .hero-oval-text {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.96);
   border: 3px solid #10B981;
   border-radius: 999px;
-  padding: 18px 42px;
+  padding: 16px 36px;
   color: #047857;
   font-weight: 800;
-  font-size: 24px;
+  font-size: clamp(15px, 3.8vw, 24px);
   text-align: center;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  max-width: 90%;
+  width: min(92%, 520px);
+  box-sizing: border-box;
   backdrop-filter: blur(4px);
   animation: pulseGlow 3s infinite alternate ease-in-out;
   z-index: 2;
+  line-height: 1.4;
 }
 @keyframes pulseGlow {
   0% { transform: scale(1); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
@@ -307,15 +326,15 @@ html, body {
 /* Mascot Left: 選挙君 */
 .hero-mascot-left {
   position: absolute;
-  top: 24px;
-  left: 24px;
+  top: 20px;
+  left: 20px;
   background: #FFFFFF;
   border: 2px solid #E5E7EB;
   border-radius: 14px;
-  padding: 8px;
+  padding: 6px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-  width: 150px;
-  height: 175px;
+  width: 140px;
+  height: 165px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -330,15 +349,15 @@ html, body {
 /* Mascot Bottom Left & Right: こめちゃん */
 .hero-mascot-kome-left {
   position: absolute;
-  bottom: 24px;
-  left: 24px;
+  bottom: 20px;
+  left: 20px;
   background: #FFFFFF;
   border: 2px solid #E5E7EB;
   border-radius: 12px;
   padding: 6px;
   box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-  width: 90px;
-  height: 90px;
+  width: 80px;
+  height: 80px;
   z-index: 3;
 }
 .hero-mascot-kome-left img {
@@ -349,15 +368,15 @@ html, body {
 
 .hero-mascot-kome-right {
   position: absolute;
-  bottom: 24px;
-  right: 24px;
+  bottom: 20px;
+  right: 20px;
   background: #FFFFFF;
   border: 2px solid #E5E7EB;
   border-radius: 12px;
   padding: 6px;
   box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-  width: 90px;
-  height: 90px;
+  width: 80px;
+  height: 80px;
   z-index: 3;
 }
 .hero-mascot-kome-right img {
@@ -369,24 +388,228 @@ html, body {
 /* Scroll guide */
 .scroll-indicator {
   position: absolute;
-  bottom: 24px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(30, 27, 75, 0.88);
+  background: rgba(30, 27, 75, 0.9);
   color: #FFFFFF;
-  padding: 10px 24px;
+  padding: 9px 22px;
   border-radius: 999px;
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.5px;
   box-shadow: 0 4px 14px rgba(0,0,0,0.25);
   animation: bounceDown 2s infinite ease-in-out;
   z-index: 4;
+  white-space: nowrap;
 }
 @keyframes bounceDown {
   0%, 100% { transform: translate(-50%, 0); }
-  50% { transform: translate(-50%, 5px); }
+  50% { transform: translate(-50%, 4px); }
 }
+
+/* 📱 スマートフォンでのヒーロー画面最適化（全機種対応） */
+@media (max-width: 640px) {
+  .main-hero-container {
+    height: calc(100vh - 56px);
+    height: calc(100dvh - 56px);
+    min-height: 440px;
+    max-height: none;
+    margin-bottom: 20px;
+  }
+  .hero-bg-photo {
+    background-position: 50% 50% !important; /* スマホ全機種で県庁タワーをど真ん中に固定 */
+    background-size: cover !important;
+  }
+  .hero-oval-text {
+    font-size: clamp(12.5px, 3.7vw, 16px);
+    padding: 10px 18px;
+    width: auto;
+    max-width: calc(100vw - 28px);
+    white-space: nowrap;
+    border-width: 2.5px;
+    letter-spacing: -0.2px;
+  }
+  .hero-mascot-left {
+    width: 68px;
+    height: 80px;
+    top: 12px;
+    left: 12px;
+    padding: 4px;
+    border-radius: 10px;
+  }
+  .hero-mascot-kome-left {
+    width: 44px;
+    height: 44px;
+    bottom: 12px;
+    left: 10px;
+    padding: 3px;
+    border-radius: 8px;
+  }
+  .hero-mascot-kome-right {
+    width: 44px;
+    height: 44px;
+    bottom: 12px;
+    right: 10px;
+    padding: 3px;
+    border-radius: 8px;
+  }
+  .scroll-indicator {
+    font-size: 11px;
+    padding: 7px 14px;
+    bottom: 14px;
+    max-width: calc(100% - 110px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* ============================================================
+   📊 アンケート調査結果セクション (HomeView)
+   ============================================================ */
+.survey-section {
+  width: 100%;
+  max-width: 100%;
+  margin-top: 24px;
+  margin-bottom: 40px;
+  box-sizing: border-box;
+}
+.survey-section .section-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 800;
+  color: #1E1B4B;
+  margin-bottom: 8px;
+}
+.survey-section .section-sub {
+  text-align: center;
+  font-size: 13.5px;
+  color: #64748B;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+.survey-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  width: 100%;
+  max-width: 768px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+.survey-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+}
+.survey-card-header {
+  margin-bottom: 16px;
+}
+.survey-tag {
+  display: inline-block;
+  background: #EDE9FE;
+  color: #6D28D9;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+.survey-question-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 4px 0 6px;
+  line-height: 1.45;
+}
+.survey-count-badge {
+  font-size: 12.5px;
+  color: #64748B;
+  font-weight: 600;
+}
+.survey-img-container {
+  width: 100%;
+  max-width: 100%;
+  background: #F8FAFC;
+  border-radius: 12px;
+  border: 1px solid #F1F5F9;
+  padding: 12px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.survey-chart-img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  border-radius: 6px;
+}
+.survey-stats-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+.stat-pill {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 8px;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+.stat-blue {
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+}
+.stat-blue .stat-label { color: #1E40AF; font-size: 12px; font-weight: 700; }
+.stat-blue .stat-value { color: #1D4ED8; font-size: 24px; font-weight: 800; }
+.stat-blue .stat-sub { color: #3B82F6; font-size: 12px; }
+
+.stat-red {
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+}
+.stat-red .stat-label { color: #991B1B; font-size: 12px; font-weight: 700; }
+.stat-red .stat-value { color: #B91C1C; font-size: 24px; font-weight: 800; }
+.stat-red .stat-sub { color: #EF4444; font-size: 12px; }
+
+@media (max-width: 640px) {
+  .survey-card {
+    padding: 14px;
+    border-radius: 12px;
+  }
+  .survey-question-title {
+    font-size: 15.5px;
+  }
+  .survey-img-container {
+    padding: 6px;
+  }
+  .stat-blue .stat-value, .stat-red .stat-value {
+    font-size: 20px;
+  }
+  .survey-section .section-title {
+    font-size: 19px;
+  }
+  .survey-section .section-sub {
+    font-size: 12px;
+    margin-bottom: 18px;
+  }
+}
+
 
 /* Feature grid & youth message card styles */
 .feature-grid {
