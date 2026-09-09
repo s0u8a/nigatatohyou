@@ -669,6 +669,8 @@
   __export(state_exports, {
     authenticateUser: () => authenticateUser,
     checkAndFireReminders: () => checkAndFireReminders,
+    createGoogleCalendarUrl: () => createGoogleCalendarUrl,
+    createOutlookCalendarUrl: () => createOutlookCalendarUrl,
     dateLabel: () => dateLabel,
     daysUntil: () => daysUntil,
     defaultDemoUser: () => defaultDemoUser,
@@ -685,6 +687,8 @@
     logoutUser: () => logoutUser,
     markNotificationsAsRead: () => markNotificationsAsRead,
     matchedCandidate: () => matchedCandidate,
+    openAppleCalendarDirect: () => openAppleCalendarDirect,
+    openCalendarModal: () => openCalendarModal,
     registerNewUser: () => registerNewUser,
     saveState: () => saveState,
     showToast: () => showToast,
@@ -956,9 +960,53 @@
     }).catch(() => {
     });
   }
-  function downloadElectionICS(electionName, isoDate, notice) {
-    const dateStr = isoDate.replace(/-/g, "");
-    const noticeDateStr = isoDate.replace(/-/g, "");
+  function createGoogleCalendarUrl(electionName, isoDate, notice) {
+    const title = encodeURIComponent(`\u{1F5F3}\uFE0F ${electionName}\uFF08\u6295\u7968\u65E5\uFF09`);
+    let dates = "";
+    if (isoDate && /^\d{4}-\d{2}-\d{2}$/.test(isoDate)) {
+      const cleanStart = isoDate.replace(/-/g, "");
+      const parts = isoDate.split("-").map(Number);
+      const nextDay = new Date(parts[0], parts[1] - 1, parts[2] + 1);
+      const endYear = nextDay.getFullYear();
+      const endMonth = String(nextDay.getMonth() + 1).padStart(2, "0");
+      const endD = String(nextDay.getDate()).padStart(2, "0");
+      dates = `${cleanStart}/${endYear}${endMonth}${endD}`;
+    } else {
+      const now = /* @__PURE__ */ new Date();
+      const todayStr = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}`;
+      dates = `${todayStr}/${todayStr}`;
+    }
+    const details = encodeURIComponent(
+      `\u3010\u65B0\u6F5F\u770C ${electionName} \u6295\u7968\u65E5\u3011
+
+\u30FB\u6295\u7968\u6642\u9593: 7:00 \u301C 20:00\uFF08\u203B\u4E00\u90E8\u6295\u7968\u6240\u3092\u9664\u304F\uFF09
+\u30FB\u671F\u65E5\u524D\u6295\u7968: \u544A\u793A\u65E5\uFF08${notice}\uFF09\u306E\u7FCC\u65E5\u301C\u6295\u7968\u65E5\u524D\u65E5\u307E\u3067
+
+\u5FD8\u308C\u305A\u306B\u6295\u7968\u306B\u884C\u304D\u307E\u3057\u3087\u3046\uFF01
+
+\u65B0\u6F5F\u770C\u9078\u6319\u7BA1\u7406\u59D4\u54E1\u4F1A \u516C\u5F0F\u30B9\u30B1\u30B8\u30E5\u30FC\u30EB:
+https://www.pref.niigata.lg.jp/site/senkyo/`
+    );
+    const location = encodeURIComponent("\u65B0\u6F5F\u770C\u5185 \u5404\u6295\u7968\u6240");
+    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
+  }
+  function createOutlookCalendarUrl(electionName, isoDate, notice) {
+    const subject = encodeURIComponent(`\u{1F5F3}\uFE0F ${electionName}\uFF08\u6295\u7968\u65E5\uFF09`);
+    const body = encodeURIComponent(
+      `\u3010\u65B0\u6F5F\u770C ${electionName} \u6295\u7968\u65E5\u3011
+
+\u6295\u7968\u6642\u9593: 7:00\u301C20:00
+\u671F\u65E5\u524D\u6295\u7968: \u544A\u793A\u65E5\uFF08${notice}\uFF09\u306E\u7FCC\u65E5\u301C\u524D\u65E5\u307E\u3067\u53EF\u80FD\u3067\u3059\u3002
+
+\u8A73\u7D30: https://www.pref.niigata.lg.jp/site/senkyo/`
+    );
+    const location = encodeURIComponent("\u65B0\u6F5F\u770C\u5185 \u5404\u6295\u7968\u6240");
+    const startdt = isoDate ? `${isoDate}T07:00:00` : "";
+    const enddt = isoDate ? `${isoDate}T20:00:00` : "";
+    return `https://outlook.live.com/calendar/0/deeplink/compose?path=/calendar/action/compose&rru=addevent&subject=${subject}&startdt=${startdt}&enddt=${enddt}&body=${body}&location=${location}&allday=true`;
+  }
+  function openAppleCalendarDirect(electionName, isoDate, notice) {
+    const dateStr = (isoDate || "").replace(/-/g, "");
     const ics = [
       "BEGIN:VCALENDAR",
       "VERSION:2.0",
@@ -972,10 +1020,49 @@
       `DTEND;VALUE=DATE:${dateStr}`,
       `SUMMARY:\u{1F5F3}\uFE0F ${electionName}\uFF08\u6295\u7968\u65E5\uFF09`,
       `DESCRIPTION:\u65B0\u6F5F\u770C ${electionName} \u306E\u6295\u7968\u65E5\u3067\u3059\u3002
-\u5FD8\u308C\u305A\u306B\u6295\u7968\u306B\u884C\u304D\u307E\u3057\u3087\u3046\uFF01
-
 \u671F\u65E5\u524D\u6295\u7968: \u544A\u793A\u65E5(${notice})\u301C\u524D\u65E5\u307E\u3067\u53EF\u80FD\u3067\u3059\u3002
-
+\u8A73\u7D30: https://www.pref.niigata.lg.jp/site/senkyo/`,
+      `LOCATION:\u65B0\u6F5F\u770C\u5185 \u5404\u6295\u7968\u6240`,
+      "BEGIN:VALARM",
+      "TRIGGER:-P7D",
+      "ACTION:DISPLAY",
+      `DESCRIPTION:\u30107\u65E5\u524D\u30EA\u30DE\u30A4\u30F3\u30C9\u3011${electionName} \u306E\u6295\u7968\u65E5\u304C1\u9031\u9593\u5F8C\u3067\u3059`,
+      "END:VALARM",
+      "BEGIN:VALARM",
+      "TRIGGER:-P1D",
+      "ACTION:DISPLAY",
+      `DESCRIPTION:\u3010\u524D\u65E5\u30EA\u30DE\u30A4\u30F3\u30C9\u3011\u660E\u65E5\u306F ${electionName} \u306E\u6295\u7968\u65E5\u3067\u3059\uFF01`,
+      "END:VALARM",
+      "END:VEVENT",
+      "END:VCALENDAR"
+    ].join("\r\n");
+    const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
+    if (isIOS) {
+      window.location.href = url;
+    } else {
+      window.open(url, "_blank");
+    }
+    showToast("\u{1F4C5} \u30AB\u30EC\u30F3\u30C0\u30FC\u3092\u958B\u304D\u307E\u3057\u305F\u3002\u300C\u8FFD\u52A0\u300D\u3092\u62BC\u3057\u3066\u767B\u9332\u3057\u3066\u304F\u3060\u3055\u3044");
+    setTimeout(() => URL.revokeObjectURL(url), 3e4);
+  }
+  function downloadElectionICS(electionName, isoDate, notice) {
+    const dateStr = (isoDate || "").replace(/-/g, "");
+    const ics = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//\u306B\u3044\u304C\u305F\u6295\u7968\u307E\u3067\u306E\u9053//JP",
+      "CALSCALE:GREGORIAN",
+      "METHOD:PUBLISH",
+      "BEGIN:VEVENT",
+      `UID:${Date.now()}@niigata-vote.jp`,
+      `DTSTAMP:${(/* @__PURE__ */ new Date()).toISOString().replace(/[-:.]/g, "").slice(0, 15)}Z`,
+      `DTSTART;VALUE=DATE:${dateStr}`,
+      `DTEND;VALUE=DATE:${dateStr}`,
+      `SUMMARY:\u{1F5F3}\uFE0F ${electionName}\uFF08\u6295\u7968\u65E5\uFF09`,
+      `DESCRIPTION:\u65B0\u6F5F\u770C ${electionName} \u306E\u6295\u7968\u65E5\u3067\u3059\u3002
+\u671F\u65E5\u524D\u6295\u7968: \u544A\u793A\u65E5(${notice})\u301C\u524D\u65E5\u307E\u3067\u53EF\u80FD\u3067\u3059\u3002
 \u8A73\u7D30: https://www.pref.niigata.lg.jp/site/senkyo/`,
       `LOCATION:\u65B0\u6F5F\u770C\u5185 \u5404\u6295\u7968\u6240`,
       "BEGIN:VALARM",
@@ -1000,7 +1087,120 @@
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    showToast("\u{1F4C5} \u30AB\u30EC\u30F3\u30C0\u30FC\u306B\u8FFD\u52A0\u3057\u307E\u3057\u305F\uFF01\u6295\u7968\u65E5\u306E7\u65E5\u524D\u30FB\u524D\u65E5\u306B\u30EA\u30DE\u30A4\u30F3\u30C9\u3055\u308C\u307E\u3059");
+    showToast("\u{1F4C5} \u30AB\u30EC\u30F3\u30C0\u30FC\u30D5\u30A1\u30A4\u30EB\uFF08.ics\uFF09\u3092\u4FDD\u5B58\u3057\u307E\u3057\u305F");
+  }
+  function openCalendarModal(electionName, isoDate, notice) {
+    const existing = document.getElementById("cal-modal-overlay");
+    if (existing) existing.remove();
+    const overlay = document.createElement("div");
+    overlay.id = "cal-modal-overlay";
+    overlay.className = "cal-modal-overlay";
+    const formattedDate = isoDate ? `${isoDate.replace(/-/g, "/")}\uFF08\u65E5\uFF09` : "\u6295\u7968\u65E5";
+    overlay.innerHTML = `
+    <div class="cal-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="cal-modal-title">
+      <div class="cal-modal-header">
+        <div class="cal-modal-title-group">
+          <span class="cal-modal-icon">\u{1F4C5}</span>
+          <div>
+            <h3 id="cal-modal-title" class="cal-modal-title">\u30AB\u30EC\u30F3\u30C0\u30FC\u306B\u76F4\u63A5\u8FFD\u52A0</h3>
+            <p class="cal-modal-sub">\u30D5\u30A1\u30A4\u30EB\u306E\u4FDD\u5B58\u306A\u3057\u3067\u3001\u4E88\u5B9A\u767B\u9332\u753B\u9762\u3092\u76F4\u63A5\u958B\u304D\u307E\u3059</p>
+          </div>
+        </div>
+        <button class="cal-modal-close-btn" aria-label="\u9589\u3058\u308B">${icon("x", 18)}</button>
+      </div>
+
+      <div class="cal-modal-target-info">
+        <span class="cal-target-badge">\u{1F5F3}\uFE0F \u5BFE\u8C61\u9078\u6319</span>
+        <div class="cal-target-name">${electionName}</div>
+        <div class="cal-target-date">\u{1F5D3}\uFE0F \u6295\u7968\u65E5\uFF1A<strong>${formattedDate}</strong>\uFF087:00\u301C20:00\uFF09</div>
+      </div>
+
+      <div class="cal-service-list">
+        <!-- Google Calendar -->
+        <button class="cal-service-btn btn-google-cal" id="cal-btn-google">
+          <div class="cal-service-icon-wrap google-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="4" width="18" height="18" rx="3" fill="#4285F4"/>
+              <path d="M7 2V6M17 2V6" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <path d="M3 10H21" stroke="white" stroke-width="2"/>
+              <text x="12" y="18" font-size="7" font-weight="bold" fill="white" text-anchor="middle" font-family="sans-serif">31</text>
+            </svg>
+          </div>
+          <div class="cal-service-text">
+            <div class="cal-service-name">Google \u30AB\u30EC\u30F3\u30C0\u30FC\u3067\u958B\u304F <span class="cal-tag-rec">\u4E00\u756A\u304A\u3059\u3059\u3081</span></div>
+            <div class="cal-service-desc">\u753B\u9762\u304C\u76F4\u63A5\u958B\u304F\u306E\u3067\u300C\u4FDD\u5B58\u300D\u3092\u62BC\u3059\u3060\u3051\u3067\u5B8C\u4E86\uFF08PC\u30FB\u30B9\u30DE\u30DB\u4E21\u5BFE\u5FDC\uFF09</div>
+          </div>
+          <span class="cal-service-arrow">${icon("chevron-right", 16)}</span>
+        </button>
+
+        <!-- Apple Calendar / iOS -->
+        <button class="cal-service-btn btn-apple-cal" id="cal-btn-apple">
+          <div class="cal-service-icon-wrap apple-icon-wrap">
+            <span style="font-size:20px;">\u{1F34E}</span>
+          </div>
+          <div class="cal-service-text">
+            <div class="cal-service-name">iPhone / Apple \u30AB\u30EC\u30F3\u30C0\u30FC\u3067\u958B\u304F</div>
+            <div class="cal-service-desc">\u7AEF\u672B\u306E\u30AB\u30EC\u30F3\u30C0\u30FC\u30A2\u30D7\u30EA\u3092\u76F4\u63A5\u8D77\u52D5\u3057\u3066\u4E88\u5B9A\u3092\u8FFD\u52A0\u3057\u307E\u3059</div>
+          </div>
+          <span class="cal-service-arrow">${icon("chevron-right", 16)}</span>
+        </button>
+
+        <!-- Outlook Web Calendar -->
+        <button class="cal-service-btn btn-outlook-cal" id="cal-btn-outlook">
+          <div class="cal-service-icon-wrap outlook-icon-wrap">
+            <span style="font-size:18px;">\u2709\uFE0F</span>
+          </div>
+          <div class="cal-service-text">
+            <div class="cal-service-name">Outlook \u30AB\u30EC\u30F3\u30C0\u30FC\u3067\u958B\u304F</div>
+            <div class="cal-service-desc">Microsoft Outlook \u306E\u4E88\u5B9A\u4F5C\u6210\u753B\u9762\u3092\u76F4\u63A5\u958B\u304D\u307E\u3059</div>
+          </div>
+          <span class="cal-service-arrow">${icon("chevron-right", 16)}</span>
+        </button>
+      </div>
+
+      <div class="cal-modal-footer">
+        <button class="cal-ics-fallback" id="cal-btn-fallback">
+          \u{1F4E5} \u4ED6\u306E\u30AB\u30EC\u30F3\u30C0\u30FC\u7528\uFF08.ics\u30D5\u30A1\u30A4\u30EB\u3092\u4FDD\u5B58\u3057\u305F\u3044\u65B9\u306F\u3053\u3061\u3089\uFF09
+        </button>
+      </div>
+    </div>
+  `;
+    document.body.appendChild(overlay);
+    const close = () => {
+      overlay.classList.add("cal-modal-closing");
+      setTimeout(() => overlay.remove(), 180);
+    };
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) close();
+    });
+    overlay.querySelector(".cal-modal-close-btn")?.addEventListener("click", close);
+    overlay.querySelector("#cal-btn-google")?.addEventListener("click", () => {
+      const url = createGoogleCalendarUrl(electionName, isoDate, notice);
+      window.open(url, "_blank");
+      showToast("\u{1F4C5} Google\u30AB\u30EC\u30F3\u30C0\u30FC\u3092\u958B\u304D\u307E\u3057\u305F\u3002\u300C\u4FDD\u5B58\u300D\u3092\u62BC\u3059\u3068\u767B\u9332\u5B8C\u4E86\u3057\u307E\u3059");
+      close();
+    });
+    overlay.querySelector("#cal-btn-apple")?.addEventListener("click", () => {
+      openAppleCalendarDirect(electionName, isoDate, notice);
+      close();
+    });
+    overlay.querySelector("#cal-btn-outlook")?.addEventListener("click", () => {
+      const url = createOutlookCalendarUrl(electionName, isoDate, notice);
+      window.open(url, "_blank");
+      showToast("\u{1F4C5} Outlook\u30AB\u30EC\u30F3\u30C0\u30FC\u3092\u958B\u304D\u307E\u3057\u305F\u3002\u300C\u4FDD\u5B58\u300D\u3092\u62BC\u3059\u3068\u767B\u9332\u5B8C\u4E86\u3057\u307E\u3059");
+      close();
+    });
+    overlay.querySelector("#cal-btn-fallback")?.addEventListener("click", () => {
+      downloadElectionICS(electionName, isoDate, notice);
+      close();
+    });
+    const handleKeydown = (e) => {
+      if (e.key === "Escape") {
+        close();
+        window.removeEventListener("keydown", handleKeydown);
+      }
+    };
+    window.addEventListener("keydown", handleKeydown);
   }
   function markNotificationsAsRead() {
     state.notifications.forEach((n) => n.read = true);
@@ -1464,7 +1664,7 @@
       <div>
         <h3 style="margin:0 0 4px 0;font-size:15px;color:#7C3AED;">\u6295\u7968\u65E5\u30EA\u30DE\u30A4\u30F3\u30C9\u901A\u77E5 \uFF06 \u30AB\u30EC\u30F3\u30C0\u30FC\u9023\u643A</h3>
         <p style="margin:0;font-size:13px;color:var(--muted);line-height:1.5;">
-          \u5404\u9078\u6319\u306E\u300C\u{1F514} \u901A\u77E5ON\u300D\u3067\u30EA\u30DE\u30A4\u30F3\u30C9\u767B\u9332\u3002\u300C\u{1F4C5} \u30AB\u30EC\u30F3\u30C0\u30FC\u300D\u3067\u7AEF\u672B\u306E\u30AB\u30EC\u30F3\u30C0\u30FC\u30A2\u30D7\u30EA\u306B\u8FFD\u52A0\u3067\u304D\u307E\u3059\u3002\u30ED\u30B0\u30A4\u30F3\u5F8C\u306B\u6709\u52B9\u306B\u306A\u308A\u307E\u3059\u3002
+          \u5404\u9078\u6319\u306E\u300C\u{1F514} \u901A\u77E5ON\u300D\u3067\u30EA\u30DE\u30A4\u30F3\u30C9\u767B\u9332\u3002\u300C\u{1F4C5} \u30AB\u30EC\u30F3\u30C0\u30FC\u300D\u3067Google\u3084iPhone\u306E\u30AB\u30EC\u30F3\u30C0\u30FC\u306B\u76F4\u63A5\u4E88\u5B9A\u3092\u8FFD\u52A0\u3067\u304D\u307E\u3059\uFF08\u30D5\u30A1\u30A4\u30EB\u306E\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9\u4E0D\u8981\uFF09\u3002
         </p>
       </div>
     </div>
@@ -1573,11 +1773,11 @@
       });
       const calBtn = document.createElement("button");
       calBtn.className = "btn-cal-add";
-      calBtn.title = "\u7AEF\u672B\u306E\u30AB\u30EC\u30F3\u30C0\u30FC\u306B\u8FFD\u52A0\uFF08iOS/Android/PC\u5BFE\u5FDC\uFF09";
+      calBtn.title = "\u30AB\u30EC\u30F3\u30C0\u30FC\u306B\u76F4\u63A5\u8FFD\u52A0\uFF08\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9\u4E0D\u8981\uFF09";
       calBtn.innerHTML = `\u{1F4C5} <span>\u30AB\u30EC\u30F3\u30C0\u30FC</span>`;
       calBtn.addEventListener("click", (evt) => {
         evt.stopPropagation();
-        downloadElectionICS(e.name, e.isoDate, e.notice);
+        openCalendarModal(e.name, e.isoDate, e.notice);
       });
       btnGroup.appendChild(subBtn);
       btnGroup.appendChild(calBtn);
@@ -5965,7 +6165,7 @@
             <h4 class="sub-election-title">${info.name}</h4>
           </div>
           <div class="sub-election-action-btns">
-            ${info.isoDate ? `<button class="btn-sub-card-action btn-ics" title="\u7AEF\u672B\u30AB\u30EC\u30F3\u30C0\u30FC\u306B\u8FFD\u52A0">
+            ${info.isoDate ? `<button class="btn-sub-card-action btn-ics" title="\u30AB\u30EC\u30F3\u30C0\u30FC\u306B\u76F4\u63A5\u8FFD\u52A0\uFF08\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9\u4E0D\u8981\uFF09">
                     \u{1F4C5} <span>\u30AB\u30EC\u30F3\u30C0\u30FC</span>
                    </button>` : ""}
             <button class="btn-sub-card-action btn-del" title="\u30EA\u30DE\u30A4\u30F3\u30C9\u89E3\u9664">
@@ -6002,7 +6202,7 @@
       `;
         item.querySelector(".btn-ics")?.addEventListener("click", (e) => {
           e.stopPropagation();
-          downloadElectionICS(info.name, info.isoDate, info.notice);
+          openCalendarModal(info.name, info.isoDate, info.notice);
         });
         item.querySelector(".btn-del")?.addEventListener("click", (e) => {
           e.stopPropagation();

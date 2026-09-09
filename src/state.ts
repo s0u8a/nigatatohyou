@@ -403,13 +403,56 @@ export function checkAndFireReminders(renderFn?: () => void) {
 }
 
 // ============================================================
-// カレンダー連携 (.ics 生成)
-// すべての端末（iOS/Android/PC）の標準カレンダーアプリに対応
+// カレンダー連携（ダウンロード不要・直接登録）
+// Google / Apple / Outlook の登録画面を直接起動
 // ============================================================
-export function downloadElectionICS(electionName: string, isoDate: string, notice: string) {
-  const dateStr = isoDate.replace(/-/g, "");
-  const noticeDateStr = isoDate.replace(/-/g, ""); // 告示日の近似値として投票日を使用
 
+export function createGoogleCalendarUrl(electionName: string, isoDate: string, notice: string): string {
+  const title = encodeURIComponent(`🗳️ ${electionName}（投票日）`);
+  let dates = "";
+  if (isoDate && /^\d{4}-\d{2}-\d{2}$/.test(isoDate)) {
+    const cleanStart = isoDate.replace(/-/g, "");
+    const parts = isoDate.split("-").map(Number);
+    const nextDay = new Date(parts[0], parts[1] - 1, parts[2] + 1);
+    const endYear = nextDay.getFullYear();
+    const endMonth = String(nextDay.getMonth() + 1).padStart(2, "0");
+    const endD = String(nextDay.getDate()).padStart(2, "0");
+    dates = `${cleanStart}/${endYear}${endMonth}${endD}`;
+  } else {
+    const now = new Date();
+    const todayStr = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}`;
+    dates = `${todayStr}/${todayStr}`;
+  }
+
+  const details = encodeURIComponent(
+    `【新潟県 ${electionName} 投票日】\n\n` +
+    `・投票時間: 7:00 〜 20:00（※一部投票所を除く）\n` +
+    `・期日前投票: 告示日（${notice}）の翌日〜投票日前日まで\n\n` +
+    `忘れずに投票に行きましょう！\n\n` +
+    `新潟県選挙管理委員会 公式スケジュール:\n` +
+    `https://www.pref.niigata.lg.jp/site/senkyo/`
+  );
+  const location = encodeURIComponent("新潟県内 各投票所");
+
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
+}
+
+export function createOutlookCalendarUrl(electionName: string, isoDate: string, notice: string): string {
+  const subject = encodeURIComponent(`🗳️ ${electionName}（投票日）`);
+  const body = encodeURIComponent(
+    `【新潟県 ${electionName} 投票日】\n\n` +
+    `投票時間: 7:00〜20:00\n` +
+    `期日前投票: 告示日（${notice}）の翌日〜前日まで可能です。\n\n` +
+    `詳細: https://www.pref.niigata.lg.jp/site/senkyo/`
+  );
+  const location = encodeURIComponent("新潟県内 各投票所");
+  const startdt = isoDate ? `${isoDate}T07:00:00` : "";
+  const enddt = isoDate ? `${isoDate}T20:00:00` : "";
+  return `https://outlook.live.com/calendar/0/deeplink/compose?path=/calendar/action/compose&rru=addevent&subject=${subject}&startdt=${startdt}&enddt=${enddt}&body=${body}&location=${location}&allday=true`;
+}
+
+export function openAppleCalendarDirect(electionName: string, isoDate: string, notice: string) {
+  const dateStr = (isoDate || "").replace(/-/g, "");
   const ics = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
@@ -422,7 +465,51 @@ export function downloadElectionICS(electionName: string, isoDate: string, notic
     `DTSTART;VALUE=DATE:${dateStr}`,
     `DTEND;VALUE=DATE:${dateStr}`,
     `SUMMARY:🗳️ ${electionName}（投票日）`,
-    `DESCRIPTION:新潟県 ${electionName} の投票日です。\n忘れずに投票に行きましょう！\n\n期日前投票: 告示日(${notice})〜前日まで可能です。\n\n詳細: https://www.pref.niigata.lg.jp/site/senkyo/`,
+    `DESCRIPTION:新潟県 ${electionName} の投票日です。\n期日前投票: 告示日(${notice})〜前日まで可能です。\n詳細: https://www.pref.niigata.lg.jp/site/senkyo/`,
+    `LOCATION:新潟県内 各投票所`,
+    "BEGIN:VALARM",
+    "TRIGGER:-P7D",
+    "ACTION:DISPLAY",
+    `DESCRIPTION:【7日前リマインド】${electionName} の投票日が1週間後です`,
+    "END:VALARM",
+    "BEGIN:VALARM",
+    "TRIGGER:-P1D",
+    "ACTION:DISPLAY",
+    `DESCRIPTION:【前日リマインド】明日は ${electionName} の投票日です！`,
+    "END:VALARM",
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ].join("\r\n");
+
+  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  
+  // iOS / macOS: direct navigation to calendar data launches the native calendar app prompt without file saving
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (isIOS) {
+    window.location.href = url;
+  } else {
+    window.open(url, "_blank");
+  }
+  showToast("📅 カレンダーを開きました。「追加」を押して登録してください");
+  setTimeout(() => URL.revokeObjectURL(url), 30000);
+}
+
+export function downloadElectionICS(electionName: string, isoDate: string, notice: string) {
+  const dateStr = (isoDate || "").replace(/-/g, "");
+  const ics = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//にいがた投票までの道//JP",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+    "BEGIN:VEVENT",
+    `UID:${Date.now()}@niigata-vote.jp`,
+    `DTSTAMP:${new Date().toISOString().replace(/[-:.]/g, "").slice(0, 15)}Z`,
+    `DTSTART;VALUE=DATE:${dateStr}`,
+    `DTEND;VALUE=DATE:${dateStr}`,
+    `SUMMARY:🗳️ ${electionName}（投票日）`,
+    `DESCRIPTION:新潟県 ${electionName} の投票日です。\n期日前投票: 告示日(${notice})〜前日まで可能です。\n詳細: https://www.pref.niigata.lg.jp/site/senkyo/`,
     `LOCATION:新潟県内 各投票所`,
     "BEGIN:VALARM",
     "TRIGGER:-P7D",
@@ -447,7 +534,140 @@ export function downloadElectionICS(electionName: string, isoDate: string, notic
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
-  showToast("📅 カレンダーに追加しました！投票日の7日前・前日にリマインドされます");
+  showToast("📅 カレンダーファイル（.ics）を保存しました");
+}
+
+// カレンダー追加モーダルを表示（ダウンロードなしで直接開く）
+export function openCalendarModal(electionName: string, isoDate: string, notice: string) {
+  const existing = document.getElementById("cal-modal-overlay");
+  if (existing) existing.remove();
+
+  const overlay = document.createElement("div");
+  overlay.id = "cal-modal-overlay";
+  overlay.className = "cal-modal-overlay";
+
+  const formattedDate = isoDate
+    ? `${isoDate.replace(/-/g, "/")}（日）`
+    : "投票日";
+
+  overlay.innerHTML = `
+    <div class="cal-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="cal-modal-title">
+      <div class="cal-modal-header">
+        <div class="cal-modal-title-group">
+          <span class="cal-modal-icon">📅</span>
+          <div>
+            <h3 id="cal-modal-title" class="cal-modal-title">カレンダーに直接追加</h3>
+            <p class="cal-modal-sub">ファイルの保存なしで、予定登録画面を直接開きます</p>
+          </div>
+        </div>
+        <button class="cal-modal-close-btn" aria-label="閉じる">${icon("x", 18)}</button>
+      </div>
+
+      <div class="cal-modal-target-info">
+        <span class="cal-target-badge">🗳️ 対象選挙</span>
+        <div class="cal-target-name">${electionName}</div>
+        <div class="cal-target-date">🗓️ 投票日：<strong>${formattedDate}</strong>（7:00〜20:00）</div>
+      </div>
+
+      <div class="cal-service-list">
+        <!-- Google Calendar -->
+        <button class="cal-service-btn btn-google-cal" id="cal-btn-google">
+          <div class="cal-service-icon-wrap google-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="4" width="18" height="18" rx="3" fill="#4285F4"/>
+              <path d="M7 2V6M17 2V6" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <path d="M3 10H21" stroke="white" stroke-width="2"/>
+              <text x="12" y="18" font-size="7" font-weight="bold" fill="white" text-anchor="middle" font-family="sans-serif">31</text>
+            </svg>
+          </div>
+          <div class="cal-service-text">
+            <div class="cal-service-name">Google カレンダーで開く <span class="cal-tag-rec">一番おすすめ</span></div>
+            <div class="cal-service-desc">画面が直接開くので「保存」を押すだけで完了（PC・スマホ両対応）</div>
+          </div>
+          <span class="cal-service-arrow">${icon("chevron-right", 16)}</span>
+        </button>
+
+        <!-- Apple Calendar / iOS -->
+        <button class="cal-service-btn btn-apple-cal" id="cal-btn-apple">
+          <div class="cal-service-icon-wrap apple-icon-wrap">
+            <span style="font-size:20px;">🍎</span>
+          </div>
+          <div class="cal-service-text">
+            <div class="cal-service-name">iPhone / Apple カレンダーで開く</div>
+            <div class="cal-service-desc">端末のカレンダーアプリを直接起動して予定を追加します</div>
+          </div>
+          <span class="cal-service-arrow">${icon("chevron-right", 16)}</span>
+        </button>
+
+        <!-- Outlook Web Calendar -->
+        <button class="cal-service-btn btn-outlook-cal" id="cal-btn-outlook">
+          <div class="cal-service-icon-wrap outlook-icon-wrap">
+            <span style="font-size:18px;">✉️</span>
+          </div>
+          <div class="cal-service-text">
+            <div class="cal-service-name">Outlook カレンダーで開く</div>
+            <div class="cal-service-desc">Microsoft Outlook の予定作成画面を直接開きます</div>
+          </div>
+          <span class="cal-service-arrow">${icon("chevron-right", 16)}</span>
+        </button>
+      </div>
+
+      <div class="cal-modal-footer">
+        <button class="cal-ics-fallback" id="cal-btn-fallback">
+          📥 他のカレンダー用（.icsファイルを保存したい方はこちら）
+        </button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  const close = () => {
+    overlay.classList.add("cal-modal-closing");
+    setTimeout(() => overlay.remove(), 180);
+  };
+
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) close();
+  });
+  overlay.querySelector(".cal-modal-close-btn")?.addEventListener("click", close);
+
+  // Google Calendar Click
+  overlay.querySelector("#cal-btn-google")?.addEventListener("click", () => {
+    const url = createGoogleCalendarUrl(electionName, isoDate, notice);
+    window.open(url, "_blank");
+    showToast("📅 Googleカレンダーを開きました。「保存」を押すと登録完了します");
+    close();
+  });
+
+  // Apple Calendar Click
+  overlay.querySelector("#cal-btn-apple")?.addEventListener("click", () => {
+    openAppleCalendarDirect(electionName, isoDate, notice);
+    close();
+  });
+
+  // Outlook Click
+  overlay.querySelector("#cal-btn-outlook")?.addEventListener("click", () => {
+    const url = createOutlookCalendarUrl(electionName, isoDate, notice);
+    window.open(url, "_blank");
+    showToast("📅 Outlookカレンダーを開きました。「保存」を押すと登録完了します");
+    close();
+  });
+
+  // Fallback .ics Click
+  overlay.querySelector("#cal-btn-fallback")?.addEventListener("click", () => {
+    downloadElectionICS(electionName, isoDate, notice);
+    close();
+  });
+
+  // Escape key handler
+  const handleKeydown = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      close();
+      window.removeEventListener("keydown", handleKeydown);
+    }
+  };
+  window.addEventListener("keydown", handleKeydown);
 }
 
 export function markNotificationsAsRead() {

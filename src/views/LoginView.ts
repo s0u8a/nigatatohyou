@@ -14,6 +14,7 @@ import {
   syncSubscriptionsToUserDB,
   checkAndFireReminders,
   daysUntil,
+  openCalendarModal,
   downloadElectionICS,
   loginQuickDemo,
 } from '../state';
@@ -414,7 +415,7 @@ function renderDashboard(renderFn: () => void): HTMLElement {
           <div class="sub-election-action-btns">
             ${
               info.isoDate
-                ? `<button class="btn-sub-card-action btn-ics" title="端末カレンダーに追加">
+                ? `<button class="btn-sub-card-action btn-ics" title="カレンダーに直接追加（ダウンロード不要）">
                     📅 <span>カレンダー</span>
                    </button>`
                 : ""
@@ -452,10 +453,10 @@ function renderDashboard(renderFn: () => void): HTMLElement {
         </div>
       `;
 
-      // カレンダー連携
+      // カレンダー連携（直接開く）
       item.querySelector(".btn-ics")?.addEventListener("click", (e) => {
         e.stopPropagation();
-        downloadElectionICS(info.name, info.isoDate, info.notice);
+        openCalendarModal(info.name, info.isoDate, info.notice);
       });
 
       // 解除

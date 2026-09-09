@@ -2,7 +2,7 @@
 // 選挙日程 ＆ カウントダウン画面 (views/ScheduleView.ts)
 // ============================================================
 
-import { state, daysUntil, dateLabel, elJpDateToIso, icon, toggleElectionSubscription, isElectionSubscribed, downloadElectionICS } from '../state';
+import { state, daysUntil, dateLabel, elJpDateToIso, icon, toggleElectionSubscription, isElectionSubscribed, openCalendarModal, downloadElectionICS } from '../state';
 import { UPCOMING_ELECTIONS, ELECTION_YEAR_FILTERS, OFFICIAL_SCHEDULE_URL } from '../data/elections';
 
 export function renderSchedulePage(renderFn: () => void): HTMLElement {
@@ -22,7 +22,7 @@ export function renderSchedulePage(renderFn: () => void): HTMLElement {
       <div>
         <h3 style="margin:0 0 4px 0;font-size:15px;color:#7C3AED;">投票日リマインド通知 ＆ カレンダー連携</h3>
         <p style="margin:0;font-size:13px;color:var(--muted);line-height:1.5;">
-          各選挙の「🔔 通知ON」でリマインド登録。「📅 カレンダー」で端末のカレンダーアプリに追加できます。ログイン後に有効になります。
+          各選挙の「🔔 通知ON」でリマインド登録。「📅 カレンダー」でGoogleやiPhoneのカレンダーに直接予定を追加できます（ファイルのダウンロード不要）。
         </p>
       </div>
     </div>
@@ -157,14 +157,14 @@ export function renderSchedulePage(renderFn: () => void): HTMLElement {
       renderFn();
     });
 
-    // 📅 カレンダー追加ボタン
+    // 📅 カレンダー追加ボタン（直接開く）
     const calBtn = document.createElement("button");
     calBtn.className = "btn-cal-add";
-    calBtn.title = "端末のカレンダーに追加（iOS/Android/PC対応）";
+    calBtn.title = "カレンダーに直接追加（ダウンロード不要）";
     calBtn.innerHTML = `📅 <span>カレンダー</span>`;
     calBtn.addEventListener("click", (evt) => {
       evt.stopPropagation();
-      downloadElectionICS(e.name, e.isoDate, e.notice);
+      openCalendarModal(e.name, e.isoDate, e.notice);
     });
 
     btnGroup.appendChild(subBtn);
